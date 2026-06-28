@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bug-cause-inference-game"
+version = "0.1.0"
+description = "A Bayesian active bug investigation prototype for synthetic bug-cause cases."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "gurig" }
+]
+
+[project.scripts]
+bug-cause-inference = "bug_cause_inference.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

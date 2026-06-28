@@ -1,0 +1,127 @@
+{
+  "case_id": "BUG-0001",
+  "current_step": 0,
+  "stop_or_continue": "continue",
+  "stop_reason": null,
+  "recommended_next_action": "run_boundary_tests",
+  "expected_cost": 2,
+  "expected_information_gain_per_cost": 0.2042,
+  "current_top_hypotheses": [
+    {
+      "rank": 1,
+      "hypothesis": "boundary_condition",
+      "posterior_probability": 0.737127
+    },
+    {
+      "rank": 2,
+      "hypothesis": "specification_mismatch",
+      "posterior_probability": 0.146341
+    },
+    {
+      "rank": 3,
+      "hypothesis": "missing_null_handling",
+      "posterior_probability": 0.094851
+    },
+    {
+      "rank": 4,
+      "hypothesis": "configuration_environment",
+      "posterior_probability": 0.01084
+    },
+    {
+      "rank": 5,
+      "hypothesis": "race_order_dependence",
+      "posterior_probability": 0.01084
+    }
+  ],
+  "why_this_action": "Policy `information_gain_per_cost` selected `run_boundary_tests` because it has expected information gain per cost 0.204 at cost 2, while the current leading hypotheses are boundary_condition, specification_mismatch.",
+  "counterfactual_notes": [
+    "Removing `boundary_probe_fails` changes the current top hypothesis probability by 0.293.",
+    "Removing `empty_or_edge_input_failure` changes the current top hypothesis probability by 0.206.",
+    "The recommended action `run_boundary_tests` is selected to reduce uncertainty among the current top causes."
+  ],
+  "known_limits": [
+    "This report does not identify a code location.",
+    "This report does not propose or generate a patch.",
+    "The recommendation depends on the synthetic likelihood table."
+  ],
+  "policy": "information_gain_per_cost",
+  "cumulative_cost": 0,
+  "observed_evidence_ids": [
+    "empty_or_edge_input_failure",
+    "boundary_probe_fails"
+  ],
+  "executed_actions": [],
+  "action_scores": [
+    {
+      "action": "inspect_error_log",
+      "cost": 1,
+      "expected_information_gain": 0.0,
+      "expected_information_gain_per_cost": 0.0
+    },
+    {
+      "action": "run_boundary_tests",
+      "cost": 2,
+      "expected_information_gain": 0.4084,
+      "expected_information_gain_per_cost": 0.2042
+    },
+    {
+      "action": "compare_environment",
+      "cost": 2,
+      "expected_information_gain": 0.0,
+      "expected_information_gain_per_cost": 0.0
+    },
+    {
+      "action": "inspect_recent_diff",
+      "cost": 2,
+      "expected_information_gain": 0.0,
+      "expected_information_gain_per_cost": 0.0
+    },
+    {
+      "action": "run_reproduction_matrix",
+      "cost": 3,
+      "expected_information_gain": 0.180034,
+      "expected_information_gain_per_cost": 0.060011
+    },
+    {
+      "action": "add_instrumentation",
+      "cost": 4,
+      "expected_information_gain": 0.0,
+      "expected_information_gain_per_cost": 0.0
+    },
+    {
+      "action": "check_spec_acceptance",
+      "cost": 3,
+      "expected_information_gain": 0.247828,
+      "expected_information_gain_per_cost": 0.082609
+    },
+    {
+      "action": "run_concurrency_stress",
+      "cost": 5,
+      "expected_information_gain": 0.0,
+      "expected_information_gain_per_cost": 0.0
+    }
+  ],
+  "observation_influence_trace": [
+    {
+      "observation_index": 1,
+      "evidence_id": "boundary_probe_fails",
+      "type": "boundary_result",
+      "top_with_all_evidence": "boundary_condition",
+      "top_without_this_evidence": "boundary_condition",
+      "top_changed": false,
+      "full_top_probability_delta": 0.292683,
+      "top_without_probability": 0.444444
+    },
+    {
+      "observation_index": 0,
+      "evidence_id": "empty_or_edge_input_failure",
+      "type": "failing_test",
+      "top_with_all_evidence": "boundary_condition",
+      "top_without_this_evidence": "boundary_condition",
+      "top_changed": false,
+      "full_top_probability_delta": 0.205877,
+      "top_without_probability": 0.53125
+    }
+  ],
+  "trace": []
+}

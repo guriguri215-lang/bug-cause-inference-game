@@ -1,0 +1,995 @@
+{
+  "settings": {
+    "budget_limit": 10,
+    "max_steps": 5,
+    "failure_cost": 12,
+    "top_probability_threshold": 0.75,
+    "top_margin_threshold": 0.15,
+    "min_expected_ig_per_cost": 0.03
+  },
+  "dataset_diagnostics": {
+    "case_count": 50,
+    "initial_top1_accuracy": 0.7,
+    "initial_top2_accuracy": 1.0,
+    "initially_wrong_case_count": 15,
+    "initially_wrong_case_ids": [
+      "BUG-0004",
+      "BUG-0006",
+      "BUG-0008",
+      "BUG-0009",
+      "BUG-0010",
+      "BUG-0020",
+      "BUG-0023",
+      "BUG-0025",
+      "BUG-0027",
+      "BUG-0039",
+      "BUG-0040",
+      "BUG-0044",
+      "BUG-0046",
+      "BUG-0048",
+      "BUG-0050"
+    ],
+    "category_summary": {
+      "boundary_condition": {
+        "case_count": 10,
+        "initial_top1_accuracy": 0.5,
+        "initially_wrong_case_count": 5
+      },
+      "configuration_environment": {
+        "case_count": 10,
+        "initial_top1_accuracy": 0.7,
+        "initially_wrong_case_count": 3
+      },
+      "missing_null_handling": {
+        "case_count": 10,
+        "initial_top1_accuracy": 0.9,
+        "initially_wrong_case_count": 1
+      },
+      "race_order_dependence": {
+        "case_count": 10,
+        "initial_top1_accuracy": 0.8,
+        "initially_wrong_case_count": 2
+      },
+      "specification_mismatch": {
+        "case_count": 10,
+        "initial_top1_accuracy": 0.6,
+        "initially_wrong_case_count": 4
+      }
+    }
+  },
+  "policies": {
+    "random": {
+      "num_runs": 5000,
+      "mean_cost_to_true_cause_top1": 2.0482,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.8952,
+      "success_rate_by_budget": {
+        "1": 0.7072,
+        "2": 0.7656,
+        "3": 0.8098,
+        "4": 0.8324,
+        "5": 0.8516,
+        "6": 0.863,
+        "7": 0.8694,
+        "8": 0.8792,
+        "9": 0.8832,
+        "10": 0.8952
+      },
+      "area_under_budget_curve": 0.83566,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 1000,
+          "mean_cost_to_true_cause_top1": 4.068,
+          "success_rate_within_budget": 0.747
+        },
+        "configuration_environment": {
+          "num_runs": 1000,
+          "mean_cost_to_true_cause_top1": 1.302,
+          "success_rate_within_budget": 0.952
+        },
+        "missing_null_handling": {
+          "num_runs": 1000,
+          "mean_cost_to_true_cause_top1": 0.376,
+          "success_rate_within_budget": 0.996
+        },
+        "race_order_dependence": {
+          "num_runs": 1000,
+          "mean_cost_to_true_cause_top1": 1.387,
+          "success_rate_within_budget": 0.941
+        },
+        "specification_mismatch": {
+          "num_runs": 1000,
+          "mean_cost_to_true_cause_top1": 3.108,
+          "success_rate_within_budget": 0.84
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.735,
+          "top_2": 0.9514,
+          "top_3": 0.9864
+        },
+        "2": {
+          "top_1": 0.772,
+          "top_2": 0.9582,
+          "top_3": 0.9864
+        },
+        "3": {
+          "top_1": 0.7652,
+          "top_2": 0.9598,
+          "top_3": 0.991
+        },
+        "4": {
+          "top_1": 0.7738,
+          "top_2": 0.9572,
+          "top_3": 0.9928
+        },
+        "5": {
+          "top_1": 0.777,
+          "top_2": 0.9584,
+          "top_3": 0.9932
+        }
+      },
+      "brier_score": 0.314007,
+      "expected_calibration_error": 0.032694,
+      "explanation_omission_test": {
+        "tested_cases": 5000.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.3334
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.12552,
+      "initially_wrong_cases": {
+        "num_runs": 1500,
+        "mean_cost_to_true_cause_top1": 6.827333,
+        "median_cost_to_true_cause_top1": 5.0,
+        "success_rate_within_budget": 0.650667,
+        "success_rate_by_budget": {
+          "1": 0.024,
+          "2": 0.218667,
+          "3": 0.366,
+          "4": 0.441333,
+          "5": 0.505333,
+          "6": 0.543333,
+          "7": 0.564667,
+          "8": 0.597333,
+          "9": 0.610667,
+          "10": 0.650667
+        },
+        "area_under_budget_curve": 0.4522,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 500,
+            "mean_cost_to_true_cause_top1": 8.136,
+            "success_rate_within_budget": 0.494
+          },
+          "configuration_environment": {
+            "num_runs": 300,
+            "mean_cost_to_true_cause_top1": 4.34,
+            "success_rate_within_budget": 0.84
+          },
+          "missing_null_handling": {
+            "num_runs": 100,
+            "mean_cost_to_true_cause_top1": 3.76,
+            "success_rate_within_budget": 0.96
+          },
+          "race_order_dependence": {
+            "num_runs": 200,
+            "mean_cost_to_true_cause_top1": 6.935,
+            "success_rate_within_budget": 0.705
+          },
+          "specification_mismatch": {
+            "num_runs": 400,
+            "mean_cost_to_true_cause_top1": 7.77,
+            "success_rate_within_budget": 0.6
+          }
+        }
+      }
+    },
+    "fixed_checklist": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.96,
+      "success_rate_by_budget": {
+        "1": 0.78,
+        "2": 0.78,
+        "3": 0.78,
+        "4": 0.78,
+        "5": 0.94,
+        "6": 0.94,
+        "7": 0.94,
+        "8": 0.94,
+        "9": 0.94,
+        "10": 0.96
+      },
+      "area_under_budget_curve": 0.878,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 3.0,
+          "success_rate_within_budget": 1.0
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.3,
+          "success_rate_within_budget": 1.0
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.1,
+          "success_rate_within_budget": 1.0
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.4,
+          "success_rate_within_budget": 0.8
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.0,
+          "success_rate_within_budget": 1.0
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.72,
+          "top_2": 0.86,
+          "top_3": 0.98
+        },
+        "2": {
+          "top_1": 0.72,
+          "top_2": 0.96,
+          "top_3": 0.98
+        },
+        "3": {
+          "top_1": 0.88,
+          "top_2": 0.96,
+          "top_3": 0.96
+        },
+        "4": {
+          "top_1": 0.88,
+          "top_2": 0.96,
+          "top_3": 0.98
+        },
+        "5": {
+          "top_1": 0.9,
+          "top_2": 0.98,
+          "top_3": 1.0
+        }
+      },
+      "brier_score": 0.214945,
+      "expected_calibration_error": 0.094098,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.38
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.121951,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 5.2,
+        "median_cost_to_true_cause_top1": 5.0,
+        "success_rate_within_budget": 0.866667,
+        "success_rate_by_budget": {
+          "1": 0.266667,
+          "2": 0.266667,
+          "3": 0.266667,
+          "4": 0.266667,
+          "5": 0.8,
+          "6": 0.8,
+          "7": 0.8,
+          "8": 0.8,
+          "9": 0.8,
+          "10": 0.866667
+        },
+        "area_under_budget_curve": 0.593333,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 6.0,
+            "success_rate_within_budget": 1.0
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 5.0,
+            "success_rate_within_budget": 1.0
+          }
+        }
+      }
+    },
+    "posterior_greedy": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 2.08,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.86,
+      "success_rate_by_budget": {
+        "1": 0.7,
+        "2": 0.78,
+        "3": 0.86,
+        "4": 0.86,
+        "5": 0.86,
+        "6": 0.86,
+        "7": 0.86,
+        "8": 0.86,
+        "9": 0.86,
+        "10": 0.86
+      },
+      "area_under_budget_curve": 0.836,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 6.0,
+          "success_rate_within_budget": 0.5
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.9,
+          "success_rate_within_budget": 1.0
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.3,
+          "success_rate_within_budget": 1.0
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.4,
+          "success_rate_within_budget": 0.8
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.8,
+          "success_rate_within_budget": 1.0
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.84,
+          "top_2": 0.96,
+          "top_3": 0.98
+        },
+        "2": {
+          "top_1": 0.86,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "3": {
+          "top_1": 0.86,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "4": {
+          "top_1": 0.86,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "5": {
+          "top_1": 0.86,
+          "top_2": 0.98,
+          "top_3": 0.98
+        }
+      },
+      "brier_score": 0.248211,
+      "expected_calibration_error": 0.045089,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.02
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.14,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 6.933333,
+        "median_cost_to_true_cause_top1": 3.0,
+        "success_rate_within_budget": 0.533333,
+        "success_rate_by_budget": {
+          "1": 0.0,
+          "2": 0.266667,
+          "3": 0.533333,
+          "4": 0.533333,
+          "5": 0.533333,
+          "6": 0.533333,
+          "7": 0.533333,
+          "8": 0.533333,
+          "9": 0.533333,
+          "10": 0.533333
+        },
+        "area_under_budget_curve": 0.453333,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 3.0,
+            "success_rate_within_budget": 1.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 3.0,
+            "success_rate_within_budget": 1.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 2.0,
+            "success_rate_within_budget": 1.0
+          }
+        }
+      }
+    },
+    "cheapest_first": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 1.92,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.94,
+      "success_rate_by_budget": {
+        "1": 0.78,
+        "2": 0.78,
+        "3": 0.78,
+        "4": 0.78,
+        "5": 0.78,
+        "6": 0.78,
+        "7": 0.94,
+        "8": 0.94,
+        "9": 0.94,
+        "10": 0.94
+      },
+      "area_under_budget_curve": 0.844,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 4.0,
+          "success_rate_within_budget": 0.9
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.3,
+          "success_rate_within_budget": 1.0
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.1,
+          "success_rate_within_budget": 1.0
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.4,
+          "success_rate_within_budget": 0.8
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.8,
+          "success_rate_within_budget": 1.0
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.72,
+          "top_2": 0.86,
+          "top_3": 0.98
+        },
+        "2": {
+          "top_1": 0.72,
+          "top_2": 0.88,
+          "top_3": 1.0
+        },
+        "3": {
+          "top_1": 0.72,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "4": {
+          "top_1": 0.88,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "5": {
+          "top_1": 0.76,
+          "top_2": 1.0,
+          "top_3": 1.0
+        }
+      },
+      "brier_score": 0.310989,
+      "expected_calibration_error": 0.167699,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.26
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.139535,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 6.4,
+        "median_cost_to_true_cause_top1": 7.0,
+        "success_rate_within_budget": 0.8,
+        "success_rate_by_budget": {
+          "1": 0.266667,
+          "2": 0.266667,
+          "3": 0.266667,
+          "4": 0.266667,
+          "5": 0.266667,
+          "6": 0.266667,
+          "7": 0.8,
+          "8": 0.8,
+          "9": 0.8,
+          "10": 0.8
+        },
+        "area_under_budget_curve": 0.48,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 8.0,
+            "success_rate_within_budget": 0.8
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 7.0,
+            "success_rate_within_budget": 1.0
+          }
+        }
+      }
+    },
+    "information_gain": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 1.74,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.9,
+      "success_rate_by_budget": {
+        "1": 0.7,
+        "2": 0.84,
+        "3": 0.86,
+        "4": 0.86,
+        "5": 0.9,
+        "6": 0.9,
+        "7": 0.9,
+        "8": 0.9,
+        "9": 0.9,
+        "10": 0.9
+      },
+      "area_under_budget_curve": 0.866,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 3.0,
+          "success_rate_within_budget": 0.8
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 3.6,
+          "success_rate_within_budget": 0.7
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.3,
+          "success_rate_within_budget": 1.0
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 1.0,
+          "success_rate_within_budget": 1.0
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.8,
+          "success_rate_within_budget": 1.0
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.88,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "2": {
+          "top_1": 0.84,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "3": {
+          "top_1": 0.84,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "4": {
+          "top_1": 0.84,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "5": {
+          "top_1": 0.84,
+          "top_2": 1.0,
+          "top_3": 1.0
+        }
+      },
+      "brier_score": 0.23018,
+      "expected_calibration_error": 0.116647,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.06
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.106383,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 5.8,
+        "median_cost_to_true_cause_top1": 3.0,
+        "success_rate_within_budget": 0.666667,
+        "success_rate_by_budget": {
+          "1": 0.0,
+          "2": 0.466667,
+          "3": 0.533333,
+          "4": 0.533333,
+          "5": 0.666667,
+          "6": 0.666667,
+          "7": 0.666667,
+          "8": 0.666667,
+          "9": 0.666667,
+          "10": 0.666667
+        },
+        "area_under_budget_curve": 0.553333,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 6.0,
+            "success_rate_within_budget": 0.6
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 3.0,
+            "success_rate_within_budget": 1.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 5.0,
+            "success_rate_within_budget": 1.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 2.0,
+            "success_rate_within_budget": 1.0
+          }
+        }
+      }
+    },
+    "information_gain_per_cost": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.94,
+      "success_rate_by_budget": {
+        "1": 0.78,
+        "2": 0.94,
+        "3": 0.94,
+        "4": 0.94,
+        "5": 0.94,
+        "6": 0.94,
+        "7": 0.94,
+        "8": 0.94,
+        "9": 0.94,
+        "10": 0.94
+      },
+      "area_under_budget_curve": 0.924,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.0,
+          "success_rate_within_budget": 0.9
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.3,
+          "success_rate_within_budget": 1.0
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.1,
+          "success_rate_within_budget": 1.0
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.4,
+          "success_rate_within_budget": 0.8
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 0.8,
+          "success_rate_within_budget": 1.0
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.88,
+          "top_2": 0.96,
+          "top_3": 0.98
+        },
+        "2": {
+          "top_1": 0.8,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "3": {
+          "top_1": 0.8,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "4": {
+          "top_1": 0.8,
+          "top_2": 0.98,
+          "top_3": 0.98
+        },
+        "5": {
+          "top_1": 0.8,
+          "top_2": 0.98,
+          "top_3": 0.98
+        }
+      },
+      "brier_score": 0.276261,
+      "expected_calibration_error": 0.146635,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.2
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 3.733333,
+        "median_cost_to_true_cause_top1": 2.0,
+        "success_rate_within_budget": 0.8,
+        "success_rate_by_budget": {
+          "1": 0.266667,
+          "2": 0.8,
+          "3": 0.8,
+          "4": 0.8,
+          "5": 0.8,
+          "6": 0.8,
+          "7": 0.8,
+          "8": 0.8,
+          "9": 0.8,
+          "10": 0.8
+        },
+        "area_under_budget_curve": 0.746667,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 4.0,
+            "success_rate_within_budget": 0.8
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 1.0,
+            "success_rate_within_budget": 1.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 2.0,
+            "success_rate_within_budget": 1.0
+          }
+        }
+      }
+    },
+    "static_posterior": {
+      "num_runs": 50,
+      "mean_cost_to_true_cause_top1": 3.6,
+      "median_cost_to_true_cause_top1": 0.0,
+      "success_rate_within_budget": 0.7,
+      "success_rate_by_budget": {
+        "1": 0.7,
+        "2": 0.7,
+        "3": 0.7,
+        "4": 0.7,
+        "5": 0.7,
+        "6": 0.7,
+        "7": 0.7,
+        "8": 0.7,
+        "9": 0.7,
+        "10": 0.7
+      },
+      "area_under_budget_curve": 0.7,
+      "category_summary": {
+        "boundary_condition": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 6.0,
+          "success_rate_within_budget": 0.5
+        },
+        "configuration_environment": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 3.6,
+          "success_rate_within_budget": 0.7
+        },
+        "missing_null_handling": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 1.2,
+          "success_rate_within_budget": 0.9
+        },
+        "race_order_dependence": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 2.4,
+          "success_rate_within_budget": 0.8
+        },
+        "specification_mismatch": {
+          "num_runs": 10,
+          "mean_cost_to_true_cause_top1": 4.8,
+          "success_rate_within_budget": 0.6
+        }
+      },
+      "top_k_accuracy_by_step": {
+        "0": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "1": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "2": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "3": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "4": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        },
+        "5": {
+          "top_1": 0.7,
+          "top_2": 1.0,
+          "top_3": 1.0
+        }
+      },
+      "brier_score": 0.392458,
+      "expected_calibration_error": 0.097274,
+      "explanation_omission_test": {
+        "tested_cases": 50.0,
+        "top1_change_rate_when_most_influential_observation_omitted": 0.74
+      },
+      "explanation_trace_completeness": 1.0,
+      "wrong_stop_rate": 0.0,
+      "initially_wrong_cases": {
+        "num_runs": 15,
+        "mean_cost_to_true_cause_top1": 12.0,
+        "median_cost_to_true_cause_top1": 12.0,
+        "success_rate_within_budget": 0.0,
+        "success_rate_by_budget": {
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0,
+          "8": 0.0,
+          "9": 0.0,
+          "10": 0.0
+        },
+        "area_under_budget_curve": 0.0,
+        "category_summary": {
+          "boundary_condition": {
+            "num_runs": 5,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "configuration_environment": {
+            "num_runs": 3,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "missing_null_handling": {
+            "num_runs": 1,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "race_order_dependence": {
+            "num_runs": 2,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          },
+          "specification_mismatch": {
+            "num_runs": 4,
+            "mean_cost_to_true_cause_top1": 12.0,
+            "success_rate_within_budget": 0.0
+          }
+        }
+      }
+    }
+  },
+  "success_checks": {
+    "primary_policy": "information_gain_per_cost",
+    "fixed_checklist_cost_reduction": 0.282051,
+    "meets_15_percent_fixed_checklist_reduction": true,
+    "posterior_greedy_mean_cost_delta": -0.96,
+    "primary_success_rate_at_least_80_percent": true,
+    "primary_wrong_stop_rate": 0.130435,
+    "primary_wrong_stop_rate_under_10_percent_diagnostic": false
+  }
+}

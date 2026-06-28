@@ -1,0 +1,4702 @@
+[
+  {
+    "case_id": "BUG-0001",
+    "true_cause": "boundary_condition",
+    "difficulty": "easy",
+    "template_id": "boundary_condition_A_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0001 initial observation 1."
+      },
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0001 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0001 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0001 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0001 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0001 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0001 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0001 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0001 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0001 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0002",
+    "true_cause": "boundary_condition",
+    "difficulty": "easy",
+    "template_id": "boundary_condition_B_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0002 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0002 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0002 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0002 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0002 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0002 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0002 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0002 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0002 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0002 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0003",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_A_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0003 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0003 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0003 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0003 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0003 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0003 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0003 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0003 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0003 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0003 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0004",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_B_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0004 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0004 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0004 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0004 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0004 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0004 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0004 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0004 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0004 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0004 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0005",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_A_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0005 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0005 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0005 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0005 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0005 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0005 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0005 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0005 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0005 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0005 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0006",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_B_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0006 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0006 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0006 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0006 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0006 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0006 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0006 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0006 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0006 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0006 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0007",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_A_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0007 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0007 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0007 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0007 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0007 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0007 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0007 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0007 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0007 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0007 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0008",
+    "true_cause": "boundary_condition",
+    "difficulty": "medium",
+    "template_id": "boundary_condition_B_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0008 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0008 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0008 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0008 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0008 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0008 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0008 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0008 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0008 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0008 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0009",
+    "true_cause": "boundary_condition",
+    "difficulty": "hard",
+    "template_id": "boundary_condition_A_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0009 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0009 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0009 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0009 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0009 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0009 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0009 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0009 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0009 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0009 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0010",
+    "true_cause": "boundary_condition",
+    "difficulty": "hard",
+    "template_id": "boundary_condition_B_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0010 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0010 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0010 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "boundary_result",
+          "evidence_id": "boundary_probe_fails",
+          "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0010 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0010 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0010 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0010 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0010 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0010 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0010 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0011",
+    "true_cause": "missing_null_handling",
+    "difficulty": "easy",
+    "template_id": "missing_null_handling_A_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0011 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0011 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0011 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0011 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0011 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0011 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0011 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0011 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0011 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0011 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0012",
+    "true_cause": "missing_null_handling",
+    "difficulty": "easy",
+    "template_id": "missing_null_handling_B_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0012 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0012 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0012 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0012 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0012 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0012 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0012 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0012 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0012 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0012 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0013",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_A_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0013 initial observation 1."
+      },
+      {
+        "type": "stack_trace",
+        "evidence_id": "trace_points_to_config_loader",
+        "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0013 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0013 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0013 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0013 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0013 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0013 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0013 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0013 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0013 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0014",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_B_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0014 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0014 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0014 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0014 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0014 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0014 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0014 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0014 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0014 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0014 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0015",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_A_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0015 initial observation 1."
+      },
+      {
+        "type": "stack_trace",
+        "evidence_id": "trace_points_to_config_loader",
+        "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0015 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0015 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0015 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0015 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0015 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0015 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0015 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0015 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0015 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0016",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_B_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0016 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0016 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0016 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0016 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0016 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0016 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0016 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0016 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0016 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0016 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0017",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_A_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0017 initial observation 1."
+      },
+      {
+        "type": "stack_trace",
+        "evidence_id": "trace_points_to_config_loader",
+        "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0017 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0017 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0017 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0017 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0017 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0017 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0017 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0017 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0017 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0018",
+    "true_cause": "missing_null_handling",
+    "difficulty": "medium",
+    "template_id": "missing_null_handling_B_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0018 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0018 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0018 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0018 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0018 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0018 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0018 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0018 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0018 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0018 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0019",
+    "true_cause": "missing_null_handling",
+    "difficulty": "hard",
+    "template_id": "missing_null_handling_A_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0019 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0019 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0019 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0019 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0019 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0019 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0019 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0019 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0019 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0019 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0020",
+    "true_cause": "missing_null_handling",
+    "difficulty": "hard",
+    "template_id": "missing_null_handling_B_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "error_log",
+        "evidence_id": "missing_key_or_uninitialized",
+        "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0020 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0020 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "null_reference_error",
+          "value": "The error log contains a null reference or None-like access failure. Context: BUG-0020 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0020 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0020 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0020 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0020 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0020 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0020 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0020 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0021",
+    "true_cause": "configuration_environment",
+    "difficulty": "easy",
+    "template_id": "configuration_environment_A_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0021 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0021 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0021 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0021 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0021 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0021 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0021 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0021 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0021 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0021 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0022",
+    "true_cause": "configuration_environment",
+    "difficulty": "easy",
+    "template_id": "configuration_environment_B_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0022 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0022 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0022 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0022 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0022 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0022 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0022 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0022 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0022 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0022 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0023",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_A_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0023 initial observation 1."
+      },
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0023 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0023 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0023 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0023 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0023 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0023 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0023 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0023 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0023 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0024",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_B_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0024 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0024 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0024 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0024 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0024 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0024 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0024 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0024 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0024 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0024 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0025",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_A_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0025 initial observation 1."
+      },
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0025 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0025 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0025 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0025 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0025 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0025 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0025 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0025 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0025 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0026",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_B_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0026 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0026 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0026 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0026 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0026 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0026 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0026 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0026 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0026 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0026 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0027",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_A_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0027 initial observation 1."
+      },
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0027 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0027 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0027 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0027 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0027 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0027 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0027 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0027 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0027 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0028",
+    "true_cause": "configuration_environment",
+    "difficulty": "medium",
+    "template_id": "configuration_environment_B_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0028 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0028 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0028 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0028 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0028 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0028 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0028 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0028 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0028 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0028 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0029",
+    "true_cause": "configuration_environment",
+    "difficulty": "hard",
+    "template_id": "configuration_environment_A_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0029 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0029 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0029 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0029 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0029 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0029 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0029 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0029 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0029 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0029 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0030",
+    "true_cause": "configuration_environment",
+    "difficulty": "hard",
+    "template_id": "configuration_environment_B_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "environment_diff",
+        "evidence_id": "config_or_dependency_mismatch",
+        "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0030 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0030 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0030 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0030 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "config_or_dependency_mismatch",
+          "value": "A configuration flag, dependency version, or path differs between passing and failing runs. Context: BUG-0030 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0030 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0030 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0030 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0030 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0030 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0031",
+    "true_cause": "race_order_dependence",
+    "difficulty": "easy",
+    "template_id": "race_order_dependence_A_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0031 initial observation 1."
+      },
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0031 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0031 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0031 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0031 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0031 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0031 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0031 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0031 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0031 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0032",
+    "true_cause": "race_order_dependence",
+    "difficulty": "easy",
+    "template_id": "race_order_dependence_B_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0032 initial observation 1."
+      },
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0032 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0032 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0032 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0032 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0032 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0032 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0032 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0032 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0032 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0033",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_A_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0033 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0033 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0033 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0033 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0033 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0033 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0033 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0033 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0033 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0033 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0034",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_B_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0034 initial observation 1."
+      },
+      {
+        "type": "internal_state",
+        "evidence_id": "instrumentation_shows_stale_state",
+        "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0034 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0034 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0034 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0034 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0034 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0034 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0034 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0034 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0034 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0035",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_A_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0035 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0035 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0035 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0035 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0035 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0035 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0035 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0035 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0035 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0035 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0036",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_B_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0036 initial observation 1."
+      },
+      {
+        "type": "internal_state",
+        "evidence_id": "instrumentation_shows_stale_state",
+        "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0036 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0036 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0036 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0036 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0036 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0036 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0036 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0036 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0036 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0037",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_A_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0037 initial observation 1."
+      },
+      {
+        "type": "environment_diff",
+        "evidence_id": "single_environment_failure",
+        "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0037 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0037 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0037 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0037 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0037 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0037 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0037 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0037 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0037 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0038",
+    "true_cause": "race_order_dependence",
+    "difficulty": "medium",
+    "template_id": "race_order_dependence_B_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0038 initial observation 1."
+      },
+      {
+        "type": "internal_state",
+        "evidence_id": "instrumentation_shows_stale_state",
+        "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0038 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0038 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0038 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0038 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0038 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0038 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0038 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0038 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0038 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0039",
+    "true_cause": "race_order_dependence",
+    "difficulty": "hard",
+    "template_id": "race_order_dependence_A_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "reproduction_condition",
+        "evidence_id": "intermittent_failure",
+        "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0039 initial observation 1."
+      },
+      {
+        "type": "error_log",
+        "evidence_id": "null_reference_error",
+        "value": "The error log contains a null reference or None-like access failure. Context: BUG-0039 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0039 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0039 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0039 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0039 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0039 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0039 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0039 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0039 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0040",
+    "true_cause": "race_order_dependence",
+    "difficulty": "hard",
+    "template_id": "race_order_dependence_B_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "timing_result",
+        "evidence_id": "order_or_cache_sensitive",
+        "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0040 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0040 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0040 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0040 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0040 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "stack_trace",
+          "evidence_id": "trace_points_to_config_loader",
+          "value": "The stack trace or log points toward configuration loading or environment setup. Context: BUG-0040 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0040 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "internal_state",
+          "evidence_id": "instrumentation_shows_stale_state",
+          "value": "Instrumentation shows stale shared state or a value from a prior operation. Context: BUG-0040 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0040 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "timing_result",
+          "evidence_id": "order_or_cache_sensitive",
+          "value": "The failure depends on cache state, call order, or prior initialization. Context: BUG-0040 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0041",
+    "true_cause": "specification_mismatch",
+    "difficulty": "easy",
+    "template_id": "specification_mismatch_A_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0041 initial observation 1."
+      },
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0041 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0041 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0041 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0041 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0041 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0041 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0041 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0041 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0041 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0042",
+    "true_cause": "specification_mismatch",
+    "difficulty": "easy",
+    "template_id": "specification_mismatch_B_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0042 initial observation 1."
+      },
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0042 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0042 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0042 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0042 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0042 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0042 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0042 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0042 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0042 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0043",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_A_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0043 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0043 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0043 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0043 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0043 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0043 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0043 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0043 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0043 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0043 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0044",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_B_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0044 initial observation 1."
+      },
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0044 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0044 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0044 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0044 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0044 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0044 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0044 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0044 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0044 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0045",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_A_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0045 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0045 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0045 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0045 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0045 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0045 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0045 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0045 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0045 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0045 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0046",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_B_0",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0046 initial observation 1."
+      },
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0046 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0046 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0046 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0046 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0046 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0046 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0046 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0046 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0046 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0047",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_A_1",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0047 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0047 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0047 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0047 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0047 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0047 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0047 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0047 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0047 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0047 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0048",
+    "true_cause": "specification_mismatch",
+    "difficulty": "medium",
+    "template_id": "specification_mismatch_B_2",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0048 initial observation 1."
+      },
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0048 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0048 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0048 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0048 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0048 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0048 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0048 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0048 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0048 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0049",
+    "true_cause": "specification_mismatch",
+    "difficulty": "hard",
+    "template_id": "specification_mismatch_A_3",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "spec_clue",
+        "evidence_id": "acceptance_criteria_conflict",
+        "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0049 initial observation 1."
+      },
+      {
+        "type": "failing_test",
+        "evidence_id": "empty_or_edge_input_failure",
+        "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0049 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0049 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0049 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0049 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0049 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0049 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0049 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0049 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0049 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  },
+  {
+    "case_id": "BUG-0050",
+    "true_cause": "specification_mismatch",
+    "difficulty": "hard",
+    "template_id": "specification_mismatch_B_4",
+    "seed": 20260627,
+    "initial_observations": [
+      {
+        "type": "recent_diff",
+        "evidence_id": "recent_contract_or_validation_diff",
+        "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0050 initial observation 1."
+      },
+      {
+        "type": "boundary_result",
+        "evidence_id": "boundary_probe_fails",
+        "value": "Targeted zero, one, max, or off-by-one probes reproduce the failure. Context: BUG-0050 initial observation 2."
+      }
+    ],
+    "available_investigations": [
+      {
+        "action": "inspect_error_log",
+        "cost": 1,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0050 after inspect_error_log."
+        }
+      },
+      {
+        "action": "run_boundary_tests",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0050 after run_boundary_tests."
+        }
+      },
+      {
+        "action": "compare_environment",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "environment_diff",
+          "evidence_id": "single_environment_failure",
+          "value": "The issue reproduces in one environment but not in a comparable baseline. Context: BUG-0050 after compare_environment."
+        }
+      },
+      {
+        "action": "inspect_recent_diff",
+        "cost": 2,
+        "observation_if_run": {
+          "type": "recent_diff",
+          "evidence_id": "recent_contract_or_validation_diff",
+          "value": "A recent change touched validation, contracts, or input interpretation. Context: BUG-0050 after inspect_recent_diff."
+        }
+      },
+      {
+        "action": "run_reproduction_matrix",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "failing_test",
+          "evidence_id": "empty_or_edge_input_failure",
+          "value": "An edge input or empty input scenario fails while common inputs pass. Context: BUG-0050 after run_reproduction_matrix."
+        }
+      },
+      {
+        "action": "add_instrumentation",
+        "cost": 4,
+        "observation_if_run": {
+          "type": "error_log",
+          "evidence_id": "missing_key_or_uninitialized",
+          "value": "The failing path reads a missing key, unset field, or default that was never initialized. Context: BUG-0050 after add_instrumentation."
+        }
+      },
+      {
+        "action": "check_spec_acceptance",
+        "cost": 3,
+        "observation_if_run": {
+          "type": "spec_clue",
+          "evidence_id": "acceptance_criteria_conflict",
+          "value": "The observed behavior conflicts with an acceptance criterion or product rule. Context: BUG-0050 after check_spec_acceptance."
+        }
+      },
+      {
+        "action": "run_concurrency_stress",
+        "cost": 5,
+        "observation_if_run": {
+          "type": "reproduction_condition",
+          "evidence_id": "intermittent_failure",
+          "value": "The failure is intermittent and changes with repeated runs. Context: BUG-0050 after run_concurrency_stress."
+        }
+      }
+    ],
+    "notes": "Synthetic case. No private project data."
+  }
+]
