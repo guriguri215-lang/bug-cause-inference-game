@@ -9,6 +9,7 @@
 - Policies: `random`, `fixed_checklist`, `posterior_greedy`, `cheapest_first`, `information_gain`, `information_gain_per_cost`, and `static_posterior`.
 - JSON and Markdown `DecisionReport` generation.
 - Policy comparison and evaluation metrics.
+- Analysis-only diagnostics for wrong stops, initially-wrong cases, stop reasons, category failures, and threshold sweeps.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
 - Wrong-stop diagnostic for the primary policy.
@@ -28,6 +29,7 @@
 - Regret-based or bandit policy learning.
 - Web UI.
 - Real project bug history ingestion.
+- Model or dataset changes in the analysis-only patch.
 
 ## Deferred To Future Work
 
@@ -46,6 +48,7 @@
 - Expected information gain is a P1a heuristic score, not a fully coherent action-conditioned generative observation model.
 - The current generated dataset is relatively informative before investigation: initial top-1 accuracy is 70%, and initial top-2 accuracy is 100%.
 - The current primary policy has a non-trivial wrong-stop rate, so the evaluation surfaces it as a diagnostic.
+- The analysis report visualizes failure modes but does not improve model behavior.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -60,6 +63,7 @@ python -B -m pytest -q -p no:cacheprovider
 python -m bug_cause_inference.cli generate-cases --output examples/cases/synthetic_cases.json
 python -m bug_cause_inference.cli report --cases examples/cases/synthetic_cases.json --case-id BUG-0001 --json-output examples/reports/decision_report_BUG-0001.json --markdown-output examples/reports/decision_report_BUG-0001.md
 python -m bug_cause_inference.cli evaluate --cases examples/cases/synthetic_cases.json --json-output examples/reports/evaluation_summary.json --markdown-output examples/reports/evaluation_summary.md
+python -m bug_cause_inference.cli analyze --cases examples/cases/synthetic_cases.json --json-output examples/reports/analysis_summary.json --markdown-output examples/reports/analysis_summary.md
 ```
 
 ## Latest Test Result
@@ -84,3 +88,11 @@ Latest generated evaluation summary:
 - The first-MVP success check against `fixed_checklist` is currently met on the synthetic dataset.
 
 See [`p1a_evaluation_notes.md`](p1a_evaluation_notes.md) for the current interpretation and limitations of these results.
+
+Latest analysis-only patch verification:
+
+- Added `analyze` CLI diagnostics.
+- Model, dataset, default thresholds, and main policy remain unchanged.
+- P1b/P1c features remain out of scope.
+- `.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider`: 15 passed.
+- `analyze` CLI smoke check generated `examples/reports/analysis_summary.json` and `examples/reports/analysis_summary.md`.

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from bug_cause_inference.analysis import analysis_to_json, analysis_to_markdown, build_analysis_summary
 from bug_cause_inference.evaluation import evaluate_policies, evaluation_to_json, evaluation_to_markdown
 from bug_cause_inference.likelihoods import validate_likelihood_table
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
@@ -62,6 +63,23 @@ def command_evaluate(args: argparse.Namespace) -> None:
         print(evaluation_to_markdown(summary), end="")
 
 
+def command_analyze(args: argparse.Namespace) -> None:
+    validate_likelihood_table()
+    cases = _load_or_generate(args.cases, args.seed)
+    policies = tuple(args.policies) if args.policies else None
+    summary = build_analysis_summary(cases, policies=policies) if policies else build_analysis_summary(cases)
+    if args.json_output:
+        args.json_output.write_text(analysis_to_json(summary), encoding="utf-8")
+    if args.markdown_output:
+        args.markdown_output.write_text(analysis_to_markdown(summary), encoding="utf-8")
+    if args.json_output or args.markdown_output:
+        return
+    if args.format == "json":
+        print(analysis_to_json(summary), end="")
+    else:
+        print(analysis_to_markdown(summary), end="")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bug-cause-inference",
@@ -99,6 +117,15 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--json-output", type=Path, default=None)
     evaluate.add_argument("--markdown-output", type=Path, default=None)
     evaluate.set_defaults(func=command_evaluate)
+
+    analyze = subparsers.add_parser("analyze", help="Generate analysis-only diagnostics for P1a.")
+    analyze.add_argument("--cases", default=None, help="Path to synthetic_cases.json. If omitted, cases are generated.")
+    analyze.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    analyze.add_argument("--policies", nargs="*", choices=POLICIES)
+    analyze.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    analyze.add_argument("--json-output", type=Path, default=None)
+    analyze.add_argument("--markdown-output", type=Path, default=None)
+    analyze.set_defaults(func=command_analyze)
 
     return parser
 

@@ -61,3 +61,9 @@ The result should be read with caution:
 - Consider threshold and calibration analysis later.
 - Defer real-code injected bug discovery and localization to P1b.
 - Defer adversarial or worst-case bug modeling to P1c.
+
+## Analysis-Only Patch
+
+The analysis-only patch adds reports for wrong-stop cases, initially-wrong cases, stop reasons, category-level failures, and a small threshold sweep. It does not change the model, dataset, default stop thresholds, likelihood table, or main policy.
+
+The purpose is to make current failure modes easier to inspect before deciding whether to design harder synthetic cases, run calibration analysis, or move toward P1b.

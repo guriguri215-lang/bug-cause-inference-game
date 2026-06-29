@@ -65,6 +65,12 @@ Compare policies:
 python -m bug_cause_inference.cli evaluate --cases examples/cases/synthetic_cases.json --format markdown
 ```
 
+Generate analysis-only diagnostics:
+
+```bash
+python -m bug_cause_inference.cli analyze --cases examples/cases/synthetic_cases.json --format markdown
+```
+
 ## Example Command
 
 ```bash
@@ -129,6 +135,27 @@ The evaluator reports:
 
 The evaluation also reports a wrong-stop diagnostic threshold for the primary policy. This is a caution signal, not a claim that the synthetic model is safe for real-world root-cause decisions.
 
+## Analysis Reports
+
+The `analyze` command adds diagnostic reports without changing the model, dataset, default thresholds, or policies. It is an analysis-only companion to the existing evaluation command.
+
+It reports:
+
+- wrong-stop cases and their final posterior state
+- initially-wrong cases by policy
+- stop-reason distributions
+- category-level failure summaries
+- a minimal threshold sweep for `information_gain_per_cost` and `fixed_checklist`
+
+Example:
+
+```bash
+python -m bug_cause_inference.cli analyze ^
+  --cases examples/cases/synthetic_cases.json ^
+  --json-output examples/reports/analysis_summary.json ^
+  --markdown-output examples/reports/analysis_summary.md
+```
+
 ## Baselines
 
 Implemented policies:
@@ -152,6 +179,7 @@ The main policy is `information_gain_per_cost`.
 - Investigation action outcomes are deterministic within each synthetic case.
 - The prototype recommends the next investigation action; it does not prove a root cause in a real system.
 - There is no web UI, LLM free-form debugging, adversarial bug generation, or regret-based policy learning in this MVP.
+- Analysis reports expose current failure modes; they do not improve the model or make real-world accuracy claims.
 
 ## Reproducibility Notes
 
