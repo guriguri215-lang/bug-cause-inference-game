@@ -61,3 +61,20 @@ The result should be read with caution:
 - Consider threshold and calibration analysis later.
 - Defer real-code injected bug discovery and localization to P1b.
 - Defer adversarial or worst-case bug modeling to P1c.
+
+## Analysis-Only Patch
+
+The analysis-only patch adds reports for wrong-stop cases, initially-wrong cases, stop reasons, category-level failures, and a small threshold sweep. It does not change the model, dataset, default stop thresholds, likelihood table, or main policy.
+
+The purpose is to make current failure modes easier to inspect before deciding whether to design harder synthetic cases, run calibration analysis, or move toward P1b.
+
+Analysis report policy runs use one diagnostic run per policy and case. The `random` policy uses `rng_seed=0`, so its analysis rows should be read as fixed-seed diagnostic traces rather than repeated-random averages.
+
+The analysis report separates related but different quantities:
+
+- `wrong_stop_rate_within_confidence_stops` is `wrong_stop_count / confidence_stop_count`.
+- `wrong_stop_rate_per_case` is `wrong_stop_count / num_cases`.
+- Threshold-sweep `wrong_stop_rate` uses the existing evaluation definition: wrong stops divided by confidence stops.
+- `ever_true_cause_top1_within_budget` means the true cause became the top-1 hypothesis within budget at least once.
+- `final_top_is_true` records whether the final top hypothesis is the true cause.
+- `is_wrong_stop` records a high-confidence stop on an incorrect final top hypothesis.

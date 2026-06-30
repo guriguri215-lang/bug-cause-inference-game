@@ -1,0 +1,3584 @@
+{
+  "analysis_scope": {
+    "kind": "analysis_only_patch",
+    "model_or_dataset_changed": false,
+    "default_stop_thresholds_changed": false,
+    "notes": [
+      "This report analyzes existing P1a behavior without tuning the dataset or policies.",
+      "Policy runs in this analysis report use one diagnostic run per policy per case.",
+      "The random policy uses rng_seed=0 for a single fixed-seed diagnostic run; it is not the same as the repeated-random average in evaluate.",
+      "It does not add real-code bug discovery, code localization, patch generation, adversarial modeling, or regret/bandit learning."
+    ]
+  },
+  "settings": {
+    "budget_limit": 10,
+    "max_steps": 5,
+    "failure_cost": 12,
+    "top_probability_threshold": 0.75,
+    "top_margin_threshold": 0.15,
+    "min_expected_ig_per_cost": 0.03
+  },
+  "policies": [
+    "random",
+    "fixed_checklist",
+    "posterior_greedy",
+    "cheapest_first",
+    "information_gain",
+    "information_gain_per_cost",
+    "static_posterior"
+  ],
+  "wrong_stop_cases": [
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.819395,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.664717,
+      "cumulative_cost": 10,
+      "current_step": 5,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "empty_or_edge_input_failure",
+        "acceptance_criteria_conflict",
+        "missing_key_or_uninitialized",
+        "single_environment_failure",
+        "recent_contract_or_validation_diff",
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0033",
+      "true_cause": "race_order_dependence",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0035",
+      "true_cause": "race_order_dependence",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0037",
+      "true_cause": "race_order_dependence",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.785421,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.663244,
+      "cumulative_cost": 3,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "null_reference_error",
+        "trace_points_to_config_loader",
+        "single_environment_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.894423,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.852683,
+      "cumulative_cost": 5,
+      "current_step": 3,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff"
+      ],
+      "observed_evidence_ids": [
+        "order_or_cache_sensitive",
+        "recent_contract_or_validation_diff",
+        "trace_points_to_config_loader",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0033",
+      "true_cause": "race_order_dependence",
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0035",
+      "true_cause": "race_order_dependence",
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0037",
+      "true_cause": "race_order_dependence",
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.821854,
+      "top2_hypothesis": "missing_null_handling",
+      "top1_top2_margin": 0.682646,
+      "cumulative_cost": 7,
+      "current_step": 4,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "null_reference_error",
+        "trace_points_to_config_loader",
+        "trace_points_to_config_loader",
+        "empty_or_edge_input_failure",
+        "single_environment_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.810911,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.703691,
+      "cumulative_cost": 10,
+      "current_step": 5,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ],
+      "observed_evidence_ids": [
+        "order_or_cache_sensitive",
+        "recent_contract_or_validation_diff",
+        "trace_points_to_config_loader",
+        "trace_points_to_config_loader",
+        "empty_or_edge_input_failure",
+        "single_environment_failure",
+        "intermittent_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.885899,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.798706,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "empty_or_edge_input_failure",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "policy": "information_gain",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_posterior_probability": 0.911762,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.863325,
+      "cumulative_cost": 5,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "add_instrumentation"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "missing_key_or_uninitialized",
+        "missing_key_or_uninitialized",
+        "missing_key_or_uninitialized"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_posterior_probability": 0.760812,
+      "top2_hypothesis": "configuration_environment",
+      "top1_top2_margin": 0.530651,
+      "cumulative_cost": 5,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ],
+      "observed_evidence_ids": [
+        "single_environment_failure",
+        "intermittent_failure",
+        "intermittent_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_posterior_probability": 0.760812,
+      "top2_hypothesis": "configuration_environment",
+      "top1_top2_margin": 0.530651,
+      "cumulative_cost": 5,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ],
+      "observed_evidence_ids": [
+        "single_environment_failure",
+        "intermittent_failure",
+        "intermittent_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_posterior_probability": 0.760812,
+      "top2_hypothesis": "configuration_environment",
+      "top1_top2_margin": 0.530651,
+      "cumulative_cost": 5,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ],
+      "observed_evidence_ids": [
+        "single_environment_failure",
+        "intermittent_failure",
+        "intermittent_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.768579,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.554248,
+      "cumulative_cost": 5,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "empty_or_edge_input_failure",
+        "acceptance_criteria_conflict",
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_posterior_probability": 0.847366,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.764836,
+      "cumulative_cost": 7,
+      "current_step": 3,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "add_instrumentation"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "missing_key_or_uninitialized",
+        "missing_key_or_uninitialized",
+        "recent_contract_or_validation_diff",
+        "missing_key_or_uninitialized"
+      ]
+    },
+    {
+      "case_id": "BUG-0033",
+      "true_cause": "race_order_dependence",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0035",
+      "true_cause": "race_order_dependence",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0037",
+      "true_cause": "race_order_dependence",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.789067,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.604951,
+      "cumulative_cost": 1,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "single_environment_failure",
+        "trace_points_to_config_loader"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.785421,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.663244,
+      "cumulative_cost": 3,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "null_reference_error",
+        "trace_points_to_config_loader",
+        "single_environment_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.885899,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.798706,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "empty_or_edge_input_failure",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_posterior_probability": 0.911762,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.863325,
+      "cumulative_cost": 5,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "add_instrumentation"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "missing_key_or_uninitialized",
+        "missing_key_or_uninitialized",
+        "missing_key_or_uninitialized"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.785421,
+      "top2_hypothesis": "race_order_dependence",
+      "top1_top2_margin": 0.663244,
+      "cumulative_cost": 3,
+      "current_step": 2,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ],
+      "observed_evidence_ids": [
+        "intermittent_failure",
+        "null_reference_error",
+        "trace_points_to_config_loader",
+        "single_environment_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_posterior_probability": 0.801999,
+      "top2_hypothesis": "specification_mismatch",
+      "top1_top2_margin": 0.707506,
+      "cumulative_cost": 8,
+      "current_step": 4,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "inspect_recent_diff",
+        "inspect_error_log",
+        "compare_environment"
+      ],
+      "observed_evidence_ids": [
+        "order_or_cache_sensitive",
+        "recent_contract_or_validation_diff",
+        "recent_contract_or_validation_diff",
+        "trace_points_to_config_loader",
+        "trace_points_to_config_loader",
+        "single_environment_failure"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.838897,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.707305,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "boundary_probe_fails",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_posterior_probability": 0.885899,
+      "top2_hypothesis": "boundary_condition",
+      "top1_top2_margin": 0.798706,
+      "cumulative_cost": 3,
+      "current_step": 1,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ],
+      "observed_evidence_ids": [
+        "empty_or_edge_input_failure",
+        "acceptance_criteria_conflict",
+        "acceptance_criteria_conflict"
+      ]
+    }
+  ],
+  "initially_wrong_cases": [
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.748761,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.664835,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0004",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.528497,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.748761,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.664835,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0006",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.528497,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.748761,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.664835,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.721167,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.838897,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0008",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.528497,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.528497,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.819395,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.556895,
+      "cost_to_true_cause_top1": 10,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.885899,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.768579,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.885899,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.885899,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0009",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.621951,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.621951,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.390478,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.683075,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "information_gain",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.911762,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "add_instrumentation"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.847366,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "add_instrumentation"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.911762,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "add_instrumentation"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.591085,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0010",
+      "true_cause": "boundary_condition",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.421053,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.421053,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.868943,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.921643,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "information_gain",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.868943,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "compare_environment",
+        "inspect_error_log",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.921643,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.868943,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "compare_environment",
+        "inspect_error_log",
+        "add_instrumentation"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "random",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.663658,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0020",
+      "true_cause": "missing_null_handling",
+      "initial_top_hypothesis": "configuration_environment",
+      "initial_top_probability": 0.493151,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.493151,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.760812,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.902081,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_reproduction_matrix",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "random",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.678225,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0023",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.51073,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.760812,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.902081,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_reproduction_matrix",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "random",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.678225,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0025",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.51073,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.760812,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.789067,
+      "cost_to_true_cause_top1": 1,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.902081,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_reproduction_matrix",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "random",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.678225,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0027",
+      "true_cause": "configuration_environment",
+      "initial_top_hypothesis": "race_order_dependence",
+      "initial_top_probability": 0.51073,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.51073,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.785421,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.821854,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.933853,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.785421,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.785421,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "random",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.351378,
+      "cost_to_true_cause_top1": 8,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0039",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "missing_null_handling",
+      "initial_top_probability": 0.354167,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "missing_null_handling",
+      "final_top_probability": 0.354167,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.894423,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.810911,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "information_gain",
+      "final_top_hypothesis": "race_order_dependence",
+      "final_top_probability": 0.922283,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_concurrency_stress",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.498035,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "low_expected_information_gain",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "configuration_environment",
+      "final_top_probability": 0.801999,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "inspect_recent_diff",
+        "inspect_error_log",
+        "compare_environment"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.376532,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0040",
+      "true_cause": "race_order_dependence",
+      "initial_top_hypothesis": "specification_mismatch",
+      "initial_top_probability": 0.286765,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.286765,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.901419,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.568097,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.8943,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "inspect_recent_diff",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.656686,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0044",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.613115,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.901419,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.568097,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.8943,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "inspect_recent_diff",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.656686,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0046",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.613115,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.901419,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.568097,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.8943,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "inspect_recent_diff",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.656686,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0048",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.613115,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "cheapest_first",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.901419,
+      "cost_to_true_cause_top1": 7,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "inspect_error_log",
+        "compare_environment",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "fixed_checklist",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.568097,
+      "cost_to_true_cause_top1": 5,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "inspect_error_log",
+        "inspect_recent_diff",
+        "run_boundary_tests",
+        "compare_environment",
+        "run_reproduction_matrix"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "information_gain_per_cost",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.8943,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "inspect_recent_diff",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "posterior_greedy",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.872233,
+      "cost_to_true_cause_top1": 2,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "top_probability_threshold",
+      "executed_actions": [
+        "run_boundary_tests",
+        "check_spec_acceptance"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "random",
+      "final_top_hypothesis": "specification_mismatch",
+      "final_top_probability": 0.656686,
+      "cost_to_true_cause_top1": 3,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
+      "stop_reason": "budget_limit",
+      "executed_actions": [
+        "check_spec_acceptance",
+        "run_concurrency_stress",
+        "inspect_recent_diff"
+      ]
+    },
+    {
+      "case_id": "BUG-0050",
+      "true_cause": "specification_mismatch",
+      "initial_top_hypothesis": "boundary_condition",
+      "initial_top_probability": 0.613115,
+      "policy": "static_posterior",
+      "final_top_hypothesis": "boundary_condition",
+      "final_top_probability": 0.613115,
+      "cost_to_true_cause_top1": 12,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
+      "stop_reason": "static_posterior_no_investigation",
+      "executed_actions": []
+    }
+  ],
+  "stop_reason_summary": [
+    {
+      "policy": "cheapest_first",
+      "stop_reason": "budget_limit",
+      "count": 7,
+      "rate": 0.14,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "cheapest_first",
+      "stop_reason": "top_probability_threshold",
+      "count": 43,
+      "rate": 0.86,
+      "wrong_stop_count": 6,
+      "wrong_stop_rate_within_reason": 0.139535
+    },
+    {
+      "policy": "fixed_checklist",
+      "stop_reason": "budget_limit",
+      "count": 9,
+      "rate": 0.18,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "stop_reason": "top_probability_threshold",
+      "count": 41,
+      "rate": 0.82,
+      "wrong_stop_count": 5,
+      "wrong_stop_rate_within_reason": 0.121951
+    },
+    {
+      "policy": "information_gain",
+      "stop_reason": "low_expected_information_gain",
+      "count": 3,
+      "rate": 0.06,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "information_gain",
+      "stop_reason": "top_probability_threshold",
+      "count": 47,
+      "rate": 0.94,
+      "wrong_stop_count": 5,
+      "wrong_stop_rate_within_reason": 0.106383
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "stop_reason": "low_expected_information_gain",
+      "count": 4,
+      "rate": 0.08,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "stop_reason": "top_probability_threshold",
+      "count": 46,
+      "rate": 0.92,
+      "wrong_stop_count": 6,
+      "wrong_stop_rate_within_reason": 0.130435
+    },
+    {
+      "policy": "posterior_greedy",
+      "stop_reason": "top_probability_threshold",
+      "count": 50,
+      "rate": 1.0,
+      "wrong_stop_count": 7,
+      "wrong_stop_rate_within_reason": 0.14
+    },
+    {
+      "policy": "random",
+      "stop_reason": "budget_limit",
+      "count": 24,
+      "rate": 0.48,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "random",
+      "stop_reason": "low_expected_information_gain",
+      "count": 3,
+      "rate": 0.06,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    },
+    {
+      "policy": "random",
+      "stop_reason": "top_probability_threshold",
+      "count": 23,
+      "rate": 0.46,
+      "wrong_stop_count": 4,
+      "wrong_stop_rate_within_reason": 0.173913
+    },
+    {
+      "policy": "static_posterior",
+      "stop_reason": "static_posterior_no_investigation",
+      "count": 50,
+      "rate": 1.0,
+      "wrong_stop_count": 0,
+      "wrong_stop_rate_within_reason": 0.0
+    }
+  ],
+  "category_failure_summary": [
+    {
+      "policy": "cheapest_first",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 4,
+      "success_rate_within_budget": 0.9,
+      "wrong_stop_count": 1,
+      "confidence_stop_count": 3,
+      "wrong_stop_rate_within_confidence_stops": 0.333333,
+      "wrong_stop_rate_per_case": 0.1,
+      "initially_wrong_success_rate": 0.8
+    },
+    {
+      "policy": "cheapest_first",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "cheapest_first",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.1,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "cheapest_first",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.4,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "cheapest_first",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.8,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 5,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.1,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.4,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "fixed_checklist",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 3,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 7,
+      "wrong_stop_rate_within_confidence_stops": 0.285714,
+      "wrong_stop_rate_per_case": 0.2,
+      "initially_wrong_success_rate": 0.6
+    },
+    {
+      "policy": "information_gain",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 3.6,
+      "success_rate_within_budget": 0.7,
+      "wrong_stop_count": 3,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.3,
+      "wrong_stop_rate_per_case": 0.3,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "information_gain",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 1,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.8,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2,
+      "success_rate_within_budget": 0.9,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 7,
+      "wrong_stop_rate_within_confidence_stops": 0.285714,
+      "wrong_stop_rate_per_case": 0.2,
+      "initially_wrong_success_rate": 0.8
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.1,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.4,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 4,
+      "confidence_stop_count": 9,
+      "wrong_stop_rate_within_confidence_stops": 0.444444,
+      "wrong_stop_rate_per_case": 0.4,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.8,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "posterior_greedy",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 6,
+      "success_rate_within_budget": 0.5,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "posterior_greedy",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.9,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "posterior_greedy",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "posterior_greedy",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.4,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.2,
+      "wrong_stop_rate_per_case": 0.2,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "posterior_greedy",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.8,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "random",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 6,
+      "success_rate_within_budget": 0.5,
+      "wrong_stop_count": 4,
+      "confidence_stop_count": 4,
+      "wrong_stop_rate_within_confidence_stops": 1.0,
+      "wrong_stop_rate_per_case": 0.4,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "random",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.9,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 2,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "random",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 0.3,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "random",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2,
+      "success_rate_within_budget": 0.9,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 5,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.5
+    },
+    {
+      "policy": "random",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 1.2,
+      "success_rate_within_budget": 1.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 1.0
+    },
+    {
+      "policy": "static_posterior",
+      "true_cause": "boundary_condition",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 6,
+      "success_rate_within_budget": 0.5,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "static_posterior",
+      "true_cause": "configuration_environment",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 3.6,
+      "success_rate_within_budget": 0.7,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "static_posterior",
+      "true_cause": "missing_null_handling",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 1.2,
+      "success_rate_within_budget": 0.9,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "static_posterior",
+      "true_cause": "race_order_dependence",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 2.4,
+      "success_rate_within_budget": 0.8,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.0
+    },
+    {
+      "policy": "static_posterior",
+      "true_cause": "specification_mismatch",
+      "num_cases": 10,
+      "mean_cost_to_true_cause_top1": 4.8,
+      "success_rate_within_budget": 0.6,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
+      "initially_wrong_success_rate": 0.0
+    }
+  ],
+  "threshold_sweep": [
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.183673,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.183673,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.183673,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.183673,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.130435,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.090909,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.090909,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.090909,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.090909,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "information_gain_per_cost",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.12,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 3.733333
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.7,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.142857,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 5.666667
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.7,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.142857,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 5.666667
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.7,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.142857,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 5.666667
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.7,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.7,
+      "success_rate_within_budget": 0.94,
+      "wrong_stop_rate": 0.142857,
+      "initially_wrong_success_rate": 0.8,
+      "initially_wrong_mean_cost": 5.666667
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.121951,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.121951,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.121951,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.75,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.121951,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.131579,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.131579,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.131579,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.8,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.131579,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.85,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.108108,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.1,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.096774,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.15,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.096774,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.2,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.096774,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    },
+    {
+      "policy": "fixed_checklist",
+      "top_probability_threshold": 0.9,
+      "top_margin_threshold": 0.25,
+      "mean_cost_to_true_cause_top1": 1.56,
+      "success_rate_within_budget": 0.96,
+      "wrong_stop_rate": 0.096774,
+      "initially_wrong_success_rate": 0.866667,
+      "initially_wrong_mean_cost": 5.2
+    }
+  ]
+}

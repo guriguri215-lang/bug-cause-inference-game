@@ -65,6 +65,12 @@ Compare policies:
 python -m bug_cause_inference.cli evaluate --cases examples/cases/synthetic_cases.json --format markdown
 ```
 
+Generate analysis-only diagnostics:
+
+```bash
+python -m bug_cause_inference.cli analyze --cases examples/cases/synthetic_cases.json --format markdown
+```
+
 ## Example Command
 
 ```bash
@@ -129,6 +135,31 @@ The evaluator reports:
 
 The evaluation also reports a wrong-stop diagnostic threshold for the primary policy. This is a caution signal, not a claim that the synthetic model is safe for real-world root-cause decisions.
 
+## Analysis Reports
+
+The `analyze` command adds diagnostic reports without changing the model, dataset, default thresholds, or policies. It is an analysis-only companion to the existing evaluation command.
+
+It reports:
+
+- wrong-stop cases and their final posterior state
+- initially-wrong cases by policy
+- stop-reason distributions
+- category-level failure summaries
+- a minimal threshold sweep for `information_gain_per_cost` and `fixed_checklist`
+
+Analysis report policy runs use one diagnostic run per policy and case. The `random` policy uses `rng_seed=0` as a single fixed-seed diagnostic run, so its analysis rows are not the same as the repeated-random averages reported by `evaluate`.
+
+In category summaries, `wrong_stop_rate_within_confidence_stops` is `wrong_stop_count / confidence_stop_count`, while `wrong_stop_rate_per_case` is `wrong_stop_count / num_cases`. In threshold-sweep rows, `wrong_stop_rate` follows the existing evaluation definition: wrong stops divided by confidence stops. In initially-wrong rows, `ever_true_cause_top1_within_budget` means the true cause became top-1 within budget at least once; it does not guarantee that the final top hypothesis is correct.
+
+Example:
+
+```bash
+python -m bug_cause_inference.cli analyze ^
+  --cases examples/cases/synthetic_cases.json ^
+  --json-output examples/reports/analysis_summary.json ^
+  --markdown-output examples/reports/analysis_summary.md
+```
+
 ## Baselines
 
 Implemented policies:
@@ -152,6 +183,7 @@ The main policy is `information_gain_per_cost`.
 - Investigation action outcomes are deterministic within each synthetic case.
 - The prototype recommends the next investigation action; it does not prove a root cause in a real system.
 - There is no web UI, LLM free-form debugging, adversarial bug generation, or regret-based policy learning in this MVP.
+- Analysis reports expose current failure modes; they do not improve the model or make real-world accuracy claims.
 
 ## Reproducibility Notes
 
