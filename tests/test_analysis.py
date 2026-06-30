@@ -8,6 +8,10 @@ from bug_cause_inference.analysis import (
 from bug_cause_inference.synthetic_cases import generate_synthetic_cases
 
 
+def _assert_rate_close(actual, expected):
+    assert actual == round(expected, 6)
+
+
 def test_analysis_summary_contains_required_reports():
     cases = generate_synthetic_cases()
     policies = ("information_gain_per_cost", "fixed_checklist", "posterior_greedy", "information_gain")
@@ -64,3 +68,51 @@ def test_threshold_sweep_shape_and_markdown():
     assert "Wrong-Stop Cases" in markdown
     assert "Initially-Wrong Cases" in markdown
     assert "Threshold Sweep" in markdown
+    assert "wrong_stop_rate_within_confidence_stops" in markdown
+    assert "wrong_stop_rate_per_case" in markdown
+    assert "ever_true_cause_top1_within_budget" in markdown
+    assert "final_top_is_true" in markdown
+    assert "is_wrong_stop" in markdown
+
+
+def test_category_failure_summary_clarifies_wrong_stop_denominators():
+    cases = generate_synthetic_cases()
+    summary = build_analysis_summary(cases, policies=("information_gain_per_cost", "fixed_checklist"))
+
+    for row in summary["category_failure_summary"]:
+        assert "wrong_stop_count" in row
+        assert "confidence_stop_count" in row
+        assert "wrong_stop_rate_within_confidence_stops" in row
+        assert "wrong_stop_rate_per_case" in row
+        assert "wrong_stop_rate" not in row
+
+        _assert_rate_close(
+            row["wrong_stop_rate_per_case"],
+            row["wrong_stop_count"] / row["num_cases"],
+        )
+        if row["confidence_stop_count"]:
+            _assert_rate_close(
+                row["wrong_stop_rate_within_confidence_stops"],
+                row["wrong_stop_count"] / row["confidence_stop_count"],
+            )
+        else:
+            assert row["wrong_stop_rate_within_confidence_stops"] == 0.0
+
+
+def test_initially_wrong_report_separates_ever_top1_from_final_correctness():
+    cases = generate_synthetic_cases()
+    summary = build_analysis_summary(cases, policies=("information_gain_per_cost", "fixed_checklist"))
+
+    assert summary["initially_wrong_cases"]
+    for row in summary["initially_wrong_cases"]:
+        assert "ever_true_cause_top1_within_budget" in row
+        assert "final_top_is_true" in row
+        assert "is_wrong_stop" in row
+        assert "success_within_budget" not in row
+
+        assert row["ever_true_cause_top1_within_budget"] == (
+            row["cost_to_true_cause_top1"] <= summary["settings"]["budget_limit"]
+        )
+        assert row["final_top_is_true"] == (row["final_top_hypothesis"] == row["true_cause"])
+        if row["is_wrong_stop"]:
+            assert row["final_top_is_true"] is False

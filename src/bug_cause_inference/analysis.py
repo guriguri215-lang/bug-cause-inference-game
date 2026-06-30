@@ -58,6 +58,14 @@ def _success(cost: int, settings: StopSettings) -> bool:
     return cost <= settings.budget_limit
 
 
+def _confidence_stop_count(results: list[SimulationResult]) -> int:
+    return sum(result.stop_reason == "top_probability_threshold" for result in results)
+
+
+def _wrong_stop_count(results: list[SimulationResult]) -> int:
+    return sum(_is_wrong_stop(result) for result in results)
+
+
 def _run_policy_grid(
     cases: list[SyntheticCase],
     policies: tuple[str, ...],
@@ -119,6 +127,7 @@ def initially_wrong_failure_report(
         if case.case_id not in initial_by_case:
             continue
         final = _ranked_summary(result.posterior)
+        final_top_is_true = final["top_hypothesis"] == case.true_cause
         rows.append(
             {
                 "case_id": case.case_id,
@@ -129,7 +138,9 @@ def initially_wrong_failure_report(
                 "final_top_hypothesis": final["top_hypothesis"],
                 "final_top_probability": final["top_probability"],
                 "cost_to_true_cause_top1": cost,
-                "success_within_budget": _success(cost, settings),
+                "ever_true_cause_top1_within_budget": _success(cost, settings),
+                "final_top_is_true": final_top_is_true,
+                "is_wrong_stop": _is_wrong_stop(result),
                 "stop_reason": result.stop_reason,
                 "executed_actions": result.executed_actions,
             }
@@ -183,6 +194,8 @@ def category_failure_summary(
         costs = [cost for _, _, cost in items]
         successes = [_success(cost, settings) for cost in costs]
         results = [result for _, result, _ in items]
+        wrong_stop_count = _wrong_stop_count(results)
+        confidence_stop_count = _confidence_stop_count(results)
         initially_wrong_items = [item for item in items if item[0].case_id in initially_wrong_ids]
         initially_wrong_successes = [
             _success(cost, settings)
@@ -195,7 +208,15 @@ def category_failure_summary(
                 "num_cases": len(items),
                 "mean_cost_to_true_cause_top1": round(mean(costs), 6),
                 "success_rate_within_budget": round(sum(successes) / len(successes), 6),
-                "wrong_stop_rate": round(_wrong_stop_rate(results), 6),
+                "wrong_stop_count": wrong_stop_count,
+                "confidence_stop_count": confidence_stop_count,
+                "wrong_stop_rate_within_confidence_stops": round(
+                    wrong_stop_count / confidence_stop_count,
+                    6,
+                )
+                if confidence_stop_count
+                else 0.0,
+                "wrong_stop_rate_per_case": round(wrong_stop_count / len(items), 6),
                 "initially_wrong_success_rate": round(
                     sum(initially_wrong_successes) / len(initially_wrong_successes),
                     6,
@@ -276,6 +297,8 @@ def build_analysis_summary(
             "default_stop_thresholds_changed": False,
             "notes": [
                 "This report analyzes existing P1a behavior without tuning the dataset or policies.",
+                "Policy runs in this analysis report use one diagnostic run per policy per case.",
+                "The random policy uses rng_seed=0 for a single fixed-seed diagnostic run; it is not the same as the repeated-random average in evaluate.",
                 "It does not add real-code bug discovery, code localization, patch generation, adversarial modeling, or regret/bandit learning.",
             ],
         },
@@ -353,7 +376,9 @@ def analysis_to_markdown(summary: dict[str, Any]) -> str:
         "final_top_hypothesis",
         "final_top_probability",
         "cost_to_true_cause_top1",
-        "success_within_budget",
+        "ever_true_cause_top1_within_budget",
+        "final_top_is_true",
+        "is_wrong_stop",
         "stop_reason",
     ]
     lines.extend(_markdown_table(initial_headers, summary["initially_wrong_cases"]))
@@ -386,7 +411,10 @@ def analysis_to_markdown(summary: dict[str, Any]) -> str:
         "num_cases",
         "mean_cost_to_true_cause_top1",
         "success_rate_within_budget",
-        "wrong_stop_rate",
+        "wrong_stop_count",
+        "confidence_stop_count",
+        "wrong_stop_rate_within_confidence_stops",
+        "wrong_stop_rate_per_case",
         "initially_wrong_success_rate",
     ]
     lines.extend(_markdown_table(category_headers, summary["category_failure_summary"]))
@@ -414,6 +442,10 @@ def analysis_to_markdown(summary: dict[str, Any]) -> str:
             "## Notes",
             "",
             "- Wrong stop means a high-confidence stop on an incorrect top hypothesis.",
+            "- In category summaries, wrong_stop_rate_within_confidence_stops is wrong_stop_count / confidence_stop_count, while wrong_stop_rate_per_case is wrong_stop_count / num_cases.",
+            "- In initially-wrong rows, ever_true_cause_top1_within_budget means the true cause became top-1 within the budget at least once; final_top_is_true reports the final top hypothesis.",
+            "- In threshold-sweep rows, wrong_stop_rate follows the existing evaluation definition: wrong stops divided by confidence stops.",
+            "- Analysis policy runs use one run per policy and case. The random policy uses rng_seed=0 and should be read as a fixed-seed diagnostic example, not as the repeated-random evaluation average.",
             "- The threshold sweep is diagnostic only and does not change default thresholds.",
             "- These results remain synthetic and should not be interpreted as real-world debugging accuracy.",
         ]

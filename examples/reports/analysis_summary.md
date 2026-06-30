@@ -47,113 +47,113 @@
 
 ## Initially-Wrong Cases
 
-| case_id | true_cause | initial_top_hypothesis | initial_top_probability | policy | final_top_hypothesis | final_top_probability | cost_to_true_cause_top1 | success_within_budget | stop_reason |
-|---|---|---|---|---|---|---|---|---|---|
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | budget_limit |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | budget_limit |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | static_posterior_no_investigation |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | budget_limit |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | budget_limit |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | static_posterior_no_investigation |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | budget_limit |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | budget_limit |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | low_expected_information_gain |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | top_probability_threshold |
-| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | static_posterior_no_investigation |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | cheapest_first | specification_mismatch | 0.819395 | 12 | False | top_probability_threshold |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | fixed_checklist | boundary_condition | 0.556895 | 10 | True | budget_limit |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | information_gain | specification_mismatch | 0.885899 | 12 | False | top_probability_threshold |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | information_gain_per_cost | specification_mismatch | 0.768579 | 2 | True | top_probability_threshold |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | posterior_greedy | specification_mismatch | 0.885899 | 12 | False | top_probability_threshold |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | random | specification_mismatch | 0.885899 | 12 | False | top_probability_threshold |
-| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | static_posterior | specification_mismatch | 0.621951 | 12 | False | static_posterior_no_investigation |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | cheapest_first | boundary_condition | 0.390478 | 7 | True | budget_limit |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | fixed_checklist | boundary_condition | 0.683075 | 5 | True | budget_limit |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | information_gain | missing_null_handling | 0.911762 | 12 | False | top_probability_threshold |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | information_gain_per_cost | missing_null_handling | 0.847366 | 12 | False | top_probability_threshold |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | posterior_greedy | missing_null_handling | 0.911762 | 12 | False | top_probability_threshold |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | random | specification_mismatch | 0.591085 | 12 | False | budget_limit |
-| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | static_posterior | missing_null_handling | 0.421053 | 12 | False | static_posterior_no_investigation |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | cheapest_first | missing_null_handling | 0.868943 | 1 | True | top_probability_threshold |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | fixed_checklist | missing_null_handling | 0.921643 | 1 | True | top_probability_threshold |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | information_gain | missing_null_handling | 0.868943 | 3 | True | top_probability_threshold |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | information_gain_per_cost | missing_null_handling | 0.921643 | 1 | True | top_probability_threshold |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | posterior_greedy | missing_null_handling | 0.868943 | 3 | True | top_probability_threshold |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | random | missing_null_handling | 0.663658 | 3 | True | budget_limit |
-| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | static_posterior | configuration_environment | 0.493151 | 12 | False | static_posterior_no_investigation |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | top_probability_threshold |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | top_probability_threshold |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | budget_limit |
-| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | static_posterior_no_investigation |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | top_probability_threshold |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | top_probability_threshold |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | budget_limit |
-| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | static_posterior_no_investigation |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | top_probability_threshold |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | top_probability_threshold |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | top_probability_threshold |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | budget_limit |
-| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | static_posterior_no_investigation |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | cheapest_first | configuration_environment | 0.785421 | 12 | False | top_probability_threshold |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | fixed_checklist | configuration_environment | 0.821854 | 12 | False | top_probability_threshold |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | information_gain | race_order_dependence | 0.933853 | 5 | True | top_probability_threshold |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | information_gain_per_cost | configuration_environment | 0.785421 | 12 | False | top_probability_threshold |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | posterior_greedy | configuration_environment | 0.785421 | 12 | False | top_probability_threshold |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | random | missing_null_handling | 0.351378 | 8 | True | budget_limit |
-| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | static_posterior | missing_null_handling | 0.354167 | 12 | False | static_posterior_no_investigation |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | cheapest_first | configuration_environment | 0.894423 | 12 | False | top_probability_threshold |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | fixed_checklist | configuration_environment | 0.810911 | 12 | False | top_probability_threshold |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | information_gain | race_order_dependence | 0.922283 | 5 | True | top_probability_threshold |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | information_gain_per_cost | specification_mismatch | 0.498035 | 12 | False | low_expected_information_gain |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | posterior_greedy | configuration_environment | 0.801999 | 12 | False | top_probability_threshold |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | random | specification_mismatch | 0.376532 | 12 | False | budget_limit |
-| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | static_posterior | specification_mismatch | 0.286765 | 12 | False | static_posterior_no_investigation |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | top_probability_threshold |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | budget_limit |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | top_probability_threshold |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | budget_limit |
-| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | static_posterior_no_investigation |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | top_probability_threshold |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | budget_limit |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | top_probability_threshold |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | budget_limit |
-| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | static_posterior_no_investigation |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | top_probability_threshold |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | budget_limit |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | top_probability_threshold |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | budget_limit |
-| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | static_posterior_no_investigation |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | top_probability_threshold |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | budget_limit |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | top_probability_threshold |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | top_probability_threshold |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | budget_limit |
-| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | static_posterior_no_investigation |
+| case_id | true_cause | initial_top_hypothesis | initial_top_probability | policy | final_top_hypothesis | final_top_probability | cost_to_true_cause_top1 | ever_true_cause_top1_within_budget | final_top_is_true | is_wrong_stop | stop_reason |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | False | False | budget_limit |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | True | False | budget_limit |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0004 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | False | False | budget_limit |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | True | False | budget_limit |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0006 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | cheapest_first | specification_mismatch | 0.748761 | 7 | True | False | False | budget_limit |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | fixed_checklist | boundary_condition | 0.664835 | 5 | True | True | False | budget_limit |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | information_gain | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | information_gain_per_cost | specification_mismatch | 0.721167 | 2 | True | False | False | low_expected_information_gain |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | posterior_greedy | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | random | specification_mismatch | 0.838897 | 12 | False | False | True | top_probability_threshold |
+| BUG-0008 | boundary_condition | specification_mismatch | 0.528497 | static_posterior | specification_mismatch | 0.528497 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | cheapest_first | specification_mismatch | 0.819395 | 12 | False | False | True | top_probability_threshold |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | fixed_checklist | boundary_condition | 0.556895 | 10 | True | True | False | budget_limit |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | information_gain | specification_mismatch | 0.885899 | 12 | False | False | True | top_probability_threshold |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | information_gain_per_cost | specification_mismatch | 0.768579 | 2 | True | False | True | top_probability_threshold |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | posterior_greedy | specification_mismatch | 0.885899 | 12 | False | False | True | top_probability_threshold |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | random | specification_mismatch | 0.885899 | 12 | False | False | True | top_probability_threshold |
+| BUG-0009 | boundary_condition | specification_mismatch | 0.621951 | static_posterior | specification_mismatch | 0.621951 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | cheapest_first | boundary_condition | 0.390478 | 7 | True | True | False | budget_limit |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | fixed_checklist | boundary_condition | 0.683075 | 5 | True | True | False | budget_limit |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | information_gain | missing_null_handling | 0.911762 | 12 | False | False | True | top_probability_threshold |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | information_gain_per_cost | missing_null_handling | 0.847366 | 12 | False | False | True | top_probability_threshold |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | posterior_greedy | missing_null_handling | 0.911762 | 12 | False | False | True | top_probability_threshold |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | random | specification_mismatch | 0.591085 | 12 | False | False | False | budget_limit |
+| BUG-0010 | boundary_condition | missing_null_handling | 0.421053 | static_posterior | missing_null_handling | 0.421053 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | cheapest_first | missing_null_handling | 0.868943 | 1 | True | True | False | top_probability_threshold |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | fixed_checklist | missing_null_handling | 0.921643 | 1 | True | True | False | top_probability_threshold |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | information_gain | missing_null_handling | 0.868943 | 3 | True | True | False | top_probability_threshold |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | information_gain_per_cost | missing_null_handling | 0.921643 | 1 | True | True | False | top_probability_threshold |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | posterior_greedy | missing_null_handling | 0.868943 | 3 | True | True | False | top_probability_threshold |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | random | missing_null_handling | 0.663658 | 3 | True | True | False | budget_limit |
+| BUG-0020 | missing_null_handling | configuration_environment | 0.493151 | static_posterior | configuration_environment | 0.493151 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | False | True | top_probability_threshold |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | True | False | top_probability_threshold |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | True | False | budget_limit |
+| BUG-0023 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | False | True | top_probability_threshold |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | True | False | top_probability_threshold |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | True | False | budget_limit |
+| BUG-0025 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | cheapest_first | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | fixed_checklist | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | information_gain | race_order_dependence | 0.760812 | 12 | False | False | True | top_probability_threshold |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | information_gain_per_cost | configuration_environment | 0.789067 | 1 | True | True | False | top_probability_threshold |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | posterior_greedy | configuration_environment | 0.902081 | 3 | True | True | False | top_probability_threshold |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | random | configuration_environment | 0.678225 | 3 | True | True | False | budget_limit |
+| BUG-0027 | configuration_environment | race_order_dependence | 0.51073 | static_posterior | race_order_dependence | 0.51073 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | cheapest_first | configuration_environment | 0.785421 | 12 | False | False | True | top_probability_threshold |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | fixed_checklist | configuration_environment | 0.821854 | 12 | False | False | True | top_probability_threshold |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | information_gain | race_order_dependence | 0.933853 | 5 | True | True | False | top_probability_threshold |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | information_gain_per_cost | configuration_environment | 0.785421 | 12 | False | False | True | top_probability_threshold |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | posterior_greedy | configuration_environment | 0.785421 | 12 | False | False | True | top_probability_threshold |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | random | missing_null_handling | 0.351378 | 8 | True | False | False | budget_limit |
+| BUG-0039 | race_order_dependence | missing_null_handling | 0.354167 | static_posterior | missing_null_handling | 0.354167 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | cheapest_first | configuration_environment | 0.894423 | 12 | False | False | True | top_probability_threshold |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | fixed_checklist | configuration_environment | 0.810911 | 12 | False | False | True | top_probability_threshold |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | information_gain | race_order_dependence | 0.922283 | 5 | True | True | False | top_probability_threshold |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | information_gain_per_cost | specification_mismatch | 0.498035 | 12 | False | False | False | low_expected_information_gain |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | posterior_greedy | configuration_environment | 0.801999 | 12 | False | False | True | top_probability_threshold |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | random | specification_mismatch | 0.376532 | 12 | False | False | False | budget_limit |
+| BUG-0040 | race_order_dependence | specification_mismatch | 0.286765 | static_posterior | specification_mismatch | 0.286765 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | True | False | top_probability_threshold |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | True | False | budget_limit |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | True | False | top_probability_threshold |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | True | False | budget_limit |
+| BUG-0044 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | True | False | top_probability_threshold |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | True | False | budget_limit |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | True | False | top_probability_threshold |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | True | False | budget_limit |
+| BUG-0046 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | True | False | top_probability_threshold |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | True | False | budget_limit |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | True | False | top_probability_threshold |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | True | False | budget_limit |
+| BUG-0048 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | False | False | static_posterior_no_investigation |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | cheapest_first | specification_mismatch | 0.901419 | 7 | True | True | False | top_probability_threshold |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | fixed_checklist | specification_mismatch | 0.568097 | 5 | True | True | False | budget_limit |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | information_gain | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | information_gain_per_cost | specification_mismatch | 0.8943 | 2 | True | True | False | top_probability_threshold |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | posterior_greedy | specification_mismatch | 0.872233 | 2 | True | True | False | top_probability_threshold |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | random | specification_mismatch | 0.656686 | 3 | True | True | False | budget_limit |
+| BUG-0050 | specification_mismatch | boundary_condition | 0.613115 | static_posterior | boundary_condition | 0.613115 | 12 | False | False | False | static_posterior_no_investigation |
 
 ## Stop Reason Summary
 
@@ -175,43 +175,43 @@
 
 ## Category Failure Summary
 
-| policy | true_cause | num_cases | mean_cost_to_true_cause_top1 | success_rate_within_budget | wrong_stop_rate | initially_wrong_success_rate |
-|---|---|---|---|---|---|---|
-| cheapest_first | boundary_condition | 10 | 4 | 0.9 | 0.333333 | 0.8 |
-| cheapest_first | configuration_environment | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| cheapest_first | missing_null_handling | 10 | 0.1 | 1.0 | 0.0 | 1.0 |
-| cheapest_first | race_order_dependence | 10 | 2.4 | 0.8 | 0.5 | 0.0 |
-| cheapest_first | specification_mismatch | 10 | 2.8 | 1.0 | 0.0 | 1.0 |
-| fixed_checklist | boundary_condition | 10 | 3 | 1.0 | 0.0 | 1.0 |
-| fixed_checklist | configuration_environment | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| fixed_checklist | missing_null_handling | 10 | 0.1 | 1.0 | 0.0 | 1.0 |
-| fixed_checklist | race_order_dependence | 10 | 2.4 | 0.8 | 0.5 | 0.0 |
-| fixed_checklist | specification_mismatch | 10 | 2 | 1.0 | 0.0 | 1.0 |
-| information_gain | boundary_condition | 10 | 3 | 0.8 | 0.285714 | 0.6 |
-| information_gain | configuration_environment | 10 | 3.6 | 0.7 | 0.3 | 0.0 |
-| information_gain | missing_null_handling | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| information_gain | race_order_dependence | 10 | 1 | 1.0 | 0.0 | 1.0 |
-| information_gain | specification_mismatch | 10 | 0.8 | 1.0 | 0.0 | 1.0 |
-| information_gain_per_cost | boundary_condition | 10 | 2 | 0.9 | 0.285714 | 0.8 |
-| information_gain_per_cost | configuration_environment | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| information_gain_per_cost | missing_null_handling | 10 | 0.1 | 1.0 | 0.0 | 1.0 |
-| information_gain_per_cost | race_order_dependence | 10 | 2.4 | 0.8 | 0.444444 | 0.0 |
-| information_gain_per_cost | specification_mismatch | 10 | 0.8 | 1.0 | 0.0 | 1.0 |
-| posterior_greedy | boundary_condition | 10 | 6 | 0.5 | 0.5 | 0.0 |
-| posterior_greedy | configuration_environment | 10 | 0.9 | 1.0 | 0.0 | 1.0 |
-| posterior_greedy | missing_null_handling | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| posterior_greedy | race_order_dependence | 10 | 2.4 | 0.8 | 0.2 | 0.0 |
-| posterior_greedy | specification_mismatch | 10 | 0.8 | 1.0 | 0.0 | 1.0 |
-| random | boundary_condition | 10 | 6 | 0.5 | 1.0 | 0.0 |
-| random | configuration_environment | 10 | 0.9 | 1.0 | 0.0 | 1.0 |
-| random | missing_null_handling | 10 | 0.3 | 1.0 | 0.0 | 1.0 |
-| random | race_order_dependence | 10 | 2 | 0.9 | 0.0 | 0.5 |
-| random | specification_mismatch | 10 | 1.2 | 1.0 | 0.0 | 1.0 |
-| static_posterior | boundary_condition | 10 | 6 | 0.5 | 0.0 | 0.0 |
-| static_posterior | configuration_environment | 10 | 3.6 | 0.7 | 0.0 | 0.0 |
-| static_posterior | missing_null_handling | 10 | 1.2 | 0.9 | 0.0 | 0.0 |
-| static_posterior | race_order_dependence | 10 | 2.4 | 0.8 | 0.0 | 0.0 |
-| static_posterior | specification_mismatch | 10 | 4.8 | 0.6 | 0.0 | 0.0 |
+| policy | true_cause | num_cases | mean_cost_to_true_cause_top1 | success_rate_within_budget | wrong_stop_count | confidence_stop_count | wrong_stop_rate_within_confidence_stops | wrong_stop_rate_per_case | initially_wrong_success_rate |
+|---|---|---|---|---|---|---|---|---|---|
+| cheapest_first | boundary_condition | 10 | 4 | 0.9 | 1 | 3 | 0.333333 | 0.1 | 0.8 |
+| cheapest_first | configuration_environment | 10 | 0.3 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| cheapest_first | missing_null_handling | 10 | 0.1 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| cheapest_first | race_order_dependence | 10 | 2.4 | 0.8 | 5 | 10 | 0.5 | 0.5 | 0.0 |
+| cheapest_first | specification_mismatch | 10 | 2.8 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| fixed_checklist | boundary_condition | 10 | 3 | 1.0 | 0 | 5 | 0.0 | 0.0 | 1.0 |
+| fixed_checklist | configuration_environment | 10 | 0.3 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| fixed_checklist | missing_null_handling | 10 | 0.1 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| fixed_checklist | race_order_dependence | 10 | 2.4 | 0.8 | 5 | 10 | 0.5 | 0.5 | 0.0 |
+| fixed_checklist | specification_mismatch | 10 | 2 | 1.0 | 0 | 6 | 0.0 | 0.0 | 1.0 |
+| information_gain | boundary_condition | 10 | 3 | 0.8 | 2 | 7 | 0.285714 | 0.2 | 0.6 |
+| information_gain | configuration_environment | 10 | 3.6 | 0.7 | 3 | 10 | 0.3 | 0.3 | 0.0 |
+| information_gain | missing_null_handling | 10 | 0.3 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| information_gain | race_order_dependence | 10 | 1 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| information_gain | specification_mismatch | 10 | 0.8 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| information_gain_per_cost | boundary_condition | 10 | 2 | 0.9 | 2 | 7 | 0.285714 | 0.2 | 0.8 |
+| information_gain_per_cost | configuration_environment | 10 | 0.3 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| information_gain_per_cost | missing_null_handling | 10 | 0.1 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| information_gain_per_cost | race_order_dependence | 10 | 2.4 | 0.8 | 4 | 9 | 0.444444 | 0.4 | 0.0 |
+| information_gain_per_cost | specification_mismatch | 10 | 0.8 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| posterior_greedy | boundary_condition | 10 | 6 | 0.5 | 5 | 10 | 0.5 | 0.5 | 0.0 |
+| posterior_greedy | configuration_environment | 10 | 0.9 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| posterior_greedy | missing_null_handling | 10 | 0.3 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| posterior_greedy | race_order_dependence | 10 | 2.4 | 0.8 | 2 | 10 | 0.2 | 0.2 | 0.0 |
+| posterior_greedy | specification_mismatch | 10 | 0.8 | 1.0 | 0 | 10 | 0.0 | 0.0 | 1.0 |
+| random | boundary_condition | 10 | 6 | 0.5 | 4 | 4 | 1.0 | 0.4 | 0.0 |
+| random | configuration_environment | 10 | 0.9 | 1.0 | 0 | 2 | 0.0 | 0.0 | 1.0 |
+| random | missing_null_handling | 10 | 0.3 | 1.0 | 0 | 6 | 0.0 | 0.0 | 1.0 |
+| random | race_order_dependence | 10 | 2 | 0.9 | 0 | 5 | 0.0 | 0.0 | 0.5 |
+| random | specification_mismatch | 10 | 1.2 | 1.0 | 0 | 6 | 0.0 | 0.0 | 1.0 |
+| static_posterior | boundary_condition | 10 | 6 | 0.5 | 0 | 0 | 0.0 | 0.0 | 0.0 |
+| static_posterior | configuration_environment | 10 | 3.6 | 0.7 | 0 | 0 | 0.0 | 0.0 | 0.0 |
+| static_posterior | missing_null_handling | 10 | 1.2 | 0.9 | 0 | 0 | 0.0 | 0.0 | 0.0 |
+| static_posterior | race_order_dependence | 10 | 2.4 | 0.8 | 0 | 0 | 0.0 | 0.0 | 0.0 |
+| static_posterior | specification_mismatch | 10 | 4.8 | 0.6 | 0 | 0 | 0.0 | 0.0 | 0.0 |
 
 ## Threshold Sweep
 
@@ -261,5 +261,9 @@
 ## Notes
 
 - Wrong stop means a high-confidence stop on an incorrect top hypothesis.
+- In category summaries, wrong_stop_rate_within_confidence_stops is wrong_stop_count / confidence_stop_count, while wrong_stop_rate_per_case is wrong_stop_count / num_cases.
+- In initially-wrong rows, ever_true_cause_top1_within_budget means the true cause became top-1 within the budget at least once; final_top_is_true reports the final top hypothesis.
+- In threshold-sweep rows, wrong_stop_rate follows the existing evaluation definition: wrong stops divided by confidence stops.
+- Analysis policy runs use one run per policy and case. The random policy uses rng_seed=0 and should be read as a fixed-seed diagnostic example, not as the repeated-random evaluation average.
 - The threshold sweep is diagnostic only and does not change default thresholds.
 - These results remain synthetic and should not be interpreted as real-world debugging accuracy.

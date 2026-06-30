@@ -5,6 +5,8 @@
     "default_stop_thresholds_changed": false,
     "notes": [
       "This report analyzes existing P1a behavior without tuning the dataset or policies.",
+      "Policy runs in this analysis report use one diagnostic run per policy per case.",
+      "The random policy uses rng_seed=0 for a single fixed-seed diagnostic run; it is not the same as the repeated-random average in evaluate.",
       "It does not add real-code bug discovery, code localization, patch generation, adversarial modeling, or regret/bandit learning."
     ]
   },
@@ -745,7 +747,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.748761,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -764,7 +768,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.664835,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -783,7 +789,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -800,7 +808,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -817,7 +827,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -832,7 +844,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -847,7 +861,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.528497,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -860,7 +876,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.748761,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -879,7 +897,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.664835,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -898,7 +918,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -915,7 +937,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -932,7 +956,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -947,7 +973,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -962,7 +990,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.528497,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -975,7 +1005,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.748761,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -994,7 +1026,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.664835,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -1013,7 +1047,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -1030,7 +1066,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.721167,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -1047,7 +1085,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -1062,7 +1102,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.838897,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -1077,7 +1119,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.528497,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1090,7 +1134,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.819395,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1109,7 +1155,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.556895,
       "cost_to_true_cause_top1": 10,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -1128,7 +1176,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.885899,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -1143,7 +1193,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.768579,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -1159,7 +1211,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.885899,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -1174,7 +1228,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.885899,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance"
@@ -1189,7 +1245,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.621951,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1202,7 +1260,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.390478,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -1221,7 +1281,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.683075,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -1240,7 +1302,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.911762,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1256,7 +1320,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.847366,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1273,7 +1339,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.911762,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1289,7 +1357,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.591085,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1306,7 +1376,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.421053,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1319,7 +1391,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.868943,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1336,7 +1410,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.921643,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1352,7 +1428,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.868943,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "compare_environment",
@@ -1369,7 +1447,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.921643,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1385,7 +1465,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.868943,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "compare_environment",
@@ -1402,7 +1484,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.663658,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1419,7 +1503,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.493151,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1432,7 +1518,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1447,7 +1535,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1462,7 +1552,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.760812,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_concurrency_stress"
@@ -1477,7 +1569,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1492,7 +1586,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.902081,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_reproduction_matrix",
@@ -1508,7 +1604,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.678225,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1525,7 +1623,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.51073,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1538,7 +1638,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1553,7 +1655,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1568,7 +1672,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.760812,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_concurrency_stress"
@@ -1583,7 +1689,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1598,7 +1706,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.902081,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_reproduction_matrix",
@@ -1614,7 +1724,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.678225,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1631,7 +1743,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.51073,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1644,7 +1758,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1659,7 +1775,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1674,7 +1792,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.760812,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_concurrency_stress"
@@ -1689,7 +1809,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.789067,
       "cost_to_true_cause_top1": 1,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log"
@@ -1704,7 +1826,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.902081,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_reproduction_matrix",
@@ -1720,7 +1844,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.678225,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1737,7 +1863,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.51073,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1750,7 +1878,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.785421,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1766,7 +1896,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.821854,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1784,7 +1916,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.933853,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_concurrency_stress",
@@ -1800,7 +1934,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.785421,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1816,7 +1952,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.785421,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1832,7 +1970,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.351378,
       "cost_to_true_cause_top1": 8,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1849,7 +1989,9 @@
       "final_top_hypothesis": "missing_null_handling",
       "final_top_probability": 0.354167,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1862,7 +2004,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.894423,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1879,7 +2023,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.810911,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1898,7 +2044,9 @@
       "final_top_hypothesis": "race_order_dependence",
       "final_top_probability": 0.922283,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_concurrency_stress",
@@ -1914,7 +2062,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.498035,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "low_expected_information_gain",
       "executed_actions": [
         "run_boundary_tests",
@@ -1931,7 +2081,9 @@
       "final_top_hypothesis": "configuration_environment",
       "final_top_probability": 0.801999,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": true,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1949,7 +2101,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.376532,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -1966,7 +2120,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.286765,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -1979,7 +2135,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.901419,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -1998,7 +2156,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.568097,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -2017,7 +2177,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2033,7 +2195,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.8943,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2050,7 +2214,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2066,7 +2232,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.656686,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -2083,7 +2251,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.613115,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -2096,7 +2266,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.901419,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -2115,7 +2287,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.568097,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -2134,7 +2308,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2150,7 +2326,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.8943,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2167,7 +2345,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2183,7 +2363,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.656686,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -2200,7 +2382,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.613115,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -2213,7 +2397,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.901419,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -2232,7 +2418,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.568097,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -2251,7 +2439,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2267,7 +2457,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.8943,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2284,7 +2476,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2300,7 +2494,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.656686,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -2317,7 +2513,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.613115,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     },
@@ -2330,7 +2528,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.901419,
       "cost_to_true_cause_top1": 7,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "inspect_error_log",
@@ -2349,7 +2549,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.568097,
       "cost_to_true_cause_top1": 5,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "inspect_error_log",
@@ -2368,7 +2570,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2384,7 +2588,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.8943,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2401,7 +2607,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.872233,
       "cost_to_true_cause_top1": 2,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "top_probability_threshold",
       "executed_actions": [
         "run_boundary_tests",
@@ -2417,7 +2625,9 @@
       "final_top_hypothesis": "specification_mismatch",
       "final_top_probability": 0.656686,
       "cost_to_true_cause_top1": 3,
-      "success_within_budget": true,
+      "ever_true_cause_top1_within_budget": true,
+      "final_top_is_true": true,
+      "is_wrong_stop": false,
       "stop_reason": "budget_limit",
       "executed_actions": [
         "check_spec_acceptance",
@@ -2434,7 +2644,9 @@
       "final_top_hypothesis": "boundary_condition",
       "final_top_probability": 0.613115,
       "cost_to_true_cause_top1": 12,
-      "success_within_budget": false,
+      "ever_true_cause_top1_within_budget": false,
+      "final_top_is_true": false,
+      "is_wrong_stop": false,
       "stop_reason": "static_posterior_no_investigation",
       "executed_actions": []
     }
@@ -2552,7 +2764,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 4,
       "success_rate_within_budget": 0.9,
-      "wrong_stop_rate": 0.333333,
+      "wrong_stop_count": 1,
+      "confidence_stop_count": 3,
+      "wrong_stop_rate_within_confidence_stops": 0.333333,
+      "wrong_stop_rate_per_case": 0.1,
       "initially_wrong_success_rate": 0.8
     },
     {
@@ -2561,7 +2776,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2570,7 +2788,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.1,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2579,7 +2800,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.4,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.5,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2588,7 +2812,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.8,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2597,7 +2824,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 5,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2606,7 +2836,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2615,7 +2848,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.1,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2624,7 +2860,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.4,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.5,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2633,7 +2872,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2642,7 +2884,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 3,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.285714,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 7,
+      "wrong_stop_rate_within_confidence_stops": 0.285714,
+      "wrong_stop_rate_per_case": 0.2,
       "initially_wrong_success_rate": 0.6
     },
     {
@@ -2651,7 +2896,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 3.6,
       "success_rate_within_budget": 0.7,
-      "wrong_stop_rate": 0.3,
+      "wrong_stop_count": 3,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.3,
+      "wrong_stop_rate_per_case": 0.3,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2660,7 +2908,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2669,7 +2920,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 1,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2678,7 +2932,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.8,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2687,7 +2944,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2,
       "success_rate_within_budget": 0.9,
-      "wrong_stop_rate": 0.285714,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 7,
+      "wrong_stop_rate_within_confidence_stops": 0.285714,
+      "wrong_stop_rate_per_case": 0.2,
       "initially_wrong_success_rate": 0.8
     },
     {
@@ -2696,7 +2956,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2705,7 +2968,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.1,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2714,7 +2980,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.4,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.444444,
+      "wrong_stop_count": 4,
+      "confidence_stop_count": 9,
+      "wrong_stop_rate_within_confidence_stops": 0.444444,
+      "wrong_stop_rate_per_case": 0.4,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2723,7 +2992,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.8,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2732,7 +3004,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 6,
       "success_rate_within_budget": 0.5,
-      "wrong_stop_rate": 0.5,
+      "wrong_stop_count": 5,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.5,
+      "wrong_stop_rate_per_case": 0.5,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2741,7 +3016,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.9,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2750,7 +3028,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2759,7 +3040,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.4,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.2,
+      "wrong_stop_count": 2,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.2,
+      "wrong_stop_rate_per_case": 0.2,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2768,7 +3052,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.8,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 10,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2777,7 +3064,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 6,
       "success_rate_within_budget": 0.5,
-      "wrong_stop_rate": 1.0,
+      "wrong_stop_count": 4,
+      "confidence_stop_count": 4,
+      "wrong_stop_rate_within_confidence_stops": 1.0,
+      "wrong_stop_rate_per_case": 0.4,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2786,7 +3076,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.9,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 2,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2795,7 +3088,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 0.3,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2804,7 +3100,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2,
       "success_rate_within_budget": 0.9,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 5,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.5
     },
     {
@@ -2813,7 +3112,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 1.2,
       "success_rate_within_budget": 1.0,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 6,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 1.0
     },
     {
@@ -2822,7 +3124,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 6,
       "success_rate_within_budget": 0.5,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2831,7 +3136,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 3.6,
       "success_rate_within_budget": 0.7,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2840,7 +3148,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 1.2,
       "success_rate_within_budget": 0.9,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2849,7 +3160,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 2.4,
       "success_rate_within_budget": 0.8,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.0
     },
     {
@@ -2858,7 +3172,10 @@
       "num_cases": 10,
       "mean_cost_to_true_cause_top1": 4.8,
       "success_rate_within_budget": 0.6,
-      "wrong_stop_rate": 0.0,
+      "wrong_stop_count": 0,
+      "confidence_stop_count": 0,
+      "wrong_stop_rate_within_confidence_stops": 0.0,
+      "wrong_stop_rate_per_case": 0.0,
       "initially_wrong_success_rate": 0.0
     }
   ],

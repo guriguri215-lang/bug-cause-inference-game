@@ -78,4 +78,7 @@ def test_analyze_cli_supports_json_and_markdown_outputs(tmp_path):
     summary = json.loads(json_path.read_text(encoding="utf-8"))
     assert "wrong_stop_cases" in summary
     assert "threshold_sweep" in summary
-    assert "Threshold Sweep" in markdown_path.read_text(encoding="utf-8")
+    markdown = markdown_path.read_text(encoding="utf-8")
+    assert "Threshold Sweep" in markdown
+    assert "wrong_stop_rate_within_confidence_stops" in markdown
+    assert "ever_true_cause_top1_within_budget" in markdown
