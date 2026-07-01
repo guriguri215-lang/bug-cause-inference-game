@@ -11,6 +11,13 @@
 - Policy comparison and evaluation metrics.
 - Analysis-only diagnostics for wrong stops, initially-wrong cases, stop reasons, category failures, and threshold sweeps.
 - Clarified analysis metrics for wrong-stop denominators and initially-wrong final correctness.
+- P1b injected-bug benchmark scaffold for a small checkout/pricing program.
+- P1b dataset metadata with 20 buggy variants and 5 clean variants.
+- P1b executable checkout/pricing helper modules with variant-specific injected behavior.
+- P1b investigation actions, function-level location ranking, cause posterior updates, and fix-intent category prediction.
+- P1b policies: `random_action`, `fixed_checklist`, `test_first`, `coverage_first`, `recent_diff_first`, `cause_only_p1a_style`, and `expected_utility_per_cost`.
+- P1b JSON and Markdown report/evaluation output.
+- P1b CLI commands: `p1b-list-variants`, `p1b-report`, and `p1b-evaluate`.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
 - Wrong-stop diagnostic for the primary policy.
@@ -22,7 +29,7 @@
 ## Not Implemented
 
 - Real-code bug discovery.
-- Source-code fault localization.
+- Production source-code fault localization.
 - Automated patch generation.
 - LLM-based free-form debugging.
 - AI agent review battles.
@@ -31,6 +38,8 @@
 - Web UI.
 - Real project bug history ingestion.
 - Model or dataset changes in the analysis-only patch.
+- Real git commit/diff artifacts for each P1b variant.
+- Randomized Hypothesis-style property generation for P1b.
 
 ## Deferred To Future Work
 
@@ -38,12 +47,12 @@
 - Learned or calibrated likelihood tables.
 - Noisy, missing, or probabilistic observations.
 - Case-specific investigation costs.
-- Real-code fault localization and injected-bug programs for P1b.
+- Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
 
 ## Known Limitations
 
-- The model does not identify code locations.
+- P1a does not identify code locations; P1b only ranks function-level locations inside the small injected-bug scaffold.
 - The model does not generate patches.
 - Recommendations depend on a synthetic likelihood table.
 - Expected information gain is a P1a heuristic score, not a fully coherent action-conditioned generative observation model.
@@ -53,6 +62,10 @@
 - Analysis report policy runs use one diagnostic run per policy and case; `random` uses `rng_seed=0` and is not the repeated-random average used by `evaluate`.
 - Category-level wrong-stop diagnostics distinguish confidence-stop denominator rates from per-case rates.
 - Threshold-sweep `wrong_stop_rate` keeps the existing evaluation denominator: wrong stops divided by confidence stops.
+- P1b is a small injected-bug scaffold, not a production debugger.
+- P1b location evaluation is function-level; `line_span_hint` is secondary.
+- P1b uses synthetic recent-diff metadata and structured coverage-like observations.
+- P1b predicts fix-intent categories but does not generate patches.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -68,17 +81,20 @@ python -m bug_cause_inference.cli generate-cases --output examples/cases/synthet
 python -m bug_cause_inference.cli report --cases examples/cases/synthetic_cases.json --case-id BUG-0001 --json-output examples/reports/decision_report_BUG-0001.json --markdown-output examples/reports/decision_report_BUG-0001.md
 python -m bug_cause_inference.cli evaluate --cases examples/cases/synthetic_cases.json --json-output examples/reports/evaluation_summary.json --markdown-output examples/reports/evaluation_summary.md
 python -m bug_cause_inference.cli analyze --cases examples/cases/synthetic_cases.json --json-output examples/reports/analysis_summary.json --markdown-output examples/reports/analysis_summary.md
+python -m bug_cause_inference.cli p1b-list-variants --output examples/p1b/variants/p1b_variants.json --markdown-output examples/p1b/variants/p1b_variants.md
+python -m bug_cause_inference.cli p1b-report --variant-id P1B-BUG-001 --json-output examples/p1b/reports/p1b_report_P1B-BUG-001.json --markdown-output examples/p1b/reports/p1b_report_P1B-BUG-001.md
+python -m bug_cause_inference.cli p1b-evaluate --json-output examples/p1b/reports/p1b_evaluation_summary.json --markdown-output examples/p1b/reports/p1b_evaluation_summary.md
 ```
 
 ## Latest Test Result
 
-Passed on 2026-06-30 after metric-clarification fixes:
+Passed on 2026-07-02 after the initial P1b scaffold implementation:
 
 ```bash
 .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 17 passed.
+Result: 31 passed.
 
 Latest generated evaluation summary:
 
@@ -93,11 +109,11 @@ Latest generated evaluation summary:
 
 See [`p1a_evaluation_notes.md`](p1a_evaluation_notes.md) for the current interpretation and limitations of these results.
 
-Latest analysis-only patch verification:
+Latest P1b initial implementation verification:
 
-- Added `analyze` CLI diagnostics.
-- Clarified `wrong_stop_count`, `confidence_stop_count`, `wrong_stop_rate_within_confidence_stops`, `wrong_stop_rate_per_case`, `ever_true_cause_top1_within_budget`, `final_top_is_true`, and `is_wrong_stop`.
-- Model, dataset, default thresholds, and main policy remain unchanged.
-- P1b/P1c features remain out of scope.
-- `.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider`: 17 passed.
-- `analyze` CLI smoke check generated `examples/reports/analysis_summary.json` and `examples/reports/analysis_summary.md`.
+- Added P1b scaffold without changing P1a evaluation semantics.
+- `.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider`: 31 passed.
+- `p1b-list-variants` generated `examples/p1b/variants/p1b_variants.json` and `.md`.
+- `p1b-report` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
+- `p1b-evaluate` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
+- P1b/P1c exclusions remain: no patch generation, no large real repositories, no LLM agent battles, no adversarial bug generation, no formal minimax framing.
