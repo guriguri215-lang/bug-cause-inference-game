@@ -988,6 +988,9 @@
     "fixed_checklist_cost_reduction": 0.282051,
     "meets_15_percent_fixed_checklist_reduction": true,
     "posterior_greedy_mean_cost_delta": -0.96,
+    "not_worse_than_posterior_greedy_overall": true,
+    "at_least_3_of_5_categories_not_worse_than_fixed_checklist": true,
+    "meets_charter_success_criteria": true,
     "primary_success_rate_at_least_80_percent": true,
     "primary_wrong_stop_rate": 0.130435,
     "primary_wrong_stop_rate_under_10_percent_diagnostic": false

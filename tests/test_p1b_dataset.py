@@ -1,6 +1,7 @@
 from collections import Counter
 
-from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants
+from bug_cause_inference.p1b.actions import P1B_ACTIONS
+from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants, validate_p1b_dataset
 from bug_cause_inference.p1b.models import P1B_FIX_INTENT_CATEGORIES
 
 
@@ -10,6 +11,10 @@ def test_p1b_dataset_has_20_buggy_and_5_clean_variants():
     assert len(variants) == 25
     assert sum(1 for variant in variants if variant.is_buggy) == 20
     assert sum(1 for variant in variants if not variant.is_buggy) == 5
+
+
+def test_validate_p1b_dataset_accepts_current_variants():
+    validate_p1b_dataset(load_p1b_variants(), action_ids=P1B_ACTIONS)
 
 
 def test_p1b_buggy_categories_are_balanced():
@@ -43,4 +48,3 @@ def test_p1b_clean_variants_are_false_positive_targets():
 
     assert clean_variants
     assert all(variant.recommended_no_bug_evidence for variant in clean_variants)
-

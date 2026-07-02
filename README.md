@@ -163,6 +163,7 @@ P1b evaluator reports:
 - `fix_intent_top1_accuracy`
 - `fix_intent_top3_accuracy`
 - `mean_investigation_cost`
+- `mean_investigation_cost_buggy_only`
 - `cause_brier_score`
 
 P1b location metrics are function-level only. Line-span hints are explanatory and secondary.
@@ -230,6 +231,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - Analysis reports expose current failure modes; they do not improve the model or make real-world accuracy claims.
 - P1b is a small injected-bug scaffold, not a production fault-localization engine.
 - P1b uses synthetic recent-diff metadata and structured coverage-like observations.
+- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.
 - P1b `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.
 - P1b predicts fix-intent categories but does not generate patches.
 

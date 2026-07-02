@@ -137,7 +137,6 @@ def top_k_accuracy_by_step(
 
 
 def explanation_omission_test(cases: list[SyntheticCase], results: list[SimulationResult]) -> dict[str, float]:
-    case_lookup = {case.case_id: case for case in cases}
     tested = 0
     changed = 0
     for result in results:
@@ -163,7 +162,6 @@ def explanation_omission_test(cases: list[SyntheticCase], results: list[Simulati
         tested += 1
         if full_top != reduced_top:
             changed += 1
-        _ = case_lookup[result.case_id]
     return {
         "tested_cases": float(tested),
         "top1_change_rate_when_most_influential_observation_omitted": changed / tested if tested else 0.0,
@@ -269,12 +267,12 @@ def _policy_summary(
     summary = _performance_block(all_pairs, settings)
     summary.update(
         {
-        "top_k_accuracy_by_step": top_k_accuracy_by_step(cases, results, settings.max_steps),
-        "brier_score": round(brier_score(results), 6),
-        "expected_calibration_error": round(expected_calibration_error(results), 6),
-        "explanation_omission_test": explanation_omission_test(cases, results),
-        "explanation_trace_completeness": round(explanation_trace_completeness(results), 6),
-        "wrong_stop_rate": round(wrong_stop_rate(results), 6),
+            "top_k_accuracy_by_step": top_k_accuracy_by_step(cases, results, settings.max_steps),
+            "brier_score": round(brier_score(results), 6),
+            "expected_calibration_error": round(expected_calibration_error(results), 6),
+            "explanation_omission_test": explanation_omission_test(cases, results),
+            "explanation_trace_completeness": round(explanation_trace_completeness(results), 6),
+            "wrong_stop_rate": round(wrong_stop_rate(results), 6),
             "initially_wrong_cases": _performance_block(initially_wrong_pairs, settings),
         }
     )
@@ -311,6 +309,29 @@ def evaluate_policies(
     greedy_delta = None
     if primary and greedy:
         greedy_delta = primary["mean_cost_to_true_cause_top1"] - greedy["mean_cost_to_true_cause_top1"]
+    category_not_worse_count = None
+    if primary and fixed:
+        category_not_worse_count = sum(
+            1
+            for cause in CAUSES
+            if primary["category_summary"][cause]["mean_cost_to_true_cause_top1"]
+            <= fixed["category_summary"][cause]["mean_cost_to_true_cause_top1"]
+        )
+    not_worse_than_greedy = greedy_delta <= 0.0 if greedy_delta is not None else None
+    at_least_3_categories_not_worse = (
+        category_not_worse_count >= 3 if category_not_worse_count is not None else None
+    )
+    meets_charter_success = None
+    if (
+        fixed_improvement is not None
+        and not_worse_than_greedy is not None
+        and at_least_3_categories_not_worse is not None
+    ):
+        meets_charter_success = (
+            fixed_improvement >= 0.15
+            and not_worse_than_greedy
+            and at_least_3_categories_not_worse
+        )
     result = {
         "settings": {
             "budget_limit": settings.budget_limit,
@@ -331,6 +352,9 @@ def evaluate_policies(
             if fixed_improvement is not None
             else None,
             "posterior_greedy_mean_cost_delta": round(greedy_delta, 6) if greedy_delta is not None else None,
+            "not_worse_than_posterior_greedy_overall": not_worse_than_greedy,
+            "at_least_3_of_5_categories_not_worse_than_fixed_checklist": at_least_3_categories_not_worse,
+            "meets_charter_success_criteria": meets_charter_success,
             "primary_success_rate_at_least_80_percent": primary["success_rate_within_budget"] >= 0.80
             if primary
             else None,

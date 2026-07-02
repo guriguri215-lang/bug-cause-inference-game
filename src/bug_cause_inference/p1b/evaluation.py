@@ -55,6 +55,8 @@ def _policy_metrics(
     buggy_count = len(buggy_results)
     clean_count = len(clean_results)
 
+    # The current loop only selects actions that fit the remaining budget; keep
+    # this predicate so the metric contract stays explicit if that loop changes.
     discovered = [
         result
         for result in buggy_results
@@ -70,6 +72,8 @@ def _policy_metrics(
         if result.stop_reason == "bug_confidence_threshold"
         or result.bug_presence_posterior >= settings.bug_presence_threshold
     ]
+    # The over-budget branch is defensive under today's remaining-budget action
+    # filter, but preserves the false-negative definition for future stop logic.
     false_negatives = [
         result
         for result in buggy_results
@@ -108,7 +112,6 @@ def _policy_metrics(
         "buggy_variants": buggy_count,
         "clean_variants": clean_count,
         "bug_discovery_rate_within_budget": _safe_rate(len(discovered), buggy_count),
-        "mean_cost_to_first_failure": round(mean(first_failure_costs), 6) if first_failure_costs else 0.0,
         "cost_to_first_failure": round(mean(first_failure_costs), 6) if first_failure_costs else 0.0,
         "reproduction_success_rate": _safe_rate(
             sum(1 for result in buggy_results if result.reproduction_input is not None),
@@ -131,6 +134,9 @@ def _policy_metrics(
         "fix_intent_top1_accuracy": _safe_rate(fix_top1, buggy_count),
         "fix_intent_top3_accuracy": _safe_rate(fix_top3, buggy_count),
         "mean_investigation_cost": round(mean(result.cumulative_cost for result in results), 6),
+        "mean_investigation_cost_buggy_only": round(mean(result.cumulative_cost for result in buggy_results), 6)
+        if buggy_results
+        else 0.0,
         "cause_brier_score": _cause_brier_score(variants, results),
         "stop_reason_counts": {
             reason: sum(1 for result in results if result.stop_reason == reason)
@@ -183,6 +189,9 @@ def evaluate_p1b(
         "success_checks": {
             "primary_policy": P1B_PRIMARY_POLICY,
             "primary_vs_fixed_mean_cost_delta": round(cost_delta, 6) if cost_delta is not None else None,
+            "primary_mean_cost_at_least_10_percent_below_fixed_checklist": cost_delta >= 0.10
+            if cost_delta is not None
+            else None,
             "primary_bug_discovery_rate_at_least_75_percent": primary["bug_discovery_rate_within_budget"] >= 0.75
             if primary
             else None,
@@ -219,15 +228,16 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
         "",
         "## Policy Metrics",
         "",
-        "| policy | bug_discovery_rate | false_positive_rate | location_top3 | cause_top1 | fix_intent_top1 | mean_cost |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| policy | bug_discovery_rate | false_positive_rate | location_top3 | cause_top1 | fix_intent_top1 | mean_cost | mean_buggy_cost |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for policy, metrics in summary["policies"].items():
         lines.append(
             f"| {policy} | {metrics['bug_discovery_rate_within_budget']:.6f} | "
             f"{metrics['false_positive_rate_on_clean_cases']:.6f} | "
             f"{metrics['location_top3_accuracy']:.6f} | {metrics['cause_top1_accuracy']:.6f} | "
-            f"{metrics['fix_intent_top1_accuracy']:.6f} | {metrics['mean_investigation_cost']:.6f} |"
+            f"{metrics['fix_intent_top1_accuracy']:.6f} | {metrics['mean_investigation_cost']:.6f} | "
+            f"{metrics['mean_investigation_cost_buggy_only']:.6f} |"
         )
     lines.extend(["", "## Success Checks", ""])
     for key, value in summary["success_checks"].items():
@@ -237,8 +247,11 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
             "",
             "## Notes",
             "",
-            "- Failure cost for undiscovered buggy variants is `budget_limit + 2`.",
+            f"- Failure cost for undiscovered buggy variants is `{summary['settings']['failure_cost']}`.",
             "- Location metrics use function-level targets; line-span hints are secondary only.",
+            "- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.",
+            "- All policies share the same stopping rules, so the comparison is primarily about action ordering.",
+            "- The equal-cost/better-localization alternative clause is assessed manually.",
             "- `inspect_recent_diff` uses synthetic metadata, not real git commits or diffs.",
             "- `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.",
         ]

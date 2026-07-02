@@ -18,6 +18,7 @@
 - P1b policies: `random_action`, `fixed_checklist`, `test_first`, `coverage_first`, `recent_diff_first`, `cause_only_p1a_style`, and `expected_utility_per_cost`.
 - P1b JSON and Markdown report/evaluation output.
 - P1b CLI commands: `p1b-list-variants`, `p1b-report`, and `p1b-evaluate`.
+- P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
 - Wrong-stop diagnostic for the primary policy.
@@ -65,6 +66,7 @@
 - P1b is a small injected-bug scaffold, not a production debugger.
 - P1b location evaluation is function-level; `line_span_hint` is secondary.
 - P1b uses synthetic recent-diff metadata and structured coverage-like observations.
+- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.
 - P1b predicts fix-intent categories but does not generate patches.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
@@ -88,24 +90,28 @@ python -m bug_cause_inference.cli p1b-evaluate --json-output examples/p1b/report
 
 ## Latest Test Result
 
-Passed on 2026-07-02 after the initial P1b scaffold implementation:
+Passed on 2026-07-03 after the P1b Phase A quality pass:
 
 ```bash
 .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 31 passed.
+Result: 102 passed.
 
 Latest generated evaluation summary:
 
 - `information_gain_per_cost` mean `cost_to_true_cause_top1`: 1.12
 - `fixed_checklist` mean `cost_to_true_cause_top1`: 1.56
 - Fixed-checklist cost reduction: 28.2051%
+- Not worse than `posterior_greedy` overall: true
+- At least 3 of 5 categories not worse than `fixed_checklist`: true
+- Meets charter success criteria: true
 - Primary success rate within budget: 94%
 - Dataset initial top-1 accuracy: 70%
 - Dataset initial top-2 accuracy: 100%
 - Primary wrong-stop rate: 13.0435%
 - The first-MVP success check against `fixed_checklist` is currently met on the synthetic dataset.
+- The `primary_success_rate_at_least_80_percent` check is a diagnostic default, not a charter success criterion.
 
 See [`p1a_evaluation_notes.md`](p1a_evaluation_notes.md) for the current interpretation and limitations of these results.
 
@@ -117,3 +123,16 @@ Latest P1b initial implementation verification:
 - `p1b-report` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
 - `p1b-evaluate` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
 - P1b/P1c exclusions remain: no patch generation, no large real repositories, no LLM agent battles, no adversarial bug generation, no formal minimax framing.
+
+Latest P1b Phase A evaluation snapshot:
+
+- Primary policy: `expected_utility_per_cost`
+- Primary bug discovery rate within budget: 0.55
+- Primary clean false-positive rate: 0.0
+- Primary location top-3 accuracy: 0.60
+- Primary cause top-1 accuracy: 0.80
+- Primary mean investigation cost: 2.80
+- Primary buggy-only mean investigation cost: 3.00
+- Primary vs fixed mean cost delta: 42.1488%
+- Primary mean cost at least 10% below fixed checklist: true
+- The equal-cost/better-localization alternative clause is assessed manually.

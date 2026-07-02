@@ -32,6 +32,8 @@ Current all-case results:
 
 These results support the idea that cost-aware active investigation can reduce investigation cost on this synthetic setup. They do not prove real-world debugging accuracy.
 
+The `primary_success_rate_at_least_80_percent` success check is a diagnostic default, not a charter success criterion.
+
 ## Initially Wrong Cases
 
 For cases where the initial top-1 hypothesis is wrong:

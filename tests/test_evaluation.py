@@ -27,7 +27,7 @@ def _assert_rate(value):
 
 def test_evaluation_metrics_run():
     cases = generate_synthetic_cases()
-    policies = ("fixed_checklist", "information_gain_per_cost", "static_posterior", "random")
+    policies = ("fixed_checklist", "posterior_greedy", "information_gain_per_cost", "static_posterior", "random")
     summary = evaluate_policies(
         cases,
         policies=policies,
@@ -61,6 +61,9 @@ def test_evaluation_metrics_run():
 
     success_checks = summary["success_checks"]
     assert isinstance(success_checks["meets_15_percent_fixed_checklist_reduction"], bool)
+    assert isinstance(success_checks["not_worse_than_posterior_greedy_overall"], bool)
+    assert isinstance(success_checks["at_least_3_of_5_categories_not_worse_than_fixed_checklist"], bool)
+    assert isinstance(success_checks["meets_charter_success_criteria"], bool)
     assert isinstance(success_checks["primary_success_rate_at_least_80_percent"], bool)
     assert isinstance(success_checks["primary_wrong_stop_rate_under_10_percent_diagnostic"], bool)
     _assert_rate(success_checks["primary_wrong_stop_rate"])

@@ -18,6 +18,7 @@ REQUIRED_P1B_METRICS = {
     "fix_intent_top1_accuracy",
     "fix_intent_top3_accuracy",
     "mean_investigation_cost",
+    "mean_investigation_cost_buggy_only",
     "cause_brier_score",
 }
 
@@ -32,4 +33,7 @@ def test_p1b_evaluation_outputs_required_metrics():
     for key in REQUIRED_P1B_METRICS:
         assert primary[key] >= 0
     assert "primary_bug_discovery_rate_at_least_75_percent" in summary["success_checks"]
-
+    assert isinstance(
+        summary["success_checks"]["primary_mean_cost_at_least_10_percent_below_fixed_checklist"],
+        bool,
+    )

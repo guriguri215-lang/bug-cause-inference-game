@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
-from bug_cause_inference.p1b.models import P1B_FIX_INTENT_CATEGORIES, P1BVariant
+from bug_cause_inference.p1b.models import P1B_CAUSE_CATEGORIES, P1B_FIX_INTENT_CATEGORIES, P1BVariant
 
 
 LOCATION_CANDIDATES = (
@@ -525,6 +527,93 @@ P1B_VARIANTS: tuple[P1BVariant, ...] = (
 
 def load_p1b_variants() -> list[P1BVariant]:
     return list(P1B_VARIANTS)
+
+
+def validate_p1b_dataset(
+    variants: list[P1BVariant] | tuple[P1BVariant, ...] | None = None,
+    *,
+    action_ids: Iterable[str],
+) -> None:
+    """Raise ValueError if the fixed P1b variant metadata is inconsistent."""
+
+    variants = list(P1B_VARIANTS if variants is None else variants)
+    action_id_set = set(action_ids)
+    location_set = set(LOCATION_CANDIDATES)
+    allowed_difficulties = {"easy", "medium", "hard"}
+    errors: list[str] = []
+
+    variant_ids = [variant.variant_id for variant in variants]
+    duplicates = sorted(variant_id for variant_id, count in Counter(variant_ids).items() if count > 1)
+    if duplicates:
+        errors.append(f"Duplicate variant_id values: {duplicates}.")
+
+    buggy_variants = [variant for variant in variants if variant.is_buggy]
+    clean_variants = [variant for variant in variants if not variant.is_buggy]
+    if len(buggy_variants) != 20:
+        errors.append(f"Expected 20 buggy variants, found {len(buggy_variants)}.")
+    if len(clean_variants) != 5:
+        errors.append(f"Expected 5 clean variants, found {len(clean_variants)}.")
+
+    category_counts = Counter(variant.true_cause_category for variant in buggy_variants)
+    for category in P1B_CAUSE_CATEGORIES:
+        if category_counts[category] != 4:
+            errors.append(f"Expected 4 buggy variants for {category!r}, found {category_counts[category]}.")
+    extra_categories = sorted(category for category in category_counts if category not in P1B_CAUSE_CATEGORIES)
+    if extra_categories:
+        errors.append(f"Unknown buggy cause categories: {extra_categories}.")
+
+    buggy_required = (
+        "true_cause_category",
+        "target_module",
+        "target_function",
+        "line_span_hint",
+        "bug_summary",
+        "trigger_condition",
+        "failing_input_or_sequence",
+        "expected_behavior",
+        "actual_behavior",
+        "fix_intent_category",
+        "fix_intent_description",
+        "difficulty",
+        "primary_discovery_action",
+        "observable_signals",
+    )
+    clean_required = (
+        "covered_spec_area",
+        "expected_clean_behavior",
+        "confusing_signals",
+        "why_false_positive_might_happen",
+        "recommended_no_bug_evidence",
+    )
+
+    for variant in buggy_variants:
+        missing = [field for field in buggy_required if getattr(variant, field) is None]
+        if missing:
+            errors.append(f"{variant.variant_id} missing buggy fields: {missing}.")
+        if variant.target_location not in location_set:
+            errors.append(f"{variant.variant_id} target_location {variant.target_location!r} is not a candidate.")
+        unknown_distractors = sorted(set(variant.distractor_locations) - location_set)
+        if unknown_distractors:
+            errors.append(f"{variant.variant_id} has unknown distractor locations: {unknown_distractors}.")
+        if variant.primary_discovery_action not in action_id_set:
+            errors.append(
+                f"{variant.variant_id} primary_discovery_action {variant.primary_discovery_action!r} is unknown."
+            )
+        unknown_secondary = sorted(set(variant.secondary_discovery_actions) - action_id_set)
+        if unknown_secondary:
+            errors.append(f"{variant.variant_id} has unknown secondary discovery actions: {unknown_secondary}.")
+        if variant.difficulty not in allowed_difficulties:
+            errors.append(f"{variant.variant_id} has invalid difficulty {variant.difficulty!r}.")
+        if variant.fix_intent_category not in P1B_FIX_INTENT_CATEGORIES:
+            errors.append(f"{variant.variant_id} has invalid fix_intent_category {variant.fix_intent_category!r}.")
+
+    for variant in clean_variants:
+        missing = [field for field in clean_required if getattr(variant, field) is None]
+        if missing:
+            errors.append(f"{variant.variant_id} missing clean fields: {missing}.")
+
+    if errors:
+        raise ValueError("P1b dataset validation failed: " + " ".join(errors))
 
 
 def get_variant(variant_id: str) -> P1BVariant:
