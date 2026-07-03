@@ -26,6 +26,7 @@ REQUIRED_P1B_METRICS = {
 def test_p1b_evaluation_outputs_required_metrics():
     summary = evaluate_p1b(policies=("fixed_checklist", "expected_utility_per_cost"))
 
+    assert summary["observation_mode"] == "metadata_synth"
     assert summary["dataset"] == {"total_variants": 25, "buggy_variants": 20, "clean_variants": 5}
     assert summary["primary_policy"] == P1B_PRIMARY_POLICY
     primary = summary["policies"][P1B_PRIMARY_POLICY]
@@ -37,3 +38,12 @@ def test_p1b_evaluation_outputs_required_metrics():
         summary["success_checks"]["primary_mean_cost_at_least_10_percent_below_fixed_checklist"],
         bool,
     )
+
+
+def test_p1b_evaluation_accepts_execution_grounded_mode():
+    summary = evaluate_p1b(policies=("expected_utility_per_cost",), observation_mode="execution_grounded")
+
+    assert summary["observation_mode"] == "execution_grounded"
+    metrics = summary["policies"][P1B_PRIMARY_POLICY]
+    assert metrics["num_variants"] == 25
+    assert metrics["false_positive_rate_on_clean_cases"] == 0.0

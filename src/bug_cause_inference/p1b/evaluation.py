@@ -6,6 +6,7 @@ import json
 from statistics import mean
 from typing import Any
 
+from bug_cause_inference.p1b.actions import P1B_OBSERVATION_MODES
 from bug_cause_inference.p1b.dataset import load_p1b_variants
 from bug_cause_inference.p1b.models import P1B_CAUSE_CATEGORIES, P1BRunResult, P1BSettings, P1BVariant, rank_distribution
 from bug_cause_inference.p1b.policies import P1B_POLICIES, P1B_PRIMARY_POLICY, run_p1b_investigation
@@ -149,13 +150,24 @@ def evaluate_p1b(
     variants: list[P1BVariant] | None = None,
     policies: tuple[str, ...] = P1B_POLICIES,
     settings: P1BSettings | None = None,
+    observation_mode: str = "metadata_synth",
 ) -> dict[str, Any]:
+    if observation_mode not in P1B_OBSERVATION_MODES:
+        raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
     settings = settings or P1BSettings()
     variants = variants or load_p1b_variants()
     policy_results: dict[str, list[P1BRunResult]] = {}
     policy_metrics: dict[str, Any] = {}
     for policy in policies:
-        results = [run_p1b_investigation(variant, policy=policy, settings=settings) for variant in variants]
+        results = [
+            run_p1b_investigation(
+                variant,
+                policy=policy,
+                settings=settings,
+                observation_mode=observation_mode,
+            )
+            for variant in variants
+        ]
         policy_results[policy] = results
         policy_metrics[policy] = _policy_metrics(variants, results, settings)
 
@@ -168,6 +180,7 @@ def evaluate_p1b(
         ) / fixed["mean_investigation_cost"]
     return {
         "benchmark": "p1b_injected_bug_benchmark",
+        "observation_mode": observation_mode,
         "settings": {
             "budget_limit": settings.budget_limit,
             "max_steps": settings.max_steps,
@@ -225,6 +238,7 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
         f"- buggy_variants: {summary['dataset']['buggy_variants']}",
         f"- clean_variants: {summary['dataset']['clean_variants']}",
         f"- primary_policy: {summary['primary_policy']}",
+        f"- observation_mode: {summary.get('observation_mode', 'metadata_synth')}",
         "",
         "## Policy Metrics",
         "",
@@ -249,11 +263,24 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
             "",
             f"- Failure cost for undiscovered buggy variants is `{summary['settings']['failure_cost']}`.",
             "- Location metrics use function-level targets; line-span hints are secondary only.",
-            "- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.",
             "- All policies share the same stopping rules, so the comparison is primarily about action ordering.",
             "- The equal-cost/better-localization alternative clause is assessed manually.",
-            "- `inspect_recent_diff` uses synthetic metadata, not real git commits or diffs.",
             "- `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.",
         ]
     )
+    if summary.get("observation_mode", "metadata_synth") == "execution_grounded":
+        lines.extend(
+            [
+                "- Execution-grounded mode builds test-action observations from checkout test results, exceptions, and traced checkout functions, not from variant cause/location/fix-intent labels.",
+                "- `inspect_coverage_spectrum` is B1-minimal and stores only simple cached failure coverage; Ochiai-style ranking is deferred to B2.",
+                "- `inspect_recent_diff` remains a synthetic prior in Phase B1; real git commit/diff artifacts are deferred to Phase C.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.",
+                "- `inspect_recent_diff` uses synthetic metadata, not real git commits or diffs.",
+            ]
+        )
     return "\n".join(lines) + "\n"

@@ -8,6 +8,7 @@ from pathlib import Path
 from bug_cause_inference.analysis import analysis_to_json, analysis_to_markdown, build_analysis_summary
 from bug_cause_inference.evaluation import evaluate_policies, evaluation_to_json, evaluation_to_markdown
 from bug_cause_inference.likelihoods import validate_likelihood_table
+from bug_cause_inference.p1b.actions import P1B_OBSERVATION_MODES
 from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants, save_variants
 from bug_cause_inference.p1b.evaluation import (
     evaluate_p1b,
@@ -120,13 +121,13 @@ def command_p1b_list_variants(args: argparse.Namespace) -> None:
 
 def command_p1b_report(args: argparse.Namespace) -> None:
     variant = get_variant(args.variant_id)
-    report = build_p1b_report(variant, policy=args.policy)
+    report = build_p1b_report(variant, policy=args.policy, observation_mode=args.observation_mode)
     _write_or_print(p1b_report_to_json(report), p1b_report_to_markdown(report), args)
 
 
 def command_p1b_evaluate(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else P1B_POLICIES
-    summary = evaluate_p1b(policies=policies)
+    summary = evaluate_p1b(policies=policies, observation_mode=args.observation_mode)
     _write_or_print(p1b_evaluation_to_json(summary), p1b_evaluation_to_markdown(summary), args)
 
 
@@ -187,6 +188,7 @@ def build_parser() -> argparse.ArgumentParser:
     p1b_report = subparsers.add_parser("p1b-report", help="Generate one P1b variant report.")
     p1b_report.add_argument("--variant-id", default="P1B-BUG-001")
     p1b_report.add_argument("--policy", choices=P1B_POLICIES, default=P1B_PRIMARY_POLICY)
+    p1b_report.add_argument("--observation-mode", choices=P1B_OBSERVATION_MODES, default="metadata_synth")
     p1b_report.add_argument("--format", choices=("json", "markdown"), default="markdown")
     p1b_report.add_argument("--json-output", type=Path, default=None)
     p1b_report.add_argument("--markdown-output", type=Path, default=None)
@@ -194,6 +196,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p1b_evaluate = subparsers.add_parser("p1b-evaluate", help="Evaluate P1b policies.")
     p1b_evaluate.add_argument("--policies", nargs="*", choices=P1B_POLICIES)
+    p1b_evaluate.add_argument("--observation-mode", choices=P1B_OBSERVATION_MODES, default="metadata_synth")
     p1b_evaluate.add_argument("--format", choices=("json", "markdown"), default="markdown")
     p1b_evaluate.add_argument("--json-output", type=Path, default=None)
     p1b_evaluate.add_argument("--markdown-output", type=Path, default=None)

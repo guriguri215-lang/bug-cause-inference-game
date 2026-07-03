@@ -29,12 +29,14 @@ def build_p1b_report(
     variant: P1BVariant,
     policy: str = P1B_PRIMARY_POLICY,
     settings: P1BSettings | None = None,
+    observation_mode: str = "metadata_synth",
 ) -> dict[str, Any]:
     settings = settings or P1BSettings()
-    result = run_p1b_investigation(variant, policy=policy, settings=settings)
+    result = run_p1b_investigation(variant, policy=policy, settings=settings, observation_mode=observation_mode)
     return {
         "variant": variant.to_dict(),
         "policy": policy,
+        "observation_mode": observation_mode,
         "stop_or_continue": "stop",
         "stop_reason": result.stop_reason,
         "recommended_next_action": None,
@@ -64,6 +66,7 @@ def p1b_report_to_markdown(report: dict[str, Any]) -> str:
         "## Summary",
         "",
         f"- policy: {report['policy']}",
+        f"- observation_mode: {report.get('observation_mode', 'metadata_synth')}",
         f"- is_buggy: {variant['is_buggy']}",
         f"- stop_reason: {report['stop_reason']}",
         f"- bug_detected: {report['bug_detected']}",

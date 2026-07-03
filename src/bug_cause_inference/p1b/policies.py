@@ -7,8 +7,9 @@ import random
 from dataclasses import dataclass
 from typing import Any
 
-from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS, P1B_ACTIONS, run_action
+from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS, P1B_ACTIONS, P1B_OBSERVATION_MODES, run_action
 from bug_cause_inference.p1b.dataset import LOCATION_CANDIDATES
+from bug_cause_inference.p1b.execution import P1BExecutionContext
 from bug_cause_inference.p1b.models import (
     P1B_CAUSE_CATEGORIES,
     P1B_FIX_INTENT_CATEGORIES,
@@ -78,6 +79,7 @@ class _State:
     cumulative_cost: int
     current_step: int
     bug_detected: bool
+    execution_context: P1BExecutionContext | None = None
 
 
 def _entropy(distribution: dict[str, float]) -> float:
@@ -207,7 +209,10 @@ def run_p1b_investigation(
     policy: str = P1B_PRIMARY_POLICY,
     settings: P1BSettings | None = None,
     rng_seed: int | None = None,
+    observation_mode: str = "metadata_synth",
 ) -> P1BRunResult:
+    if observation_mode not in P1B_OBSERVATION_MODES:
+        raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
     settings = settings or P1BSettings()
     seed = settings.rng_seed if rng_seed is None else rng_seed
     rng = random.Random(_stable_seed(variant.variant_id, seed))
@@ -220,6 +225,7 @@ def run_p1b_investigation(
         cumulative_cost=0,
         current_step=0,
         bug_detected=False,
+        execution_context=P1BExecutionContext() if observation_mode == "execution_grounded" else None,
     )
     trace: list[P1BStepTrace] = []
     reproduction_input: str | None = None
@@ -243,7 +249,12 @@ def run_p1b_investigation(
         prior_cause = dict(state.cause_posterior)
         prior_location = dict(state.location_posterior)
         prior_fix = dict(state.fix_intent_posterior)
-        observation = run_action(variant, action_id)
+        observation = run_action(
+            variant,
+            action_id,
+            observation_mode=observation_mode,
+            execution_context=state.execution_context,
+        )
 
         state.executed_actions.append(action_id)
         state.cumulative_cost += observation.cost

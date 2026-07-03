@@ -115,6 +115,15 @@ class P1BObservation:
     cause_scores: dict[str, float] = field(default_factory=dict)
     location_scores: dict[str, float] = field(default_factory=dict)
     fix_intent_scores: dict[str, float] = field(default_factory=dict)
+    evidence_source: str = "metadata_synth"
+    test_results: list[dict[str, Any]] = field(default_factory=list)
+    failed_test_ids: list[str] = field(default_factory=list)
+    passed_test_ids: list[str] = field(default_factory=list)
+    executed_functions: list[str] = field(default_factory=list)
+    failing_executed_functions: list[str] = field(default_factory=list)
+    passing_executed_functions: list[str] = field(default_factory=list)
+    stack_functions: list[str] = field(default_factory=list)
+    coverage_suspicion: dict[str, float] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

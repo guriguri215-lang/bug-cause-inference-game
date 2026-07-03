@@ -32,10 +32,31 @@ def test_p1b_evaluate_cli_outputs_major_metrics(tmp_path):
     main(["p1b-evaluate", "--policies", "expected_utility_per_cost", "--json-output", str(json_path)])
 
     summary = json.loads(json_path.read_text(encoding="utf-8"))
+    assert summary["observation_mode"] == "metadata_synth"
     metrics = summary["policies"]["expected_utility_per_cost"]
     assert "bug_discovery_rate_within_budget" in metrics
     assert "location_top3_accuracy" in metrics
     assert "fix_intent_top1_accuracy" in metrics
+
+
+def test_p1b_evaluate_cli_accepts_execution_grounded_mode(tmp_path):
+    json_path = tmp_path / "p1b_eval_execution.json"
+
+    main(
+        [
+            "p1b-evaluate",
+            "--policies",
+            "expected_utility_per_cost",
+            "--observation-mode",
+            "execution_grounded",
+            "--json-output",
+            str(json_path),
+        ]
+    )
+
+    summary = json.loads(json_path.read_text(encoding="utf-8"))
+    assert summary["observation_mode"] == "execution_grounded"
+    assert summary["policies"]["expected_utility_per_cost"]["num_variants"] == 25
 
 
 def test_p1b_list_variants_cli_can_save_dataset(tmp_path):
