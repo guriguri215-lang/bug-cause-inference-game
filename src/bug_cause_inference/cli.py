@@ -8,6 +8,20 @@ from pathlib import Path
 from bug_cause_inference.analysis import analysis_to_json, analysis_to_markdown, build_analysis_summary
 from bug_cause_inference.evaluation import evaluate_policies, evaluation_to_json, evaluation_to_markdown
 from bug_cause_inference.likelihoods import validate_likelihood_table
+from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants, save_variants
+from bug_cause_inference.p1b.evaluation import (
+    evaluate_p1b,
+    p1b_evaluation_to_json,
+    p1b_evaluation_to_markdown,
+)
+from bug_cause_inference.p1b.policies import P1B_POLICIES, P1B_PRIMARY_POLICY
+from bug_cause_inference.p1b.reports import (
+    build_p1b_report,
+    p1b_report_to_json,
+    p1b_report_to_markdown,
+    p1b_variants_to_json,
+    p1b_variants_to_markdown,
+)
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
 from bug_cause_inference.reports import build_decision_report, report_to_json, report_to_markdown
 from bug_cause_inference.synthetic_cases import DEFAULT_SEED, generate_synthetic_cases, load_cases, save_cases
@@ -80,6 +94,42 @@ def command_analyze(args: argparse.Namespace) -> None:
         print(analysis_to_markdown(summary), end="")
 
 
+def _write_or_print(
+    data_json: str,
+    data_markdown: str,
+    args: argparse.Namespace,
+) -> None:
+    if args.json_output:
+        args.json_output.write_text(data_json, encoding="utf-8")
+    if args.markdown_output:
+        args.markdown_output.write_text(data_markdown, encoding="utf-8")
+    if args.json_output or args.markdown_output:
+        return
+    if args.format == "json":
+        print(data_json, end="")
+    else:
+        print(data_markdown, end="")
+
+
+def command_p1b_list_variants(args: argparse.Namespace) -> None:
+    variants = load_p1b_variants()
+    if args.output:
+        save_variants(args.output, variants)
+    _write_or_print(p1b_variants_to_json(variants), p1b_variants_to_markdown(variants), args)
+
+
+def command_p1b_report(args: argparse.Namespace) -> None:
+    variant = get_variant(args.variant_id)
+    report = build_p1b_report(variant, policy=args.policy)
+    _write_or_print(p1b_report_to_json(report), p1b_report_to_markdown(report), args)
+
+
+def command_p1b_evaluate(args: argparse.Namespace) -> None:
+    policies = tuple(args.policies) if args.policies else P1B_POLICIES
+    summary = evaluate_p1b(policies=policies)
+    _write_or_print(p1b_evaluation_to_json(summary), p1b_evaluation_to_markdown(summary), args)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bug-cause-inference",
@@ -126,6 +176,28 @@ def build_parser() -> argparse.ArgumentParser:
     analyze.add_argument("--json-output", type=Path, default=None)
     analyze.add_argument("--markdown-output", type=Path, default=None)
     analyze.set_defaults(func=command_analyze)
+
+    p1b_list = subparsers.add_parser("p1b-list-variants", help="List P1b injected-bug benchmark variants.")
+    p1b_list.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1b_list.add_argument("--output", type=Path, default=None, help="Optional JSON dataset output path.")
+    p1b_list.add_argument("--json-output", type=Path, default=None)
+    p1b_list.add_argument("--markdown-output", type=Path, default=None)
+    p1b_list.set_defaults(func=command_p1b_list_variants)
+
+    p1b_report = subparsers.add_parser("p1b-report", help="Generate one P1b variant report.")
+    p1b_report.add_argument("--variant-id", default="P1B-BUG-001")
+    p1b_report.add_argument("--policy", choices=P1B_POLICIES, default=P1B_PRIMARY_POLICY)
+    p1b_report.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1b_report.add_argument("--json-output", type=Path, default=None)
+    p1b_report.add_argument("--markdown-output", type=Path, default=None)
+    p1b_report.set_defaults(func=command_p1b_report)
+
+    p1b_evaluate = subparsers.add_parser("p1b-evaluate", help="Evaluate P1b policies.")
+    p1b_evaluate.add_argument("--policies", nargs="*", choices=P1B_POLICIES)
+    p1b_evaluate.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1b_evaluate.add_argument("--json-output", type=Path, default=None)
+    p1b_evaluate.add_argument("--markdown-output", type=Path, default=None)
+    p1b_evaluate.set_defaults(func=command_p1b_evaluate)
 
     return parser
 

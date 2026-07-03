@@ -2,7 +2,9 @@
 
 A Bayesian active bug investigation prototype that recommends the next investigation action under limited debugging budget.
 
-This first MVP works only on synthetic observed-bug cases. It updates posterior probabilities over cause categories, compares investigation policies, and emits a `DecisionReport` whose primary output is `recommended_next_action`.
+P1a works on synthetic observed-bug cases. It updates posterior probabilities over cause categories, compares investigation policies, and emits a `DecisionReport` whose primary output is `recommended_next_action`.
+
+P1b adds a small injected-bug checkout/pricing benchmark scaffold. It evaluates whether budget-aware policies can discover failures, rank function-level locations, infer coarse cause categories, and predict fix-intent categories on 20 buggy variants and 5 clean variants.
 
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
@@ -13,6 +15,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A Bayesian update loop using a fixed observation likelihood table.
 - A policy comparison harness for action-selection strategies.
 - A report generator for JSON and Markdown `DecisionReport` outputs.
+- A P1b small injected-bug benchmark scaffold for checkout/pricing variants.
 
 ## What This Project Is Not
 
@@ -21,7 +24,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - This is not an LLM debugging benchmark.
 - This is not yet a full game-theoretic debugging tool.
 - It does not discover bugs in source code.
-- It does not identify code locations.
+- P1a does not identify code locations; P1b only ranks function-level locations inside a small injected benchmark scaffold.
 - It does not generate patches.
 - It does not ingest real project bug histories.
 
@@ -71,6 +74,14 @@ Generate analysis-only diagnostics:
 python -m bug_cause_inference.cli analyze --cases examples/cases/synthetic_cases.json --format markdown
 ```
 
+Run the P1b injected-bug benchmark scaffold:
+
+```bash
+python -m bug_cause_inference.cli p1b-list-variants
+python -m bug_cause_inference.cli p1b-report --variant-id P1B-BUG-001 --format markdown
+python -m bug_cause_inference.cli p1b-evaluate --format markdown
+```
+
 ## Example Command
 
 ```bash
@@ -114,7 +125,7 @@ Exact probabilities depend on the generated case and the investigation trace.
 
 ## Evaluation Metrics
 
-The evaluator reports:
+P1a evaluator reports:
 
 - `initial_top1_accuracy`
 - `initial_top2_accuracy`
@@ -134,6 +145,28 @@ The evaluator reports:
 `wrong_stop_rate` means the model stopped on a high-confidence but incorrect cause hypothesis. It is not about patch correctness.
 
 The evaluation also reports a wrong-stop diagnostic threshold for the primary policy. This is a caution signal, not a claim that the synthetic model is safe for real-world root-cause decisions.
+
+P1b evaluator reports:
+
+- `bug_discovery_rate_within_budget`
+- `cost_to_first_failure`
+- `reproduction_success_rate`
+- `false_positive_rate_on_clean_cases`
+- `false_negative_rate_on_buggy_cases`
+- `location_top1_accuracy`
+- `location_top3_accuracy`
+- `location_mrr`
+- `cause_top1_accuracy`
+- `cause_top2_accuracy`
+- `cost_to_true_cause_top1`
+- `wrong_cause_high_confidence_rate`
+- `fix_intent_top1_accuracy`
+- `fix_intent_top3_accuracy`
+- `mean_investigation_cost`
+- `mean_investigation_cost_buggy_only`
+- `cause_brier_score`
+
+P1b location metrics are function-level only. Line-span hints are explanatory and secondary.
 
 ## Analysis Reports
 
@@ -174,6 +207,18 @@ Implemented policies:
 
 The main policy is `information_gain_per_cost`.
 
+P1b implemented policies:
+
+- `random_action`
+- `fixed_checklist`
+- `test_first`
+- `coverage_first`
+- `recent_diff_first`
+- `cause_only_p1a_style`
+- `expected_utility_per_cost`
+
+The P1b main policy is `expected_utility_per_cost`.
+
 ## Limitations
 
 - The dataset is synthetic and intentionally small.
@@ -184,6 +229,11 @@ The main policy is `information_gain_per_cost`.
 - The prototype recommends the next investigation action; it does not prove a root cause in a real system.
 - There is no web UI, LLM free-form debugging, adversarial bug generation, or regret-based policy learning in this MVP.
 - Analysis reports expose current failure modes; they do not improve the model or make real-world accuracy claims.
+- P1b is a small injected-bug scaffold, not a production fault-localization engine.
+- P1b uses synthetic recent-diff metadata and structured coverage-like observations.
+- P1b observations are synthesized from ground-truth variant metadata via discovery-action matching; they are not derived from executing the checkout code, except for two exception probes (`P1B-BUG-007`, `P1B-BUG-012`). Location, cause, and fix-intent metrics therefore measure action-selection efficiency on this scaffold, not real fault-localization ability.
+- P1b `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.
+- P1b predicts fix-intent categories but does not generate patches.
 
 ## Reproducibility Notes
 
@@ -192,6 +242,7 @@ The main policy is `information_gain_per_cost`.
 - Each case has 2 initial observations and all 8 possible investigation outcomes.
 - The current generated dataset has initial top-1 accuracy of 70% and initial top-2 accuracy of 100%, so evaluation reports both all-case and initially-wrong-case performance.
 - Generated examples under `examples/` are reproducible from the CLI.
+- P1b examples under `examples/p1b/` are generated by `p1b-list-variants`, `p1b-report`, and `p1b-evaluate`.
 
 ## License
 
