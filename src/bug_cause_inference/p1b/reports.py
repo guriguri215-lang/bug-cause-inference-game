@@ -103,6 +103,36 @@ def p1b_report_to_markdown(report: dict[str, Any]) -> str:
         lines.append(f"| {item['rank']} | {item['label']} | {item['probability']:.6f} |")
     lines.extend(["", "## Executed Actions", ""])
     lines.extend(f"- {action}" for action in report["executed_actions"])
+    coverage_steps = [
+        step
+        for step in report["trace"]
+        if step["selected_action"] == "inspect_coverage_spectrum"
+        and step["observation"].get("coverage_suspicion")
+    ]
+    if coverage_steps:
+        lines.extend(
+            [
+                "",
+                "## Coverage Spectrum",
+                "",
+                "| step | function | ochiai | failed | passed | total_failed |",
+                "|---:|---|---:|---:|---:|---:|",
+            ]
+        )
+        for step in coverage_steps:
+            observation = step["observation"]
+            counts = observation.get("coverage_counts", {})
+            ranked = sorted(
+                observation["coverage_suspicion"].items(),
+                key=lambda item: (-item[1], item[0]),
+            )[:5]
+            for function, suspicion in ranked:
+                values = counts.get(function, {})
+                lines.append(
+                    f"| {step['step']} | {function} | {suspicion:.6f} | "
+                    f"{values.get('failed', 0)} | {values.get('passed', 0)} | "
+                    f"{values.get('total_failed', 0)} |"
+                )
     lines.extend(["", "## Known Limits", ""])
     lines.extend(f"- {limit}" for limit in report["known_limits"])
     return "\n".join(lines) + "\n"

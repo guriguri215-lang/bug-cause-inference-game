@@ -8,6 +8,7 @@ those labels are reserved for evaluation.
 from __future__ import annotations
 
 import sys
+from math import sqrt
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
@@ -37,6 +38,8 @@ CAUSE_HINT_WEIGHT = 3.0
 FIX_INTENT_HINT_WEIGHT = 2.5
 FAILING_FUNCTION_WEIGHT = 1.8
 STACK_FUNCTION_WEIGHT = 2.2
+COVERAGE_LOCATION_WEIGHT = 10.0
+STACK_TIE_BREAKER_WEIGHT = 0.25
 
 
 @dataclass(frozen=True)
@@ -53,12 +56,26 @@ class ExecutionTestCase:
 @dataclass
 class P1BExecutionContext:
     test_results: list[dict[str, Any]] = field(default_factory=list)
+    action_results: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
 
-    def record(self, results: list[dict[str, Any]]) -> None:
-        self.test_results.extend(results)
+    def record(self, action_id: str, results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        recorded = []
+        for result in results:
+            item = dict(result)
+            item["action_id"] = action_id
+            recorded.append(item)
+        self.test_results.extend(recorded)
+        self.action_results.setdefault(action_id, []).extend(recorded)
+        return recorded
 
     def failed_results(self) -> list[dict[str, Any]]:
         return [result for result in self.test_results if not result["passed"]]
+
+    def spectrum_results(self) -> list[dict[str, Any]]:
+        by_test_id: dict[str, dict[str, Any]] = {}
+        for result in self.test_results:
+            by_test_id.setdefault(result["test_id"], result)
+        return list(by_test_id.values())
 
 
 def _unique(items: Iterator[str] | list[str] | tuple[str, ...]) -> list[str]:
@@ -639,13 +656,61 @@ def _score_maps_from_results(
     return cause_scores, location_scores, fix_intent_scores
 
 
+def _coverage_counts_from_results(results: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
+    total_failed = sum(1 for result in results if not result["passed"])
+    functions = _aggregate_functions(results)
+    counts: dict[str, dict[str, int]] = {}
+    for function in functions:
+        failed = 0
+        passed = 0
+        for result in results:
+            executed = set(result["executed_functions"])
+            if function not in executed:
+                continue
+            if result["passed"]:
+                passed += 1
+            else:
+                failed += 1
+        counts[function] = {
+            "failed": failed,
+            "passed": passed,
+            "total_failed": total_failed,
+        }
+    return counts
+
+
+def _ochiai(failed: int, passed: int, total_failed: int) -> float:
+    if failed <= 0 or total_failed <= 0:
+        return 0.0
+    denominator = sqrt(total_failed * (failed + passed))
+    if denominator <= 0:
+        return 0.0
+    return failed / denominator
+
+
 def _coverage_suspicion_from_results(results: list[dict[str, Any]]) -> dict[str, float]:
-    # B1 keeps this intentionally simple; Ochiai-style ranking belongs to B2.
-    failed_results = [result for result in results if not result["passed"]]
-    if not failed_results:
-        return {}
-    failing_functions = _aggregate_functions(failed_results)
-    return {function: 1.0 for function in failing_functions}
+    counts = _coverage_counts_from_results(results)
+    suspicion = {
+        function: round(_ochiai(values["failed"], values["passed"], values["total_failed"]), 6)
+        for function, values in counts.items()
+        if values["failed"] > 0
+    }
+    return {function: value for function, value in suspicion.items() if value > 0.0}
+
+
+def _location_scores_from_coverage(
+    coverage_suspicion: dict[str, float],
+    stack_functions: list[str],
+) -> dict[str, float]:
+    location_scores = {
+        function: 1.0 + COVERAGE_LOCATION_WEIGHT * suspicion
+        for function, suspicion in coverage_suspicion.items()
+        if suspicion > 0.0
+    }
+    for function in stack_functions:
+        if function in location_scores:
+            location_scores[function] += STACK_TIE_BREAKER_WEIGHT
+    return location_scores
 
 
 def _observation_from_results(
@@ -664,6 +729,7 @@ def _observation_from_results(
     first_exception = next((result for result in failed_results if result["exception_type"]), None)
     cause_scores, location_scores, fix_intent_scores = _score_maps_from_results(results)
     stack_functions = _aggregate_stack_functions(failed_results)
+    coverage_counts = _coverage_counts_from_results(results)
     if first_failure:
         summary = (
             f"{action_id} failed {len(failed_results)}/{len(results)} execution-grounded tests; "
@@ -694,6 +760,7 @@ def _observation_from_results(
         passing_executed_functions=_aggregate_functions(results, passed=True),
         stack_functions=stack_functions,
         coverage_suspicion=_coverage_suspicion_from_results(results),
+        coverage_counts=coverage_counts,
     )
 
 
@@ -714,8 +781,10 @@ def _inspect_traceback(
             results=cached_failures,
             recordable=False,
         )
-    results = [_run_test_case(TEST_CASES[test_id], variant_id) for test_id in TRACEBACK_PROBE_IDS]
-    context.record(results)
+    results = context.record(
+        action_id,
+        [_run_test_case(TEST_CASES[test_id], variant_id) for test_id in TRACEBACK_PROBE_IDS],
+    )
     return _observation_from_results(
         action_id=action_id,
         cost=cost,
@@ -731,19 +800,24 @@ def _inspect_coverage_spectrum(
     observation_type: str,
     context: P1BExecutionContext,
 ) -> P1BObservation:
-    results = list(context.test_results)
+    results = context.spectrum_results()
     failed_results = [result for result in results if not result["passed"]]
+    passed_results = [result for result in results if result["passed"]]
     coverage_suspicion = _coverage_suspicion_from_results(results)
-    location_scores = {function: 1.2 for function in coverage_suspicion}
+    coverage_counts = _coverage_counts_from_results(results)
+    stack_functions = _aggregate_stack_functions(failed_results)
+    location_scores = _location_scores_from_coverage(coverage_suspicion, stack_functions)
     if failed_results:
+        top_functions = sorted(coverage_suspicion.items(), key=lambda item: (-item[1], item[0]))[:3]
+        top_summary = ", ".join(f"{function}={score:.6f}" for function, score in top_functions) or "none"
         summary = (
-            f"{action_id} summarized {len(failed_results)} cached failing execution tests. "
-            "B1 stores the spectrum footing; Ochiai ranking is deferred to B2."
+            f"{action_id} computed Ochiai over {len(failed_results)} failing and "
+            f"{len(passed_results)} passing cached execution tests; top suspicious functions: {top_summary}."
         )
     else:
         summary = (
             f"{action_id} found no cached failing execution tests. "
-            "B1 coverage ranking is intentionally minimal until B2."
+            "Coverage suspicion is empty because Ochiai requires at least one failing test."
         )
     return P1BObservation(
         action_id=action_id,
@@ -757,12 +831,13 @@ def _inspect_coverage_spectrum(
         evidence_source="execution_grounded",
         test_results=results,
         failed_test_ids=[result["test_id"] for result in failed_results],
-        passed_test_ids=[result["test_id"] for result in results if result["passed"]],
+        passed_test_ids=[result["test_id"] for result in passed_results],
         executed_functions=_aggregate_functions(results),
         failing_executed_functions=_aggregate_functions(results, passed=False),
         passing_executed_functions=_aggregate_functions(results, passed=True),
-        stack_functions=_aggregate_stack_functions(failed_results),
+        stack_functions=stack_functions,
         coverage_suspicion=coverage_suspicion,
+        coverage_counts=coverage_counts,
     )
 
 
@@ -792,8 +867,7 @@ def run_execution_grounded_action(
         )
     if action_id not in ACTION_TEST_CASE_IDS:
         raise ValueError(f"Action {action_id!r} has no execution-grounded test registry.")
-    results = _test_results_for_action(action_id, variant_id)
-    context.record(results)
+    results = context.record(action_id, _test_results_for_action(action_id, variant_id))
     return _observation_from_results(
         action_id=action_id,
         cost=cost,

@@ -272,8 +272,8 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
         lines.extend(
             [
                 "- Execution-grounded mode builds test-action observations from checkout test results, exceptions, and traced checkout functions, not from variant cause/location/fix-intent labels.",
-                "- `inspect_coverage_spectrum` is B1-minimal and stores only simple cached failure coverage; Ochiai-style ranking is deferred to B2.",
-                "- `inspect_recent_diff` remains a synthetic prior in Phase B1; real git commit/diff artifacts are deferred to Phase C.",
+                "- `inspect_coverage_spectrum` computes function-level Ochiai suspicion from cached passing/failing execution results.",
+                "- `inspect_recent_diff` remains a synthetic prior in Phase B; real git commit/diff artifacts are deferred to Phase C.",
             ]
         )
     else:

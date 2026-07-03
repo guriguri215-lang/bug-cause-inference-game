@@ -139,7 +139,7 @@ def _synthetic_recent_diff_prior(action_id: str, spec: P1BActionSpec) -> P1BObse
         cost=spec.cost,
         observation_type=spec.observation_type,
         summary=(
-            "Synthetic recent-diff prior retained for Phase B1; real per-variant "
+            "Synthetic recent-diff prior retained for Phase B; real per-variant "
             "git diff artifacts are deferred to Phase C."
         ),
         cause_scores={cause: 1.2 for cause in spec.strong_causes},

@@ -2,6 +2,12 @@ import pytest
 
 from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS, run_action
 from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants
+from bug_cause_inference.p1b.execution import (
+    P1BExecutionContext,
+    _coverage_counts_from_results,
+    _coverage_suspicion_from_results,
+)
+from bug_cause_inference.p1b.reports import build_p1b_report, p1b_report_to_markdown
 
 
 EXPECTED_COSTS = {
@@ -124,3 +130,87 @@ def test_p1b_execution_grounded_observation_contains_test_and_trace_payload():
     assert observation.test_results[0]["expected"] is True
     assert observation.test_results[0]["actual"] is False
     assert "boundary_failure" in observation.test_results[0]["evidence_tags"]
+
+
+def test_p1b_coverage_suspicion_uses_ochiai_counts():
+    results = [
+        {"test_id": "f1", "passed": False, "executed_functions": ["shipping.free_shipping_eligible", "cart.checkout_quote"]},
+        {"test_id": "f2", "passed": False, "executed_functions": ["cart.checkout_quote"]},
+        {"test_id": "p1", "passed": True, "executed_functions": ["shipping.free_shipping_eligible", "cart.checkout_quote"]},
+        {"test_id": "p2", "passed": True, "executed_functions": ["discounts.compute_discount"]},
+    ]
+
+    counts = _coverage_counts_from_results(results)
+    suspicion = _coverage_suspicion_from_results(results)
+
+    assert counts["shipping.free_shipping_eligible"] == {"failed": 1, "passed": 1, "total_failed": 2}
+    assert counts["cart.checkout_quote"] == {"failed": 2, "passed": 1, "total_failed": 2}
+    assert counts["discounts.compute_discount"] == {"failed": 0, "passed": 1, "total_failed": 2}
+    assert suspicion["shipping.free_shipping_eligible"] == pytest.approx(0.5)
+    assert suspicion["cart.checkout_quote"] == pytest.approx(0.816497)
+    assert "discounts.compute_discount" not in suspicion
+
+
+def test_p1b_inspect_coverage_spectrum_uses_cached_execution_results():
+    variant = get_variant("P1B-BUG-001")
+    context = P1BExecutionContext()
+
+    run_action(
+        variant,
+        "run_boundary_tests",
+        observation_mode="execution_grounded",
+        execution_context=context,
+    )
+    observation = run_action(
+        variant,
+        "inspect_coverage_spectrum",
+        observation_mode="execution_grounded",
+        execution_context=context,
+    )
+
+    assert observation.failed_test_ids == ["boundary.free_shipping_exact_threshold"]
+    assert "boundary.quantity_upper_boundary" in observation.passed_test_ids
+    assert {result["action_id"] for result in observation.test_results} == {"run_boundary_tests"}
+    assert observation.coverage_suspicion["shipping.free_shipping_eligible"] == pytest.approx(1.0)
+    assert observation.coverage_counts["shipping.free_shipping_eligible"] == {
+        "failed": 1,
+        "passed": 0,
+        "total_failed": 1,
+    }
+    assert observation.location_scores["shipping.free_shipping_eligible"] == pytest.approx(11.0)
+
+
+def test_p1b_passing_only_functions_are_not_raised_by_coverage_spectrum():
+    variant = get_variant("P1B-BUG-001")
+    context = P1BExecutionContext()
+
+    run_action(
+        variant,
+        "run_boundary_tests",
+        observation_mode="execution_grounded",
+        execution_context=context,
+    )
+    observation = run_action(
+        variant,
+        "inspect_coverage_spectrum",
+        observation_mode="execution_grounded",
+        execution_context=context,
+    )
+
+    assert observation.coverage_counts["cart.add_item"] == {"failed": 0, "passed": 1, "total_failed": 1}
+    assert "cart.add_item" not in observation.coverage_suspicion
+    assert "cart.add_item" not in observation.location_scores
+
+
+def test_p1b_markdown_report_shows_coverage_spectrum_when_inspected():
+    report = build_p1b_report(
+        get_variant("P1B-BUG-001"),
+        policy="coverage_first",
+        observation_mode="execution_grounded",
+    )
+
+    markdown = p1b_report_to_markdown(report)
+
+    assert "## Coverage Spectrum" in markdown
+    assert "| step | function | ochiai | failed | passed | total_failed |" in markdown
+    assert "shipping.free_shipping_eligible" in markdown

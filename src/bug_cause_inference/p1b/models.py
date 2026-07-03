@@ -124,6 +124,7 @@ class P1BObservation:
     passing_executed_functions: list[str] = field(default_factory=list)
     stack_functions: list[str] = field(default_factory=list)
     coverage_suspicion: dict[str, float] = field(default_factory=dict)
+    coverage_counts: dict[str, dict[str, int]] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

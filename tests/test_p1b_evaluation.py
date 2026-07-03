@@ -40,6 +40,20 @@ def test_p1b_evaluation_outputs_required_metrics():
     )
 
 
+def test_p1b_metadata_synth_primary_baseline_values_remain_frozen():
+    summary = evaluate_p1b(policies=("fixed_checklist", "expected_utility_per_cost"))
+
+    primary = summary["policies"][P1B_PRIMARY_POLICY]
+    assert summary["observation_mode"] == "metadata_synth"
+    assert primary["bug_discovery_rate_within_budget"] == 0.55
+    assert primary["false_positive_rate_on_clean_cases"] == 0.0
+    assert primary["location_top3_accuracy"] == 0.6
+    assert primary["cause_top1_accuracy"] == 0.8
+    assert primary["fix_intent_top1_accuracy"] == 0.75
+    assert primary["mean_investigation_cost"] == 2.8
+    assert summary["success_checks"]["primary_vs_fixed_mean_cost_delta"] == 0.421488
+
+
 def test_p1b_evaluation_accepts_execution_grounded_mode():
     summary = evaluate_p1b(policies=("expected_utility_per_cost",), observation_mode="execution_grounded")
 
