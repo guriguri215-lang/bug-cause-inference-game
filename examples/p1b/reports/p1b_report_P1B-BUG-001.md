@@ -3,6 +3,7 @@
 ## Summary
 
 - policy: expected_utility_per_cost
+- observation_mode: metadata_synth
 - is_buggy: True
 - stop_reason: bug_confidence_threshold
 - bug_detected: True

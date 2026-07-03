@@ -11,6 +11,7 @@ from bug_cause_inference.likelihoods import validate_likelihood_table
 from bug_cause_inference.p1b.actions import P1B_OBSERVATION_MODES
 from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants, save_variants
 from bug_cause_inference.p1b.evaluation import (
+    P1B_EVALUATION_OBSERVATION_MODES,
     evaluate_p1b,
     p1b_evaluation_to_json,
     p1b_evaluation_to_markdown,
@@ -196,7 +197,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p1b_evaluate = subparsers.add_parser("p1b-evaluate", help="Evaluate P1b policies.")
     p1b_evaluate.add_argument("--policies", nargs="*", choices=P1B_POLICIES)
-    p1b_evaluate.add_argument("--observation-mode", choices=P1B_OBSERVATION_MODES, default="metadata_synth")
+    p1b_evaluate.add_argument("--observation-mode", choices=P1B_EVALUATION_OBSERVATION_MODES, default="metadata_synth")
     p1b_evaluate.add_argument("--format", choices=("json", "markdown"), default="markdown")
     p1b_evaluate.add_argument("--json-output", type=Path, default=None)
     p1b_evaluate.add_argument("--markdown-output", type=Path, default=None)

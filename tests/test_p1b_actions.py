@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS, run_action
@@ -46,6 +48,13 @@ REQUIRED_TEST_RESULT_FIELDS = {
     "executed_functions",
     "evidence_tags",
 }
+FORBIDDEN_EXECUTION_METADATA_TOKENS = (
+    "true_cause_category",
+    "target_location",
+    "fix_intent_category",
+    "primary_discovery_action",
+    "distractor",
+)
 
 
 def test_p1b_action_costs_match_spec():
@@ -214,3 +223,11 @@ def test_p1b_markdown_report_shows_coverage_spectrum_when_inspected():
     assert "## Coverage Spectrum" in markdown
     assert "| step | function | ochiai | failed | passed | total_failed |" in markdown
     assert "shipping.free_shipping_eligible" in markdown
+
+
+def test_p1b_execution_harness_does_not_reference_ground_truth_metadata():
+    execution_path = Path(__file__).parents[1] / "src" / "bug_cause_inference" / "p1b" / "execution.py"
+    source = execution_path.read_text(encoding="utf-8")
+
+    for token in FORBIDDEN_EXECUTION_METADATA_TOKENS:
+        assert token not in source
