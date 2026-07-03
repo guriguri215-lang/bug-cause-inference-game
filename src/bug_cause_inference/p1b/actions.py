@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from bug_cause_inference.p1b.checkout import cart, config, shipping
+from bug_cause_inference.p1b.execution import P1BExecutionContext, run_execution_grounded_action
 from bug_cause_inference.p1b.models import P1BActionSpec, P1BObservation, P1BVariant
 
 
@@ -92,6 +93,7 @@ P1B_ACTION_SPECS: dict[str, P1BActionSpec] = {
 }
 
 P1B_ACTIONS = tuple(P1B_ACTION_SPECS)
+P1B_OBSERVATION_MODES = ("metadata_synth", "execution_grounded")
 
 
 def action_cost(action_id: str) -> int:
@@ -129,6 +131,22 @@ def _exception_for_variant(variant: P1BVariant, action_id: str) -> str | None:
     return None
 
 
+def _synthetic_recent_diff_prior(action_id: str, spec: P1BActionSpec) -> P1BObservation:
+    """Keep recent-diff evidence synthetic until Phase C real diff artifacts."""
+
+    return P1BObservation(
+        action_id=action_id,
+        cost=spec.cost,
+        observation_type=spec.observation_type,
+        summary=(
+            "Synthetic recent-diff prior retained for Phase B; real per-variant "
+            "git diff artifacts are deferred to Phase C."
+        ),
+        cause_scores={cause: 1.2 for cause in spec.strong_causes},
+        evidence_source="metadata_synth",
+    )
+
+
 def _score_maps(variant: P1BVariant, action_id: str, directness: float) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
     cause_scores: dict[str, float] = {}
     location_scores: dict[str, float] = {}
@@ -159,14 +177,34 @@ def _score_maps(variant: P1BVariant, action_id: str, directness: float) -> tuple
     return cause_scores, location_scores, fix_intent_scores
 
 
-def run_action(variant: P1BVariant, action_id: str) -> P1BObservation:
+def run_action(
+    variant: P1BVariant,
+    action_id: str,
+    *,
+    observation_mode: str = "metadata_synth",
+    execution_context: P1BExecutionContext | None = None,
+) -> P1BObservation:
     """Run one P1b action and return a structured observation.
 
-    The checkout package is executable, but this first P1b MVP deliberately returns
-    structured benchmark observations instead of free-form debugger output.
+    ``metadata_synth`` preserves the Phase A baseline that synthesizes evidence
+    from variant metadata. ``execution_grounded`` runs checkout test cases and
+    constructs observations from actual values, exceptions, and traced functions.
     """
 
     spec = P1B_ACTION_SPECS[action_id]
+    if observation_mode not in P1B_OBSERVATION_MODES:
+        raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
+    if observation_mode == "execution_grounded":
+        if action_id == "inspect_recent_diff":
+            return _synthetic_recent_diff_prior(action_id, spec)
+        return run_execution_grounded_action(
+            variant_id=variant.variant_id,
+            action_id=action_id,
+            cost=spec.cost,
+            observation_type=spec.observation_type,
+            context=execution_context,
+        )
+
     if not variant.is_buggy:
         return P1BObservation(
             action_id=action_id,

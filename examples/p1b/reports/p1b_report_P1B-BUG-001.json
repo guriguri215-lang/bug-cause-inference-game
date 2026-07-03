@@ -32,6 +32,7 @@
     "recommended_no_bug_evidence": null
   },
   "policy": "expected_utility_per_cost",
+  "observation_mode": "metadata_synth",
   "stop_or_continue": "stop",
   "stop_reason": "bug_confidence_threshold",
   "recommended_next_action": null,
@@ -147,7 +148,17 @@
           "config.get_shipping_threshold": 1.0,
           "cart.cart_subtotal": 1.0
         },
-        "fix_intent_scores": {}
+        "fix_intent_scores": {},
+        "evidence_source": "metadata_synth",
+        "test_results": [],
+        "failed_test_ids": [],
+        "passed_test_ids": [],
+        "executed_functions": [],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {}
       },
       "prior_bug_presence_posterior": 0.5,
       "updated_bug_presence_posterior": 0.32,
@@ -359,7 +370,17 @@
         },
         "fix_intent_scores": {
           "change_comparison": 9.1
-        }
+        },
+        "evidence_source": "metadata_synth",
+        "test_results": [],
+        "failed_test_ids": [],
+        "passed_test_ids": [],
+        "executed_functions": [],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {}
       },
       "prior_bug_presence_posterior": 0.32,
       "updated_bug_presence_posterior": 0.6699999999999999,
@@ -562,7 +583,17 @@
         },
         "fix_intent_scores": {
           "change_comparison": 9.1
-        }
+        },
+        "evidence_source": "metadata_synth",
+        "test_results": [],
+        "failed_test_ids": [],
+        "passed_test_ids": [],
+        "executed_functions": [],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {}
       },
       "prior_bug_presence_posterior": 0.6699999999999999,
       "updated_bug_presence_posterior": 0.72,
@@ -756,7 +787,17 @@
         },
         "fix_intent_scores": {
           "change_comparison": 9.1
-        }
+        },
+        "evidence_source": "metadata_synth",
+        "test_results": [],
+        "failed_test_ids": [],
+        "passed_test_ids": [],
+        "executed_functions": [],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {}
       },
       "prior_bug_presence_posterior": 0.72,
       "updated_bug_presence_posterior": 0.98,
