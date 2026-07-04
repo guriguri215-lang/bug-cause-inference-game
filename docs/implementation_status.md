@@ -25,6 +25,7 @@
 - P1b Phase C1 real-diff artifact schema with clean baseline checkout source, per-variant unified patches, and manifest.
 - P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
+- Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -101,7 +102,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-04 after the P1b Phase C3 docs/examples refresh:
+Passed on 2026-07-04 after adding the minimal CI workflow:
 
 ```bash
 .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
