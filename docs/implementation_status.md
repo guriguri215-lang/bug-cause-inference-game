@@ -24,6 +24,7 @@
 - P1b Phase B3 comparison reporting via `p1b-evaluate --observation-mode both`.
 - P1b Phase C1 real-diff artifact schema with clean baseline checkout source, per-variant unified patches, and manifest.
 - P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
+- P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -45,7 +46,6 @@
 - Web UI.
 - Real project bug history ingestion.
 - Model or dataset changes in the analysis-only patch.
-- `inspect_recent_diff` wiring to the Phase C1 real-diff artifacts.
 - Real git commit histories for each P1b variant.
 - Randomized Hypothesis-style property generation for P1b.
 - Bayesian redesign of `bug_presence_posterior`.
@@ -74,8 +74,8 @@
 - P1b is a small injected-bug scaffold, not a production debugger.
 - P1b location evaluation is function-level; `line_span_hint` is secondary.
 - P1b `metadata_synth` observations are synthesized from ground-truth variant metadata via discovery-action matching. They are retained as a frozen baseline for comparison, not as evidence of real fault-localization ability.
-- P1b `execution_grounded` observations are derived from checkout test results, exceptions, traced checkout functions, and function-level Ochiai coverage suspicion. They still run inside a small injected benchmark scaffold rather than real project histories.
-- P1b `inspect_recent_diff` remains a synthetic prior after Phase C1; real-diff artifacts now exist, but evaluation wiring is deferred to C2.
+- P1b `execution_grounded` observations are derived from checkout test results, exceptions, traced checkout functions, function-level Ochiai coverage suspicion, and Phase C real-diff artifacts for `inspect_recent_diff`. They still run inside a small injected benchmark scaffold rather than real project histories.
+- P1b `metadata_synth` keeps synthetic recent-diff observations as the frozen baseline; only `execution_grounded` reads real-diff artifacts.
 - P1b predicts fix-intent categories but does not generate patches.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
@@ -101,18 +101,18 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-03 after the P1b Phase B3 comparison report update:
+Passed on 2026-07-04 after the P1b Phase C2 real-diff observation wiring:
 
 ```bash
 .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 175 passed.
+Result: 187 passed.
 
 In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
 
 ```text
-167 passed, 8 errors
+174 passed, 13 errors
 PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
 ```
 
@@ -145,7 +145,7 @@ Latest P1b Phase B status:
 - `p1b-report` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
 - `p1b-evaluate --observation-mode both` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
 - P1b/P1c exclusions remain: no patch generation, no large real repositories, no LLM agent battles, no adversarial bug generation, no formal minimax framing.
-- P1b Phase C1 adds real-diff artifacts and a generator/validator only; `inspect_recent_diff` and evaluation values are unchanged until C2.
+- P1b Phase C2 connects `execution_grounded` `inspect_recent_diff` to real-diff artifacts; no policy, threshold, or score tuning was introduced.
 
 Latest P1b primary-policy comparison:
 
@@ -154,9 +154,9 @@ Latest P1b primary-policy comparison:
 | bug_discovery_rate_within_budget | 0.55 | 0.40 | -0.15 | 0.15 |
 | false_positive_rate_on_clean_cases | 0.00 | 0.00 | 0.00 | 0.00 |
 | location_top3_accuracy | 0.60 | 0.55 | -0.05 | 0.05 |
-| cause_top1_accuracy | 0.80 | 0.50 | -0.30 | 0.30 |
+| cause_top1_accuracy | 0.80 | 0.55 | -0.25 | 0.25 |
 | fix_intent_top1_accuracy | 0.75 | 0.40 | -0.35 | 0.35 |
-| mean_investigation_cost | 2.80 | 4.76 | 1.96 | 1.96 |
-| primary_vs_fixed_mean_cost_delta | 0.421488 | 0.137681 | -0.283807 | 0.283807 |
+| mean_investigation_cost | 2.80 | 4.64 | 1.84 | 1.84 |
+| primary_vs_fixed_mean_cost_delta | 0.421488 | 0.159420 | -0.262068 | 0.262068 |
 
 `execution_minus_metadata_delta` is `execution_grounded_value - metadata_synth_value`. Positive `metadata_optimism_gap` means `metadata_synth` made the primary policy look better than execution-grounded evidence. For lower-is-better metrics such as false-positive rate and mean cost, the gap is `execution_grounded_value - metadata_synth_value`; otherwise it is `metadata_synth_value - execution_grounded_value`.

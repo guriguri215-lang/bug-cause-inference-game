@@ -131,22 +131,6 @@ def _exception_for_variant(variant: P1BVariant, action_id: str) -> str | None:
     return None
 
 
-def _synthetic_recent_diff_prior(action_id: str, spec: P1BActionSpec) -> P1BObservation:
-    """Keep recent-diff evidence synthetic until Phase C real diff artifacts."""
-
-    return P1BObservation(
-        action_id=action_id,
-        cost=spec.cost,
-        observation_type=spec.observation_type,
-        summary=(
-            "Synthetic recent-diff prior retained for Phase B; real per-variant "
-            "git diff artifacts are deferred to Phase C."
-        ),
-        cause_scores={cause: 1.2 for cause in spec.strong_causes},
-        evidence_source="metadata_synth",
-    )
-
-
 def _score_maps(variant: P1BVariant, action_id: str, directness: float) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
     cause_scores: dict[str, float] = {}
     location_scores: dict[str, float] = {}
@@ -188,15 +172,14 @@ def run_action(
 
     ``metadata_synth`` preserves the Phase A baseline that synthesizes evidence
     from variant metadata. ``execution_grounded`` runs checkout test cases and
-    constructs observations from actual values, exceptions, and traced functions.
+    constructs observations from actual values, exceptions, traced functions,
+    and real-diff artifacts.
     """
 
     spec = P1B_ACTION_SPECS[action_id]
     if observation_mode not in P1B_OBSERVATION_MODES:
         raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
     if observation_mode == "execution_grounded":
-        if action_id == "inspect_recent_diff":
-            return _synthetic_recent_diff_prior(action_id, spec)
         return run_execution_grounded_action(
             variant_id=variant.variant_id,
             action_id=action_id,

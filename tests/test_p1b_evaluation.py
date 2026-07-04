@@ -63,7 +63,7 @@ def test_p1b_evaluation_accepts_execution_grounded_mode():
     assert metrics["false_positive_rate_on_clean_cases"] == 0.0
 
 
-def test_p1b_execution_grounded_primary_b2_values_remain_frozen():
+def test_p1b_execution_grounded_primary_c2_values_remain_frozen():
     summary = evaluate_p1b(
         policies=("fixed_checklist", "expected_utility_per_cost"),
         observation_mode="execution_grounded",
@@ -73,10 +73,10 @@ def test_p1b_execution_grounded_primary_b2_values_remain_frozen():
     assert primary["bug_discovery_rate_within_budget"] == 0.4
     assert primary["false_positive_rate_on_clean_cases"] == 0.0
     assert primary["location_top3_accuracy"] == 0.55
-    assert primary["cause_top1_accuracy"] == 0.5
+    assert primary["cause_top1_accuracy"] == 0.55
     assert primary["fix_intent_top1_accuracy"] == 0.4
-    assert primary["mean_investigation_cost"] == 4.76
-    assert summary["success_checks"]["primary_vs_fixed_mean_cost_delta"] == 0.137681
+    assert primary["mean_investigation_cost"] == 4.64
+    assert summary["success_checks"]["primary_vs_fixed_mean_cost_delta"] == 0.15942
 
 
 def test_p1b_evaluation_both_mode_contains_policy_metrics_and_deltas():
@@ -100,15 +100,15 @@ def test_p1b_evaluation_both_mode_contains_policy_metrics_and_deltas():
 
     mean_cost = comparison["mean_investigation_cost"]
     assert mean_cost["metadata_synth_value"] == 2.8
-    assert mean_cost["execution_grounded_value"] == 4.76
-    assert mean_cost["execution_minus_metadata_delta"] == 1.96
-    assert mean_cost["metadata_optimism_gap"] == 1.96
+    assert mean_cost["execution_grounded_value"] == 4.64
+    assert mean_cost["execution_minus_metadata_delta"] == 1.84
+    assert mean_cost["metadata_optimism_gap"] == 1.84
 
     cost_delta = comparison["primary_vs_fixed_mean_cost_delta"]
     assert cost_delta["metadata_synth_value"] == 0.421488
-    assert cost_delta["execution_grounded_value"] == 0.137681
-    assert cost_delta["execution_minus_metadata_delta"] == -0.283807
-    assert cost_delta["metadata_optimism_gap"] == 0.283807
+    assert cost_delta["execution_grounded_value"] == 0.15942
+    assert cost_delta["execution_minus_metadata_delta"] == -0.262068
+    assert cost_delta["metadata_optimism_gap"] == 0.262068
 
 
 def test_p1b_both_markdown_includes_comparison_table_and_phase_b_notes():
@@ -121,6 +121,6 @@ def test_p1b_both_markdown_includes_comparison_table_and_phase_b_notes():
 
     assert "# P1b Evaluation Comparison" in markdown
     assert "| metric | metadata_synth | execution_grounded | execution_minus_metadata_delta | metadata_optimism_gap |" in markdown
-    assert "Lower execution-grounded scores are diagnostic evidence" in markdown
-    assert "`inspect_recent_diff` remains a synthetic prior in Phase B" in markdown
-    assert "real git commit/diff artifacts are deferred to Phase C" in markdown
+    assert "recent-diff signals come from" in markdown
+    assert "`inspect_recent_diff` reads Phase C real-diff artifacts" in markdown
+    assert "changed files, changed functions, and a diff excerpt" in markdown

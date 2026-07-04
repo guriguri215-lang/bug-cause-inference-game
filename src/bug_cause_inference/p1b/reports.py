@@ -14,7 +14,7 @@ P1B_KNOWN_LIMITS = [
     "P1b is a small injected-bug benchmark scaffold, not a real-code production debugger.",
     "P1b ranks function-level locations; line spans are explanatory hints only.",
     "P1b predicts fix-intent categories but does not generate patches.",
-    "P1b uses synthetic recent-diff metadata and structured coverage-like observations.",
+    "P1b keeps metadata-synth recent-diff evidence synthetic; execution-grounded mode reads Phase C real-diff artifacts.",
 ]
 
 
@@ -133,6 +133,35 @@ def p1b_report_to_markdown(report: dict[str, Any]) -> str:
                     f"{values.get('failed', 0)} | {values.get('passed', 0)} | "
                     f"{values.get('total_failed', 0)} |"
                 )
+    recent_diff_steps = [
+        step
+        for step in report["trace"]
+        if step["selected_action"] == "inspect_recent_diff"
+        and step["observation"].get("changed_files")
+    ]
+    if recent_diff_steps:
+        lines.extend(
+            [
+                "",
+                "## Recent Diff Artifact",
+                "",
+                "| step | patch | changed_files | changed_functions |",
+                "|---:|---|---|---|",
+            ]
+        )
+        for step in recent_diff_steps:
+            observation = step["observation"]
+            changed_files = ", ".join(observation.get("changed_files", []))
+            changed_functions = ", ".join(observation.get("changed_functions", []))
+            lines.append(
+                f"| {step['step']} | {observation.get('diff_artifact_path', '')} | "
+                f"{changed_files} | {changed_functions} |"
+            )
+            diff_excerpt = observation.get("diff_excerpt")
+            if diff_excerpt:
+                lines.extend(["", f"### Diff Excerpt: Step {step['step']}", "", "```diff"])
+                lines.extend(diff_excerpt.splitlines())
+                lines.append("```")
     lines.extend(["", "## Known Limits", ""])
     lines.extend(f"- {limit}" for limit in report["known_limits"])
     return "\n".join(lines) + "\n"

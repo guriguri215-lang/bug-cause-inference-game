@@ -7,8 +7,10 @@ from bug_cause_inference.p1b.real_diff import (
     ARTIFACT_ROOT,
     FORBIDDEN_MANIFEST_FIELDS,
     FORBIDDEN_SOURCE_TOKENS,
+    changed_functions_in_patch,
     generate_real_diff_checkout_tree,
     generated_checkout_imports,
+    inspect_real_diff_artifact,
     load_real_diff_manifest,
     validate_real_diff_artifacts,
     validate_real_diff_manifest_schema,
@@ -56,6 +58,21 @@ def test_p1b_real_diff_validator_applies_all_variant_patches(tmp_path):
     assert {item["variant_id"] for item in summary["validated_variants"]} == {
         variant.variant_id for variant in load_p1b_variants()
     }
+
+
+def test_p1b_real_diff_extracts_changed_functions_from_patch():
+    patch_text = (ARTIFACT_ROOT / "patches" / "P1B-BUG-001.patch").read_text(encoding="utf-8")
+
+    assert changed_functions_in_patch(patch_text) == ["shipping.free_shipping_eligible"]
+
+
+def test_p1b_real_diff_inspection_payload_uses_artifact_data_only():
+    payload = inspect_real_diff_artifact("P1B-BUG-020")
+
+    assert payload["patch_path"] == "patches/P1B-BUG-020.patch"
+    assert payload["changed_files"] == ["checkout/inventory.py"]
+    assert payload["changed_functions"] == ["inventory.reserve_stock"]
+    assert "preorder" in payload["diff_excerpt"]
 
 
 def test_p1b_real_diff_generated_tree_has_no_variant_branch_tokens(tmp_path):

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import importlib
 import json
 import re
@@ -40,6 +41,8 @@ class RealDiffArtifactError(ValueError):
 @dataclass(frozen=True)
 class _PatchHunk:
     old_start: int
+    old_count: int
+    section: str
     lines: tuple[str, ...]
 
 
@@ -49,7 +52,18 @@ class _FilePatch:
     hunks: tuple[_PatchHunk, ...]
 
 
-_HUNK_RE = re.compile(r"^@@ -(?P<old_start>\d+)(?:,\d+)? \+(?P<new_start>\d+)(?:,\d+)? @@")
+@dataclass(frozen=True)
+class _FunctionSpan:
+    name: str
+    start: int
+    end: int
+
+
+_HUNK_RE = re.compile(
+    r"^@@ -(?P<old_start>\d+)(?:,(?P<old_count>\d+))? "
+    r"\+(?P<new_start>\d+)(?:,(?P<new_count>\d+))? @@(?: (?P<section>.*))?$"
+)
+_FUNCTION_SECTION_RE = re.compile(r"\b(?:async\s+def|def)\s+(?P<name>[A-Za-z_]\w*)\s*\(")
 
 
 def _artifact_root(artifact_root: Path | None = None) -> Path:
@@ -177,6 +191,8 @@ def _parse_unified_patch(patch_text: str) -> tuple[_FilePatch, ...]:
             if not match:
                 raise RealDiffArtifactError(f"Expected unified diff hunk header, got: {line!r}")
             old_start = int(match.group("old_start"))
+            old_count = int(match.group("old_count") or "1")
+            section = match.group("section") or ""
             index += 1
             hunk_lines: list[str] = []
             while index < len(lines):
@@ -190,7 +206,14 @@ def _parse_unified_patch(patch_text: str) -> tuple[_FilePatch, ...]:
                     raise RealDiffArtifactError(f"Invalid unified diff hunk line: {hunk_line!r}")
                 hunk_lines.append(hunk_line)
                 index += 1
-            hunks.append(_PatchHunk(old_start=old_start, lines=tuple(hunk_lines)))
+            hunks.append(
+                _PatchHunk(
+                    old_start=old_start,
+                    old_count=old_count,
+                    section=section,
+                    lines=tuple(hunk_lines),
+                )
+            )
         file_patches.append(_FilePatch(path=path, hunks=tuple(hunks)))
     if not file_patches:
         raise RealDiffArtifactError("Patch contains no file changes.")
@@ -201,6 +224,95 @@ def changed_files_in_patch(patch_text: str) -> list[str]:
     """Return changed files listed by a unified diff."""
 
     return sorted({file_patch.path for file_patch in _parse_unified_patch(patch_text)})
+
+
+def _function_spans(source_text: str) -> list[_FunctionSpan]:
+    tree = ast.parse(source_text)
+    spans: list[_FunctionSpan] = []
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            spans.append(
+                _FunctionSpan(
+                    name=node.name,
+                    start=node.lineno,
+                    end=getattr(node, "end_lineno", node.lineno),
+                )
+            )
+    return spans
+
+
+def _module_name_from_patch_path(patch_path: str) -> str | None:
+    parsed = PurePosixPath(patch_path)
+    if parsed.suffix != ".py" or parsed.name == "__init__.py":
+        return None
+    parts = parsed.parts
+    if len(parts) < 2 or parts[0] != "checkout":
+        return None
+    return ".".join((*parts[1:-1], parsed.stem))
+
+
+def _hunk_old_line_range(hunk: _PatchHunk) -> tuple[int, int]:
+    old_count = max(hunk.old_count, 1)
+    return hunk.old_start, hunk.old_start + old_count - 1
+
+
+def _ranges_overlap(left: tuple[int, int], right: tuple[int, int]) -> bool:
+    return left[0] <= right[1] and right[0] <= left[1]
+
+
+def changed_functions_in_patch(patch_text: str, *, tree_root: Path | None = None) -> list[str]:
+    """Return checkout functions whose source spans overlap a unified diff."""
+
+    root = tree_root or ARTIFACT_ROOT / "baseline"
+    changed_functions: set[str] = set()
+    for file_patch in _parse_unified_patch(patch_text):
+        module_name = _module_name_from_patch_path(file_patch.path)
+        if module_name is None:
+            continue
+        source_path = _checkout_file_path(root, file_patch.path)
+        spans = _function_spans(source_path.read_text(encoding="utf-8"))
+        for hunk in file_patch.hunks:
+            hunk_range = _hunk_old_line_range(hunk)
+            matched = False
+            for span in spans:
+                if _ranges_overlap(hunk_range, (span.start, span.end)):
+                    changed_functions.add(f"{module_name}.{span.name}")
+                    matched = True
+            if not matched:
+                section_match = _FUNCTION_SECTION_RE.search(hunk.section)
+                if section_match:
+                    changed_functions.add(f"{module_name}.{section_match.group('name')}")
+    return sorted(changed_functions)
+
+
+def diff_excerpt(patch_text: str, *, max_lines: int = 16) -> str:
+    """Return a compact excerpt for observation payloads and reports."""
+
+    return "\n".join(patch_text.strip("\n").splitlines()[:max_lines])
+
+
+def inspect_real_diff_artifact(
+    variant_id: str,
+    *,
+    artifact_root: Path | None = None,
+    max_excerpt_lines: int = 16,
+) -> dict[str, Any]:
+    """Return observation-ready data for one real-diff variant artifact."""
+
+    root = _artifact_root(artifact_root)
+    manifest = validate_real_diff_manifest_schema(load_real_diff_manifest(root))
+    entry = _manifest_entry_by_id(manifest, variant_id)
+    patch_path = root / entry["patch_path"]
+    patch_text = patch_path.read_text(encoding="utf-8")
+    changed_files = changed_files_in_patch(patch_text)
+    _validate_patch_expected_files(entry, changed_files)
+    return {
+        "variant_id": variant_id,
+        "patch_path": entry["patch_path"],
+        "changed_files": changed_files,
+        "changed_functions": changed_functions_in_patch(patch_text, tree_root=root / "baseline"),
+        "diff_excerpt": diff_excerpt(patch_text, max_lines=max_excerpt_lines),
+    }
 
 
 def _checkout_file_path(tree_root: Path, patch_path: str) -> Path:

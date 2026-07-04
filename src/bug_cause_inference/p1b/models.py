@@ -116,6 +116,10 @@ class P1BObservation:
     location_scores: dict[str, float] = field(default_factory=dict)
     fix_intent_scores: dict[str, float] = field(default_factory=dict)
     evidence_source: str = "metadata_synth"
+    diff_artifact_path: str | None = None
+    changed_files: list[str] = field(default_factory=list)
+    changed_functions: list[str] = field(default_factory=list)
+    diff_excerpt: str | None = None
     test_results: list[dict[str, Any]] = field(default_factory=list)
     failed_test_ids: list[str] = field(default_factory=list)
     passed_test_ids: list[str] = field(default_factory=list)

@@ -17,6 +17,7 @@ from typing import Any
 from bug_cause_inference.p1b.checkout import cart, config, discounts, inventory, shipping
 from bug_cause_inference.p1b.dataset import LOCATION_CANDIDATES
 from bug_cause_inference.p1b.models import P1BObservation
+from bug_cause_inference.p1b.real_diff import inspect_real_diff_artifact
 
 
 CHECKOUT_MODULE_PREFIX = "bug_cause_inference.p1b.checkout."
@@ -40,6 +41,7 @@ FAILING_FUNCTION_WEIGHT = 1.8
 STACK_FUNCTION_WEIGHT = 2.2
 COVERAGE_LOCATION_WEIGHT = 10.0
 STACK_TIE_BREAKER_WEIGHT = 0.25
+RECENT_DIFF_LOCATION_WEIGHT = 4.0
 
 
 @dataclass(frozen=True)
@@ -841,6 +843,49 @@ def _inspect_coverage_spectrum(
     )
 
 
+def _location_scores_from_changed_functions(changed_functions: list[str]) -> dict[str, float]:
+    return {
+        function: RECENT_DIFF_LOCATION_WEIGHT
+        for function in changed_functions
+        if function in LOCATION_CANDIDATE_SET
+    }
+
+
+def _inspect_recent_diff(
+    *,
+    variant_id: str,
+    action_id: str,
+    cost: int,
+    observation_type: str,
+) -> P1BObservation:
+    artifact = inspect_real_diff_artifact(variant_id)
+    changed_files = list(artifact["changed_files"])
+    changed_functions = list(artifact["changed_functions"])
+    location_scores = _location_scores_from_changed_functions(changed_functions)
+    file_summary = ", ".join(changed_files) or "none"
+    function_summary = ", ".join(changed_functions) or "none"
+    summary = (
+        f"{action_id} read {artifact['patch_path']} from the Phase C real-diff artifacts; "
+        f"changed files: {file_summary}; changed functions: {function_summary}. "
+        "Diff evidence alone is not treated as a reproduced bug."
+    )
+    return P1BObservation(
+        action_id=action_id,
+        cost=cost,
+        observation_type=observation_type,
+        summary=summary,
+        bug_detected=False,
+        failure_found=False,
+        no_bug_evidence=False,
+        location_scores=location_scores,
+        evidence_source="real_diff_artifact",
+        diff_artifact_path=str(artifact["patch_path"]),
+        changed_files=changed_files,
+        changed_functions=changed_functions,
+        diff_excerpt=str(artifact["diff_excerpt"]),
+    )
+
+
 def run_execution_grounded_action(
     *,
     variant_id: str,
@@ -850,6 +895,13 @@ def run_execution_grounded_action(
     context: P1BExecutionContext | None = None,
 ) -> P1BObservation:
     context = context or P1BExecutionContext()
+    if action_id == "inspect_recent_diff":
+        return _inspect_recent_diff(
+            variant_id=variant_id,
+            action_id=action_id,
+            cost=cost,
+            observation_type=observation_type,
+        )
     if action_id == "inspect_traceback":
         return _inspect_traceback(
             variant_id=variant_id,
