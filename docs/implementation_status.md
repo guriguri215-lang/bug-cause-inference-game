@@ -18,7 +18,7 @@
 - P1b policies: `random_action`, `fixed_checklist`, `test_first`, `coverage_first`, `recent_diff_first`, `cause_only_p1a_style`, and `expected_utility_per_cost`.
 - P1b JSON and Markdown report/evaluation output.
 - P1b CLI commands: `p1b-list-variants`, `p1b-report`, and `p1b-evaluate`.
-- P1b observation modes: `metadata_synth` as the frozen Phase A/B baseline and `execution_grounded` as the Phase B execution-derived mode.
+- P1b observation modes: `metadata_synth` as the frozen Phase A/B baseline and `execution_grounded` as the execution-derived mode with Phase C real-diff evidence for `inspect_recent_diff`.
 - P1b Phase B1 execution-grounded harness using checkout test results, exceptions, and traced checkout functions.
 - P1b Phase B2 coverage-spectrum localization with function-level Ochiai suspicion and coverage counts.
 - P1b Phase B3 comparison reporting via `p1b-evaluate --observation-mode both`.
@@ -101,7 +101,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-04 after the P1b Phase C2 real-diff observation wiring:
+Passed on 2026-07-04 after the P1b Phase C3 docs/examples refresh:
 
 ```bash
 .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
@@ -135,14 +135,17 @@ Latest generated evaluation summary:
 
 See [`p1a_evaluation_notes.md`](p1a_evaluation_notes.md) for the current interpretation and limitations of these results.
 
-Latest P1b Phase B status:
+Latest P1b Phase C status:
 
 - Phase B1 local commit: `6610738` (`feat: add P1b execution-grounded observation harness`).
 - Phase B2 local commit: `2669530` (`feat: add P1b coverage spectrum localization`).
-- Phase B3 local commit: this comparison-report commit; exact hash is recorded in the implementation handoff report.
-- B1/B2/B3 remain local until the user approves push/PR.
+- Phase B3 local commit: `6359f07` (`feat: add P1b observation-mode comparison reports`).
+- Phase C1 local commit: `cabc086` (`feat: add P1b real diff artifact generator`).
+- Phase C2 local commit: `4469213` (`feat: wire P1b real diff observations`).
+- Phase C3 refreshed README/status/devlog and regenerated P1b examples around the C2 outputs.
+- B1/B2/B3/C1/C2/C3 remain local until the user approves push/PR.
 - `p1b-list-variants` generated `examples/p1b/variants/p1b_variants.json` and `.md`.
-- `p1b-report` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
+- `p1b-report --policy recent_diff_first --observation-mode execution_grounded` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
 - `p1b-evaluate --observation-mode both` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
 - P1b/P1c exclusions remain: no patch generation, no large real repositories, no LLM agent battles, no adversarial bug generation, no formal minimax framing.
 - P1b Phase C2 connects `execution_grounded` `inspect_recent_diff` to real-diff artifacts; no policy, threshold, or score tuning was introduced.

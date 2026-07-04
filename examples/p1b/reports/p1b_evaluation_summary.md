@@ -3,9 +3,10 @@
 P1b is a small injected-bug benchmark scaffold. It does not generate patches,
 handle large repositories, or implement adversarial bug generation.
 
-Phase B compares the frozen `metadata_synth` baseline with `execution_grounded`
-observations. Lower execution-grounded scores are diagnostic evidence about
-metadata-synth optimism, not a B3 implementation failure.
+The comparison keeps the frozen `metadata_synth` baseline next to
+`execution_grounded` observations. Execution-grounded test and coverage
+signals come from checkout execution, and recent-diff signals come from
+Phase C real-diff artifacts.
 
 ## Dataset
 
@@ -23,10 +24,10 @@ metadata-synth optimism, not a B3 implementation failure.
 | bug_discovery_rate_within_budget | 0.550000 | 0.400000 | -0.150000 | 0.150000 |
 | false_positive_rate_on_clean_cases | 0.000000 | 0.000000 | 0.000000 | 0.000000 |
 | location_top3_accuracy | 0.600000 | 0.550000 | -0.050000 | 0.050000 |
-| cause_top1_accuracy | 0.800000 | 0.500000 | -0.300000 | 0.300000 |
+| cause_top1_accuracy | 0.800000 | 0.550000 | -0.250000 | 0.250000 |
 | fix_intent_top1_accuracy | 0.750000 | 0.400000 | -0.350000 | 0.350000 |
-| mean_investigation_cost | 2.800000 | 4.760000 | 1.960000 | 1.960000 |
-| primary_vs_fixed_mean_cost_delta | 0.421488 | 0.137681 | -0.283807 | 0.283807 |
+| mean_investigation_cost | 2.800000 | 4.640000 | 1.840000 | 1.840000 |
+| primary_vs_fixed_mean_cost_delta | 0.421488 | 0.159420 | -0.262068 | 0.262068 |
 
 ## Policy Metrics: metadata_synth
 
@@ -48,9 +49,9 @@ metadata-synth optimism, not a B3 implementation failure.
 | fixed_checklist | 0.350000 | 0.000000 | 0.350000 | 0.350000 | 0.500000 | 5.520000 | 6.150000 |
 | test_first | 0.350000 | 0.000000 | 0.350000 | 0.350000 | 0.500000 | 5.520000 | 6.150000 |
 | coverage_first | 0.350000 | 0.000000 | 0.350000 | 0.350000 | 0.500000 | 5.360000 | 5.950000 |
-| recent_diff_first | 0.350000 | 0.000000 | 0.350000 | 0.300000 | 0.500000 | 6.960000 | 7.450000 |
-| cause_only_p1a_style | 0.400000 | 0.000000 | 0.500000 | 0.500000 | 0.400000 | 4.680000 | 5.350000 |
-| expected_utility_per_cost | 0.400000 | 0.000000 | 0.550000 | 0.500000 | 0.400000 | 4.760000 | 5.450000 |
+| recent_diff_first | 0.350000 | 0.000000 | 1.000000 | 0.350000 | 0.500000 | 6.960000 | 7.450000 |
+| cause_only_p1a_style | 0.400000 | 0.000000 | 0.550000 | 0.550000 | 0.400000 | 4.520000 | 5.150000 |
+| expected_utility_per_cost | 0.400000 | 0.000000 | 0.550000 | 0.550000 | 0.400000 | 4.640000 | 5.300000 |
 
 ## Notes
 
@@ -60,6 +61,6 @@ metadata-synth optimism, not a B3 implementation failure.
 - Location metrics use function-level targets; line-span hints are secondary only.
 - Execution-grounded mode builds test-action observations from checkout test results, exceptions, and traced checkout functions, not from variant cause/location/fix-intent labels.
 - `inspect_coverage_spectrum` computes function-level Ochiai suspicion from cached passing/failing execution results.
-- `inspect_recent_diff` remains a synthetic prior in Phase B; real git commit/diff artifacts are deferred to Phase C.
+- In execution-grounded mode, `inspect_recent_diff` reads Phase C real-diff artifacts and reports changed files, changed functions, and a diff excerpt.
 - All policies share the same stopping rules, so the comparison is primarily about action ordering.
 - `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.
