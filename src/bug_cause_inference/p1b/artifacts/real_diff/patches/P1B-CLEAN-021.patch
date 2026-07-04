@@ -1,0 +1,8 @@
+diff --git a/checkout/shipping.py b/checkout/shipping.py
+--- a/checkout/shipping.py
++++ b/checkout/shipping.py
+@@ -18,7 +18,8 @@ def free_shipping_eligible(subtotal: int, config: dict[str, Any]) -> bool:
+     threshold = config_helpers.get_shipping_threshold(config)
+-    return subtotal >= threshold
++    eligible = subtotal >= threshold
++    return eligible

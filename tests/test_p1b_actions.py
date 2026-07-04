@@ -141,6 +141,34 @@ def test_p1b_execution_grounded_observation_contains_test_and_trace_payload():
     assert "boundary_failure" in observation.test_results[0]["evidence_tags"]
 
 
+def test_p1b_execution_grounded_recent_diff_reads_real_artifact():
+    variant = get_variant("P1B-BUG-001")
+
+    observation = run_action(variant, "inspect_recent_diff", observation_mode="execution_grounded")
+
+    assert observation.evidence_source == "real_diff_artifact"
+    assert not observation.bug_detected
+    assert not observation.failure_found
+    assert not observation.no_bug_evidence
+    assert observation.test_results == []
+    assert observation.diff_artifact_path == "patches/P1B-BUG-001.patch"
+    assert observation.changed_files == ["checkout/shipping.py"]
+    assert observation.changed_functions == ["shipping.free_shipping_eligible"]
+    assert observation.location_scores["shipping.free_shipping_eligible"] == pytest.approx(4.0)
+    assert "return subtotal > threshold" in observation.diff_excerpt
+
+
+def test_p1b_execution_grounded_clean_recent_diff_does_not_detect_bug():
+    variant = get_variant("P1B-CLEAN-021")
+
+    observation = run_action(variant, "inspect_recent_diff", observation_mode="execution_grounded")
+
+    assert observation.evidence_source == "real_diff_artifact"
+    assert not observation.bug_detected
+    assert observation.changed_files == ["checkout/shipping.py"]
+    assert observation.changed_functions == ["shipping.free_shipping_eligible"]
+
+
 def test_p1b_coverage_suspicion_uses_ochiai_counts():
     results = [
         {"test_id": "f1", "passed": False, "executed_functions": ["shipping.free_shipping_eligible", "cart.checkout_quote"]},
@@ -222,6 +250,21 @@ def test_p1b_markdown_report_shows_coverage_spectrum_when_inspected():
 
     assert "## Coverage Spectrum" in markdown
     assert "| step | function | ochiai | failed | passed | total_failed |" in markdown
+    assert "shipping.free_shipping_eligible" in markdown
+
+
+def test_p1b_markdown_report_shows_recent_diff_artifact_when_inspected():
+    report = build_p1b_report(
+        get_variant("P1B-BUG-001"),
+        policy="recent_diff_first",
+        observation_mode="execution_grounded",
+    )
+
+    markdown = p1b_report_to_markdown(report)
+
+    assert "## Recent Diff Artifact" in markdown
+    assert "| step | patch | changed_files | changed_functions |" in markdown
+    assert "patches/P1B-BUG-001.patch" in markdown
     assert "shipping.free_shipping_eligible" in markdown
 
 

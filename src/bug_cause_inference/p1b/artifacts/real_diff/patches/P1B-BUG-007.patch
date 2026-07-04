@@ -1,0 +1,10 @@
+diff --git a/checkout/cart.py b/checkout/cart.py
+--- a/checkout/cart.py
++++ b/checkout/cart.py
+@@ -23,8 +23,6 @@ def add_item(cart: list[dict[str, Any]], sku: str, unit_price: int, quantity: in
+ 
+ 
+ def cart_subtotal(items: list[dict[str, Any]] | None) -> int:
+-    if items is None:
+-        return 0
+     return sum(int(item["unit_price"]) * int(item.get("quantity", 1)) for item in items)

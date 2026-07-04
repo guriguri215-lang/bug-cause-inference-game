@@ -31,125 +31,134 @@
     "why_false_positive_might_happen": null,
     "recommended_no_bug_evidence": null
   },
-  "policy": "expected_utility_per_cost",
-  "observation_mode": "metadata_synth",
+  "policy": "recent_diff_first",
+  "observation_mode": "execution_grounded",
   "stop_or_continue": "stop",
-  "stop_reason": "bug_confidence_threshold",
+  "stop_reason": "budget_limit",
   "recommended_next_action": null,
   "bug_detected": true,
-  "reproduction_input": "Cart subtotal 10000, region domestic, no coupon.",
-  "bug_presence_posterior": 0.98,
+  "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+  "bug_presence_posterior": 0.44,
   "location_ranking": [
     {
       "rank": 1,
       "label": "shipping.free_shipping_eligible",
-      "probability": 0.999572
+      "probability": 0.291629
     },
     {
       "rank": 2,
-      "label": "cart.cart_subtotal",
-      "probability": 3.7e-05
+      "label": "config.get_shipping_threshold",
+      "probability": 0.072907
     },
     {
       "rank": 3,
-      "label": "config.get_shipping_threshold",
-      "probability": 3.7e-05
+      "label": "config.load_config",
+      "probability": 0.072907
     },
     {
       "rank": 4,
-      "label": "cart.add_item",
-      "probability": 1.7e-05
+      "label": "cart.cart_subtotal",
+      "probability": 0.040504
     },
     {
       "rank": 5,
-      "label": "cart.calculate_tax",
-      "probability": 1.7e-05
+      "label": "cart.checkout_quote",
+      "probability": 0.040504
     }
   ],
   "cause_posterior": [
     {
       "rank": 1,
       "label": "boundary_condition",
-      "probability": 0.972339
+      "probability": 0.6
     },
     {
       "rank": 2,
-      "label": "configuration_environment",
-      "probability": 0.006915
+      "label": "specification_mismatch",
+      "probability": 0.2
     },
     {
       "rank": 3,
-      "label": "missing_null_handling",
-      "probability": 0.006915
+      "label": "configuration_environment",
+      "probability": 0.066667
     },
     {
       "rank": 4,
-      "label": "specification_mismatch",
-      "probability": 0.006915
+      "label": "missing_null_handling",
+      "probability": 0.066667
     },
     {
       "rank": 5,
       "label": "state_order_dependence",
-      "probability": 0.006915
+      "probability": 0.066667
     }
   ],
   "fix_intent_prediction": [
     {
       "rank": 1,
       "label": "change_comparison",
-      "probability": 0.988198
+      "probability": 0.409836
     },
     {
       "rank": 2,
       "label": "add_missing_value_guard",
-      "probability": 0.001311
+      "probability": 0.065574
     },
     {
       "rank": 3,
       "label": "add_spec_exception_rule",
-      "probability": 0.001311
+      "probability": 0.065574
     },
     {
       "rank": 4,
       "label": "align_calculation_order_with_spec",
-      "probability": 0.001311
+      "probability": 0.065574
     },
     {
       "rank": 5,
       "label": "align_selection_rule_with_spec",
-      "probability": 0.001311
+      "probability": 0.065574
     }
   ],
-  "cumulative_cost": 6,
-  "current_step": 4,
+  "cumulative_cost": 12,
+  "current_step": 6,
   "executed_actions": [
-    "inspect_traceback",
-    "run_smoke_tests",
     "inspect_recent_diff",
+    "run_smoke_tests",
+    "run_boundary_tests",
+    "run_config_matrix_tests",
+    "run_null_missing_tests",
     "inspect_spec_clause"
   ],
   "trace": [
     {
       "step": 1,
-      "policy": "expected_utility_per_cost",
-      "selected_action": "inspect_traceback",
+      "policy": "recent_diff_first",
+      "selected_action": "inspect_recent_diff",
       "observation": {
-        "action_id": "inspect_traceback",
-        "cost": 1,
-        "observation_type": "exception_trace",
-        "summary": "inspect_traceback did not expose P1B-BUG-001; signal is weak for this injected bug.",
+        "action_id": "inspect_recent_diff",
+        "cost": 2,
+        "observation_type": "recent_diff_signal",
+        "summary": "inspect_recent_diff read patches/P1B-BUG-001.patch from the Phase C real-diff artifacts; changed files: checkout/shipping.py; changed functions: shipping.free_shipping_eligible. Diff evidence alone is not treated as a reproduced bug.",
         "bug_detected": false,
         "failure_found": false,
-        "no_bug_evidence": true,
+        "no_bug_evidence": false,
         "reproduction_input": null,
         "exception_type": null,
         "cause_scores": {},
         "location_scores": {
-          "config.get_shipping_threshold": 1.0,
-          "cart.cart_subtotal": 1.0
+          "shipping.free_shipping_eligible": 4.0
         },
         "fix_intent_scores": {},
-        "evidence_source": "metadata_synth",
+        "evidence_source": "real_diff_artifact",
+        "diff_artifact_path": "patches/P1B-BUG-001.patch",
+        "changed_files": [
+          "checkout/shipping.py"
+        ],
+        "changed_functions": [
+          "shipping.free_shipping_eligible"
+        ],
+        "diff_excerpt": "diff --git a/checkout/shipping.py b/checkout/shipping.py\n--- a/checkout/shipping.py\n+++ b/checkout/shipping.py\n@@ -18,7 +18,7 @@ def free_shipping_eligible(subtotal: int, config: dict[str, Any]) -> bool:\n     threshold = config_helpers.get_shipping_threshold(config)\n-    return subtotal >= threshold\n+    return subtotal > threshold",
         "test_results": [],
         "failed_test_ids": [],
         "passed_test_ids": [],
@@ -161,7 +170,7 @@
         "coverage_counts": {}
       },
       "prior_bug_presence_posterior": 0.5,
-      "updated_bug_presence_posterior": 0.32,
+      "updated_bug_presence_posterior": 0.55,
       "prior_cause_posterior": {
         "boundary_condition": 0.2,
         "missing_null_handling": 0.2,
@@ -203,30 +212,30 @@
         "config.get_region_aliases": 0.041666666666666664
       },
       "updated_location_posterior": {
-        "cart.add_item": 0.041666666666666664,
-        "cart.validate_item": 0.041666666666666664,
-        "cart.cart_subtotal": 0.041666666666666664,
-        "cart.calculate_tax": 0.041666666666666664,
-        "cart.calculate_total": 0.041666666666666664,
-        "cart.checkout_quote": 0.041666666666666664,
-        "cart.remove_item": 0.041666666666666664,
-        "cart.item_requires_shipping": 0.041666666666666664,
-        "discounts.apply_coupon": 0.041666666666666664,
-        "discounts.coupon_is_eligible": 0.041666666666666664,
-        "discounts.compute_discount": 0.041666666666666664,
-        "discounts.apply_bogo_discount": 0.041666666666666664,
-        "shipping.resolve_region_rate": 0.041666666666666664,
-        "shipping.free_shipping_eligible": 0.041666666666666664,
-        "shipping.calculate_shipping": 0.041666666666666664,
-        "inventory.reserve_stock": 0.041666666666666664,
-        "inventory.cancel_reservation": 0.041666666666666664,
-        "inventory.sync_after_cart_update": 0.041666666666666664,
-        "config.get_tax_rate": 0.041666666666666664,
-        "config.get_feature_flag": 0.041666666666666664,
-        "config.load_config": 0.041666666666666664,
-        "config.get_shipping_threshold": 0.041666666666666664,
-        "config.get_region_defaults": 0.041666666666666664,
-        "config.get_region_aliases": 0.041666666666666664
+        "cart.add_item": 0.037037037037037035,
+        "cart.validate_item": 0.037037037037037035,
+        "cart.cart_subtotal": 0.037037037037037035,
+        "cart.calculate_tax": 0.037037037037037035,
+        "cart.calculate_total": 0.037037037037037035,
+        "cart.checkout_quote": 0.037037037037037035,
+        "cart.remove_item": 0.037037037037037035,
+        "cart.item_requires_shipping": 0.037037037037037035,
+        "discounts.apply_coupon": 0.037037037037037035,
+        "discounts.coupon_is_eligible": 0.037037037037037035,
+        "discounts.compute_discount": 0.037037037037037035,
+        "discounts.apply_bogo_discount": 0.037037037037037035,
+        "shipping.resolve_region_rate": 0.037037037037037035,
+        "shipping.free_shipping_eligible": 0.14814814814814814,
+        "shipping.calculate_shipping": 0.037037037037037035,
+        "inventory.reserve_stock": 0.037037037037037035,
+        "inventory.cancel_reservation": 0.037037037037037035,
+        "inventory.sync_after_cart_update": 0.037037037037037035,
+        "config.get_tax_rate": 0.037037037037037035,
+        "config.get_feature_flag": 0.037037037037037035,
+        "config.load_config": 0.037037037037037035,
+        "config.get_shipping_threshold": 0.037037037037037035,
+        "config.get_region_defaults": 0.037037037037037035,
+        "config.get_region_aliases": 0.037037037037037035
       },
       "prior_fix_intent_posterior": {
         "change_comparison": 0.1,
@@ -252,7 +261,7 @@
         "align_selection_rule_with_spec": 0.1,
         "add_spec_exception_rule": 0.1
       },
-      "cumulative_cost": 1,
+      "cumulative_cost": 2,
       "action_scores": [
         {
           "action": "inspect_traceback",
@@ -348,42 +357,242 @@
     },
     {
       "step": 2,
-      "policy": "expected_utility_per_cost",
+      "policy": "recent_diff_first",
       "selected_action": "run_smoke_tests",
       "observation": {
         "action_id": "run_smoke_tests",
         "cost": 1,
         "observation_type": "test_failure",
-        "summary": "run_smoke_tests exposed P1B-BUG-001: expected Shipping fee is 0.; observed Shipping fee is standard domestic fee.",
+        "summary": "run_smoke_tests failed 1/4 execution-grounded tests; first failure smoke.checkout_quote_threshold expected {'subtotal': 10000, 'shipping': 0, 'total': 10000} and observed {'subtotal': 10000, 'shipping': 800, 'total': 10800}.",
         "bug_detected": true,
         "failure_found": true,
         "no_bug_evidence": false,
-        "reproduction_input": "Cart subtotal 10000, region domestic, no coupon.",
+        "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
         "exception_type": null,
         "cause_scores": {
-          "boundary_condition": 5.2
+          "boundary_condition": 3.0,
+          "specification_mismatch": 3.0
         },
         "location_scores": {
-          "shipping.free_shipping_eligible": 39.0,
-          "config.get_shipping_threshold": 1.3,
-          "cart.cart_subtotal": 1.3
+          "cart.cart_subtotal": 1.8,
+          "cart.checkout_quote": 1.8,
+          "config.get_region_aliases": 1.8,
+          "config.get_shipping_threshold": 1.8,
+          "config.load_config": 1.8,
+          "shipping.calculate_shipping": 1.8,
+          "shipping.free_shipping_eligible": 1.8,
+          "shipping.resolve_region_rate": 1.8
         },
         "fix_intent_scores": {
-          "change_comparison": 9.1
+          "change_comparison": 2.5
         },
-        "evidence_source": "metadata_synth",
-        "test_results": [],
-        "failed_test_ids": [],
-        "passed_test_ids": [],
-        "executed_functions": [],
-        "failing_executed_functions": [],
-        "passing_executed_functions": [],
+        "evidence_source": "execution_grounded",
+        "diff_artifact_path": null,
+        "changed_files": [],
+        "changed_functions": [],
+        "diff_excerpt": null,
+        "test_results": [
+          {
+            "test_id": "smoke.checkout_quote_threshold",
+            "group": "smoke",
+            "passed": false,
+            "expected": {
+              "subtotal": 10000,
+              "shipping": 0,
+              "total": 10000
+            },
+            "actual": {
+              "subtotal": 10000,
+              "shipping": 800,
+              "total": 10800
+            },
+            "exception_type": null,
+            "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "boundary_failure",
+              "spec_rule_failure"
+            ],
+            "fix_intent_hints": [
+              "change_comparison"
+            ],
+            "action_id": "run_smoke_tests"
+          },
+          {
+            "test_id": "smoke.missing_coupon_noop",
+            "group": "smoke",
+            "passed": true,
+            "expected": {},
+            "actual": {},
+            "exception_type": null,
+            "reproduction_input": "apply_coupon({}, None).",
+            "executed_functions": [
+              "discounts.apply_coupon"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "null_exception"
+            ],
+            "fix_intent_hints": [
+              "add_missing_value_guard"
+            ],
+            "action_id": "run_smoke_tests"
+          },
+          {
+            "test_id": "smoke.digital_shipping",
+            "group": "smoke",
+            "passed": true,
+            "expected": 0,
+            "actual": 0,
+            "exception_type": null,
+            "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+            "executed_functions": [
+              "config.load_config",
+              "shipping.calculate_shipping"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure"
+            ],
+            "fix_intent_hints": [
+              "add_spec_exception_rule"
+            ],
+            "action_id": "run_smoke_tests"
+          },
+          {
+            "test_id": "smoke.preorder_reserve",
+            "group": "smoke",
+            "passed": true,
+            "expected": 1,
+            "actual": 1,
+            "exception_type": null,
+            "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+            "executed_functions": [
+              "inventory.reserve_stock"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure",
+              "state_invariant_failure"
+            ],
+            "fix_intent_hints": [
+              "add_spec_exception_rule"
+            ],
+            "action_id": "run_smoke_tests"
+          }
+        ],
+        "failed_test_ids": [
+          "smoke.checkout_quote_threshold"
+        ],
+        "passed_test_ids": [
+          "smoke.missing_coupon_noop",
+          "smoke.digital_shipping",
+          "smoke.preorder_reserve"
+        ],
+        "executed_functions": [
+          "cart.cart_subtotal",
+          "cart.checkout_quote",
+          "config.get_region_aliases",
+          "config.get_shipping_threshold",
+          "config.load_config",
+          "discounts.apply_coupon",
+          "inventory.reserve_stock",
+          "shipping.calculate_shipping",
+          "shipping.free_shipping_eligible",
+          "shipping.resolve_region_rate"
+        ],
+        "failing_executed_functions": [
+          "cart.cart_subtotal",
+          "cart.checkout_quote",
+          "config.get_region_aliases",
+          "config.get_shipping_threshold",
+          "config.load_config",
+          "shipping.calculate_shipping",
+          "shipping.free_shipping_eligible",
+          "shipping.resolve_region_rate"
+        ],
+        "passing_executed_functions": [
+          "config.load_config",
+          "discounts.apply_coupon",
+          "inventory.reserve_stock",
+          "shipping.calculate_shipping"
+        ],
         "stack_functions": [],
-        "coverage_suspicion": {},
-        "coverage_counts": {}
+        "coverage_suspicion": {
+          "cart.cart_subtotal": 1.0,
+          "cart.checkout_quote": 1.0,
+          "config.get_region_aliases": 1.0,
+          "config.get_shipping_threshold": 1.0,
+          "config.load_config": 0.707107,
+          "shipping.calculate_shipping": 0.707107,
+          "shipping.free_shipping_eligible": 1.0,
+          "shipping.resolve_region_rate": 1.0
+        },
+        "coverage_counts": {
+          "cart.cart_subtotal": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "cart.checkout_quote": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "config.get_region_aliases": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "config.get_shipping_threshold": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "config.load_config": {
+            "failed": 1,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "discounts.apply_coupon": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "inventory.reserve_stock": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "shipping.calculate_shipping": {
+            "failed": 1,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "shipping.free_shipping_eligible": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "shipping.resolve_region_rate": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          }
+        }
       },
-      "prior_bug_presence_posterior": 0.32,
-      "updated_bug_presence_posterior": 0.6699999999999999,
+      "prior_bug_presence_posterior": 0.55,
+      "updated_bug_presence_posterior": 0.9,
       "prior_cause_posterior": {
         "boundary_condition": 0.2,
         "missing_null_handling": 0.2,
@@ -392,63 +601,63 @@
         "specification_mismatch": 0.2
       },
       "updated_cause_posterior": {
-        "boundary_condition": 0.5652173913043478,
-        "missing_null_handling": 0.10869565217391304,
-        "configuration_environment": 0.10869565217391304,
-        "state_order_dependence": 0.10869565217391304,
-        "specification_mismatch": 0.10869565217391304
+        "boundary_condition": 0.3333333333333333,
+        "missing_null_handling": 0.1111111111111111,
+        "configuration_environment": 0.1111111111111111,
+        "state_order_dependence": 0.1111111111111111,
+        "specification_mismatch": 0.3333333333333333
       },
       "prior_location_posterior": {
-        "cart.add_item": 0.041666666666666664,
-        "cart.validate_item": 0.041666666666666664,
-        "cart.cart_subtotal": 0.041666666666666664,
-        "cart.calculate_tax": 0.041666666666666664,
-        "cart.calculate_total": 0.041666666666666664,
-        "cart.checkout_quote": 0.041666666666666664,
-        "cart.remove_item": 0.041666666666666664,
-        "cart.item_requires_shipping": 0.041666666666666664,
-        "discounts.apply_coupon": 0.041666666666666664,
-        "discounts.coupon_is_eligible": 0.041666666666666664,
-        "discounts.compute_discount": 0.041666666666666664,
-        "discounts.apply_bogo_discount": 0.041666666666666664,
-        "shipping.resolve_region_rate": 0.041666666666666664,
-        "shipping.free_shipping_eligible": 0.041666666666666664,
-        "shipping.calculate_shipping": 0.041666666666666664,
-        "inventory.reserve_stock": 0.041666666666666664,
-        "inventory.cancel_reservation": 0.041666666666666664,
-        "inventory.sync_after_cart_update": 0.041666666666666664,
-        "config.get_tax_rate": 0.041666666666666664,
-        "config.get_feature_flag": 0.041666666666666664,
-        "config.load_config": 0.041666666666666664,
-        "config.get_shipping_threshold": 0.041666666666666664,
-        "config.get_region_defaults": 0.041666666666666664,
-        "config.get_region_aliases": 0.041666666666666664
+        "cart.add_item": 0.037037037037037035,
+        "cart.validate_item": 0.037037037037037035,
+        "cart.cart_subtotal": 0.037037037037037035,
+        "cart.calculate_tax": 0.037037037037037035,
+        "cart.calculate_total": 0.037037037037037035,
+        "cart.checkout_quote": 0.037037037037037035,
+        "cart.remove_item": 0.037037037037037035,
+        "cart.item_requires_shipping": 0.037037037037037035,
+        "discounts.apply_coupon": 0.037037037037037035,
+        "discounts.coupon_is_eligible": 0.037037037037037035,
+        "discounts.compute_discount": 0.037037037037037035,
+        "discounts.apply_bogo_discount": 0.037037037037037035,
+        "shipping.resolve_region_rate": 0.037037037037037035,
+        "shipping.free_shipping_eligible": 0.14814814814814814,
+        "shipping.calculate_shipping": 0.037037037037037035,
+        "inventory.reserve_stock": 0.037037037037037035,
+        "inventory.cancel_reservation": 0.037037037037037035,
+        "inventory.sync_after_cart_update": 0.037037037037037035,
+        "config.get_tax_rate": 0.037037037037037035,
+        "config.get_feature_flag": 0.037037037037037035,
+        "config.load_config": 0.037037037037037035,
+        "config.get_shipping_threshold": 0.037037037037037035,
+        "config.get_region_defaults": 0.037037037037037035,
+        "config.get_region_aliases": 0.037037037037037035
       },
       "updated_location_posterior": {
-        "cart.add_item": 0.01597444089456869,
-        "cart.validate_item": 0.01597444089456869,
-        "cart.cart_subtotal": 0.020766773162939296,
-        "cart.calculate_tax": 0.01597444089456869,
-        "cart.calculate_total": 0.01597444089456869,
-        "cart.checkout_quote": 0.01597444089456869,
-        "cart.remove_item": 0.01597444089456869,
-        "cart.item_requires_shipping": 0.01597444089456869,
-        "discounts.apply_coupon": 0.01597444089456869,
-        "discounts.coupon_is_eligible": 0.01597444089456869,
-        "discounts.compute_discount": 0.01597444089456869,
-        "discounts.apply_bogo_discount": 0.01597444089456869,
-        "shipping.resolve_region_rate": 0.01597444089456869,
-        "shipping.free_shipping_eligible": 0.6230031948881789,
-        "shipping.calculate_shipping": 0.01597444089456869,
-        "inventory.reserve_stock": 0.01597444089456869,
-        "inventory.cancel_reservation": 0.01597444089456869,
-        "inventory.sync_after_cart_update": 0.01597444089456869,
-        "config.get_tax_rate": 0.01597444089456869,
-        "config.get_feature_flag": 0.01597444089456869,
-        "config.load_config": 0.01597444089456869,
-        "config.get_shipping_threshold": 0.020766773162939296,
-        "config.get_region_defaults": 0.01597444089456869,
-        "config.get_region_aliases": 0.01597444089456869
+        "cart.add_item": 0.027932960893854747,
+        "cart.validate_item": 0.027932960893854747,
+        "cart.cart_subtotal": 0.05027932960893854,
+        "cart.calculate_tax": 0.027932960893854747,
+        "cart.calculate_total": 0.027932960893854747,
+        "cart.checkout_quote": 0.05027932960893854,
+        "cart.remove_item": 0.027932960893854747,
+        "cart.item_requires_shipping": 0.027932960893854747,
+        "discounts.apply_coupon": 0.027932960893854747,
+        "discounts.coupon_is_eligible": 0.027932960893854747,
+        "discounts.compute_discount": 0.027932960893854747,
+        "discounts.apply_bogo_discount": 0.027932960893854747,
+        "shipping.resolve_region_rate": 0.05027932960893854,
+        "shipping.free_shipping_eligible": 0.20111731843575417,
+        "shipping.calculate_shipping": 0.05027932960893854,
+        "inventory.reserve_stock": 0.027932960893854747,
+        "inventory.cancel_reservation": 0.027932960893854747,
+        "inventory.sync_after_cart_update": 0.027932960893854747,
+        "config.get_tax_rate": 0.027932960893854747,
+        "config.get_feature_flag": 0.027932960893854747,
+        "config.load_config": 0.05027932960893854,
+        "config.get_shipping_threshold": 0.05027932960893854,
+        "config.get_region_defaults": 0.027932960893854747,
+        "config.get_region_aliases": 0.05027932960893854
       },
       "prior_fix_intent_posterior": {
         "change_comparison": 0.1,
@@ -463,498 +672,1440 @@
         "add_spec_exception_rule": 0.1
       },
       "updated_fix_intent_posterior": {
-        "change_comparison": 0.5027624309392266,
-        "add_missing_value_guard": 0.05524861878453039,
-        "fix_config_default": 0.05524861878453039,
-        "normalize_config_or_input": 0.05524861878453039,
-        "fix_state_transition": 0.05524861878453039,
-        "make_operation_idempotent": 0.05524861878453039,
-        "recompute_stale_state": 0.05524861878453039,
-        "align_calculation_order_with_spec": 0.05524861878453039,
-        "align_selection_rule_with_spec": 0.05524861878453039,
-        "add_spec_exception_rule": 0.05524861878453039
+        "change_comparison": 0.21739130434782605,
+        "add_missing_value_guard": 0.08695652173913043,
+        "fix_config_default": 0.08695652173913043,
+        "normalize_config_or_input": 0.08695652173913043,
+        "fix_state_transition": 0.08695652173913043,
+        "make_operation_idempotent": 0.08695652173913043,
+        "recompute_stale_state": 0.08695652173913043,
+        "align_calculation_order_with_spec": 0.08695652173913043,
+        "align_selection_rule_with_spec": 0.08695652173913043,
+        "add_spec_exception_rule": 0.08695652173913043
       },
-      "cumulative_cost": 2,
+      "cumulative_cost": 3,
       "action_scores": [
+        {
+          "action": "inspect_traceback",
+          "cost": 1,
+          "expected_utility": 1.415707,
+          "expected_utility_per_cost": 1.415707,
+          "discovery_utility": 0.135,
+          "cause_utility": 0.4,
+          "location_utility": 0.680707
+        },
         {
           "action": "run_smoke_tests",
           "cost": 1,
-          "expected_utility": 1.156,
-          "expected_utility_per_cost": 1.156,
-          "discovery_utility": 0.306,
+          "expected_utility": 1.045609,
+          "expected_utility_per_cost": 1.045609,
+          "discovery_utility": 0.2025,
           "cause_utility": 0.4,
-          "location_utility": 0.25
+          "location_utility": 0.243109
         },
         {
           "action": "inspect_spec_clause",
           "cost": 2,
-          "expected_utility": 1.606,
-          "expected_utility_per_cost": 0.803,
-          "discovery_utility": 0.306,
+          "expected_utility": 1.488719,
+          "expected_utility_per_cost": 0.744359,
+          "discovery_utility": 0.2025,
           "cause_utility": 0.6,
-          "location_utility": 0.5
-        },
-        {
-          "action": "inspect_recent_diff",
-          "cost": 2,
-          "expected_utility": 1.486,
-          "expected_utility_per_cost": 0.743,
-          "discovery_utility": 0.136,
-          "cause_utility": 0.6,
-          "location_utility": 0.55
+          "location_utility": 0.486219
         },
         {
           "action": "run_null_missing_tests",
           "cost": 2,
-          "expected_utility": 1.426,
-          "expected_utility_per_cost": 0.713,
-          "discovery_utility": 0.476,
+          "expected_utility": 1.249841,
+          "expected_utility_per_cost": 0.62492,
+          "discovery_utility": 0.315,
           "cause_utility": 0.2,
-          "location_utility": 0.55
+          "location_utility": 0.534841
         },
         {
           "action": "run_boundary_tests",
           "cost": 2,
-          "expected_utility": 1.326,
-          "expected_utility_per_cost": 0.663,
-          "discovery_utility": 0.476,
+          "expected_utility": 1.152597,
+          "expected_utility_per_cost": 0.576299,
+          "discovery_utility": 0.315,
           "cause_utility": 0.2,
-          "location_utility": 0.45
+          "location_utility": 0.437597
         },
         {
           "action": "inspect_coverage_spectrum",
           "cost": 3,
-          "expected_utility": 1.402,
-          "expected_utility_per_cost": 0.467333,
-          "discovery_utility": 0.102,
+          "expected_utility": 1.344072,
+          "expected_utility_per_cost": 0.448024,
+          "discovery_utility": 0.0675,
           "cause_utility": 0.25,
-          "location_utility": 0.85
+          "location_utility": 0.826572
         },
         {
           "action": "run_config_matrix_tests",
           "cost": 3,
-          "expected_utility": 1.326,
-          "expected_utility_per_cost": 0.442,
-          "discovery_utility": 0.476,
+          "expected_utility": 1.152597,
+          "expected_utility_per_cost": 0.384199,
+          "discovery_utility": 0.315,
           "cause_utility": 0.2,
-          "location_utility": 0.45
+          "location_utility": 0.437597
         },
         {
           "action": "run_state_sequence_tests",
           "cost": 4,
-          "expected_utility": 1.46,
-          "expected_utility_per_cost": 0.365,
-          "discovery_utility": 0.51,
+          "expected_utility": 1.272341,
+          "expected_utility_per_cost": 0.318085,
+          "discovery_utility": 0.3375,
           "cause_utility": 0.2,
-          "location_utility": 0.55
+          "location_utility": 0.534841
         },
         {
           "action": "run_property_search",
           "cost": 5,
-          "expected_utility": 1.592,
-          "expected_utility_per_cost": 0.3184,
-          "discovery_utility": 0.442,
+          "expected_utility": 1.432853,
+          "expected_utility_per_cost": 0.286571,
+          "discovery_utility": 0.2925,
           "cause_utility": 0.6,
-          "location_utility": 0.35
+          "location_utility": 0.340353
         }
       ]
     },
     {
       "step": 3,
-      "policy": "expected_utility_per_cost",
-      "selected_action": "inspect_recent_diff",
+      "policy": "recent_diff_first",
+      "selected_action": "run_boundary_tests",
       "observation": {
-        "action_id": "inspect_recent_diff",
+        "action_id": "run_boundary_tests",
         "cost": 2,
-        "observation_type": "recent_diff_signal",
-        "summary": "inspect_recent_diff produced a useful prior signal for P1B-BUG-001: Boundary counterexample at exactly 10000.",
-        "bug_detected": false,
-        "failure_found": false,
+        "observation_type": "boundary_counterexample",
+        "summary": "run_boundary_tests failed 1/4 execution-grounded tests; first failure boundary.free_shipping_exact_threshold expected True and observed False.",
+        "bug_detected": true,
+        "failure_found": true,
         "no_bug_evidence": false,
-        "reproduction_input": null,
+        "reproduction_input": "free_shipping_eligible subtotal=10000.",
         "exception_type": null,
         "cause_scores": {
-          "boundary_condition": 5.2
+          "boundary_condition": 3.0
         },
         "location_scores": {
-          "shipping.free_shipping_eligible": 39.0,
-          "config.get_shipping_threshold": 1.3,
-          "cart.cart_subtotal": 1.3
+          "config.get_shipping_threshold": 1.8,
+          "config.load_config": 1.8,
+          "shipping.free_shipping_eligible": 1.8
         },
         "fix_intent_scores": {
-          "change_comparison": 9.1
+          "change_comparison": 2.5
         },
-        "evidence_source": "metadata_synth",
-        "test_results": [],
-        "failed_test_ids": [],
-        "passed_test_ids": [],
-        "executed_functions": [],
-        "failing_executed_functions": [],
-        "passing_executed_functions": [],
+        "evidence_source": "execution_grounded",
+        "diff_artifact_path": null,
+        "changed_files": [],
+        "changed_functions": [],
+        "diff_excerpt": null,
+        "test_results": [
+          {
+            "test_id": "boundary.free_shipping_exact_threshold",
+            "group": "boundary",
+            "passed": false,
+            "expected": true,
+            "actual": false,
+            "exception_type": null,
+            "reproduction_input": "free_shipping_eligible subtotal=10000.",
+            "executed_functions": [
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "shipping.free_shipping_eligible"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "boundary_failure"
+            ],
+            "fix_intent_hints": [
+              "change_comparison"
+            ],
+            "action_id": "run_boundary_tests"
+          },
+          {
+            "test_id": "boundary.coupon_exact_minimum",
+            "group": "boundary",
+            "passed": true,
+            "expected": true,
+            "actual": true,
+            "exception_type": null,
+            "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+            "executed_functions": [
+              "discounts.coupon_is_eligible"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "boundary_failure"
+            ],
+            "fix_intent_hints": [
+              "change_comparison"
+            ],
+            "action_id": "run_boundary_tests"
+          },
+          {
+            "test_id": "boundary.quantity_upper_boundary",
+            "group": "boundary",
+            "passed": true,
+            "expected": 99,
+            "actual": 99,
+            "exception_type": null,
+            "reproduction_input": "add_item quantity=99.",
+            "executed_functions": [
+              "cart.add_item",
+              "cart.validate_item"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "boundary_failure"
+            ],
+            "fix_intent_hints": [
+              "change_comparison"
+            ],
+            "action_id": "run_boundary_tests"
+          },
+          {
+            "test_id": "boundary.tax_half_up_rounding",
+            "group": "boundary",
+            "passed": true,
+            "expected": 200,
+            "actual": 200,
+            "exception_type": null,
+            "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+            "executed_functions": [
+              "cart.calculate_tax"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "boundary_failure"
+            ],
+            "fix_intent_hints": [
+              "change_comparison"
+            ],
+            "action_id": "run_boundary_tests"
+          }
+        ],
+        "failed_test_ids": [
+          "boundary.free_shipping_exact_threshold"
+        ],
+        "passed_test_ids": [
+          "boundary.coupon_exact_minimum",
+          "boundary.quantity_upper_boundary",
+          "boundary.tax_half_up_rounding"
+        ],
+        "executed_functions": [
+          "cart.add_item",
+          "cart.calculate_tax",
+          "cart.validate_item",
+          "config.get_shipping_threshold",
+          "config.load_config",
+          "discounts.coupon_is_eligible",
+          "shipping.free_shipping_eligible"
+        ],
+        "failing_executed_functions": [
+          "config.get_shipping_threshold",
+          "config.load_config",
+          "shipping.free_shipping_eligible"
+        ],
+        "passing_executed_functions": [
+          "cart.add_item",
+          "cart.calculate_tax",
+          "cart.validate_item",
+          "discounts.coupon_is_eligible"
+        ],
         "stack_functions": [],
-        "coverage_suspicion": {},
-        "coverage_counts": {}
+        "coverage_suspicion": {
+          "config.get_shipping_threshold": 1.0,
+          "config.load_config": 1.0,
+          "shipping.free_shipping_eligible": 1.0
+        },
+        "coverage_counts": {
+          "cart.add_item": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "cart.calculate_tax": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "cart.validate_item": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "config.get_shipping_threshold": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "config.load_config": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          },
+          "discounts.coupon_is_eligible": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 1
+          },
+          "shipping.free_shipping_eligible": {
+            "failed": 1,
+            "passed": 0,
+            "total_failed": 1
+          }
+        }
       },
-      "prior_bug_presence_posterior": 0.6699999999999999,
-      "updated_bug_presence_posterior": 0.72,
+      "prior_bug_presence_posterior": 0.9,
+      "updated_bug_presence_posterior": 0.98,
       "prior_cause_posterior": {
-        "boundary_condition": 0.5652173913043478,
-        "missing_null_handling": 0.10869565217391304,
-        "configuration_environment": 0.10869565217391304,
-        "state_order_dependence": 0.10869565217391304,
-        "specification_mismatch": 0.10869565217391304
+        "boundary_condition": 0.3333333333333333,
+        "missing_null_handling": 0.1111111111111111,
+        "configuration_environment": 0.1111111111111111,
+        "state_order_dependence": 0.1111111111111111,
+        "specification_mismatch": 0.3333333333333333
       },
       "updated_cause_posterior": {
-        "boundary_condition": 0.8711340206185566,
-        "missing_null_handling": 0.03221649484536082,
-        "configuration_environment": 0.03221649484536082,
-        "state_order_dependence": 0.03221649484536082,
-        "specification_mismatch": 0.03221649484536082
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
       },
       "prior_location_posterior": {
-        "cart.add_item": 0.01597444089456869,
-        "cart.validate_item": 0.01597444089456869,
-        "cart.cart_subtotal": 0.020766773162939296,
-        "cart.calculate_tax": 0.01597444089456869,
-        "cart.calculate_total": 0.01597444089456869,
-        "cart.checkout_quote": 0.01597444089456869,
-        "cart.remove_item": 0.01597444089456869,
-        "cart.item_requires_shipping": 0.01597444089456869,
-        "discounts.apply_coupon": 0.01597444089456869,
-        "discounts.coupon_is_eligible": 0.01597444089456869,
-        "discounts.compute_discount": 0.01597444089456869,
-        "discounts.apply_bogo_discount": 0.01597444089456869,
-        "shipping.resolve_region_rate": 0.01597444089456869,
-        "shipping.free_shipping_eligible": 0.6230031948881789,
-        "shipping.calculate_shipping": 0.01597444089456869,
-        "inventory.reserve_stock": 0.01597444089456869,
-        "inventory.cancel_reservation": 0.01597444089456869,
-        "inventory.sync_after_cart_update": 0.01597444089456869,
-        "config.get_tax_rate": 0.01597444089456869,
-        "config.get_feature_flag": 0.01597444089456869,
-        "config.load_config": 0.01597444089456869,
-        "config.get_shipping_threshold": 0.020766773162939296,
-        "config.get_region_defaults": 0.01597444089456869,
-        "config.get_region_aliases": 0.01597444089456869
+        "cart.add_item": 0.027932960893854747,
+        "cart.validate_item": 0.027932960893854747,
+        "cart.cart_subtotal": 0.05027932960893854,
+        "cart.calculate_tax": 0.027932960893854747,
+        "cart.calculate_total": 0.027932960893854747,
+        "cart.checkout_quote": 0.05027932960893854,
+        "cart.remove_item": 0.027932960893854747,
+        "cart.item_requires_shipping": 0.027932960893854747,
+        "discounts.apply_coupon": 0.027932960893854747,
+        "discounts.coupon_is_eligible": 0.027932960893854747,
+        "discounts.compute_discount": 0.027932960893854747,
+        "discounts.apply_bogo_discount": 0.027932960893854747,
+        "shipping.resolve_region_rate": 0.05027932960893854,
+        "shipping.free_shipping_eligible": 0.20111731843575417,
+        "shipping.calculate_shipping": 0.05027932960893854,
+        "inventory.reserve_stock": 0.027932960893854747,
+        "inventory.cancel_reservation": 0.027932960893854747,
+        "inventory.sync_after_cart_update": 0.027932960893854747,
+        "config.get_tax_rate": 0.027932960893854747,
+        "config.get_feature_flag": 0.027932960893854747,
+        "config.load_config": 0.05027932960893854,
+        "config.get_shipping_threshold": 0.05027932960893854,
+        "config.get_region_defaults": 0.027932960893854747,
+        "config.get_region_aliases": 0.05027932960893854
       },
       "updated_location_posterior": {
-        "cart.add_item": 0.000647090036107624,
-        "cart.validate_item": 0.000647090036107624,
-        "cart.cart_subtotal": 0.0010935821610218845,
-        "cart.calculate_tax": 0.000647090036107624,
-        "cart.calculate_total": 0.000647090036107624,
-        "cart.checkout_quote": 0.000647090036107624,
-        "cart.remove_item": 0.000647090036107624,
-        "cart.item_requires_shipping": 0.000647090036107624,
-        "discounts.apply_coupon": 0.000647090036107624,
-        "discounts.coupon_is_eligible": 0.000647090036107624,
-        "discounts.compute_discount": 0.000647090036107624,
-        "discounts.apply_bogo_discount": 0.000647090036107624,
-        "shipping.resolve_region_rate": 0.000647090036107624,
-        "shipping.free_shipping_eligible": 0.9842239449196961,
-        "shipping.calculate_shipping": 0.000647090036107624,
-        "inventory.reserve_stock": 0.000647090036107624,
-        "inventory.cancel_reservation": 0.000647090036107624,
-        "inventory.sync_after_cart_update": 0.000647090036107624,
-        "config.get_tax_rate": 0.000647090036107624,
-        "config.get_feature_flag": 0.000647090036107624,
-        "config.load_config": 0.000647090036107624,
-        "config.get_shipping_threshold": 0.0010935821610218845,
-        "config.get_region_defaults": 0.000647090036107624,
-        "config.get_region_aliases": 0.000647090036107624
+        "cart.add_item": 0.022502250225022502,
+        "cart.validate_item": 0.022502250225022502,
+        "cart.cart_subtotal": 0.0405040504050405,
+        "cart.calculate_tax": 0.022502250225022502,
+        "cart.calculate_total": 0.022502250225022502,
+        "cart.checkout_quote": 0.0405040504050405,
+        "cart.remove_item": 0.022502250225022502,
+        "cart.item_requires_shipping": 0.022502250225022502,
+        "discounts.apply_coupon": 0.022502250225022502,
+        "discounts.coupon_is_eligible": 0.022502250225022502,
+        "discounts.compute_discount": 0.022502250225022502,
+        "discounts.apply_bogo_discount": 0.022502250225022502,
+        "shipping.resolve_region_rate": 0.0405040504050405,
+        "shipping.free_shipping_eligible": 0.2916291629162916,
+        "shipping.calculate_shipping": 0.0405040504050405,
+        "inventory.reserve_stock": 0.022502250225022502,
+        "inventory.cancel_reservation": 0.022502250225022502,
+        "inventory.sync_after_cart_update": 0.022502250225022502,
+        "config.get_tax_rate": 0.022502250225022502,
+        "config.get_feature_flag": 0.022502250225022502,
+        "config.load_config": 0.0729072907290729,
+        "config.get_shipping_threshold": 0.0729072907290729,
+        "config.get_region_defaults": 0.022502250225022502,
+        "config.get_region_aliases": 0.0405040504050405
       },
       "prior_fix_intent_posterior": {
-        "change_comparison": 0.5027624309392266,
-        "add_missing_value_guard": 0.05524861878453039,
-        "fix_config_default": 0.05524861878453039,
-        "normalize_config_or_input": 0.05524861878453039,
-        "fix_state_transition": 0.05524861878453039,
-        "make_operation_idempotent": 0.05524861878453039,
-        "recompute_stale_state": 0.05524861878453039,
-        "align_calculation_order_with_spec": 0.05524861878453039,
-        "align_selection_rule_with_spec": 0.05524861878453039,
-        "add_spec_exception_rule": 0.05524861878453039
+        "change_comparison": 0.21739130434782605,
+        "add_missing_value_guard": 0.08695652173913043,
+        "fix_config_default": 0.08695652173913043,
+        "normalize_config_or_input": 0.08695652173913043,
+        "fix_state_transition": 0.08695652173913043,
+        "make_operation_idempotent": 0.08695652173913043,
+        "recompute_stale_state": 0.08695652173913043,
+        "align_calculation_order_with_spec": 0.08695652173913043,
+        "align_selection_rule_with_spec": 0.08695652173913043,
+        "add_spec_exception_rule": 0.08695652173913043
       },
       "updated_fix_intent_posterior": {
-        "change_comparison": 0.9019714628036162,
-        "add_missing_value_guard": 0.010892059688487093,
-        "fix_config_default": 0.010892059688487093,
-        "normalize_config_or_input": 0.010892059688487093,
-        "fix_state_transition": 0.010892059688487093,
-        "make_operation_idempotent": 0.010892059688487093,
-        "recompute_stale_state": 0.010892059688487093,
-        "align_calculation_order_with_spec": 0.010892059688487093,
-        "align_selection_rule_with_spec": 0.010892059688487093,
-        "add_spec_exception_rule": 0.010892059688487093
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
       },
-      "cumulative_cost": 4,
+      "cumulative_cost": 5,
       "action_scores": [
         {
-          "action": "inspect_recent_diff",
-          "cost": 2,
-          "expected_utility": 1.202983,
-          "expected_utility_per_cost": 0.601492,
-          "discovery_utility": 0.0231,
-          "cause_utility": 0.625991,
-          "location_utility": 0.39879
+          "action": "inspect_traceback",
+          "cost": 1,
+          "expected_utility": 1.226424,
+          "expected_utility_per_cost": 1.226424,
+          "discovery_utility": 0.0105,
+          "cause_utility": 0.202254,
+          "location_utility": 0.818833
         },
         {
           "action": "inspect_spec_clause",
           "cost": 2,
-          "expected_utility": 1.195604,
-          "expected_utility_per_cost": 0.597802,
-          "discovery_utility": 0.051975,
-          "cause_utility": 0.625991,
-          "location_utility": 0.362537
+          "expected_utility": 1.503356,
+          "expected_utility_per_cost": 0.751678,
+          "discovery_utility": 0.01575,
+          "cause_utility": 0.707888,
+          "location_utility": 0.584881
         },
         {
           "action": "run_boundary_tests",
           "cost": 2,
-          "expected_utility": 1.014339,
-          "expected_utility_per_cost": 0.50717,
-          "discovery_utility": 0.08085,
-          "cause_utility": 0.452105,
-          "location_utility": 0.326283
+          "expected_utility": 1.049111,
+          "expected_utility_per_cost": 0.524555,
+          "discovery_utility": 0.0245,
+          "cause_utility": 0.303381,
+          "location_utility": 0.526393
         },
         {
           "action": "run_null_missing_tests",
           "cost": 2,
-          "expected_utility": 0.721685,
-          "expected_utility_per_cost": 0.360843,
-          "discovery_utility": 0.08085,
-          "cause_utility": 0.086943,
-          "location_utility": 0.39879
+          "expected_utility": 0.963833,
+          "expected_utility_per_cost": 0.481917,
+          "discovery_utility": 0.0245,
+          "cause_utility": 0.101127,
+          "location_utility": 0.643369
         },
         {
           "action": "inspect_coverage_spectrum",
           "cost": 3,
-          "expected_utility": 0.988708,
-          "expected_utility_per_cost": 0.329569,
-          "discovery_utility": 0.017325,
-          "cause_utility": 0.199969,
-          "location_utility": 0.616312
-        },
-        {
-          "action": "run_property_search",
-          "cost": 5,
-          "expected_utility": 1.109943,
-          "expected_utility_per_cost": 0.221989,
-          "discovery_utility": 0.075075,
-          "cause_utility": 0.625991,
-          "location_utility": 0.253776
+          "expected_utility": 1.42192,
+          "expected_utility_per_cost": 0.473973,
+          "discovery_utility": 0.00525,
+          "cause_utility": 0.227535,
+          "location_utility": 0.994297
         },
         {
           "action": "run_config_matrix_tests",
           "cost": 3,
-          "expected_utility": 0.649178,
-          "expected_utility_per_cost": 0.216393,
-          "discovery_utility": 0.08085,
-          "cause_utility": 0.086943,
-          "location_utility": 0.326283
+          "expected_utility": 0.846857,
+          "expected_utility_per_cost": 0.282286,
+          "discovery_utility": 0.0245,
+          "cause_utility": 0.101127,
+          "location_utility": 0.526393
+        },
+        {
+          "action": "run_property_search",
+          "cost": 5,
+          "expected_utility": 1.334892,
+          "expected_utility_per_cost": 0.266978,
+          "discovery_utility": 0.02275,
+          "cause_utility": 0.707888,
+          "location_utility": 0.409416
         },
         {
           "action": "run_state_sequence_tests",
           "cost": 4,
-          "expected_utility": 0.72746,
-          "expected_utility_per_cost": 0.181865,
-          "discovery_utility": 0.086625,
-          "cause_utility": 0.086943,
-          "location_utility": 0.39879
+          "expected_utility": 0.965583,
+          "expected_utility_per_cost": 0.241396,
+          "discovery_utility": 0.02625,
+          "cause_utility": 0.101127,
+          "location_utility": 0.643369
         }
       ]
     },
     {
       "step": 4,
-      "policy": "expected_utility_per_cost",
+      "policy": "recent_diff_first",
+      "selected_action": "run_config_matrix_tests",
+      "observation": {
+        "action_id": "run_config_matrix_tests",
+        "cost": 3,
+        "observation_type": "config_counterexample",
+        "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+        "bug_detected": false,
+        "failure_found": false,
+        "no_bug_evidence": true,
+        "reproduction_input": null,
+        "exception_type": null,
+        "cause_scores": {},
+        "location_scores": {},
+        "fix_intent_scores": {},
+        "evidence_source": "execution_grounded",
+        "diff_artifact_path": null,
+        "changed_files": [],
+        "changed_functions": [],
+        "diff_excerpt": null,
+        "test_results": [
+          {
+            "test_id": "config.missing_jp_tax_default",
+            "group": "config_matrix",
+            "passed": true,
+            "expected": 0.1,
+            "actual": 0.1,
+            "exception_type": null,
+            "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+            "executed_functions": [
+              "config.get_tax_rate",
+              "config.load_config"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "config_matrix_failure"
+            ],
+            "fix_intent_hints": [
+              "fix_config_default"
+            ],
+            "action_id": "run_config_matrix_tests"
+          },
+          {
+            "test_id": "config.missing_feature_flag_no_stacking",
+            "group": "config_matrix",
+            "passed": true,
+            "expected": 500,
+            "actual": 500,
+            "exception_type": null,
+            "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+            "executed_functions": [
+              "config.get_feature_flag",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "config_matrix_failure"
+            ],
+            "fix_intent_hints": [
+              "fix_config_default"
+            ],
+            "action_id": "run_config_matrix_tests"
+          },
+          {
+            "test_id": "config.region_alias_rate",
+            "group": "config_matrix",
+            "passed": true,
+            "expected": 1600,
+            "actual": 1600,
+            "exception_type": null,
+            "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+            "executed_functions": [
+              "config.get_region_aliases",
+              "config.load_config",
+              "shipping.resolve_region_rate"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "config_matrix_failure"
+            ],
+            "fix_intent_hints": [
+              "normalize_config_or_input"
+            ],
+            "action_id": "run_config_matrix_tests"
+          },
+          {
+            "test_id": "config.free_shipping_threshold_override",
+            "group": "config_matrix",
+            "passed": true,
+            "expected": true,
+            "actual": true,
+            "exception_type": null,
+            "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+            "executed_functions": [
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "shipping.free_shipping_eligible"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "config_parse_exception"
+            ],
+            "fix_intent_hints": [
+              "normalize_config_or_input"
+            ],
+            "action_id": "run_config_matrix_tests"
+          }
+        ],
+        "failed_test_ids": [],
+        "passed_test_ids": [
+          "config.missing_jp_tax_default",
+          "config.missing_feature_flag_no_stacking",
+          "config.region_alias_rate",
+          "config.free_shipping_threshold_override"
+        ],
+        "executed_functions": [
+          "config.get_feature_flag",
+          "config.get_region_aliases",
+          "config.get_shipping_threshold",
+          "config.get_tax_rate",
+          "config.load_config",
+          "discounts.compute_discount",
+          "discounts.coupon_is_eligible",
+          "shipping.free_shipping_eligible",
+          "shipping.resolve_region_rate"
+        ],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [
+          "config.get_feature_flag",
+          "config.get_region_aliases",
+          "config.get_shipping_threshold",
+          "config.get_tax_rate",
+          "config.load_config",
+          "discounts.compute_discount",
+          "discounts.coupon_is_eligible",
+          "shipping.free_shipping_eligible",
+          "shipping.resolve_region_rate"
+        ],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {
+          "config.get_feature_flag": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_region_aliases": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_shipping_threshold": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_tax_rate": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.load_config": {
+            "failed": 0,
+            "passed": 4,
+            "total_failed": 0
+          },
+          "discounts.compute_discount": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "discounts.coupon_is_eligible": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "shipping.free_shipping_eligible": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "shipping.resolve_region_rate": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          }
+        }
+      },
+      "prior_bug_presence_posterior": 0.98,
+      "updated_bug_presence_posterior": 0.8,
+      "prior_cause_posterior": {
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
+      },
+      "updated_cause_posterior": {
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
+      },
+      "prior_location_posterior": {
+        "cart.add_item": 0.022502250225022502,
+        "cart.validate_item": 0.022502250225022502,
+        "cart.cart_subtotal": 0.0405040504050405,
+        "cart.calculate_tax": 0.022502250225022502,
+        "cart.calculate_total": 0.022502250225022502,
+        "cart.checkout_quote": 0.0405040504050405,
+        "cart.remove_item": 0.022502250225022502,
+        "cart.item_requires_shipping": 0.022502250225022502,
+        "discounts.apply_coupon": 0.022502250225022502,
+        "discounts.coupon_is_eligible": 0.022502250225022502,
+        "discounts.compute_discount": 0.022502250225022502,
+        "discounts.apply_bogo_discount": 0.022502250225022502,
+        "shipping.resolve_region_rate": 0.0405040504050405,
+        "shipping.free_shipping_eligible": 0.2916291629162916,
+        "shipping.calculate_shipping": 0.0405040504050405,
+        "inventory.reserve_stock": 0.022502250225022502,
+        "inventory.cancel_reservation": 0.022502250225022502,
+        "inventory.sync_after_cart_update": 0.022502250225022502,
+        "config.get_tax_rate": 0.022502250225022502,
+        "config.get_feature_flag": 0.022502250225022502,
+        "config.load_config": 0.0729072907290729,
+        "config.get_shipping_threshold": 0.0729072907290729,
+        "config.get_region_defaults": 0.022502250225022502,
+        "config.get_region_aliases": 0.0405040504050405
+      },
+      "updated_location_posterior": {
+        "cart.add_item": 0.022502250225022506,
+        "cart.validate_item": 0.022502250225022506,
+        "cart.cart_subtotal": 0.04050405040504051,
+        "cart.calculate_tax": 0.022502250225022506,
+        "cart.calculate_total": 0.022502250225022506,
+        "cart.checkout_quote": 0.04050405040504051,
+        "cart.remove_item": 0.022502250225022506,
+        "cart.item_requires_shipping": 0.022502250225022506,
+        "discounts.apply_coupon": 0.022502250225022506,
+        "discounts.coupon_is_eligible": 0.022502250225022506,
+        "discounts.compute_discount": 0.022502250225022506,
+        "discounts.apply_bogo_discount": 0.022502250225022506,
+        "shipping.resolve_region_rate": 0.04050405040504051,
+        "shipping.free_shipping_eligible": 0.29162916291629165,
+        "shipping.calculate_shipping": 0.04050405040504051,
+        "inventory.reserve_stock": 0.022502250225022506,
+        "inventory.cancel_reservation": 0.022502250225022506,
+        "inventory.sync_after_cart_update": 0.022502250225022506,
+        "config.get_tax_rate": 0.022502250225022506,
+        "config.get_feature_flag": 0.022502250225022506,
+        "config.load_config": 0.07290729072907291,
+        "config.get_shipping_threshold": 0.07290729072907291,
+        "config.get_region_defaults": 0.022502250225022506,
+        "config.get_region_aliases": 0.04050405040504051
+      },
+      "prior_fix_intent_posterior": {
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
+      },
+      "updated_fix_intent_posterior": {
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
+      },
+      "cumulative_cost": 8,
+      "action_scores": [
+        {
+          "action": "inspect_traceback",
+          "cost": 1,
+          "expected_utility": 1.0294,
+          "expected_utility_per_cost": 1.0294,
+          "discovery_utility": 0.0021,
+          "cause_utility": 0.096928,
+          "location_utility": 0.758955
+        },
+        {
+          "action": "inspect_spec_clause",
+          "cost": 2,
+          "expected_utility": 1.346708,
+          "expected_utility_per_cost": 0.673354,
+          "discovery_utility": 0.00315,
+          "cause_utility": 0.63003,
+          "location_utility": 0.542111
+        },
+        {
+          "action": "inspect_coverage_spectrum",
+          "cost": 3,
+          "expected_utility": 1.275795,
+          "expected_utility_per_cost": 0.425265,
+          "discovery_utility": 0.00105,
+          "cause_utility": 0.181739,
+          "location_utility": 0.921588
+        },
+        {
+          "action": "run_null_missing_tests",
+          "cost": 2,
+          "expected_utility": 0.821103,
+          "expected_utility_per_cost": 0.410552,
+          "discovery_utility": 0.0049,
+          "cause_utility": 0.048464,
+          "location_utility": 0.596322
+        },
+        {
+          "action": "run_config_matrix_tests",
+          "cost": 3,
+          "expected_utility": 0.712681,
+          "expected_utility_per_cost": 0.23756,
+          "discovery_utility": 0.0049,
+          "cause_utility": 0.048464,
+          "location_utility": 0.487899
+        },
+        {
+          "action": "run_property_search",
+          "cost": 5,
+          "expected_utility": 1.185475,
+          "expected_utility_per_cost": 0.237095,
+          "discovery_utility": 0.00455,
+          "cause_utility": 0.63003,
+          "location_utility": 0.379477
+        },
+        {
+          "action": "run_state_sequence_tests",
+          "cost": 4,
+          "expected_utility": 0.821453,
+          "expected_utility_per_cost": 0.205363,
+          "discovery_utility": 0.00525,
+          "cause_utility": 0.048464,
+          "location_utility": 0.596322
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "policy": "recent_diff_first",
+      "selected_action": "run_null_missing_tests",
+      "observation": {
+        "action_id": "run_null_missing_tests",
+        "cost": 2,
+        "observation_type": "exception_trace",
+        "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+        "bug_detected": false,
+        "failure_found": false,
+        "no_bug_evidence": true,
+        "reproduction_input": null,
+        "exception_type": null,
+        "cause_scores": {},
+        "location_scores": {},
+        "fix_intent_scores": {},
+        "evidence_source": "execution_grounded",
+        "diff_artifact_path": null,
+        "changed_files": [],
+        "changed_functions": [],
+        "diff_excerpt": null,
+        "test_results": [
+          {
+            "test_id": "null_missing.coupon_none_noop",
+            "group": "null_missing",
+            "passed": true,
+            "expected": {},
+            "actual": {},
+            "exception_type": null,
+            "reproduction_input": "apply_coupon({}, None).",
+            "executed_functions": [
+              "discounts.apply_coupon"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "null_exception"
+            ],
+            "fix_intent_hints": [
+              "add_missing_value_guard"
+            ],
+            "action_id": "run_null_missing_tests"
+          },
+          {
+            "test_id": "null_missing.missing_region_default",
+            "group": "null_missing",
+            "passed": true,
+            "expected": 800,
+            "actual": 800,
+            "exception_type": null,
+            "reproduction_input": "resolve_region_rate with an address missing region.",
+            "executed_functions": [
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "shipping.resolve_region_rate"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "missing_key_exception"
+            ],
+            "fix_intent_hints": [
+              "add_missing_value_guard"
+            ],
+            "action_id": "run_null_missing_tests"
+          },
+          {
+            "test_id": "null_missing.none_cart_subtotal",
+            "group": "null_missing",
+            "passed": true,
+            "expected": 0,
+            "actual": 0,
+            "exception_type": null,
+            "reproduction_input": "cart_subtotal(None).",
+            "executed_functions": [
+              "cart.cart_subtotal"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "null_exception"
+            ],
+            "fix_intent_hints": [
+              "add_missing_value_guard"
+            ],
+            "action_id": "run_null_missing_tests"
+          },
+          {
+            "test_id": "null_missing.missing_reserved_defaults_zero",
+            "group": "null_missing",
+            "passed": true,
+            "expected": 1,
+            "actual": 1,
+            "exception_type": null,
+            "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+            "executed_functions": [
+              "inventory.reserve_stock"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "missing_key_exception"
+            ],
+            "fix_intent_hints": [
+              "add_missing_value_guard"
+            ],
+            "action_id": "run_null_missing_tests"
+          }
+        ],
+        "failed_test_ids": [],
+        "passed_test_ids": [
+          "null_missing.coupon_none_noop",
+          "null_missing.missing_region_default",
+          "null_missing.none_cart_subtotal",
+          "null_missing.missing_reserved_defaults_zero"
+        ],
+        "executed_functions": [
+          "cart.cart_subtotal",
+          "config.get_region_aliases",
+          "config.get_region_defaults",
+          "config.load_config",
+          "discounts.apply_coupon",
+          "inventory.reserve_stock",
+          "shipping.resolve_region_rate"
+        ],
+        "failing_executed_functions": [],
+        "passing_executed_functions": [
+          "cart.cart_subtotal",
+          "config.get_region_aliases",
+          "config.get_region_defaults",
+          "config.load_config",
+          "discounts.apply_coupon",
+          "inventory.reserve_stock",
+          "shipping.resolve_region_rate"
+        ],
+        "stack_functions": [],
+        "coverage_suspicion": {},
+        "coverage_counts": {
+          "cart.cart_subtotal": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_region_aliases": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_region_defaults": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.load_config": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "discounts.apply_coupon": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "inventory.reserve_stock": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "shipping.resolve_region_rate": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          }
+        }
+      },
+      "prior_bug_presence_posterior": 0.8,
+      "updated_bug_presence_posterior": 0.6200000000000001,
+      "prior_cause_posterior": {
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
+      },
+      "updated_cause_posterior": {
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
+      },
+      "prior_location_posterior": {
+        "cart.add_item": 0.022502250225022506,
+        "cart.validate_item": 0.022502250225022506,
+        "cart.cart_subtotal": 0.04050405040504051,
+        "cart.calculate_tax": 0.022502250225022506,
+        "cart.calculate_total": 0.022502250225022506,
+        "cart.checkout_quote": 0.04050405040504051,
+        "cart.remove_item": 0.022502250225022506,
+        "cart.item_requires_shipping": 0.022502250225022506,
+        "discounts.apply_coupon": 0.022502250225022506,
+        "discounts.coupon_is_eligible": 0.022502250225022506,
+        "discounts.compute_discount": 0.022502250225022506,
+        "discounts.apply_bogo_discount": 0.022502250225022506,
+        "shipping.resolve_region_rate": 0.04050405040504051,
+        "shipping.free_shipping_eligible": 0.29162916291629165,
+        "shipping.calculate_shipping": 0.04050405040504051,
+        "inventory.reserve_stock": 0.022502250225022506,
+        "inventory.cancel_reservation": 0.022502250225022506,
+        "inventory.sync_after_cart_update": 0.022502250225022506,
+        "config.get_tax_rate": 0.022502250225022506,
+        "config.get_feature_flag": 0.022502250225022506,
+        "config.load_config": 0.07290729072907291,
+        "config.get_shipping_threshold": 0.07290729072907291,
+        "config.get_region_defaults": 0.022502250225022506,
+        "config.get_region_aliases": 0.04050405040504051
+      },
+      "updated_location_posterior": {
+        "cart.add_item": 0.022502250225022506,
+        "cart.validate_item": 0.022502250225022506,
+        "cart.cart_subtotal": 0.04050405040504051,
+        "cart.calculate_tax": 0.022502250225022506,
+        "cart.calculate_total": 0.022502250225022506,
+        "cart.checkout_quote": 0.04050405040504051,
+        "cart.remove_item": 0.022502250225022506,
+        "cart.item_requires_shipping": 0.022502250225022506,
+        "discounts.apply_coupon": 0.022502250225022506,
+        "discounts.coupon_is_eligible": 0.022502250225022506,
+        "discounts.compute_discount": 0.022502250225022506,
+        "discounts.apply_bogo_discount": 0.022502250225022506,
+        "shipping.resolve_region_rate": 0.04050405040504051,
+        "shipping.free_shipping_eligible": 0.29162916291629165,
+        "shipping.calculate_shipping": 0.04050405040504051,
+        "inventory.reserve_stock": 0.022502250225022506,
+        "inventory.cancel_reservation": 0.022502250225022506,
+        "inventory.sync_after_cart_update": 0.022502250225022506,
+        "config.get_tax_rate": 0.022502250225022506,
+        "config.get_feature_flag": 0.022502250225022506,
+        "config.load_config": 0.07290729072907291,
+        "config.get_shipping_threshold": 0.07290729072907291,
+        "config.get_region_defaults": 0.022502250225022506,
+        "config.get_region_aliases": 0.04050405040504051
+      },
+      "prior_fix_intent_posterior": {
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
+      },
+      "updated_fix_intent_posterior": {
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
+      },
+      "cumulative_cost": 10,
+      "action_scores": [
+        {
+          "action": "inspect_traceback",
+          "cost": 1,
+          "expected_utility": 1.0483,
+          "expected_utility_per_cost": 1.0483,
+          "discovery_utility": 0.021,
+          "cause_utility": 0.096928,
+          "location_utility": 0.758955
+        },
+        {
+          "action": "inspect_spec_clause",
+          "cost": 2,
+          "expected_utility": 1.375058,
+          "expected_utility_per_cost": 0.687529,
+          "discovery_utility": 0.0315,
+          "cause_utility": 0.63003,
+          "location_utility": 0.542111
+        },
+        {
+          "action": "run_null_missing_tests",
+          "cost": 2,
+          "expected_utility": 0.865203,
+          "expected_utility_per_cost": 0.432602,
+          "discovery_utility": 0.049,
+          "cause_utility": 0.048464,
+          "location_utility": 0.596322
+        },
+        {
+          "action": "inspect_coverage_spectrum",
+          "cost": 3,
+          "expected_utility": 1.285245,
+          "expected_utility_per_cost": 0.428415,
+          "discovery_utility": 0.0105,
+          "cause_utility": 0.181739,
+          "location_utility": 0.921588
+        },
+        {
+          "action": "run_state_sequence_tests",
+          "cost": 4,
+          "expected_utility": 0.868703,
+          "expected_utility_per_cost": 0.217176,
+          "discovery_utility": 0.0525,
+          "cause_utility": 0.048464,
+          "location_utility": 0.596322
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "policy": "recent_diff_first",
       "selected_action": "inspect_spec_clause",
       "observation": {
         "action_id": "inspect_spec_clause",
         "cost": 2,
         "observation_type": "spec_clause_mismatch",
-        "summary": "inspect_spec_clause exposed P1B-BUG-001: expected Shipping fee is 0.; observed Shipping fee is standard domestic fee.",
-        "bug_detected": true,
-        "failure_found": true,
-        "no_bug_evidence": false,
-        "reproduction_input": "Cart subtotal 10000, region domestic, no coupon.",
+        "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+        "bug_detected": false,
+        "failure_found": false,
+        "no_bug_evidence": true,
+        "reproduction_input": null,
         "exception_type": null,
-        "cause_scores": {
-          "boundary_condition": 5.2
-        },
-        "location_scores": {
-          "shipping.free_shipping_eligible": 39.0,
-          "config.get_shipping_threshold": 1.3,
-          "cart.cart_subtotal": 1.3
-        },
-        "fix_intent_scores": {
-          "change_comparison": 9.1
-        },
-        "evidence_source": "metadata_synth",
-        "test_results": [],
+        "cause_scores": {},
+        "location_scores": {},
+        "fix_intent_scores": {},
+        "evidence_source": "execution_grounded",
+        "diff_artifact_path": null,
+        "changed_files": [],
+        "changed_functions": [],
+        "diff_excerpt": null,
+        "test_results": [
+          {
+            "test_id": "spec.discount_before_tax",
+            "group": "spec_clause",
+            "passed": true,
+            "expected": 10450,
+            "actual": 10450,
+            "exception_type": null,
+            "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+            "executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure"
+            ],
+            "fix_intent_hints": [
+              "align_calculation_order_with_spec"
+            ],
+            "action_id": "inspect_spec_clause"
+          },
+          {
+            "test_id": "spec.bogo_cheapest_rule",
+            "group": "spec_clause",
+            "passed": true,
+            "expected": 1000,
+            "actual": 1000,
+            "exception_type": null,
+            "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+            "executed_functions": [
+              "discounts.apply_bogo_discount"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure"
+            ],
+            "fix_intent_hints": [
+              "align_selection_rule_with_spec"
+            ],
+            "action_id": "inspect_spec_clause"
+          },
+          {
+            "test_id": "spec.digital_only_shipping",
+            "group": "spec_clause",
+            "passed": true,
+            "expected": 0,
+            "actual": 0,
+            "exception_type": null,
+            "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+            "executed_functions": [
+              "config.load_config",
+              "shipping.calculate_shipping"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure"
+            ],
+            "fix_intent_hints": [
+              "add_spec_exception_rule"
+            ],
+            "action_id": "inspect_spec_clause"
+          },
+          {
+            "test_id": "spec.preorder_reservation",
+            "group": "spec_clause",
+            "passed": true,
+            "expected": 1,
+            "actual": 1,
+            "exception_type": null,
+            "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+            "executed_functions": [
+              "inventory.reserve_stock"
+            ],
+            "stack_functions": [],
+            "evidence_tags": [
+              "spec_rule_failure",
+              "state_invariant_failure"
+            ],
+            "fix_intent_hints": [
+              "add_spec_exception_rule"
+            ],
+            "action_id": "inspect_spec_clause"
+          }
+        ],
         "failed_test_ids": [],
-        "passed_test_ids": [],
-        "executed_functions": [],
+        "passed_test_ids": [
+          "spec.discount_before_tax",
+          "spec.bogo_cheapest_rule",
+          "spec.digital_only_shipping",
+          "spec.preorder_reservation"
+        ],
+        "executed_functions": [
+          "cart.calculate_tax",
+          "cart.calculate_total",
+          "cart.cart_subtotal",
+          "config.get_feature_flag",
+          "config.get_tax_rate",
+          "config.load_config",
+          "discounts.apply_bogo_discount",
+          "discounts.compute_discount",
+          "discounts.coupon_is_eligible",
+          "inventory.reserve_stock",
+          "shipping.calculate_shipping"
+        ],
         "failing_executed_functions": [],
-        "passing_executed_functions": [],
+        "passing_executed_functions": [
+          "cart.calculate_tax",
+          "cart.calculate_total",
+          "cart.cart_subtotal",
+          "config.get_feature_flag",
+          "config.get_tax_rate",
+          "config.load_config",
+          "discounts.apply_bogo_discount",
+          "discounts.compute_discount",
+          "discounts.coupon_is_eligible",
+          "inventory.reserve_stock",
+          "shipping.calculate_shipping"
+        ],
         "stack_functions": [],
         "coverage_suspicion": {},
-        "coverage_counts": {}
+        "coverage_counts": {
+          "cart.calculate_tax": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "cart.calculate_total": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "cart.cart_subtotal": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_feature_flag": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.get_tax_rate": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "config.load_config": {
+            "failed": 0,
+            "passed": 2,
+            "total_failed": 0
+          },
+          "discounts.apply_bogo_discount": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "discounts.compute_discount": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "discounts.coupon_is_eligible": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "inventory.reserve_stock": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          },
+          "shipping.calculate_shipping": {
+            "failed": 0,
+            "passed": 1,
+            "total_failed": 0
+          }
+        }
       },
-      "prior_bug_presence_posterior": 0.72,
-      "updated_bug_presence_posterior": 0.98,
+      "prior_bug_presence_posterior": 0.6200000000000001,
+      "updated_bug_presence_posterior": 0.4400000000000001,
       "prior_cause_posterior": {
-        "boundary_condition": 0.8711340206185566,
-        "missing_null_handling": 0.03221649484536082,
-        "configuration_environment": 0.03221649484536082,
-        "state_order_dependence": 0.03221649484536082,
-        "specification_mismatch": 0.03221649484536082
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
       },
       "updated_cause_posterior": {
-        "boundary_condition": 0.9723390130559859,
-        "missing_null_handling": 0.006915246736003541,
-        "configuration_environment": 0.006915246736003541,
-        "state_order_dependence": 0.006915246736003541,
-        "specification_mismatch": 0.006915246736003541
+        "boundary_condition": 0.6000000000000001,
+        "missing_null_handling": 0.06666666666666667,
+        "configuration_environment": 0.06666666666666667,
+        "state_order_dependence": 0.06666666666666667,
+        "specification_mismatch": 0.2
       },
       "prior_location_posterior": {
-        "cart.add_item": 0.000647090036107624,
-        "cart.validate_item": 0.000647090036107624,
-        "cart.cart_subtotal": 0.0010935821610218845,
-        "cart.calculate_tax": 0.000647090036107624,
-        "cart.calculate_total": 0.000647090036107624,
-        "cart.checkout_quote": 0.000647090036107624,
-        "cart.remove_item": 0.000647090036107624,
-        "cart.item_requires_shipping": 0.000647090036107624,
-        "discounts.apply_coupon": 0.000647090036107624,
-        "discounts.coupon_is_eligible": 0.000647090036107624,
-        "discounts.compute_discount": 0.000647090036107624,
-        "discounts.apply_bogo_discount": 0.000647090036107624,
-        "shipping.resolve_region_rate": 0.000647090036107624,
-        "shipping.free_shipping_eligible": 0.9842239449196961,
-        "shipping.calculate_shipping": 0.000647090036107624,
-        "inventory.reserve_stock": 0.000647090036107624,
-        "inventory.cancel_reservation": 0.000647090036107624,
-        "inventory.sync_after_cart_update": 0.000647090036107624,
-        "config.get_tax_rate": 0.000647090036107624,
-        "config.get_feature_flag": 0.000647090036107624,
-        "config.load_config": 0.000647090036107624,
-        "config.get_shipping_threshold": 0.0010935821610218845,
-        "config.get_region_defaults": 0.000647090036107624,
-        "config.get_region_aliases": 0.000647090036107624
+        "cart.add_item": 0.022502250225022506,
+        "cart.validate_item": 0.022502250225022506,
+        "cart.cart_subtotal": 0.04050405040504051,
+        "cart.calculate_tax": 0.022502250225022506,
+        "cart.calculate_total": 0.022502250225022506,
+        "cart.checkout_quote": 0.04050405040504051,
+        "cart.remove_item": 0.022502250225022506,
+        "cart.item_requires_shipping": 0.022502250225022506,
+        "discounts.apply_coupon": 0.022502250225022506,
+        "discounts.coupon_is_eligible": 0.022502250225022506,
+        "discounts.compute_discount": 0.022502250225022506,
+        "discounts.apply_bogo_discount": 0.022502250225022506,
+        "shipping.resolve_region_rate": 0.04050405040504051,
+        "shipping.free_shipping_eligible": 0.29162916291629165,
+        "shipping.calculate_shipping": 0.04050405040504051,
+        "inventory.reserve_stock": 0.022502250225022506,
+        "inventory.cancel_reservation": 0.022502250225022506,
+        "inventory.sync_after_cart_update": 0.022502250225022506,
+        "config.get_tax_rate": 0.022502250225022506,
+        "config.get_feature_flag": 0.022502250225022506,
+        "config.load_config": 0.07290729072907291,
+        "config.get_shipping_threshold": 0.07290729072907291,
+        "config.get_region_defaults": 0.022502250225022506,
+        "config.get_region_aliases": 0.04050405040504051
       },
       "updated_location_posterior": {
-        "cart.add_item": 1.6850791331696805e-05,
-        "cart.validate_item": 1.6850791331696805e-05,
-        "cart.cart_subtotal": 3.702118855573788e-05,
-        "cart.calculate_tax": 1.6850791331696805e-05,
-        "cart.calculate_total": 1.6850791331696805e-05,
-        "cart.checkout_quote": 1.6850791331696805e-05,
-        "cart.remove_item": 1.6850791331696805e-05,
-        "cart.item_requires_shipping": 1.6850791331696805e-05,
-        "discounts.apply_coupon": 1.6850791331696805e-05,
-        "discounts.coupon_is_eligible": 1.6850791331696805e-05,
-        "discounts.compute_discount": 1.6850791331696805e-05,
-        "discounts.apply_bogo_discount": 1.6850791331696805e-05,
-        "shipping.resolve_region_rate": 1.6850791331696805e-05,
-        "shipping.free_shipping_eligible": 0.9995720910049228,
-        "shipping.calculate_shipping": 1.6850791331696805e-05,
-        "inventory.reserve_stock": 1.6850791331696805e-05,
-        "inventory.cancel_reservation": 1.6850791331696805e-05,
-        "inventory.sync_after_cart_update": 1.6850791331696805e-05,
-        "config.get_tax_rate": 1.6850791331696805e-05,
-        "config.get_feature_flag": 1.6850791331696805e-05,
-        "config.load_config": 1.6850791331696805e-05,
-        "config.get_shipping_threshold": 3.702118855573788e-05,
-        "config.get_region_defaults": 1.6850791331696805e-05,
-        "config.get_region_aliases": 1.6850791331696805e-05
+        "cart.add_item": 0.022502250225022506,
+        "cart.validate_item": 0.022502250225022506,
+        "cart.cart_subtotal": 0.04050405040504051,
+        "cart.calculate_tax": 0.022502250225022506,
+        "cart.calculate_total": 0.022502250225022506,
+        "cart.checkout_quote": 0.04050405040504051,
+        "cart.remove_item": 0.022502250225022506,
+        "cart.item_requires_shipping": 0.022502250225022506,
+        "discounts.apply_coupon": 0.022502250225022506,
+        "discounts.coupon_is_eligible": 0.022502250225022506,
+        "discounts.compute_discount": 0.022502250225022506,
+        "discounts.apply_bogo_discount": 0.022502250225022506,
+        "shipping.resolve_region_rate": 0.04050405040504051,
+        "shipping.free_shipping_eligible": 0.29162916291629165,
+        "shipping.calculate_shipping": 0.04050405040504051,
+        "inventory.reserve_stock": 0.022502250225022506,
+        "inventory.cancel_reservation": 0.022502250225022506,
+        "inventory.sync_after_cart_update": 0.022502250225022506,
+        "config.get_tax_rate": 0.022502250225022506,
+        "config.get_feature_flag": 0.022502250225022506,
+        "config.load_config": 0.07290729072907291,
+        "config.get_shipping_threshold": 0.07290729072907291,
+        "config.get_region_defaults": 0.022502250225022506,
+        "config.get_region_aliases": 0.04050405040504051
       },
       "prior_fix_intent_posterior": {
-        "change_comparison": 0.9019714628036162,
-        "add_missing_value_guard": 0.010892059688487093,
-        "fix_config_default": 0.010892059688487093,
-        "normalize_config_or_input": 0.010892059688487093,
-        "fix_state_transition": 0.010892059688487093,
-        "make_operation_idempotent": 0.010892059688487093,
-        "recompute_stale_state": 0.010892059688487093,
-        "align_calculation_order_with_spec": 0.010892059688487093,
-        "align_selection_rule_with_spec": 0.010892059688487093,
-        "add_spec_exception_rule": 0.010892059688487093
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
       },
       "updated_fix_intent_posterior": {
-        "change_comparison": 0.9881978202685389,
-        "add_missing_value_guard": 0.0013113533034956745,
-        "fix_config_default": 0.0013113533034956745,
-        "normalize_config_or_input": 0.0013113533034956745,
-        "fix_state_transition": 0.0013113533034956745,
-        "make_operation_idempotent": 0.0013113533034956745,
-        "recompute_stale_state": 0.0013113533034956745,
-        "align_calculation_order_with_spec": 0.0013113533034956745,
-        "align_selection_rule_with_spec": 0.0013113533034956745,
-        "add_spec_exception_rule": 0.0013113533034956745
+        "change_comparison": 0.4098360655737705,
+        "add_missing_value_guard": 0.06557377049180328,
+        "fix_config_default": 0.06557377049180328,
+        "normalize_config_or_input": 0.06557377049180328,
+        "fix_state_transition": 0.06557377049180328,
+        "make_operation_idempotent": 0.06557377049180328,
+        "recompute_stale_state": 0.06557377049180328,
+        "align_calculation_order_with_spec": 0.06557377049180328,
+        "align_selection_rule_with_spec": 0.06557377049180328,
+        "add_spec_exception_rule": 0.06557377049180328
       },
-      "cumulative_cost": 6,
+      "cumulative_cost": 12,
       "action_scores": [
+        {
+          "action": "inspect_traceback",
+          "cost": 1,
+          "expected_utility": 1.0672,
+          "expected_utility_per_cost": 1.0672,
+          "discovery_utility": 0.0399,
+          "cause_utility": 0.096928,
+          "location_utility": 0.758955
+        },
         {
           "action": "inspect_spec_clause",
           "cost": 2,
-          "expected_utility": 0.443499,
-          "expected_utility_per_cost": 0.221749,
-          "discovery_utility": 0.0441,
-          "cause_utility": 0.327197,
-          "location_utility": 0.025634
-        },
-        {
-          "action": "run_boundary_tests",
-          "cost": 2,
-          "expected_utility": 0.442901,
-          "expected_utility_per_cost": 0.22145,
-          "discovery_utility": 0.0686,
-          "cause_utility": 0.304663,
-          "location_utility": 0.023071
-        },
-        {
-          "action": "run_property_search",
-          "cost": 5,
-          "expected_utility": 0.455408,
-          "expected_utility_per_cost": 0.091082,
-          "discovery_utility": 0.0637,
-          "cause_utility": 0.327197,
-          "location_utility": 0.017944
-        },
-        {
-          "action": "run_null_missing_tests",
-          "cost": 2,
-          "expected_utility": 0.154632,
-          "expected_utility_per_cost": 0.077316,
-          "discovery_utility": 0.0686,
-          "cause_utility": 0.011267,
-          "location_utility": 0.028198
-        },
-        {
-          "action": "inspect_coverage_spectrum",
-          "cost": 3,
-          "expected_utility": 0.192278,
-          "expected_utility_per_cost": 0.064093,
-          "discovery_utility": 0.0147,
-          "cause_utility": 0.087433,
-          "location_utility": 0.043578
-        },
-        {
-          "action": "run_config_matrix_tests",
-          "cost": 3,
-          "expected_utility": 0.149505,
-          "expected_utility_per_cost": 0.049835,
-          "discovery_utility": 0.0686,
-          "cause_utility": 0.011267,
-          "location_utility": 0.023071
-        },
-        {
-          "action": "run_state_sequence_tests",
-          "cost": 4,
-          "expected_utility": 0.159532,
-          "expected_utility_per_cost": 0.039883,
-          "discovery_utility": 0.0735,
-          "cause_utility": 0.011267,
-          "location_utility": 0.028198
+          "expected_utility": 1.403408,
+          "expected_utility_per_cost": 0.701704,
+          "discovery_utility": 0.05985,
+          "cause_utility": 0.63003,
+          "location_utility": 0.542111
         }
       ]
     }
@@ -963,6 +2114,6 @@
     "P1b is a small injected-bug benchmark scaffold, not a real-code production debugger.",
     "P1b ranks function-level locations; line spans are explanatory hints only.",
     "P1b predicts fix-intent categories but does not generate patches.",
-    "P1b uses synthetic recent-diff metadata and structured coverage-like observations."
+    "P1b keeps metadata-synth recent-diff evidence synthetic; execution-grounded mode reads Phase C real-diff artifacts."
   ]
 }

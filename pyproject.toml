@@ -19,6 +19,13 @@ bug-cause-inference = "bug_cause_inference.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"bug_cause_inference.p1b" = [
+  "artifacts/real_diff/manifest.json",
+  "artifacts/real_diff/baseline/checkout/*.py",
+  "artifacts/real_diff/patches/*.patch",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

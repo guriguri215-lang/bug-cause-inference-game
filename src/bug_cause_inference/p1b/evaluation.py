@@ -375,9 +375,10 @@ def _p1b_comparison_to_markdown(summary: dict[str, Any]) -> str:
         "P1b is a small injected-bug benchmark scaffold. It does not generate patches,",
         "handle large repositories, or implement adversarial bug generation.",
         "",
-        "Phase B compares the frozen `metadata_synth` baseline with `execution_grounded`",
-        "observations. Lower execution-grounded scores are diagnostic evidence about",
-        "metadata-synth optimism, not a B3 implementation failure.",
+        "The comparison keeps the frozen `metadata_synth` baseline next to",
+        "`execution_grounded` observations. Execution-grounded test and coverage",
+        "signals come from checkout execution, and recent-diff signals come from",
+        "Phase C real-diff artifacts.",
         "",
         "## Dataset",
         "",
@@ -415,7 +416,7 @@ def _p1b_comparison_to_markdown(summary: dict[str, Any]) -> str:
             "- Location metrics use function-level targets; line-span hints are secondary only.",
             "- Execution-grounded mode builds test-action observations from checkout test results, exceptions, and traced checkout functions, not from variant cause/location/fix-intent labels.",
             "- `inspect_coverage_spectrum` computes function-level Ochiai suspicion from cached passing/failing execution results.",
-            "- `inspect_recent_diff` remains a synthetic prior in Phase B; real git commit/diff artifacts are deferred to Phase C.",
+            "- In execution-grounded mode, `inspect_recent_diff` reads Phase C real-diff artifacts and reports changed files, changed functions, and a diff excerpt.",
             "- All policies share the same stopping rules, so the comparison is primarily about action ordering.",
             "- `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.",
         ]
@@ -465,7 +466,7 @@ def p1b_evaluation_to_markdown(summary: dict[str, Any]) -> str:
             [
                 "- Execution-grounded mode builds test-action observations from checkout test results, exceptions, and traced checkout functions, not from variant cause/location/fix-intent labels.",
                 "- `inspect_coverage_spectrum` computes function-level Ochiai suspicion from cached passing/failing execution results.",
-                "- `inspect_recent_diff` remains a synthetic prior in Phase B; real git commit/diff artifacts are deferred to Phase C.",
+                "- `inspect_recent_diff` reads Phase C real-diff artifacts and reports changed files, changed functions, and a diff excerpt.",
             ]
         )
     else:
