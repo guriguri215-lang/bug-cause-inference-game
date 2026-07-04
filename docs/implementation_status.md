@@ -22,6 +22,8 @@
 - P1b Phase B1 execution-grounded harness using checkout test results, exceptions, and traced checkout functions.
 - P1b Phase B2 coverage-spectrum localization with function-level Ochiai suspicion and coverage counts.
 - P1b Phase B3 comparison reporting via `p1b-evaluate --observation-mode both`.
+- P1b Phase C1 real-diff artifact schema with clean baseline checkout source, per-variant unified patches, and manifest.
+- P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -43,7 +45,8 @@
 - Web UI.
 - Real project bug history ingestion.
 - Model or dataset changes in the analysis-only patch.
-- Real git commit/diff artifacts for each P1b variant.
+- `inspect_recent_diff` wiring to the Phase C1 real-diff artifacts.
+- Real git commit histories for each P1b variant.
 - Randomized Hypothesis-style property generation for P1b.
 - Bayesian redesign of `bug_presence_posterior`.
 
@@ -72,7 +75,7 @@
 - P1b location evaluation is function-level; `line_span_hint` is secondary.
 - P1b `metadata_synth` observations are synthesized from ground-truth variant metadata via discovery-action matching. They are retained as a frozen baseline for comparison, not as evidence of real fault-localization ability.
 - P1b `execution_grounded` observations are derived from checkout test results, exceptions, traced checkout functions, and function-level Ochiai coverage suspicion. They still run inside a small injected benchmark scaffold rather than real project histories.
-- P1b `inspect_recent_diff` remains a synthetic prior in Phase B; real per-variant git commit/diff artifacts are deferred to Phase C.
+- P1b `inspect_recent_diff` remains a synthetic prior after Phase C1; real-diff artifacts now exist, but evaluation wiring is deferred to C2.
 - P1b predicts fix-intent categories but does not generate patches.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
@@ -93,6 +96,7 @@ python -m bug_cause_inference.cli p1b-list-variants --output examples/p1b/varian
 python -m bug_cause_inference.cli p1b-report --variant-id P1B-BUG-001 --json-output examples/p1b/reports/p1b_report_P1B-BUG-001.json --markdown-output examples/p1b/reports/p1b_report_P1B-BUG-001.md
 python -m bug_cause_inference.cli p1b-evaluate --observation-mode execution_grounded --format markdown
 python -m bug_cause_inference.cli p1b-evaluate --observation-mode both --json-output examples/p1b/reports/p1b_evaluation_summary.json --markdown-output examples/p1b/reports/p1b_evaluation_summary.md
+python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
@@ -141,6 +145,7 @@ Latest P1b Phase B status:
 - `p1b-report` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
 - `p1b-evaluate --observation-mode both` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
 - P1b/P1c exclusions remain: no patch generation, no large real repositories, no LLM agent battles, no adversarial bug generation, no formal minimax framing.
+- P1b Phase C1 adds real-diff artifacts and a generator/validator only; `inspect_recent_diff` and evaluation values are unchanged until C2.
 
 Latest P1b primary-policy comparison:
 

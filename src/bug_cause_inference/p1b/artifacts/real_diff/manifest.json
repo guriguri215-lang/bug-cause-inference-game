@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "baseline_id": "p1b_checkout_clean_v1",
+  "baseline_root": "baseline/checkout",
+  "patch_root": "patches",
+  "variants": [
+    {
+      "variant_id": "P1B-BUG-001",
+      "patch_path": "patches/P1B-BUG-001.patch",
+      "expected_changed_files": ["checkout/shipping.py"],
+      "review_note": "Changes the free-shipping threshold comparison."
+    },
+    {
+      "variant_id": "P1B-BUG-002",
+      "patch_path": "patches/P1B-BUG-002.patch",
+      "expected_changed_files": ["checkout/discounts.py"],
+      "review_note": "Changes the coupon minimum-spend comparison."
+    },
+    {
+      "variant_id": "P1B-BUG-003",
+      "patch_path": "patches/P1B-BUG-003.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Changes the accepted quantity upper boundary."
+    },
+    {
+      "variant_id": "P1B-BUG-004",
+      "patch_path": "patches/P1B-BUG-004.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Changes monetary rounding to truncation."
+    },
+    {
+      "variant_id": "P1B-BUG-005",
+      "patch_path": "patches/P1B-BUG-005.patch",
+      "expected_changed_files": ["checkout/discounts.py"],
+      "review_note": "Removes missing-coupon normalization before string cleanup."
+    },
+    {
+      "variant_id": "P1B-BUG-006",
+      "patch_path": "patches/P1B-BUG-006.patch",
+      "expected_changed_files": ["checkout/shipping.py"],
+      "review_note": "Changes missing-region handling to raise."
+    },
+    {
+      "variant_id": "P1B-BUG-007",
+      "patch_path": "patches/P1B-BUG-007.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Removes absent-items normalization in subtotal calculation."
+    },
+    {
+      "variant_id": "P1B-BUG-008",
+      "patch_path": "patches/P1B-BUG-008.patch",
+      "expected_changed_files": ["checkout/inventory.py"],
+      "review_note": "Assumes reservation state is always present."
+    },
+    {
+      "variant_id": "P1B-BUG-009",
+      "patch_path": "patches/P1B-BUG-009.patch",
+      "expected_changed_files": ["checkout/config.py"],
+      "review_note": "Changes the fallback tax rate for JP."
+    },
+    {
+      "variant_id": "P1B-BUG-010",
+      "patch_path": "patches/P1B-BUG-010.patch",
+      "expected_changed_files": ["checkout/config.py"],
+      "review_note": "Changes the default for discount-stacking feature flag."
+    },
+    {
+      "variant_id": "P1B-BUG-011",
+      "patch_path": "patches/P1B-BUG-011.patch",
+      "expected_changed_files": ["checkout/shipping.py"],
+      "review_note": "Removes region alias normalization."
+    },
+    {
+      "variant_id": "P1B-BUG-012",
+      "patch_path": "patches/P1B-BUG-012.patch",
+      "expected_changed_files": ["checkout/config.py"],
+      "review_note": "Leaves the threshold override unparsed."
+    },
+    {
+      "variant_id": "P1B-BUG-013",
+      "patch_path": "patches/P1B-BUG-013.patch",
+      "expected_changed_files": ["checkout/inventory.py"],
+      "review_note": "Stops cancellation from updating reservation state."
+    },
+    {
+      "variant_id": "P1B-BUG-014",
+      "patch_path": "patches/P1B-BUG-014.patch",
+      "expected_changed_files": ["checkout/discounts.py"],
+      "review_note": "Allows duplicate coupon state entries."
+    },
+    {
+      "variant_id": "P1B-BUG-015",
+      "patch_path": "patches/P1B-BUG-015.patch",
+      "expected_changed_files": ["checkout/inventory.py"],
+      "review_note": "Stops cart-update sync from releasing reservations."
+    },
+    {
+      "variant_id": "P1B-BUG-016",
+      "patch_path": "patches/P1B-BUG-016.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Uses stale quote items for shipping calculation."
+    },
+    {
+      "variant_id": "P1B-BUG-017",
+      "patch_path": "patches/P1B-BUG-017.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Changes the discount and tax calculation order."
+    },
+    {
+      "variant_id": "P1B-BUG-018",
+      "patch_path": "patches/P1B-BUG-018.patch",
+      "expected_changed_files": ["checkout/discounts.py"],
+      "review_note": "Changes BOGO item selection."
+    },
+    {
+      "variant_id": "P1B-BUG-019",
+      "patch_path": "patches/P1B-BUG-019.patch",
+      "expected_changed_files": ["checkout/shipping.py"],
+      "review_note": "Removes the digital-only shipping exemption."
+    },
+    {
+      "variant_id": "P1B-BUG-020",
+      "patch_path": "patches/P1B-BUG-020.patch",
+      "expected_changed_files": ["checkout/inventory.py"],
+      "review_note": "Removes preorder reservation allowance."
+    },
+    {
+      "variant_id": "P1B-CLEAN-021",
+      "patch_path": "patches/P1B-CLEAN-021.patch",
+      "expected_changed_files": ["checkout/shipping.py"],
+      "review_note": "Benign local variable extraction for threshold eligibility."
+    },
+    {
+      "variant_id": "P1B-CLEAN-022",
+      "patch_path": "patches/P1B-CLEAN-022.patch",
+      "expected_changed_files": ["checkout/discounts.py"],
+      "review_note": "Benign local naming clarification for coupon normalization."
+    },
+    {
+      "variant_id": "P1B-CLEAN-023",
+      "patch_path": "patches/P1B-CLEAN-023.patch",
+      "expected_changed_files": ["checkout/config.py"],
+      "review_note": "Benign default lookup simplification for feature flags."
+    },
+    {
+      "variant_id": "P1B-CLEAN-024",
+      "patch_path": "patches/P1B-CLEAN-024.patch",
+      "expected_changed_files": ["checkout/inventory.py"],
+      "review_note": "Benign local variable extraction for reservation cancellation."
+    },
+    {
+      "variant_id": "P1B-CLEAN-025",
+      "patch_path": "patches/P1B-CLEAN-025.patch",
+      "expected_changed_files": ["checkout/cart.py"],
+      "review_note": "Benign local variable extraction for final tax addition."
+    }
+  ]
+}

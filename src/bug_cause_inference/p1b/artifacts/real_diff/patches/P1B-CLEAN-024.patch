@@ -1,0 +1,10 @@
+diff --git a/checkout/inventory.py b/checkout/inventory.py
+--- a/checkout/inventory.py
++++ b/checkout/inventory.py
+@@ -15,7 +15,8 @@ def reserve_stock(record: dict[str, Any], quantity: int) -> dict[str, Any]:
+ 
+ def cancel_reservation(record: dict[str, Any], quantity: int) -> dict[str, Any]:
+     reserved = int(record.get("reserved", 0))
+-    return {**record, "reserved": max(0, reserved - quantity)}
++    remaining = max(0, reserved - quantity)
++    return {**record, "reserved": remaining}

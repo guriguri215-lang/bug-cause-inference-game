@@ -1,0 +1,7 @@
+diff --git a/checkout/discounts.py b/checkout/discounts.py
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -24,7 +24,7 @@ def coupon_is_eligible(subtotal: int, coupon_code: str) -> bool:
+     coupon = COUPONS[coupon_code]
+-    return subtotal >= int(coupon["min_spend"])
++    return subtotal > int(coupon["min_spend"])

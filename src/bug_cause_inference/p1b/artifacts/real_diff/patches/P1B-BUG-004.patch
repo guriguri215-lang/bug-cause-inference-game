@@ -1,0 +1,7 @@
+diff --git a/checkout/cart.py b/checkout/cart.py
+--- a/checkout/cart.py
++++ b/checkout/cart.py
+@@ -29,7 +29,7 @@ def calculate_tax(amount: int, tax_rate: float) -> int:
+     raw = Decimal(str(amount)) * Decimal(str(tax_rate))
+-    return int(raw.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
++    return int(raw)

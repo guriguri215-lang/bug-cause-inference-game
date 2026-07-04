@@ -1,0 +1,18 @@
+diff --git a/checkout/discounts.py b/checkout/discounts.py
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -14,12 +14,13 @@ COUPONS = {
+ 
+ 
+ def apply_coupon(cart_state: dict[str, Any], coupon_code: str | None) -> dict[str, Any]:
+     normalized = "" if coupon_code is None else coupon_code.strip().upper()
+-    if not normalized:
++    normalized_coupon = normalized
++    if not normalized_coupon:
+         return cart_state
+     applied = list(cart_state.get("applied_coupons", []))
+-    if normalized not in applied:
+-        applied.append(normalized)
++    if normalized_coupon not in applied:
++        applied.append(normalized_coupon)
+     return {**cart_state, "applied_coupons": applied}

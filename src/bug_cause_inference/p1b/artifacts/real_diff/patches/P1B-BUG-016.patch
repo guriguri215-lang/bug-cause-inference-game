@@ -1,0 +1,11 @@
+diff --git a/checkout/cart.py b/checkout/cart.py
+--- a/checkout/cart.py
++++ b/checkout/cart.py
+@@ -61,5 +61,7 @@ def checkout_quote(
+ ) -> dict[str, int]:
+     subtotal = cart_subtotal(items)
+-    shipping_fee = shipping.calculate_shipping(items, subtotal, address, config)
++    quote_items = list(items[:-1]) if len(items) > 1 else items
++    shipping_subtotal = cart_subtotal(quote_items)
++    shipping_fee = shipping.calculate_shipping(quote_items, shipping_subtotal, address, config)
+     return {"subtotal": subtotal, "shipping": shipping_fee, "total": subtotal + shipping_fee}

@@ -1,0 +1,9 @@
+diff --git a/checkout/inventory.py b/checkout/inventory.py
+--- a/checkout/inventory.py
++++ b/checkout/inventory.py
+@@ -19,4 +19,4 @@ def cancel_reservation(record: dict[str, Any], quantity: int) -> dict[str, Any]:
+ 
+ 
+ def sync_after_cart_update(record: dict[str, Any], removed_quantity: int) -> dict[str, Any]:
+-    return cancel_reservation(record, removed_quantity)
++    return dict(record)

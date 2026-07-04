@@ -1,0 +1,13 @@
+diff --git a/checkout/shipping.py b/checkout/shipping.py
+--- a/checkout/shipping.py
++++ b/checkout/shipping.py
+@@ -28,9 +28,6 @@ def calculate_shipping(
+     address: dict[str, Any],
+     config: dict[str, Any],
+ ) -> int:
+-    has_physical_item = any(item.get("requires_shipping", True) for item in items)
+-    if not has_physical_item:
+-        return 0
+     if free_shipping_eligible(subtotal, config):
+         return 0
+     return resolve_region_rate(address, config)

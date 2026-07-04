@@ -1,0 +1,10 @@
+diff --git a/checkout/cart.py b/checkout/cart.py
+--- a/checkout/cart.py
++++ b/checkout/cart.py
+@@ -52,5 +52,6 @@ def calculate_total(
+     )
+     tax_rate = config_helpers.get_tax_rate(config, region)
+     taxable_amount = max(0, subtotal - discount)
+-    return taxable_amount + calculate_tax(taxable_amount, tax_rate)
++    tax = calculate_tax(taxable_amount, tax_rate)
++    return taxable_amount + tax

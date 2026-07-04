@@ -1,0 +1,10 @@
+diff --git a/checkout/inventory.py b/checkout/inventory.py
+--- a/checkout/inventory.py
++++ b/checkout/inventory.py
+@@ -8,7 +8,7 @@ def reserve_stock(record: dict[str, Any], quantity: int) -> dict[str, Any]:
+     if record.get("preorder"):
+         return {**record, "reserved": int(record.get("reserved", 0)) + quantity}
+-    reserved = int(record.get("reserved", 0))
++    reserved = record["reserved"]
+     if int(record.get("on_hand", 0)) - reserved < quantity:
+         raise ValueError("out of stock")

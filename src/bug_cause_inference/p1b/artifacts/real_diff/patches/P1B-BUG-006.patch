@@ -1,0 +1,11 @@
+diff --git a/checkout/shipping.py b/checkout/shipping.py
+--- a/checkout/shipping.py
++++ b/checkout/shipping.py
+@@ -8,7 +8,7 @@ from . import config as config_helpers
+ 
+ def resolve_region_rate(address: dict[str, Any], config: dict[str, Any]) -> int:
+     if "region" not in address:
+-        region = config_helpers.get_region_defaults(config).get("missing", "domestic")
++        raise KeyError("region")
+     else:
+         region = address["region"]
