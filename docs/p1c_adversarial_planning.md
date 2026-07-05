@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo with implemented P1c1/P1c2/P1c3 follow-through notes.
+Status: planning memo with implemented P1c1/P1c2/P1c3 follow-through notes and a P1c4 specification link.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -63,7 +63,7 @@ Possible metric:
 
 - Success-rate-by-budget under cost profiles.
 - Area under budget curve under cost profiles.
-- Regret against the best fixed policy for that profile.
+- Metric-specific profile-versus-baseline gaps for each policy and bucket.
 
 ### D. Observation Dropout Or Delay
 
@@ -93,6 +93,8 @@ P1c2 records the next slice as specification-only adversarial bucket selection. 
 
 P1c3 implements that P1c2 bucket-selection report as an analysis-only addition to `p1c-evaluate`. It consumes the existing P1c1 bucket metrics and per-variant outcomes, reports metric-specific selected buckets by policy, and keeps clean false-positive stress separate from buggy bucket metrics.
 
+P1c4 records the next slice as specification-only bounded observation-cost stress. See [`p1c4_bounded_observation_cost_stress_spec.md`](p1c4_bounded_observation_cost_stress_spec.md). It defines bounded integer cost overlays over existing P1b action IDs, keeps the overlays separate from P1c3 bucket selection, and preserves `execution_grounded` as the headline observation mode with `metadata_synth` as diagnostic only.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -121,7 +123,7 @@ This should not add new injected variants, randomized test generation, patch gen
 - Should the adversary choose a raw variant, a difficulty bucket, or an observation condition?
 - Should "worst-case" be measured per metric or by a weighted utility score?
 - Should clean variants be part of the adversary's choice, especially for false-positive stress?
-- Should P1c use regret against the best existing P1b policy, or only report worst-case metric gaps?
+- Which metric-specific profile gaps should be reported before considering any later regret or formal payoff framing?
 - How many difficulty labels can be assigned without making the 25-variant benchmark look more general than it is?
 - Which P1c result would justify moving from robustness reporting to a more formal game model?
 
@@ -138,4 +140,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review `docs/p1c2_adversarial_bucket_selection_spec.md` before implementing any bucket-selection report.
+Review `docs/p1c4_bounded_observation_cost_stress_spec.md` before implementing any observation-cost stress report.

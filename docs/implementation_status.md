@@ -30,6 +30,7 @@
 - P1c1 result interpretation note: [`docs/p1c1_result_interpretation.md`](p1c1_result_interpretation.md).
 - P1c2 adversarial bucket selection specification: [`docs/p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md).
 - P1c3 adversarial bucket selection report integrated into `p1c-evaluate`, adding metric-specific selected buckets and separate clean false-positive stress as analysis-only output.
+- P1c4 bounded observation-cost stress specification: [`docs/p1c4_bounded_observation_cost_stress_spec.md`](p1c4_bounded_observation_cost_stress_spec.md).
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
@@ -57,6 +58,7 @@
 - Randomized Hypothesis-style property generation for P1b.
 - Bayesian redesign of `bug_presence_posterior`.
 - Dedicated P1c adversarial-selection CLI command; P1c3 is integrated into the existing `p1c-evaluate` output.
+- P1c4 observation-cost stress runtime/report implementation; P1c4 is specification-only.
 
 ## Deferred To Future Work
 
@@ -64,6 +66,7 @@
 - Learned or calibrated likelihood tables.
 - Noisy, missing, or probabilistic observations.
 - Case-specific investigation costs.
+- Analysis-only bounded observation-cost stress over existing P1b action IDs.
 - Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
 
@@ -88,6 +91,7 @@
 - P1c1 is analysis-only. It does not add variants, alter P1b execution logic, tune policies, or provide a formal game-theoretic guarantee.
 - P1c2 is specification-only. It defines metric-specific bucket selection but does not implement a report, change P1b/P1c1 behavior, or introduce a weighted payoff, regret, minimax, or equilibrium model.
 - P1c3 implements the P1c2 bucket-selection report as an analysis-only addition to P1c1 output. It selects buckets per policy and metric, keeps clean false-positive stress separate, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal game-theoretic guarantee.
+- P1c4 is specification-only. It defines bounded action-cost overlays for future P1c-only observation-cost stress reporting, keeps P1b default costs unchanged, keeps P1c3 bucket selection separate, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
