@@ -3,13 +3,34 @@
 from __future__ import annotations
 
 import json
+import math
+import random
+from dataclasses import dataclass, replace
 from statistics import mean
 from typing import Any
 
-from bug_cause_inference.p1b.actions import P1B_OBSERVATION_MODES
-from bug_cause_inference.p1b.dataset import load_p1b_variants
-from bug_cause_inference.p1b.models import P1BRunResult, P1BSettings, P1BVariant, rank_distribution
-from bug_cause_inference.p1b.policies import P1B_POLICIES, P1B_PRIMARY_POLICY, run_p1b_investigation
+from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS, P1B_OBSERVATION_MODES, run_action
+from bug_cause_inference.p1b.dataset import LOCATION_CANDIDATES, load_p1b_variants
+from bug_cause_inference.p1b.execution import P1BExecutionContext
+from bug_cause_inference.p1b.models import (
+    P1B_CAUSE_CATEGORIES,
+    P1B_FIX_INTENT_CATEGORIES,
+    P1BRunResult,
+    P1BSettings,
+    P1BStepTrace,
+    P1BVariant,
+    rank_distribution,
+    uniform_distribution,
+    update_distribution,
+)
+from bug_cause_inference.p1b.policies import (
+    FIXED_CHECKLIST_ORDER,
+    P1B_POLICIES,
+    P1B_PRIMARY_POLICY,
+    RECENT_DIFF_FIRST_ORDER,
+    TEST_FIRST_ORDER,
+    run_p1b_investigation,
+)
 from bug_cause_inference.p1c.labels import (
     BUGGY_PRIMARY_BUCKETS,
     PRIMARY_BUCKETS,
@@ -47,6 +68,71 @@ RAW_WORST_CASE_KEYS = (
 P1C3_ANALYSIS_PHASE = "p1c3_adversarial_bucket_selection_report"
 P1C3_SELECTOR_MODEL = "metric_specific_bucket_selection"
 P1C3_PRIMARY_OBSERVATION_MODE = "execution_grounded"
+
+P1C5_ANALYSIS_PHASE = "p1c5_bounded_observation_cost_stress_report"
+P1C5_STRESS_MODEL = "bounded_action_cost_overlay"
+P1C5_COST_VISIBILITY = "policy_visible_overlay"
+P1C5_PRIMARY_OBSERVATION_MODE = "execution_grounded"
+
+P1C5_COST_PROFILES: tuple[dict[str, Any], ...] = (
+    {
+        "profile_id": "trace_access_expensive",
+        "overlay": {
+            "inspect_traceback": 4,
+            "run_null_missing_tests": 5,
+        },
+        "stress_rationale": (
+            "Exception and null/missing evidence is not treated as nearly free while "
+            "observation content remains unchanged."
+        ),
+    },
+    {
+        "profile_id": "sequence_reproduction_expensive",
+        "overlay": {
+            "run_state_sequence_tests": 8,
+            "run_property_search": 7,
+        },
+        "stress_rationale": (
+            "Sequential and property-style reproduction become costly within the default "
+            "budget."
+        ),
+    },
+    {
+        "profile_id": "localization_evidence_expensive",
+        "overlay": {
+            "inspect_coverage_spectrum": 6,
+            "inspect_recent_diff": 5,
+            "inspect_spec_clause": 4,
+        },
+        "stress_rationale": (
+            "Coverage, recent-diff, and spec inspection require nontrivial review time."
+        ),
+    },
+    {
+        "profile_id": "targeted_reproduction_expensive",
+        "overlay": {
+            "run_boundary_tests": 4,
+            "run_config_matrix_tests": 5,
+            "run_state_sequence_tests": 7,
+            "run_property_search": 8,
+        },
+        "stress_rationale": (
+            "Targeted reproduction suites become more expensive than smoke checks and "
+            "lightweight inspection."
+        ),
+    },
+)
+
+P1C5_PROFILE_GAP_METRICS: dict[str, str] = {
+    "bug_discovery_rate_within_budget": "higher_is_better",
+    "cost_to_first_failure": "lower_is_better",
+    "location_top3_accuracy": "higher_is_better",
+    "cause_top1_accuracy": "higher_is_better",
+    "fix_intent_top1_accuracy": "higher_is_better",
+    "wrong_cause_high_confidence_rate": "lower_is_better",
+    "false_positive_rate_on_clean_cases": "lower_is_better",
+    "mean_investigation_cost": "lower_is_better",
+}
 
 P1C3_SELECTED_BUCKET_METRICS: dict[str, dict[str, Any]] = {
     "bucket_bug_discovery_rate": {
@@ -99,6 +185,341 @@ P1C3_SELECTED_BUCKET_METRICS: dict[str, dict[str, Any]] = {
         "allowed_buckets": PRIMARY_BUCKETS,
     },
 }
+
+
+@dataclass
+class _P1CCostOverlayState:
+    bug_presence: float
+    cause_posterior: dict[str, float]
+    location_posterior: dict[str, float]
+    fix_intent_posterior: dict[str, float]
+    executed_actions: list[str]
+    cumulative_cost: int
+    current_step: int
+    bug_detected: bool
+    execution_context: P1BExecutionContext | None = None
+
+
+def _effective_costs_for_profile(overlay: dict[str, int]) -> dict[str, int]:
+    effective = {action_id: spec.cost for action_id, spec in P1B_ACTION_SPECS.items()}
+    for action_id, cost in overlay.items():
+        if action_id not in P1B_ACTION_SPECS:
+            raise ValueError(f"Unknown P1b action in cost profile: {action_id}")
+        if not isinstance(cost, int) or cost < 1 or cost > 8:
+            raise ValueError(f"Invalid P1c5 cost for {action_id}: {cost!r}")
+        effective[action_id] = cost
+    for action_id, cost in effective.items():
+        if cost < 1 or cost > 8:
+            raise ValueError(f"Effective P1c5 cost out of range for {action_id}: {cost}")
+    return effective
+
+
+def _cost_profile_to_dict(profile: dict[str, Any], settings: P1BSettings) -> dict[str, Any]:
+    overlay = dict(profile["overlay"])
+    effective_costs = _effective_costs_for_profile(overlay)
+    costs = list(effective_costs.values())
+    return {
+        "profile_id": profile["profile_id"],
+        "overlay": overlay,
+        "effective_costs_by_action": effective_costs,
+        "cost_range": {"min": min(costs), "max": max(costs)},
+        "unchanged_actions_use_default": True,
+        "budget_limit": settings.budget_limit,
+        "failure_cost": settings.failure_cost,
+        "stress_rationale": profile["stress_rationale"],
+    }
+
+
+def _cost_overlay_entropy(distribution: dict[str, float]) -> float:
+    if not distribution:
+        return 0.0
+    max_entropy = math.log2(len(distribution))
+    if max_entropy == 0:
+        return 0.0
+    entropy = -sum(value * math.log2(value) for value in distribution.values() if value > 0)
+    return entropy / max_entropy
+
+
+def _cost_overlay_remaining_actions(
+    state: _P1CCostOverlayState,
+    remaining_budget: int,
+    effective_costs: dict[str, int],
+) -> list[str]:
+    return [
+        action_id
+        for action_id in P1B_ACTION_SPECS
+        if action_id not in state.executed_actions and effective_costs[action_id] <= remaining_budget
+    ]
+
+
+def _cost_overlay_score_actions(
+    state: _P1CCostOverlayState,
+    remaining_budget: int,
+    effective_costs: dict[str, int],
+) -> list[dict[str, Any]]:
+    scores: list[dict[str, Any]] = []
+    cause_entropy = _cost_overlay_entropy(state.cause_posterior)
+    location_entropy = _cost_overlay_entropy(state.location_posterior)
+    fix_entropy = _cost_overlay_entropy(state.fix_intent_posterior)
+    for action_id in _cost_overlay_remaining_actions(state, remaining_budget, effective_costs):
+        spec = P1B_ACTION_SPECS[action_id]
+        cost = effective_costs[action_id]
+        cause_relevance = sum(state.cause_posterior.get(cause, 0.0) for cause in spec.strong_causes)
+        if not spec.strong_causes:
+            cause_relevance = 0.25
+        discovery_utility = spec.discovery_power * (1.0 - state.bug_presence)
+        cause_utility = cause_entropy * cause_relevance
+        location_utility = location_entropy * spec.location_power
+        fix_utility = fix_entropy * 0.20
+        if state.bug_detected:
+            discovery_utility *= 0.35
+            location_utility *= 1.25
+        expected_utility = discovery_utility + cause_utility + location_utility + fix_utility
+        row: dict[str, Any] = {
+            "action": action_id,
+            "cost": cost,
+            "expected_utility": round(expected_utility, 6),
+            "expected_utility_per_cost": round(expected_utility / cost, 6),
+            "discovery_utility": round(discovery_utility, 6),
+            "cause_utility": round(cause_utility, 6),
+            "location_utility": round(location_utility, 6),
+        }
+        if cost != spec.cost:
+            row["default_cost"] = spec.cost
+        scores.append(row)
+    return sorted(scores, key=lambda item: (-item["expected_utility_per_cost"], item["cost"], item["action"]))
+
+
+def _cost_overlay_first_available(
+    order: tuple[str, ...],
+    state: _P1CCostOverlayState,
+    remaining_budget: int,
+    effective_costs: dict[str, int],
+) -> str | None:
+    available = set(_cost_overlay_remaining_actions(state, remaining_budget, effective_costs))
+    for action_id in order:
+        if action_id in available:
+            return action_id
+    return None
+
+
+def _cost_overlay_choose_action(
+    policy: str,
+    state: _P1CCostOverlayState,
+    remaining_budget: int,
+    effective_costs: dict[str, int],
+    rng: random.Random,
+) -> str | None:
+    available = _cost_overlay_remaining_actions(state, remaining_budget, effective_costs)
+    if not available:
+        return None
+    if policy == "random_action":
+        return rng.choice(available)
+    if policy == "fixed_checklist":
+        return _cost_overlay_first_available(
+            FIXED_CHECKLIST_ORDER,
+            state,
+            remaining_budget,
+            effective_costs,
+        ) or available[0]
+    if policy == "test_first":
+        return _cost_overlay_first_available(
+            TEST_FIRST_ORDER,
+            state,
+            remaining_budget,
+            effective_costs,
+        ) or available[0]
+    if policy == "coverage_first":
+        if state.bug_detected and "inspect_coverage_spectrum" in available:
+            return "inspect_coverage_spectrum"
+        return _cost_overlay_first_available(
+            TEST_FIRST_ORDER,
+            state,
+            remaining_budget,
+            effective_costs,
+        ) or available[0]
+    if policy == "recent_diff_first":
+        return _cost_overlay_first_available(
+            RECENT_DIFF_FIRST_ORDER,
+            state,
+            remaining_budget,
+            effective_costs,
+        ) or available[0]
+
+    scores = _cost_overlay_score_actions(state, remaining_budget, effective_costs)
+    if policy == "cause_only_p1a_style":
+        cause_scores = []
+        for item in scores:
+            spec = P1B_ACTION_SPECS[item["action"]]
+            relevance = sum(state.cause_posterior.get(cause, 0.0) for cause in spec.strong_causes)
+            cause_scores.append((relevance / effective_costs[item["action"]], item["cost"], item["action"]))
+        cause_scores.sort(key=lambda item: (-item[0], item[1], item[2]))
+        return cause_scores[0][2]
+    if policy == "expected_utility_per_cost":
+        return scores[0]["action"]
+    raise ValueError(f"Unknown P1b policy: {policy}")
+
+
+def _cost_overlay_update_bug_presence(
+    current: float,
+    observation_bug_detected: bool,
+    no_bug_evidence: bool,
+) -> float:
+    if observation_bug_detected:
+        return min(0.98, current + 0.35)
+    if no_bug_evidence:
+        return max(0.02, current - 0.18)
+    return min(0.98, current + 0.05)
+
+
+def _cost_overlay_check_stop(
+    state: _P1CCostOverlayState,
+    settings: P1BSettings,
+    best_score: float | None = None,
+) -> str | None:
+    no_bug_probability = 1.0 - state.bug_presence
+    cause_top = rank_distribution(state.cause_posterior)[0]
+    location_top = rank_distribution(state.location_posterior)[0]
+    if no_bug_probability >= settings.no_bug_probability_threshold:
+        return "no_bug_probability_threshold"
+    if (
+        state.bug_detected
+        and state.bug_presence >= settings.bug_presence_threshold
+        and location_top[1] >= settings.location_top1_threshold
+        and cause_top[1] >= settings.cause_top1_threshold
+    ):
+        return "bug_confidence_threshold"
+    if state.cumulative_cost >= settings.budget_limit:
+        return "budget_limit"
+    if state.current_step >= settings.max_steps:
+        return "max_steps"
+    if best_score is not None and best_score < settings.min_expected_utility_per_cost:
+        return "low_expected_utility"
+    return None
+
+
+def _cost_overlay_stable_seed(variant_id: str, rng_seed: int) -> int:
+    return rng_seed + sum((index + 1) * ord(char) for index, char in enumerate(variant_id))
+
+
+def _run_p1c_cost_overlay_investigation(
+    variant: P1BVariant,
+    *,
+    policy: str,
+    settings: P1BSettings,
+    observation_mode: str,
+    effective_costs: dict[str, int],
+) -> P1BRunResult:
+    if observation_mode not in P1B_OBSERVATION_MODES:
+        raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
+    rng = random.Random(_cost_overlay_stable_seed(variant.variant_id, settings.rng_seed))
+    state = _P1CCostOverlayState(
+        bug_presence=0.50,
+        cause_posterior=uniform_distribution(P1B_CAUSE_CATEGORIES),
+        location_posterior=uniform_distribution(LOCATION_CANDIDATES),
+        fix_intent_posterior=uniform_distribution(P1B_FIX_INTENT_CATEGORIES),
+        executed_actions=[],
+        cumulative_cost=0,
+        current_step=0,
+        bug_detected=False,
+        execution_context=P1BExecutionContext() if observation_mode == "execution_grounded" else None,
+    )
+    trace: list[P1BStepTrace] = []
+    reproduction_input: str | None = None
+    first_failure_cost: int | None = None
+    cost_to_true_cause_top1: int | None = None
+    stop_reason = "not_started"
+
+    while True:
+        remaining_budget = settings.budget_limit - state.cumulative_cost
+        action_scores = _cost_overlay_score_actions(state, remaining_budget, effective_costs)
+        best_score = action_scores[0]["expected_utility_per_cost"] if action_scores else None
+        stop_reason = _cost_overlay_check_stop(state, settings, best_score)
+        if stop_reason is not None:
+            break
+        action_id = _cost_overlay_choose_action(policy, state, remaining_budget, effective_costs, rng)
+        if action_id is None:
+            stop_reason = "no_available_actions"
+            break
+
+        prior_bug = state.bug_presence
+        prior_cause = dict(state.cause_posterior)
+        prior_location = dict(state.location_posterior)
+        prior_fix = dict(state.fix_intent_posterior)
+        observation = run_action(
+            variant,
+            action_id,
+            observation_mode=observation_mode,
+            execution_context=state.execution_context,
+        )
+        effective_cost = effective_costs[action_id]
+        if observation.cost != effective_cost:
+            observation = replace(observation, cost=effective_cost)
+
+        state.executed_actions.append(action_id)
+        state.cumulative_cost += effective_cost
+        state.current_step += 1
+        state.bug_detected = state.bug_detected or observation.bug_detected
+        state.bug_presence = _cost_overlay_update_bug_presence(
+            state.bug_presence,
+            observation.bug_detected,
+            observation.no_bug_evidence,
+        )
+        state.cause_posterior = update_distribution(state.cause_posterior, observation.cause_scores)
+        state.location_posterior = update_distribution(state.location_posterior, observation.location_scores)
+        state.fix_intent_posterior = update_distribution(state.fix_intent_posterior, observation.fix_intent_scores)
+        if observation.reproduction_input and reproduction_input is None:
+            reproduction_input = observation.reproduction_input
+        if observation.failure_found and first_failure_cost is None:
+            first_failure_cost = state.cumulative_cost
+        if (
+            variant.is_buggy
+            and variant.true_cause_category
+            and rank_distribution(state.cause_posterior)[0][0] == variant.true_cause_category
+            and cost_to_true_cause_top1 is None
+            and state.cumulative_cost <= settings.budget_limit
+        ):
+            cost_to_true_cause_top1 = state.cumulative_cost
+
+        trace.append(
+            P1BStepTrace(
+                step=state.current_step,
+                policy=policy,
+                selected_action=action_id,
+                observation=observation,
+                prior_bug_presence_posterior=prior_bug,
+                updated_bug_presence_posterior=state.bug_presence,
+                prior_cause_posterior=prior_cause,
+                updated_cause_posterior=dict(state.cause_posterior),
+                prior_location_posterior=prior_location,
+                updated_location_posterior=dict(state.location_posterior),
+                prior_fix_intent_posterior=prior_fix,
+                updated_fix_intent_posterior=dict(state.fix_intent_posterior),
+                cumulative_cost=state.cumulative_cost,
+                action_scores=action_scores,
+            )
+        )
+
+    if variant.is_buggy and cost_to_true_cause_top1 is None:
+        cost_to_true_cause_top1 = settings.failure_cost
+    return P1BRunResult(
+        variant_id=variant.variant_id,
+        is_buggy=variant.is_buggy,
+        policy=policy,
+        bug_detected=state.bug_detected,
+        reproduction_input=reproduction_input,
+        bug_presence_posterior=state.bug_presence,
+        cause_posterior=state.cause_posterior,
+        location_posterior=state.location_posterior,
+        fix_intent_posterior=state.fix_intent_posterior,
+        executed_actions=state.executed_actions,
+        cumulative_cost=state.cumulative_cost,
+        current_step=state.current_step,
+        stop_reason=stop_reason,
+        trace=trace,
+        first_failure_cost=first_failure_cost,
+        cost_to_true_cause_top1=cost_to_true_cause_top1,
+    )
 
 
 def _settings_to_dict(settings: P1BSettings) -> dict[str, Any]:
@@ -518,6 +939,198 @@ def _clean_false_positive_variant_ids(outcomes: list[dict[str, Any]]) -> list[st
     )
 
 
+def _profile_gap_row(
+    *,
+    direction: str,
+    baseline_value: float | None,
+    profile_value: float | None,
+) -> dict[str, Any]:
+    gap = None
+    if baseline_value is not None and profile_value is not None:
+        if direction == "higher_is_better":
+            gap = round(baseline_value - profile_value, 6)
+        else:
+            gap = round(profile_value - baseline_value, 6)
+    return {
+        "direction": direction,
+        "baseline_value": baseline_value,
+        "profile_value": profile_value,
+        "gap": gap,
+    }
+
+
+def _profile_vs_baseline_gap(
+    baseline_aggregate: dict[str, float | None],
+    profile_aggregate: dict[str, float | None],
+) -> dict[str, dict[str, Any]]:
+    return {
+        metric: _profile_gap_row(
+            direction=direction,
+            baseline_value=baseline_aggregate[metric],
+            profile_value=profile_aggregate[metric],
+        )
+        for metric, direction in P1C5_PROFILE_GAP_METRICS.items()
+    }
+
+
+def _clean_no_bug_stop_rate(outcomes: list[dict[str, Any]]) -> float | None:
+    clean = [outcome for outcome in outcomes if not outcome["is_buggy"]]
+    return _safe_rate(sum(1 for outcome in clean if outcome["clean_no_bug_stop"]), len(clean))
+
+
+def _p1c5_clean_false_positive_row(
+    *,
+    outcomes: list[dict[str, Any]],
+    aggregate: dict[str, float | None],
+    bucket_metrics: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    clean_metrics = bucket_metrics["clean_false_positive"]
+    diagnostic_ids = _clean_false_positive_variant_ids(outcomes)
+    row: dict[str, Any] = {
+        "metric": "false_positive_rate_on_clean_cases",
+        "direction": "lower_is_better",
+        "allowed_bucket_set": "clean_false_positive_only",
+        "allowed_bucket_ids": ["clean_false_positive"],
+        "selected_bucket_ids": ["clean_false_positive"],
+        "false_positive_rate_on_clean_cases": aggregate["false_positive_rate_on_clean_cases"],
+        "clean_bucket_false_positive_rate": clean_metrics["bucket_false_positive_rate"],
+        "clean_bucket_mean_investigation_cost": clean_metrics["bucket_mean_investigation_cost"],
+        "clean_no_bug_stop_rate": _clean_no_bug_stop_rate(outcomes),
+        "diagnostic_variant_ids": diagnostic_ids,
+    }
+    if not diagnostic_ids:
+        row["note"] = "Clean false positives are not triggered in the current cost profile."
+    return row
+
+
+def _p1c5_profile_outcomes(
+    *,
+    variants: list[P1BVariant],
+    policies: tuple[str, ...],
+    settings: P1BSettings,
+    observation_mode: str,
+    effective_costs: dict[str, int],
+) -> dict[str, list[dict[str, Any]]]:
+    labels = load_p1c_variant_labels(variants)
+    outcomes_by_policy: dict[str, list[dict[str, Any]]] = {}
+    for policy in policies:
+        outcomes: list[dict[str, Any]] = []
+        for variant in variants:
+            result = _run_p1c_cost_overlay_investigation(
+                variant,
+                policy=policy,
+                settings=settings,
+                observation_mode=observation_mode,
+                effective_costs=effective_costs,
+            )
+            label = labels[variant.variant_id]
+            outcomes.append(_variant_outcome(variant, result, settings, label.primary_bucket))
+        outcomes_by_policy[policy] = outcomes
+    return outcomes_by_policy
+
+
+def _observation_cost_stress(
+    *,
+    observation_mode: str,
+    variants: list[P1BVariant],
+    policies: tuple[str, ...],
+    settings: P1BSettings,
+    baseline_aggregate_metrics: dict[str, dict[str, float | None]],
+    baseline_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+) -> dict[str, Any]:
+    profile_dicts = [_cost_profile_to_dict(profile, settings) for profile in P1C5_COST_PROFILES]
+    results_by_profile: dict[str, dict[str, Any]] = {}
+    gaps_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+    clean_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+
+    for profile in profile_dicts:
+        profile_id = profile["profile_id"]
+        outcomes_by_policy = _p1c5_profile_outcomes(
+            variants=variants,
+            policies=policies,
+            settings=settings,
+            observation_mode=observation_mode,
+            effective_costs=profile["effective_costs_by_action"],
+        )
+
+        aggregate_by_policy: dict[str, dict[str, float | None]] = {}
+        bucket_by_policy: dict[str, dict[str, dict[str, Any]]] = {}
+        raw_by_policy: dict[str, dict[str, list[str]]] = {}
+        gap_by_policy: dict[str, dict[str, Any]] = {}
+        clean_by_policy: dict[str, dict[str, Any]] = {}
+
+        for policy in policies:
+            outcomes = outcomes_by_policy[policy]
+            aggregate = _aggregate_metrics(outcomes)
+            buckets = _bucket_metrics(outcomes)
+            aggregate_by_policy[policy] = aggregate
+            bucket_by_policy[policy] = buckets
+            raw_by_policy[policy] = _raw_variant_worst_cases(outcomes)
+            gap_by_policy[policy] = _profile_vs_baseline_gap(
+                baseline_aggregate_metrics[policy],
+                aggregate,
+            )
+            clean_by_policy[policy] = _p1c5_clean_false_positive_row(
+                outcomes=outcomes,
+                aggregate=aggregate,
+                bucket_metrics=buckets,
+            )
+
+        gaps_by_profile[profile_id] = gap_by_policy
+        clean_by_profile[profile_id] = clean_by_policy
+        results_by_profile[profile_id] = {
+            "aggregate_metrics_by_policy": aggregate_by_policy,
+            "bucket_metrics_by_policy": bucket_by_policy,
+            "raw_variant_worst_cases_by_policy": raw_by_policy,
+            "profile_vs_baseline_gap_by_policy": gap_by_policy,
+            "clean_false_positive_stress_by_policy": clean_by_policy,
+        }
+
+    notes = [
+        "P1c5 is analysis-only and applies bounded integer cost overlays to existing P1b action IDs.",
+        "Cost overlays are policy-visible in this P1c-only run path: effective costs affect action scoring, remaining-budget affordability, cumulative cost, and metrics.",
+        "P1B_ACTION_SPECS, action_cost(), and default P1b run behavior are not mutated.",
+        "observation_cost_stress is a separate slice from P1c3 adversarial_bucket_selection.",
+        "Clean false-positive stress is reported separately from buggy bucket metrics.",
+        "execution_grounded is the headline primary observation mode; metadata_synth is diagnostic when requested.",
+        "The report does not introduce a single weighted payoff, regret, minimax, equilibrium, or formal payoff model.",
+        "The report does not add variants, change observation content, add dropout or delay, generate patches, or claim real-world debugging accuracy.",
+    ]
+    if all(
+        not row["diagnostic_variant_ids"]
+        for profile_rows in clean_by_profile.values()
+        for row in profile_rows.values()
+    ):
+        notes.append("Clean false positives are not triggered in the current cost profiles.")
+
+    return {
+        "analysis_phase": P1C5_ANALYSIS_PHASE,
+        "stress_model": P1C5_STRESS_MODEL,
+        "cost_visibility": P1C5_COST_VISIBILITY,
+        "primary_observation_mode": P1C5_PRIMARY_OBSERVATION_MODE,
+        "source_observation_mode": observation_mode,
+        "report_role": "headline_primary"
+        if observation_mode == P1C5_PRIMARY_OBSERVATION_MODE
+        else "diagnostic",
+        "base_budget_limit": settings.budget_limit,
+        "base_failure_cost": settings.failure_cost,
+        "cost_constraints": {
+            "integer_costs": True,
+            "min_effective_cost": 1,
+            "max_effective_cost": 8,
+            "default_budget_limit_unchanged": True,
+            "default_failure_cost_unchanged": True,
+        },
+        "profiles": profile_dicts,
+        "baseline_aggregate_metrics_by_policy": baseline_aggregate_metrics,
+        "baseline_bucket_metrics_by_policy": baseline_bucket_metrics,
+        "results_by_profile": results_by_profile,
+        "profile_vs_baseline_gap_by_policy": gaps_by_profile,
+        "clean_false_positive_stress_by_policy": clean_by_profile,
+        "notes": notes,
+    }
+
+
 def _adversarial_bucket_selection(
     *,
     observation_mode: str,
@@ -630,6 +1243,7 @@ def _evaluate_single_mode(
     bucket_metrics: dict[str, dict[str, Any]] = {}
     headline: dict[str, dict[str, Any]] = {}
     raw_worst: dict[str, dict[str, list[str]]] = {}
+    aggregate_metrics: dict[str, dict[str, float | None]] = {}
     average_vs_worst: dict[str, dict[str, dict[str, Any]]] = {}
 
     for policy in policies:
@@ -645,11 +1259,13 @@ def _evaluate_single_mode(
             outcomes.append(_variant_outcome(variant, result, settings, label.primary_bucket))
         policy_bucket_metrics = _bucket_metrics(outcomes)
         policy_headline = _headline_worst_case_summary(policy_bucket_metrics)
+        policy_aggregate = _aggregate_metrics(outcomes)
         per_variant_outcomes[policy] = outcomes
         bucket_metrics[policy] = policy_bucket_metrics
         headline[policy] = policy_headline
         raw_worst[policy] = _raw_variant_worst_cases(outcomes)
-        average_vs_worst[policy] = _average_vs_worst_gap(_aggregate_metrics(outcomes), policy_headline)
+        aggregate_metrics[policy] = policy_aggregate
+        average_vs_worst[policy] = _average_vs_worst_gap(policy_aggregate, policy_headline)
 
     adversarial_selection = _adversarial_bucket_selection(
         observation_mode=observation_mode,
@@ -657,6 +1273,14 @@ def _evaluate_single_mode(
         bucket_metrics=bucket_metrics,
         average_vs_worst=average_vs_worst,
         per_variant_outcomes=per_variant_outcomes,
+    )
+    observation_cost_stress = _observation_cost_stress(
+        observation_mode=observation_mode,
+        variants=variants,
+        policies=policies,
+        settings=settings,
+        baseline_aggregate_metrics=aggregate_metrics,
+        baseline_bucket_metrics=bucket_metrics,
     )
 
     return {
@@ -669,11 +1293,13 @@ def _evaluate_single_mode(
         "policies_evaluated": list(policies),
         "variant_labels": p1c_variant_labels_to_dict(variants),
         "per_variant_outcomes": per_variant_outcomes,
+        "aggregate_metrics": aggregate_metrics,
         "bucket_metrics": bucket_metrics,
         "headline_worst_case_summary": headline,
         "raw_variant_worst_cases": raw_worst,
         "average_vs_worst_gap": average_vs_worst,
         "adversarial_bucket_selection": adversarial_selection,
+        "observation_cost_stress": observation_cost_stress,
         "notes": [
             "P1c1 is an analysis-only report over existing P1b variants, policies, settings, and run results.",
             "execution_grounded is the primary observation mode; metadata_synth is diagnostic when requested.",
@@ -766,6 +1392,118 @@ def _selected_buckets(row: dict[str, Any]) -> str:
         for bucket_id in row["selected_bucket_ids"]
     ]
     return ", ".join(labels) if labels else "none"
+
+
+def _overlay_costs(profile: dict[str, Any]) -> str:
+    return ", ".join(f"{action}={cost}" for action, cost in profile["overlay"].items())
+
+
+def _extend_p1c5_markdown(lines: list[str], summary: dict[str, Any]) -> None:
+    stress = summary["observation_cost_stress"]
+    lines.extend(
+        [
+            "",
+            "## P1c5 Observation-Cost Stress",
+            "",
+            "P1c5 adds an analysis-only bounded action-cost overlay report over the existing P1b/P1c scaffold.",
+            "It is a separate slice from P1c3 `adversarial_bucket_selection`; cost profiles are not bucket selectors.",
+            "The overlay is policy-visible in this P1c-only run path, so effective costs affect action scoring, remaining-budget affordability, cumulative cost, and metrics.",
+            "`execution_grounded` is the headline primary observation mode; `metadata_synth` remains diagnostic when requested.",
+            "",
+            f"- analysis_phase: {stress['analysis_phase']}",
+            f"- stress_model: {stress['stress_model']}",
+            f"- cost_visibility: {stress['cost_visibility']}",
+            f"- primary_observation_mode: {stress['primary_observation_mode']}",
+            f"- source_observation_mode: {stress['source_observation_mode']}",
+            f"- base_budget_limit: {stress['base_budget_limit']}",
+            f"- base_failure_cost: {stress['base_failure_cost']}",
+            "",
+            "### Cost Profiles",
+            "",
+            "| profile | overlay | cost_range | budget | failure_cost |",
+            "|---|---|---:|---:|---:|",
+        ]
+    )
+    for profile in stress["profiles"]:
+        cost_range = profile["cost_range"]
+        lines.append(
+            f"| {profile['profile_id']} | {_overlay_costs(profile)} | "
+            f"{cost_range['min']}..{cost_range['max']} | "
+            f"{profile['budget_limit']} | {profile['failure_cost']} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "### Profile Metrics",
+            "",
+            "| profile | policy | discovery | first_failure_cost | location_top3 | cause_top1 | fix_intent_top1 | wrong_cause_high_conf | clean_false_positive | mean_cost |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for profile_id, profile_result in stress["results_by_profile"].items():
+        aggregates = profile_result["aggregate_metrics_by_policy"]
+        for policy in summary["policies_evaluated"]:
+            metrics = aggregates[policy]
+            lines.append(
+                f"| {profile_id} | {policy} | "
+                f"{_format_value(metrics['bug_discovery_rate_within_budget'])} | "
+                f"{_format_value(metrics['cost_to_first_failure'])} | "
+                f"{_format_value(metrics['location_top3_accuracy'])} | "
+                f"{_format_value(metrics['cause_top1_accuracy'])} | "
+                f"{_format_value(metrics['fix_intent_top1_accuracy'])} | "
+                f"{_format_value(metrics['wrong_cause_high_confidence_rate'])} | "
+                f"{_format_value(metrics['false_positive_rate_on_clean_cases'])} | "
+                f"{_format_value(metrics['mean_investigation_cost'])} |"
+            )
+
+    lines.extend(
+        [
+            "",
+            "### Profile-Vs-Baseline Gaps",
+            "",
+            "Positive gaps mean the cost profile made the metric worse under the metric-specific direction.",
+            "",
+            "| profile | policy | metric | direction | baseline | profile_value | gap |",
+            "|---|---|---|---|---:|---:|---:|",
+        ]
+    )
+    for profile_id, gaps_by_policy in stress["profile_vs_baseline_gap_by_policy"].items():
+        for policy in summary["policies_evaluated"]:
+            for metric in P1C5_PROFILE_GAP_METRICS:
+                row = gaps_by_policy[policy][metric]
+                lines.append(
+                    f"| {profile_id} | {policy} | {metric} | {row['direction']} | "
+                    f"{_format_value(row['baseline_value'])} | "
+                    f"{_format_value(row['profile_value'])} | "
+                    f"{_format_value(row['gap'])} |"
+                )
+
+    lines.extend(
+        [
+            "",
+            "### Clean False-Positive Cost Stress",
+            "",
+            "Clean false-positive stress is kept separate from buggy discovery, localization, cause, and fix-intent metrics.",
+            "",
+            "| profile | policy | false_positive_rate | clean_mean_cost | clean_no_bug_stop_rate | diagnostic_variant_ids | note |",
+            "|---|---|---:|---:|---:|---|---|",
+        ]
+    )
+    for profile_id, rows_by_policy in stress["clean_false_positive_stress_by_policy"].items():
+        for policy in summary["policies_evaluated"]:
+            row = rows_by_policy[policy]
+            lines.append(
+                f"| {profile_id} | {policy} | "
+                f"{_format_value(row['false_positive_rate_on_clean_cases'])} | "
+                f"{_format_value(row['clean_bucket_mean_investigation_cost'])} | "
+                f"{_format_value(row['clean_no_bug_stop_rate'])} | "
+                f"{_variant_ids(row['diagnostic_variant_ids'])} | "
+                f"{row.get('note', '')} |"
+            )
+
+    lines.extend(["", "### Scope/Non-Claim Notes", ""])
+    lines.extend(f"- {note}" for note in stress["notes"])
 
 
 def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
@@ -935,6 +1673,8 @@ def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
 
     lines.extend(["", "### P1c3 Notes", ""])
     lines.extend(f"- {note}" for note in selection["notes"])
+
+    _extend_p1c5_markdown(lines, summary)
 
     lines.extend(["", "## Notes", ""])
     lines.extend(f"- {note}" for note in summary["notes"])

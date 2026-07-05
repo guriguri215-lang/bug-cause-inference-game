@@ -1,3 +1,4 @@
+from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS
 from bug_cause_inference.p1b.dataset import load_p1b_variants
 from bug_cause_inference.p1b.policies import P1B_POLICIES
 from bug_cause_inference.p1c.evaluation import (
@@ -41,6 +42,39 @@ def test_p1c_adversarial_bucket_selection_shape_is_present():
     )
 
 
+def test_p1c_observation_cost_stress_shape_is_present_and_separate():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    stress = summary["observation_cost_stress"]
+
+    assert stress is not summary["adversarial_bucket_selection"]
+    assert stress["analysis_phase"] == "p1c5_bounded_observation_cost_stress_report"
+    assert stress["stress_model"] == "bounded_action_cost_overlay"
+    assert stress["cost_visibility"] == "policy_visible_overlay"
+    assert stress["primary_observation_mode"] == "execution_grounded"
+    assert stress["source_observation_mode"] == "execution_grounded"
+    assert stress["base_budget_limit"] == 12
+    assert stress["base_failure_cost"] == 14
+    assert set(stress["results_by_profile"]) == {
+        "trace_access_expensive",
+        "sequence_reproduction_expensive",
+        "localization_evidence_expensive",
+        "targeted_reproduction_expensive",
+    }
+
+
+def test_p1c_cost_profiles_are_bounded_and_do_not_mutate_default_costs():
+    before_costs = {action_id: spec.cost for action_id, spec in P1B_ACTION_SPECS.items()}
+
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+
+    after_costs = {action_id: spec.cost for action_id, spec in P1B_ACTION_SPECS.items()}
+    assert after_costs == before_costs
+    for profile in summary["observation_cost_stress"]["profiles"]:
+        cost_range = profile["cost_range"]
+        assert 1 <= cost_range["min"] <= cost_range["max"] <= 8
+        assert all(1 <= cost <= 8 for cost in profile["effective_costs_by_action"].values())
+
+
 def test_p1c_raw_worst_case_lists_are_present_and_use_valid_variant_ids():
     summary = evaluate_p1c(policies=("expected_utility_per_cost",))
     valid_ids = {variant.variant_id for variant in load_p1b_variants()}
@@ -74,6 +108,20 @@ def test_p1c_markdown_includes_p1c3_section_and_scope_notes():
     assert "equilibrium" in markdown
     assert "`metadata_synth` remains diagnostic" in markdown
     assert "### Clean False-Positive Stress" in markdown
+
+
+def test_p1c_markdown_includes_p1c5_section_and_non_claim_notes():
+    markdown = p1c_evaluation_to_markdown(evaluate_p1c(policies=("expected_utility_per_cost",)))
+
+    assert "## P1c5 Observation-Cost Stress" in markdown
+    assert "bounded action-cost overlay" in markdown
+    assert "policy-visible" in markdown
+    assert "Profile-Vs-Baseline Gaps" in markdown
+    assert "Clean False-Positive Cost Stress" in markdown
+    assert "Scope/Non-Claim Notes" in markdown
+    assert "separate slice from P1c3" in markdown
+    assert "does not introduce a single weighted payoff" in markdown
+    assert "formal payoff model" in markdown
 
 
 def test_p1c_execution_grounded_bucket_metrics_remain_arithmetic_grounded():
@@ -207,6 +255,46 @@ def test_p1c_clean_false_positive_stress_is_reported_separately():
     assert "not triggered" in row["note"]
 
 
+def test_p1c_observation_cost_clean_false_positive_stress_stays_separate():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    stress = summary["observation_cost_stress"]
+
+    for profile_id, rows_by_policy in stress["clean_false_positive_stress_by_policy"].items():
+        row = rows_by_policy["expected_utility_per_cost"]
+        assert row["allowed_bucket_set"] == "clean_false_positive_only"
+        assert row["selected_bucket_ids"] == ["clean_false_positive"]
+        assert row["false_positive_rate_on_clean_cases"] == 0.0
+        assert row["diagnostic_variant_ids"] == []
+
+        clean_metrics = stress["results_by_profile"][profile_id]["bucket_metrics_by_policy"][
+            "expected_utility_per_cost"
+        ]["clean_false_positive"]
+        assert clean_metrics["bucket_bug_discovery_rate"] is None
+        assert clean_metrics["bucket_location_top3_accuracy"] is None
+        assert clean_metrics["bucket_cause_top1_accuracy"] is None
+        assert clean_metrics["bucket_false_positive_rate"] == 0.0
+
+
+def test_p1c_observation_cost_report_avoids_formal_payoff_fields():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    stress_text = str(summary["observation_cost_stress"])
+
+    for forbidden_key in (
+        "'weighted_payoff'",
+        "'regret'",
+        "'minimax'",
+        "'equilibrium'",
+        "'formal_payoff'",
+    ):
+        assert forbidden_key not in stress_text
+    assert "does not introduce a single weighted payoff" in " ".join(
+        summary["observation_cost_stress"]["notes"]
+    )
+
+
 def test_p1c_both_mode_keeps_execution_grounded_as_primary_report():
     summary = evaluate_p1c(
         policies=("expected_utility_per_cost",),
@@ -231,3 +319,21 @@ def test_p1c_both_mode_keeps_execution_grounded_as_primary_report():
     ]
     assert summary["adversarial_bucket_selection"]["source_observation_mode"] == "execution_grounded"
     assert diagnostics["metadata_synth"]["observation_mode"] == "metadata_synth"
+
+
+def test_p1c_both_mode_keeps_observation_cost_execution_grounded_primary():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="both",
+    )
+    stress = summary["observation_cost_stress"]
+    diagnostics = summary["diagnostic_reports_by_observation_mode"]
+
+    assert stress == diagnostics["execution_grounded"]["observation_cost_stress"]
+    assert stress["primary_observation_mode"] == "execution_grounded"
+    assert stress["source_observation_mode"] == "execution_grounded"
+    assert stress["report_role"] == "headline_primary"
+    assert diagnostics["metadata_synth"]["observation_cost_stress"]["report_role"] == "diagnostic"
+    assert diagnostics["metadata_synth"]["observation_cost_stress"]["source_observation_mode"] == (
+        "metadata_synth"
+    )
