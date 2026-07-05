@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5 follow-through notes plus P1c4/P1c6 specification links.
+Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5/P1c7 follow-through notes plus P1c4/P1c6 specification links.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -99,6 +99,8 @@ P1c5 implements that P1c4 bounded observation-cost stress design as an analysis-
 
 P1c6 records the next slice as a specification-only cost-profile bucket-selection diagnostic. See [`p1c6_cost_profile_bucket_selection_spec.md`](p1c6_cost_profile_bucket_selection_spec.md). It keeps the P1c3 top-level `adversarial_bucket_selection` as the default-cost baseline selected-bucket report, and recommends a future nested diagnostic under P1c5 `observation_cost_stress` for profile-conditioned selected-bucket shifts by policy and metric.
 
+P1c7 implements that P1c6 nested diagnostic inside the existing `p1c-evaluate` output. It adds `observation_cost_stress.profile_conditioned_bucket_selection_by_profile`, derives selected buckets from existing P1c5 profile bucket metrics, compares them with the P1c3 baseline selection, keeps clean false-positive stress separate, and avoids weighted payoff, regret, minimax, equilibrium, or formal payoff framing.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -144,4 +146,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review the P1c6 cost-profile bucket-selection specification before deciding whether to implement the nested diagnostic, move to observation dropout/delay, or run a larger design review.
+Review the P1c7 nested diagnostic output before deciding whether to move to observation dropout/delay, run a larger design review, or pause P1c expansion.

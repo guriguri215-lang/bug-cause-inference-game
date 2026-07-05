@@ -7,7 +7,7 @@ from bug_cause_inference.p1c.evaluation import (
     evaluate_p1c,
     p1c_evaluation_to_markdown,
 )
-from bug_cause_inference.p1c.labels import BUGGY_PRIMARY_BUCKETS
+from bug_cause_inference.p1c.labels import BUGGY_PRIMARY_BUCKETS, PRIMARY_BUCKETS
 
 
 def test_p1c_default_evaluation_uses_execution_grounded_and_all_policies():
@@ -60,6 +60,9 @@ def test_p1c_observation_cost_stress_shape_is_present_and_separate():
         "localization_evidence_expensive",
         "targeted_reproduction_expensive",
     }
+    assert set(stress["profile_conditioned_bucket_selection_by_profile"]) == set(
+        stress["results_by_profile"]
+    )
 
 
 def test_p1c_cost_profiles_are_bounded_and_do_not_mutate_default_costs():
@@ -117,9 +120,12 @@ def test_p1c_markdown_includes_p1c5_section_and_non_claim_notes():
     assert "bounded action-cost overlay" in markdown
     assert "policy-visible" in markdown
     assert "Profile-Vs-Baseline Gaps" in markdown
+    assert "Profile-Conditioned Bucket Selection" in markdown
+    assert "Profile-Conditioned Clean False-Positive Stress" in markdown
     assert "Clean False-Positive Cost Stress" in markdown
     assert "Scope/Non-Claim Notes" in markdown
     assert "separate slice from P1c3" in markdown
+    assert "does not replace top-level `adversarial_bucket_selection`" in markdown
     assert "does not introduce a single weighted payoff" in markdown
     assert "formal payoff model" in markdown
 
@@ -278,6 +284,107 @@ def test_p1c_observation_cost_clean_false_positive_stress_stays_separate():
         assert clean_metrics["bucket_false_positive_rate"] == 0.0
 
 
+def test_p1c_profile_conditioned_bucket_selection_matches_p1c3_baseline():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    baseline = summary["adversarial_bucket_selection"]["selected_buckets_by_policy"][
+        "expected_utility_per_cost"
+    ]
+    profile_reports = summary["observation_cost_stress"][
+        "profile_conditioned_bucket_selection_by_profile"
+    ]
+
+    assert set(profile_reports) == {
+        "trace_access_expensive",
+        "sequence_reproduction_expensive",
+        "localization_evidence_expensive",
+        "targeted_reproduction_expensive",
+    }
+    for profile_id, report in profile_reports.items():
+        assert report["analysis_phase"] == "p1c7_profile_conditioned_bucket_selection_report"
+        assert report["selector_model"] == (
+            "profile_conditioned_metric_specific_bucket_selection"
+        )
+        assert report["source_profile_id"] == profile_id
+        assert report["baseline_selection_source"] == "adversarial_bucket_selection"
+        assert report["primary_observation_mode"] == "execution_grounded"
+        assert report["source_observation_mode"] == "execution_grounded"
+
+        selected = report["selected_buckets_by_policy"]["expected_utility_per_cost"]
+        for metric_name, baseline_row in baseline.items():
+            row = selected[metric_name]
+            assert row["baseline_selected_bucket_ids"] == baseline_row["selected_bucket_ids"]
+            assert row["baseline_selected_value"] == baseline_row["selected_value"]
+            assert isinstance(row["bucket_shifted_from_baseline"], bool)
+
+
+def test_p1c_profile_conditioned_selection_keeps_bucket_sets_separate():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    report = summary["observation_cost_stress"]["profile_conditioned_bucket_selection_by_profile"][
+        "trace_access_expensive"
+    ]
+    selected = report["selected_buckets_by_policy"]["expected_utility_per_cost"]
+
+    for metric_name in (
+        "bucket_bug_discovery_rate",
+        "bucket_cost_to_first_failure",
+        "bucket_location_top3_accuracy",
+        "bucket_cause_top1_accuracy",
+        "bucket_fix_intent_top1_accuracy",
+        "bucket_wrong_cause_high_confidence_rate",
+    ):
+        row = selected[metric_name]
+        assert row["allowed_bucket_set"] == "buggy_primary_buckets"
+        assert tuple(row["allowed_bucket_ids"]) == BUGGY_PRIMARY_BUCKETS
+        assert "clean_false_positive" not in row["profile_selected_bucket_ids"]
+
+    mean_cost = selected["bucket_mean_investigation_cost"]
+    assert mean_cost["allowed_bucket_set"] == "all_primary_buckets"
+    assert tuple(mean_cost["allowed_bucket_ids"]) == PRIMARY_BUCKETS
+    assert "profile_selected_bucket_types" in mean_cost
+    assert set(mean_cost["profile_selected_bucket_types"].values()) <= {"buggy", "clean"}
+
+    clean = report["clean_false_positive_stress"]
+    clean_row = clean["by_policy"]["expected_utility_per_cost"]
+    assert clean["allowed_bucket_set"] == "clean_false_positive_only"
+    assert clean["selected_bucket_ids"] == ["clean_false_positive"]
+    assert clean_row["baseline_false_positive_rate"] == 0.0
+    assert clean_row["profile_false_positive_rate"] == 0.0
+    assert clean_row["profile_vs_baseline_gap"] == 0.0
+    assert clean_row["diagnostic_variant_ids"] == []
+    assert "not triggered" in clean_row["note"]
+
+
+def test_p1c_profile_conditioned_gap_uses_metric_direction():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    report = summary["observation_cost_stress"]["profile_conditioned_bucket_selection_by_profile"][
+        "trace_access_expensive"
+    ]
+    selected = report["selected_buckets_by_policy"]["expected_utility_per_cost"]
+
+    discovery = selected["bucket_bug_discovery_rate"]
+    assert discovery["direction"] == "higher_is_better"
+    assert discovery["profile_vs_baseline_selected_value_gap"] == round(
+        discovery["baseline_selected_value"] - discovery["profile_selected_value"],
+        6,
+    )
+
+    mean_cost = selected["bucket_mean_investigation_cost"]
+    assert mean_cost["direction"] == "lower_is_better"
+    assert mean_cost["profile_vs_baseline_selected_value_gap"] == round(
+        mean_cost["profile_selected_value"] - mean_cost["baseline_selected_value"],
+        6,
+    )
+
+
 def test_p1c_observation_cost_report_avoids_formal_payoff_fields():
     summary = evaluate_p1c(policies=("expected_utility_per_cost",))
     stress_text = str(summary["observation_cost_stress"])
@@ -337,3 +444,12 @@ def test_p1c_both_mode_keeps_observation_cost_execution_grounded_primary():
     assert diagnostics["metadata_synth"]["observation_cost_stress"]["source_observation_mode"] == (
         "metadata_synth"
     )
+    assert stress["profile_conditioned_bucket_selection_by_profile"] == diagnostics[
+        "execution_grounded"
+    ]["observation_cost_stress"]["profile_conditioned_bucket_selection_by_profile"]
+    metadata_profile_reports = diagnostics["metadata_synth"]["observation_cost_stress"][
+        "profile_conditioned_bucket_selection_by_profile"
+    ]
+    for report in metadata_profile_reports.values():
+        assert report["report_role"] == "diagnostic"
+        assert report["source_observation_mode"] == "metadata_synth"
