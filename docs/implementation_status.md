@@ -27,6 +27,7 @@
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
 - Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
 - P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
+- P1c1 result interpretation note: [`docs/p1c1_result_interpretation.md`](p1c1_result_interpretation.md).
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
