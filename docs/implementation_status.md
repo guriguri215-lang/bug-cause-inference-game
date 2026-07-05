@@ -34,6 +34,7 @@
 - P1c5 bounded observation-cost stress report integrated into `p1c-evaluate`, adding policy-visible cost-profile overlays, profile-vs-baseline gaps, and separate clean false-positive cost stress as analysis-only output.
 - P1c6 cost-profile bucket-selection diagnostic specification: [`docs/p1c6_cost_profile_bucket_selection_spec.md`](p1c6_cost_profile_bucket_selection_spec.md).
 - P1c7 profile-conditioned bucket-selection diagnostic integrated under `observation_cost_stress`, adding profile-specific selected-bucket shifts against the P1c3 baseline as analysis-only output.
+- P1c8 bounded observation dropout/delay specification: [`docs/p1c8_bounded_observation_dropout_delay_spec.md`](p1c8_bounded_observation_dropout_delay_spec.md).
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
@@ -63,12 +64,14 @@
 - Dedicated P1c adversarial-selection CLI command; P1c3 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c observation-cost stress CLI command; P1c5 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c profile-conditioned bucket-selection CLI command; P1c7 is integrated into the existing `p1c-evaluate` output.
+- Dedicated P1c observation dropout/delay CLI command or runtime report; P1c8 is specification-only.
 
 ## Deferred To Future Work
 
 - `oracle_policy` or `dynamic_programming_upper_bound` as an upper-bound comparison.
 - Learned or calibrated likelihood tables.
 - Noisy, missing, or probabilistic observations.
+- Bounded observation dropout/delay stress reporting as a future P1c-only `p1c-evaluate` extension candidate.
 - Case-specific investigation costs.
 - Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
@@ -98,6 +101,7 @@
 - P1c5 implements the P1c4 bounded observation-cost stress report as an analysis-only addition to P1c1 output. It uses a P1c-only policy-visible cost overlay, keeps `P1B_ACTION_SPECS` and default P1b behavior unchanged, keeps `observation_cost_stress` separate from `adversarial_bucket_selection`, keeps clean false-positive stress separate from buggy metrics, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c6 is specification-only. It defines a future profile-conditioned bucket-selection diagnostic derived from existing P1c5 profile bucket metrics, keeps the P1c3 baseline selection and P1c5 cost-stress objects separate, recommends nesting the diagnostic under `observation_cost_stress`, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c7 implements the P1c6 profile-conditioned bucket-selection diagnostic as an analysis-only nested addition under `observation_cost_stress`. It keeps the P1c3 baseline selected-bucket report unchanged, derives profile-selected buckets from existing P1c5 profile bucket metrics, keeps clean false-positive stress separate from buggy metrics, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
+- P1c8 is specification-only. It defines deterministic, reproducible, bounded future observation dropout/delay profiles as P1c-only copied-observation perturbations, keeps P1b default observations, execution traces, real-diff artifacts, P1c3 bucket selection, P1c5 cost stress, and P1c7 nested diagnostics unchanged, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
