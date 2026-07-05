@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5 follow-through notes and a P1c4 specification link.
+Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5 follow-through notes plus P1c4/P1c6 specification links.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -97,6 +97,8 @@ P1c4 records the next slice as specification-only bounded observation-cost stres
 
 P1c5 implements that P1c4 bounded observation-cost stress design as an analysis-only `observation_cost_stress` extension to the existing `p1c-evaluate` output. It uses P1c-only policy-visible cost overlays for action scoring, affordability, cumulative cost, and metrics; it does not mutate `P1B_ACTION_SPECS`, change `action_cost()`, or change default P1b behavior. The report keeps cost-profile stress separate from P1c3 `adversarial_bucket_selection`, keeps clean false-positive stress separate from buggy metrics, and avoids weighted payoff, regret, minimax, equilibrium, or formal payoff framing.
 
+P1c6 records the next slice as a specification-only cost-profile bucket-selection diagnostic. See [`p1c6_cost_profile_bucket_selection_spec.md`](p1c6_cost_profile_bucket_selection_spec.md). It keeps the P1c3 top-level `adversarial_bucket_selection` as the default-cost baseline selected-bucket report, and recommends a future nested diagnostic under P1c5 `observation_cost_stress` for profile-conditioned selected-bucket shifts by policy and metric.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -142,4 +144,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review the P1c5 observation-cost stress report before deciding whether the next P1c slice should be observation dropout/delay, a combined cost-profile plus bucket-selection diagnostic, or a larger design review.
+Review the P1c6 cost-profile bucket-selection specification before deciding whether to implement the nested diagnostic, move to observation dropout/delay, or run a larger design review.
