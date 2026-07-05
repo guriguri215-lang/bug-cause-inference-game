@@ -33,8 +33,14 @@ def test_p1c_evaluate_cli_writes_json_and_markdown(tmp_path):
     assert summary["adversarial_bucket_selection"]["selector_model"] == (
         "metric_specific_bucket_selection"
     )
+    assert summary["observation_cost_stress"]["stress_model"] == "bounded_action_cost_overlay"
+    assert summary["observation_cost_stress"]["cost_visibility"] == "policy_visible_overlay"
+    assert summary["observation_cost_stress"]["primary_observation_mode"] == "execution_grounded"
     assert "# P1c1 Worst-Case Analysis Report" in markdown
     assert "## P1c3 Adversarial Bucket Selection" in markdown
+    assert "## P1c5 Observation-Cost Stress" in markdown
+    assert "Scope/Non-Claim Notes" in markdown
     assert "### Clean False-Positive Stress" in markdown
+    assert "### Clean False-Positive Cost Stress" in markdown
     assert "analysis-only" in markdown
     assert "execution_grounded" in markdown
