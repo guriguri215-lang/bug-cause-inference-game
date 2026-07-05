@@ -21,14 +21,24 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 
 ## What This Project Is Not
 
-- This is not a real-code fault localization engine.
+- This is not a production fault-localization engine.
 - This is not an automated program repair tool.
 - This is not an LLM debugging benchmark.
-- This is not yet a full game-theoretic debugging tool.
-- It does not discover bugs in source code.
-- P1a does not identify code locations; P1b only ranks function-level locations inside a small injected benchmark scaffold.
-- It does not generate patches.
-- It does not ingest real project bug histories.
+- This is not a fuzzing or property-based testing framework.
+- This is not yet a formal game-theoretic debugging system.
+- P1a does not discover bugs or identify source-code locations.
+- P1b uses a small injected checkout/pricing benchmark scaffold; it does not claim real-world debugging accuracy.
+- P1b only ranks function-level locations inside that scaffold.
+- P1b real-diff artifacts are not real repository histories.
+- P1b predicts fix-intent categories but does not generate patches.
+
+## Related Work
+
+This project is closest to probabilistic debugging, Bayesian fault diagnosis, and active diagnosis. Those areas study how to rank likely diagnoses from observations and how to choose the next test or observation under limited cost. P1a adopts that framing at a deliberately small scale: it ranks coarse bug-cause categories rather than source-code locations, and it recommends the next investigation action rather than generating a patch.
+
+The project also touches fault localization and spectrum-based fault localization, but P1a is not a source-location engine. P1b adds a small injected-bug checkout/pricing benchmark with function-level location metrics, execution-derived observations, and real-diff artifacts, while keeping the scope far below production fault-localization systems or large bug benchmarks such as Defects4J.
+
+Mutation testing, fuzzing, property-based testing, automated program repair, and LLM software-engineering agents are adjacent rather than direct targets. They can generate failures, evaluate test suites, or repair code; this project currently focuses on cost-aware investigation and scoped benchmark scaffolding after a failure is observed.
 
 ## Installation
 
