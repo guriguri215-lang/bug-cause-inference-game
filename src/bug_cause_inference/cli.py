@@ -24,6 +24,13 @@ from bug_cause_inference.p1b.reports import (
     p1b_variants_to_json,
     p1b_variants_to_markdown,
 )
+from bug_cause_inference.p1c.evaluation import (
+    P1C_DEFAULT_OBSERVATION_MODE,
+    P1C_OBSERVATION_MODES,
+    evaluate_p1c,
+    p1c_evaluation_to_json,
+    p1c_evaluation_to_markdown,
+)
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
 from bug_cause_inference.reports import build_decision_report, report_to_json, report_to_markdown
 from bug_cause_inference.synthetic_cases import DEFAULT_SEED, generate_synthetic_cases, load_cases, save_cases
@@ -132,6 +139,12 @@ def command_p1b_evaluate(args: argparse.Namespace) -> None:
     _write_or_print(p1b_evaluation_to_json(summary), p1b_evaluation_to_markdown(summary), args)
 
 
+def command_p1c_evaluate(args: argparse.Namespace) -> None:
+    policies = tuple(args.policies) if args.policies else P1B_POLICIES
+    summary = evaluate_p1c(policies=policies, observation_mode=args.observation_mode)
+    _write_or_print(p1c_evaluation_to_json(summary), p1c_evaluation_to_markdown(summary), args)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bug-cause-inference",
@@ -202,6 +215,14 @@ def build_parser() -> argparse.ArgumentParser:
     p1b_evaluate.add_argument("--json-output", type=Path, default=None)
     p1b_evaluate.add_argument("--markdown-output", type=Path, default=None)
     p1b_evaluate.set_defaults(func=command_p1b_evaluate)
+
+    p1c_evaluate = subparsers.add_parser("p1c-evaluate", help="Evaluate P1c worst-case bucket robustness.")
+    p1c_evaluate.add_argument("--policies", nargs="*", choices=P1B_POLICIES)
+    p1c_evaluate.add_argument("--observation-mode", choices=P1C_OBSERVATION_MODES, default=P1C_DEFAULT_OBSERVATION_MODE)
+    p1c_evaluate.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1c_evaluate.add_argument("--json-output", type=Path, default=None)
+    p1c_evaluate.add_argument("--markdown-output", type=Path, default=None)
+    p1c_evaluate.set_defaults(func=command_p1c_evaluate)
 
     return parser
 
