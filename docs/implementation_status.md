@@ -33,7 +33,7 @@
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
 - Wrong-stop diagnostic for the primary policy.
-- CLI output saving with either JSON or Markdown output paths independently.
+- CLI output saving with either JSON or Markdown output paths independently, creating parent directories when needed.
 - Per-step trace logging for executed investigation actions.
 - CLI commands for case generation, report generation, and evaluation.
 - Pytest coverage for the core MVP requirements.
@@ -108,13 +108,13 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-05 after adding the P1c1 analysis-only report:
+Passed on 2026-07-05 after adding the P1c1 review follow-ups:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 194 passed.
+Result: 198 passed.
 
 In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
 

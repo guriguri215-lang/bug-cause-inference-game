@@ -4,8 +4,8 @@ from bug_cause_inference.cli import main
 
 
 def test_p1c_evaluate_cli_writes_json_and_markdown(tmp_path):
-    json_path = tmp_path / "p1c_summary.json"
-    markdown_path = tmp_path / "p1c_summary.md"
+    json_path = tmp_path / "nested" / "reports" / "p1c_summary.json"
+    markdown_path = tmp_path / "nested" / "reports" / "p1c_summary.md"
 
     main(
         [
@@ -18,6 +18,9 @@ def test_p1c_evaluate_cli_writes_json_and_markdown(tmp_path):
             str(markdown_path),
         ]
     )
+
+    assert json_path.exists()
+    assert markdown_path.exists()
 
     summary = json.loads(json_path.read_text(encoding="utf-8"))
     markdown = markdown_path.read_text(encoding="utf-8")

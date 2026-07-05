@@ -42,6 +42,11 @@ def _load_or_generate(path: str | None, seed: int):
     return generate_synthetic_cases(seed)
 
 
+def _write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+
+
 def command_generate_cases(args: argparse.Namespace) -> None:
     validate_likelihood_table()
     cases = generate_synthetic_cases(args.seed)
@@ -58,9 +63,9 @@ def command_report(args: argparse.Namespace) -> None:
     result = run_investigation(case, policy=args.policy, rng_seed=args.rng_seed) if args.simulate_to_stop else None
     report = build_decision_report(case, result=result, policy=args.policy)
     if args.json_output:
-        args.json_output.write_text(report_to_json(report), encoding="utf-8")
+        _write_text(args.json_output, report_to_json(report))
     if args.markdown_output:
-        args.markdown_output.write_text(report_to_markdown(report), encoding="utf-8")
+        _write_text(args.markdown_output, report_to_markdown(report))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -75,9 +80,9 @@ def command_evaluate(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else POLICIES
     summary = evaluate_policies(cases, policies=policies, random_repeats=args.random_repeats)
     if args.json_output:
-        args.json_output.write_text(evaluation_to_json(summary), encoding="utf-8")
+        _write_text(args.json_output, evaluation_to_json(summary))
     if args.markdown_output:
-        args.markdown_output.write_text(evaluation_to_markdown(summary), encoding="utf-8")
+        _write_text(args.markdown_output, evaluation_to_markdown(summary))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -92,9 +97,9 @@ def command_analyze(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else None
     summary = build_analysis_summary(cases, policies=policies) if policies else build_analysis_summary(cases)
     if args.json_output:
-        args.json_output.write_text(analysis_to_json(summary), encoding="utf-8")
+        _write_text(args.json_output, analysis_to_json(summary))
     if args.markdown_output:
-        args.markdown_output.write_text(analysis_to_markdown(summary), encoding="utf-8")
+        _write_text(args.markdown_output, analysis_to_markdown(summary))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -109,9 +114,9 @@ def _write_or_print(
     args: argparse.Namespace,
 ) -> None:
     if args.json_output:
-        args.json_output.write_text(data_json, encoding="utf-8")
+        _write_text(args.json_output, data_json)
     if args.markdown_output:
-        args.markdown_output.write_text(data_markdown, encoding="utf-8")
+        _write_text(args.markdown_output, data_markdown)
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
