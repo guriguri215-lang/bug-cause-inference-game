@@ -44,6 +44,62 @@ RAW_WORST_CASE_KEYS = (
     "false_positive_clean_variant_ids",
 )
 
+P1C3_ANALYSIS_PHASE = "p1c3_adversarial_bucket_selection_report"
+P1C3_SELECTOR_MODEL = "metric_specific_bucket_selection"
+P1C3_PRIMARY_OBSERVATION_MODE = "execution_grounded"
+
+P1C3_SELECTED_BUCKET_METRICS: dict[str, dict[str, Any]] = {
+    "bucket_bug_discovery_rate": {
+        "direction": "higher_is_better",
+        "selector": "min",
+        "selector_rule": "select_minimum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_cost_to_first_failure": {
+        "direction": "lower_is_better",
+        "selector": "max",
+        "selector_rule": "select_maximum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_location_top3_accuracy": {
+        "direction": "higher_is_better",
+        "selector": "min",
+        "selector_rule": "select_minimum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_cause_top1_accuracy": {
+        "direction": "higher_is_better",
+        "selector": "min",
+        "selector_rule": "select_minimum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_fix_intent_top1_accuracy": {
+        "direction": "higher_is_better",
+        "selector": "min",
+        "selector_rule": "select_minimum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_wrong_cause_high_confidence_rate": {
+        "direction": "lower_is_better",
+        "selector": "max",
+        "selector_rule": "select_maximum",
+        "allowed_bucket_set": "buggy_primary_buckets",
+        "allowed_buckets": BUGGY_PRIMARY_BUCKETS,
+    },
+    "bucket_mean_investigation_cost": {
+        "direction": "lower_is_better",
+        "selector": "max",
+        "selector_rule": "select_maximum",
+        "allowed_bucket_set": "all_primary_buckets",
+        "allowed_buckets": PRIMARY_BUCKETS,
+    },
+}
+
 
 def _settings_to_dict(settings: P1BSettings) -> dict[str, Any]:
     return {
@@ -400,6 +456,168 @@ def _average_vs_worst_gap(
     }
 
 
+def _bucket_type(bucket_id: str) -> str:
+    return "clean" if bucket_id == "clean_false_positive" else "buggy"
+
+
+def _variant_ids_for_selected_bucket_metric(
+    *,
+    metric: str,
+    selected_bucket_ids: list[str],
+    outcomes: list[dict[str, Any]],
+) -> list[str]:
+    selected = [
+        outcome for outcome in outcomes if outcome["primary_bucket"] in selected_bucket_ids
+    ]
+    if metric == "bucket_bug_discovery_rate":
+        ids = [
+            outcome["variant_id"]
+            for outcome in selected
+            if outcome["is_buggy"] and not outcome["discovered_within_budget"]
+        ]
+    elif metric == "bucket_location_top3_accuracy":
+        ids = [
+            outcome["variant_id"]
+            for outcome in selected
+            if outcome["is_buggy"] and not outcome["location_top3_hit"]
+        ]
+    elif metric == "bucket_cause_top1_accuracy":
+        ids = [
+            outcome["variant_id"]
+            for outcome in selected
+            if outcome["is_buggy"] and not outcome["cause_top1_hit"]
+        ]
+    elif metric == "bucket_fix_intent_top1_accuracy":
+        ids = [
+            outcome["variant_id"]
+            for outcome in selected
+            if outcome["is_buggy"] and not outcome["fix_intent_top1_hit"]
+        ]
+    elif metric == "bucket_wrong_cause_high_confidence_rate":
+        ids = [
+            outcome["variant_id"]
+            for outcome in selected
+            if outcome["is_buggy"] and outcome["wrong_cause_high_confidence"]
+        ]
+    elif metric == "bucket_cost_to_first_failure":
+        ids = [outcome["variant_id"] for outcome in selected if outcome["is_buggy"]]
+    elif metric == "bucket_mean_investigation_cost":
+        ids = [outcome["variant_id"] for outcome in selected]
+    else:
+        ids = []
+    return sorted(ids)
+
+
+def _clean_false_positive_variant_ids(outcomes: list[dict[str, Any]]) -> list[str]:
+    return sorted(
+        outcome["variant_id"]
+        for outcome in outcomes
+        if outcome["primary_bucket"] == "clean_false_positive"
+        and not outcome["is_buggy"]
+        and outcome["false_positive"]
+    )
+
+
+def _adversarial_bucket_selection(
+    *,
+    observation_mode: str,
+    policies: tuple[str, ...],
+    bucket_metrics: dict[str, dict[str, Any]],
+    average_vs_worst: dict[str, dict[str, dict[str, Any]]],
+    per_variant_outcomes: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    selected_by_policy: dict[str, dict[str, Any]] = {}
+    clean_by_policy: dict[str, dict[str, Any]] = {}
+
+    for policy in policies:
+        policy_selected: dict[str, Any] = {}
+        for metric, rule in P1C3_SELECTED_BUCKET_METRICS.items():
+            allowed_buckets = tuple(rule["allowed_buckets"])
+            selected = _value_with_buckets(
+                bucket_metrics[policy],
+                metric,
+                allowed_buckets,
+                rule["selector"],
+            )
+            selected_bucket_ids = selected["bucket_ids"]
+            gap = average_vs_worst[policy][metric]
+            row: dict[str, Any] = {
+                "direction": rule["direction"],
+                "selector_rule": rule["selector_rule"],
+                "allowed_bucket_set": rule["allowed_bucket_set"],
+                "allowed_bucket_ids": list(allowed_buckets),
+                "selected_bucket_ids": selected_bucket_ids,
+                "selected_value": selected["value"],
+                "average_metric": gap["average_metric"],
+                "average_vs_selected_gap": gap["gap"],
+                "diagnostic_variant_ids": _variant_ids_for_selected_bucket_metric(
+                    metric=metric,
+                    selected_bucket_ids=selected_bucket_ids,
+                    outcomes=per_variant_outcomes[policy],
+                ),
+            }
+            if metric == "bucket_mean_investigation_cost":
+                row["selected_bucket_types"] = {
+                    bucket_id: _bucket_type(bucket_id) for bucket_id in selected_bucket_ids
+                }
+            policy_selected[metric] = row
+        selected_by_policy[policy] = policy_selected
+
+        clean_gap = average_vs_worst[policy]["clean_false_positive_rate"]
+        clean_metrics = bucket_metrics[policy]["clean_false_positive"]
+        clean_diagnostic_ids = _clean_false_positive_variant_ids(per_variant_outcomes[policy])
+        clean_row: dict[str, Any] = {
+            "direction": "lower_is_better",
+            "selector_rule": "report_clean_bucket_only",
+            "allowed_bucket_set": "clean_false_positive_only",
+            "allowed_bucket_ids": ["clean_false_positive"],
+            "selected_bucket_ids": ["clean_false_positive"],
+            "selected_value": clean_metrics["bucket_false_positive_rate"],
+            "average_metric": clean_gap["average_metric"],
+            "average_vs_selected_gap": clean_gap["gap"],
+            "diagnostic_variant_ids": clean_diagnostic_ids,
+            "supporting_clean_mean_investigation_cost": clean_metrics[
+                "bucket_mean_investigation_cost"
+            ],
+        }
+        if not clean_diagnostic_ids:
+            clean_row["note"] = "Clean false positives are not triggered in the current run."
+        clean_by_policy[policy] = clean_row
+
+    notes = [
+        "P1c3 is analysis-only and consumes existing P1c1 bucket metrics and per-variant outcomes.",
+        "Selection is metric-specific and policy-aware; it does not define a single weighted payoff.",
+        "Buggy metric selectors use only the five buggy primary buckets.",
+        "Clean false-positive stress is reported separately from buggy metrics.",
+        "execution_grounded is the headline primary observation mode; non-primary observation modes are diagnostic when requested.",
+        "Raw variant IDs are diagnostic evidence for selected buckets, not headline benchmark claims.",
+        "The report does not define regret, minimax, equilibrium, or a formal game-theoretic guarantee.",
+    ]
+    if all(not row["diagnostic_variant_ids"] for row in clean_by_policy.values()):
+        notes.append("Clean false positives are not triggered in the current run.")
+
+    return {
+        "analysis_phase": P1C3_ANALYSIS_PHASE,
+        "selector_model": P1C3_SELECTOR_MODEL,
+        "primary_observation_mode": P1C3_PRIMARY_OBSERVATION_MODE,
+        "source_observation_mode": observation_mode,
+        "report_role": "headline_primary"
+        if observation_mode == P1C3_PRIMARY_OBSERVATION_MODE
+        else "diagnostic",
+        "policies_evaluated": list(policies),
+        "selected_buckets_by_policy": selected_by_policy,
+        "clean_false_positive_stress": {
+            "metric": "clean_false_positive_rate",
+            "direction": "lower_is_better",
+            "allowed_bucket_set": "clean_false_positive_only",
+            "allowed_bucket_ids": ["clean_false_positive"],
+            "selected_bucket_ids": ["clean_false_positive"],
+            "by_policy": clean_by_policy,
+        },
+        "notes": notes,
+    }
+
+
 def _evaluate_single_mode(
     *,
     variants: list[P1BVariant],
@@ -433,6 +651,14 @@ def _evaluate_single_mode(
         raw_worst[policy] = _raw_variant_worst_cases(outcomes)
         average_vs_worst[policy] = _average_vs_worst_gap(_aggregate_metrics(outcomes), policy_headline)
 
+    adversarial_selection = _adversarial_bucket_selection(
+        observation_mode=observation_mode,
+        policies=policies,
+        bucket_metrics=bucket_metrics,
+        average_vs_worst=average_vs_worst,
+        per_variant_outcomes=per_variant_outcomes,
+    )
+
     return {
         "benchmark": "p1b_injected_bug_benchmark",
         "analysis_phase": "p1c1_analysis_only_worst_case_report",
@@ -447,6 +673,7 @@ def _evaluate_single_mode(
         "headline_worst_case_summary": headline,
         "raw_variant_worst_cases": raw_worst,
         "average_vs_worst_gap": average_vs_worst,
+        "adversarial_bucket_selection": adversarial_selection,
         "notes": [
             "P1c1 is an analysis-only report over existing P1b variants, policies, settings, and run results.",
             "execution_grounded is the primary observation mode; metadata_synth is diagnostic when requested.",
@@ -528,6 +755,17 @@ def _headline_value(row: dict[str, Any]) -> str:
 
 def _variant_ids(ids: list[str]) -> str:
     return ", ".join(ids) if ids else "none"
+
+
+def _selected_buckets(row: dict[str, Any]) -> str:
+    bucket_types = row.get("selected_bucket_types", {})
+    labels = [
+        f"{bucket_id} ({bucket_types[bucket_id]})"
+        if bucket_id in bucket_types
+        else bucket_id
+        for bucket_id in row["selected_bucket_ids"]
+    ]
+    return ", ".join(labels) if labels else "none"
 
 
 def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
@@ -637,6 +875,66 @@ def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
                 f"{_format_value(row['worst_bucket_metric'])} | "
                 f"{_format_value(row['gap'])} |"
             )
+
+    selection = summary["adversarial_bucket_selection"]
+    lines.extend(
+        [
+            "",
+            "## P1c3 Adversarial Bucket Selection",
+            "",
+            "P1c3 adds an analysis-only selected-bucket view over the existing P1c1 report fields.",
+            "Selection is metric-specific and policy-aware; it does not define a weighted payoff, regret, minimax, equilibrium, or formal game guarantee.",
+            "`execution_grounded` is the headline primary observation mode; `metadata_synth` remains diagnostic when requested.",
+            "Raw variant IDs below are diagnostic evidence for selected buckets, not headline benchmark claims.",
+            "",
+            f"- analysis_phase: {selection['analysis_phase']}",
+            f"- selector_model: {selection['selector_model']}",
+            f"- primary_observation_mode: {selection['primary_observation_mode']}",
+            f"- source_observation_mode: {selection['source_observation_mode']}",
+            "",
+            "| policy | metric | direction | allowed_bucket_set | selected_buckets | selected_value | average | gap | diagnostic_variant_ids |",
+            "|---|---|---|---|---|---:|---:|---:|---|",
+        ]
+    )
+    for policy in summary["policies_evaluated"]:
+        selected_metrics = selection["selected_buckets_by_policy"][policy]
+        for metric in P1C3_SELECTED_BUCKET_METRICS:
+            row = selected_metrics[metric]
+            lines.append(
+                f"| {policy} | {metric} | {row['direction']} | "
+                f"{row['allowed_bucket_set']} | {_selected_buckets(row)} | "
+                f"{_format_value(row['selected_value'])} | "
+                f"{_format_value(row['average_metric'])} | "
+                f"{_format_value(row['average_vs_selected_gap'])} | "
+                f"{_variant_ids(row['diagnostic_variant_ids'])} |"
+            )
+
+    clean = selection["clean_false_positive_stress"]
+    lines.extend(
+        [
+            "",
+            "### Clean False-Positive Stress",
+            "",
+            f"- allowed_bucket_set: {clean['allowed_bucket_set']}",
+            f"- metric: {clean['metric']}",
+            "",
+            "| policy | selected_bucket | false_positive_rate | average | gap | diagnostic_variant_ids | note |",
+            "|---|---|---:|---:|---:|---|---|",
+        ]
+    )
+    for policy in summary["policies_evaluated"]:
+        row = clean["by_policy"][policy]
+        lines.append(
+            f"| {policy} | {_selected_buckets(row)} | "
+            f"{_format_value(row['selected_value'])} | "
+            f"{_format_value(row['average_metric'])} | "
+            f"{_format_value(row['average_vs_selected_gap'])} | "
+            f"{_variant_ids(row['diagnostic_variant_ids'])} | "
+            f"{row.get('note', '')} |"
+        )
+
+    lines.extend(["", "### P1c3 Notes", ""])
+    lines.extend(f"- {note}" for note in selection["notes"])
 
     lines.extend(["", "## Notes", ""])
     lines.extend(f"- {note}" for note in summary["notes"])

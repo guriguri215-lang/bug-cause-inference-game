@@ -27,6 +27,20 @@ def test_p1c_headline_summary_contains_required_keys():
         assert "bucket_ids" in headline[key]
 
 
+def test_p1c_adversarial_bucket_selection_shape_is_present():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    selection = summary["adversarial_bucket_selection"]
+
+    assert selection["analysis_phase"] == "p1c3_adversarial_bucket_selection_report"
+    assert selection["selector_model"] == "metric_specific_bucket_selection"
+    assert selection["primary_observation_mode"] == "execution_grounded"
+    assert selection["source_observation_mode"] == "execution_grounded"
+    assert "expected_utility_per_cost" in selection["selected_buckets_by_policy"]
+    assert selection["clean_false_positive_stress"]["allowed_bucket_set"] == (
+        "clean_false_positive_only"
+    )
+
+
 def test_p1c_raw_worst_case_lists_are_present_and_use_valid_variant_ids():
     summary = evaluate_p1c(policies=("expected_utility_per_cost",))
     valid_ids = {variant.variant_id for variant in load_p1b_variants()}
@@ -47,6 +61,19 @@ def test_p1c_markdown_states_analysis_scope_and_primary_mode():
     assert "does not" in markdown
     assert "formal game-theoretic guarantee" in markdown
     assert "minimax-optimal" not in markdown
+
+
+def test_p1c_markdown_includes_p1c3_section_and_scope_notes():
+    markdown = p1c_evaluation_to_markdown(evaluate_p1c(policies=("expected_utility_per_cost",)))
+
+    assert "## P1c3 Adversarial Bucket Selection" in markdown
+    assert "metric-specific and policy-aware" in markdown
+    assert "weighted payoff" in markdown
+    assert "regret" in markdown
+    assert "minimax" in markdown
+    assert "equilibrium" in markdown
+    assert "`metadata_synth` remains diagnostic" in markdown
+    assert "### Clean False-Positive Stress" in markdown
 
 
 def test_p1c_execution_grounded_bucket_metrics_remain_arithmetic_grounded():
@@ -106,6 +133,40 @@ def test_p1c_average_vs_worst_gap_uses_metric_direction():
     assert mean_cost["gap"] == round(mean_cost["worst_bucket_metric"] - mean_cost["average_metric"], 6)
 
 
+def test_p1c_adversarial_bucket_selection_uses_metric_specific_rules():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    selected = summary["adversarial_bucket_selection"]["selected_buckets_by_policy"][
+        "expected_utility_per_cost"
+    ]
+
+    for metric_name in (
+        "bucket_bug_discovery_rate",
+        "bucket_location_top3_accuracy",
+        "bucket_cause_top1_accuracy",
+        "bucket_fix_intent_top1_accuracy",
+    ):
+        row = selected[metric_name]
+        assert row["allowed_bucket_set"] == "buggy_primary_buckets"
+        assert "clean_false_positive" not in row["allowed_bucket_ids"]
+        assert row["selected_bucket_ids"] == ["state_sequence"]
+        assert row["selected_value"] == 0.0
+        assert row["diagnostic_variant_ids"] == [
+            "P1B-BUG-013",
+            "P1B-BUG-014",
+            "P1B-BUG-015",
+            "P1B-BUG-016",
+        ]
+
+    mean_cost = selected["bucket_mean_investigation_cost"]
+    assert mean_cost["allowed_bucket_set"] == "all_primary_buckets"
+    assert mean_cost["selected_bucket_ids"] == ["missing_optional_input"]
+    assert mean_cost["selected_value"] == 9.75
+    assert mean_cost["selected_bucket_types"] == {"missing_optional_input": "buggy"}
+
+
 def test_p1c_clean_false_positive_bucket_keeps_buggy_metrics_na():
     summary = evaluate_p1c(
         policies=("expected_utility_per_cost",),
@@ -130,6 +191,22 @@ def test_p1c_clean_false_positive_bucket_keeps_buggy_metrics_na():
         assert metrics[bucket]["bucket_false_positive_rate"] is None
 
 
+def test_p1c_clean_false_positive_stress_is_reported_separately():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    stress = summary["adversarial_bucket_selection"]["clean_false_positive_stress"]
+    row = stress["by_policy"]["expected_utility_per_cost"]
+
+    assert stress["allowed_bucket_set"] == "clean_false_positive_only"
+    assert stress["selected_bucket_ids"] == ["clean_false_positive"]
+    assert row["allowed_bucket_set"] == "clean_false_positive_only"
+    assert row["selected_value"] == 0.0
+    assert row["diagnostic_variant_ids"] == []
+    assert "not triggered" in row["note"]
+
+
 def test_p1c_both_mode_keeps_execution_grounded_as_primary_report():
     summary = evaluate_p1c(
         policies=("expected_utility_per_cost",),
@@ -149,4 +226,8 @@ def test_p1c_both_mode_keeps_execution_grounded_as_primary_report():
     assert summary["headline_worst_case_summary"] == diagnostics["execution_grounded"][
         "headline_worst_case_summary"
     ]
+    assert summary["adversarial_bucket_selection"] == diagnostics["execution_grounded"][
+        "adversarial_bucket_selection"
+    ]
+    assert summary["adversarial_bucket_selection"]["source_observation_mode"] == "execution_grounded"
     assert diagnostics["metadata_synth"]["observation_mode"] == "metadata_synth"

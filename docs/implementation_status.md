@@ -29,6 +29,7 @@
 - P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
 - P1c1 result interpretation note: [`docs/p1c1_result_interpretation.md`](p1c1_result_interpretation.md).
 - P1c2 adversarial bucket selection specification: [`docs/p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md).
+- P1c3 adversarial bucket selection report integrated into `p1c-evaluate`, adding metric-specific selected buckets and separate clean false-positive stress as analysis-only output.
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
@@ -55,7 +56,7 @@
 - Real git commit histories for each P1b variant.
 - Randomized Hypothesis-style property generation for P1b.
 - Bayesian redesign of `bug_presence_posterior`.
-- P1c2 adversarial bucket selection implementation or CLI command.
+- Dedicated P1c adversarial-selection CLI command; P1c3 is integrated into the existing `p1c-evaluate` output.
 
 ## Deferred To Future Work
 
@@ -86,6 +87,7 @@
 - P1b predicts fix-intent categories but does not generate patches.
 - P1c1 is analysis-only. It does not add variants, alter P1b execution logic, tune policies, or provide a formal game-theoretic guarantee.
 - P1c2 is specification-only. It defines metric-specific bucket selection but does not implement a report, change P1b/P1c1 behavior, or introduce a weighted payoff, regret, minimax, or equilibrium model.
+- P1c3 implements the P1c2 bucket-selection report as an analysis-only addition to P1c1 output. It selects buckets per policy and metric, keeps clean false-positive stress separate, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal game-theoretic guarantee.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -112,13 +114,13 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-05 after adding the P1c1 review follow-ups:
+Passed on 2026-07-05 after adding the P1c3 adversarial bucket selection report:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 198 passed.
+Result: 202 passed.
 
 In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
 

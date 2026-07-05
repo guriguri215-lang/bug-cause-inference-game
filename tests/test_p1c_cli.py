@@ -30,6 +30,11 @@ def test_p1c_evaluate_cli_writes_json_and_markdown(tmp_path):
     assert "headline_worst_case_summary" in summary
     assert "raw_variant_worst_cases" in summary
     assert "average_vs_worst_gap" in summary
+    assert summary["adversarial_bucket_selection"]["selector_model"] == (
+        "metric_specific_bucket_selection"
+    )
     assert "# P1c1 Worst-Case Analysis Report" in markdown
+    assert "## P1c3 Adversarial Bucket Selection" in markdown
+    assert "### Clean False-Positive Stress" in markdown
     assert "analysis-only" in markdown
     assert "execution_grounded" in markdown
