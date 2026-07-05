@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo only.
+Status: planning memo with implemented P1c1/P1c2/P1c3 follow-through notes.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -90,6 +90,8 @@ Reasons:
 The first implementation candidate should therefore be a P1c analysis report, not a new execution harness.
 
 P1c2 records the next slice as specification-only adversarial bucket selection. See [`p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md). It keeps selection metric-specific, separates clean false-positive stress from buggy bucket metrics, and preserves `execution_grounded` as the headline observation mode with `metadata_synth` as diagnostic only.
+
+P1c3 implements that P1c2 bucket-selection report as an analysis-only addition to `p1c-evaluate`. It consumes the existing P1c1 bucket metrics and per-variant outcomes, reports metric-specific selected buckets by policy, and keeps clean false-positive stress separate from buggy bucket metrics.
 
 ## Proposed P1c0 Deliverable
 
