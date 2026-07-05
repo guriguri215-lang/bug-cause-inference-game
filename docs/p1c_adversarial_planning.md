@@ -134,4 +134,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Write the P1c0 specification for difficulty labels and worst-case metrics, then review it before touching code.
+Review `docs/p1c0_specification.md` before touching code.
