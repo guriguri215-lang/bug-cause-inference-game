@@ -89,6 +89,8 @@ Reasons:
 
 The first implementation candidate should therefore be a P1c analysis report, not a new execution harness.
 
+P1c2 records the next slice as specification-only adversarial bucket selection. See [`p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md). It keeps selection metric-specific, separates clean false-positive stress from buggy bucket metrics, and preserves `execution_grounded` as the headline observation mode with `metadata_synth` as diagnostic only.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -134,4 +136,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review `docs/p1c0_specification.md` before touching code.
+Review `docs/p1c2_adversarial_bucket_selection_spec.md` before implementing any bucket-selection report.
