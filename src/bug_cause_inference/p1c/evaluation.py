@@ -74,6 +74,10 @@ P1C5_STRESS_MODEL = "bounded_action_cost_overlay"
 P1C5_COST_VISIBILITY = "policy_visible_overlay"
 P1C5_PRIMARY_OBSERVATION_MODE = "execution_grounded"
 
+P1C7_ANALYSIS_PHASE = "p1c7_profile_conditioned_bucket_selection_report"
+P1C7_SELECTOR_MODEL = "profile_conditioned_metric_specific_bucket_selection"
+P1C7_BASELINE_SELECTION_SOURCE = "adversarial_bucket_selection"
+
 P1C5_COST_PROFILES: tuple[dict[str, Any], ...] = (
     {
         "profile_id": "trace_access_expensive",
@@ -1003,6 +1007,157 @@ def _p1c5_clean_false_positive_row(
     return row
 
 
+def _selected_value_gap(
+    *,
+    direction: str,
+    baseline_value: float | int | None,
+    profile_value: float | int | None,
+) -> float | None:
+    if baseline_value is None or profile_value is None:
+        return None
+    if direction == "higher_is_better":
+        return round(baseline_value - profile_value, 6)
+    return round(profile_value - baseline_value, 6)
+
+
+def _p1c7_clean_false_positive_stress(
+    *,
+    policies: tuple[str, ...],
+    baseline_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+    profile_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+    profile_outcomes_by_policy: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    by_policy: dict[str, dict[str, Any]] = {}
+    for policy in policies:
+        baseline_metrics = baseline_bucket_metrics[policy]["clean_false_positive"]
+        profile_metrics = profile_bucket_metrics[policy]["clean_false_positive"]
+        profile_outcomes = profile_outcomes_by_policy[policy]
+        diagnostic_ids = _clean_false_positive_variant_ids(profile_outcomes)
+        baseline_rate = baseline_metrics["bucket_false_positive_rate"]
+        profile_rate = profile_metrics["bucket_false_positive_rate"]
+        row: dict[str, Any] = {
+            "baseline_false_positive_rate": baseline_rate,
+            "profile_false_positive_rate": profile_rate,
+            "profile_vs_baseline_gap": _selected_value_gap(
+                direction="lower_is_better",
+                baseline_value=baseline_rate,
+                profile_value=profile_rate,
+            ),
+            "baseline_clean_bucket_mean_investigation_cost": baseline_metrics[
+                "bucket_mean_investigation_cost"
+            ],
+            "profile_clean_bucket_mean_investigation_cost": profile_metrics[
+                "bucket_mean_investigation_cost"
+            ],
+            "profile_clean_no_bug_stop_rate": _clean_no_bug_stop_rate(profile_outcomes),
+            "diagnostic_variant_ids": diagnostic_ids,
+        }
+        if not diagnostic_ids:
+            row["note"] = "Clean false positives are not triggered in this cost profile."
+        by_policy[policy] = row
+    return {
+        "metric": "clean_false_positive_rate",
+        "direction": "lower_is_better",
+        "allowed_bucket_set": "clean_false_positive_only",
+        "allowed_bucket_ids": ["clean_false_positive"],
+        "selected_bucket_ids": ["clean_false_positive"],
+        "by_policy": by_policy,
+    }
+
+
+def _profile_conditioned_bucket_selection(
+    *,
+    observation_mode: str,
+    source_profile_id: str,
+    policies: tuple[str, ...],
+    baseline_selection: dict[str, Any],
+    baseline_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+    profile_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+    profile_outcomes_by_policy: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    selected_by_policy: dict[str, dict[str, Any]] = {}
+
+    for policy in policies:
+        policy_selected: dict[str, Any] = {}
+        baseline_selected_metrics = baseline_selection["selected_buckets_by_policy"][policy]
+        for metric, rule in P1C3_SELECTED_BUCKET_METRICS.items():
+            allowed_buckets = tuple(rule["allowed_buckets"])
+            baseline_row = baseline_selected_metrics[metric]
+            profile_selected = _value_with_buckets(
+                profile_bucket_metrics[policy],
+                metric,
+                allowed_buckets,
+                rule["selector"],
+            )
+            baseline_selected_bucket_ids = list(baseline_row["selected_bucket_ids"])
+            profile_selected_bucket_ids = profile_selected["bucket_ids"]
+            row: dict[str, Any] = {
+                "direction": rule["direction"],
+                "selector_rule": rule["selector_rule"],
+                "allowed_bucket_set": rule["allowed_bucket_set"],
+                "allowed_bucket_ids": list(allowed_buckets),
+                "baseline_selected_bucket_ids": baseline_selected_bucket_ids,
+                "profile_selected_bucket_ids": profile_selected_bucket_ids,
+                "bucket_shifted_from_baseline": set(profile_selected_bucket_ids)
+                != set(baseline_selected_bucket_ids),
+                "baseline_selected_value": baseline_row["selected_value"],
+                "profile_selected_value": profile_selected["value"],
+                "profile_vs_baseline_selected_value_gap": _selected_value_gap(
+                    direction=rule["direction"],
+                    baseline_value=baseline_row["selected_value"],
+                    profile_value=profile_selected["value"],
+                ),
+                "diagnostic_variant_ids": _variant_ids_for_selected_bucket_metric(
+                    metric=metric,
+                    selected_bucket_ids=profile_selected_bucket_ids,
+                    outcomes=profile_outcomes_by_policy[policy],
+                ),
+            }
+            if metric == "bucket_mean_investigation_cost":
+                row["baseline_selected_bucket_types"] = {
+                    bucket_id: _bucket_type(bucket_id)
+                    for bucket_id in baseline_selected_bucket_ids
+                }
+                row["profile_selected_bucket_types"] = {
+                    bucket_id: _bucket_type(bucket_id)
+                    for bucket_id in profile_selected_bucket_ids
+                }
+            policy_selected[metric] = row
+        selected_by_policy[policy] = policy_selected
+
+    clean_stress = _p1c7_clean_false_positive_stress(
+        policies=policies,
+        baseline_bucket_metrics=baseline_bucket_metrics,
+        profile_bucket_metrics=profile_bucket_metrics,
+        profile_outcomes_by_policy=profile_outcomes_by_policy,
+    )
+    notes = [
+        "P1c7 is an analysis-only nested diagnostic under observation_cost_stress.",
+        "Baseline selected buckets come from the top-level P1c3 adversarial_bucket_selection report and are not replaced.",
+        "Profile selected buckets are derived from P1c5 profile bucket metrics.",
+        "Buggy metric selectors use only the five buggy primary buckets.",
+        "Clean false-positive stress is reported separately from buggy metrics.",
+        "Bucket shifts and selected-value gaps remain metric-specific.",
+        "The diagnostic does not introduce a single weighted payoff, regret, minimax, equilibrium, or formal payoff model.",
+    ]
+    if all(not row["diagnostic_variant_ids"] for row in clean_stress["by_policy"].values()):
+        notes.append("Clean false positives are not triggered in this cost profile.")
+    return {
+        "analysis_phase": P1C7_ANALYSIS_PHASE,
+        "selector_model": P1C7_SELECTOR_MODEL,
+        "source_profile_id": source_profile_id,
+        "baseline_selection_source": P1C7_BASELINE_SELECTION_SOURCE,
+        "primary_observation_mode": P1C5_PRIMARY_OBSERVATION_MODE,
+        "source_observation_mode": observation_mode,
+        "report_role": "headline_primary"
+        if observation_mode == P1C5_PRIMARY_OBSERVATION_MODE
+        else "diagnostic",
+        "selected_buckets_by_policy": selected_by_policy,
+        "clean_false_positive_stress": clean_stress,
+        "notes": notes,
+    }
+
+
 def _p1c5_profile_outcomes(
     *,
     variants: list[P1BVariant],
@@ -1037,11 +1192,13 @@ def _observation_cost_stress(
     settings: P1BSettings,
     baseline_aggregate_metrics: dict[str, dict[str, float | None]],
     baseline_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+    baseline_adversarial_bucket_selection: dict[str, Any],
 ) -> dict[str, Any]:
     profile_dicts = [_cost_profile_to_dict(profile, settings) for profile in P1C5_COST_PROFILES]
     results_by_profile: dict[str, dict[str, Any]] = {}
     gaps_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
     clean_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+    profile_conditioned_selection_by_profile: dict[str, dict[str, Any]] = {}
 
     for profile in profile_dicts:
         profile_id = profile["profile_id"]
@@ -1085,12 +1242,24 @@ def _observation_cost_stress(
             "profile_vs_baseline_gap_by_policy": gap_by_policy,
             "clean_false_positive_stress_by_policy": clean_by_policy,
         }
+        profile_conditioned_selection_by_profile[profile_id] = (
+            _profile_conditioned_bucket_selection(
+                observation_mode=observation_mode,
+                source_profile_id=profile_id,
+                policies=policies,
+                baseline_selection=baseline_adversarial_bucket_selection,
+                baseline_bucket_metrics=baseline_bucket_metrics,
+                profile_bucket_metrics=bucket_by_policy,
+                profile_outcomes_by_policy=outcomes_by_policy,
+            )
+        )
 
     notes = [
         "P1c5 is analysis-only and applies bounded integer cost overlays to existing P1b action IDs.",
         "Cost overlays are policy-visible in this P1c-only run path: effective costs affect action scoring, remaining-budget affordability, cumulative cost, and metrics.",
         "P1B_ACTION_SPECS, action_cost(), and default P1b run behavior are not mutated.",
         "observation_cost_stress is a separate slice from P1c3 adversarial_bucket_selection.",
+        "profile_conditioned_bucket_selection_by_profile is a nested diagnostic; it does not replace the P1c3 baseline selected-bucket report.",
         "Clean false-positive stress is reported separately from buggy bucket metrics.",
         "execution_grounded is the headline primary observation mode; metadata_synth is diagnostic when requested.",
         "The report does not introduce a single weighted payoff, regret, minimax, equilibrium, or formal payoff model.",
@@ -1125,6 +1294,7 @@ def _observation_cost_stress(
         "baseline_aggregate_metrics_by_policy": baseline_aggregate_metrics,
         "baseline_bucket_metrics_by_policy": baseline_bucket_metrics,
         "results_by_profile": results_by_profile,
+        "profile_conditioned_bucket_selection_by_profile": profile_conditioned_selection_by_profile,
         "profile_vs_baseline_gap_by_policy": gaps_by_profile,
         "clean_false_positive_stress_by_policy": clean_by_profile,
         "notes": notes,
@@ -1281,6 +1451,7 @@ def _evaluate_single_mode(
         settings=settings,
         baseline_aggregate_metrics=aggregate_metrics,
         baseline_bucket_metrics=bucket_metrics,
+        baseline_adversarial_bucket_selection=adversarial_selection,
     )
 
     return {
@@ -1383,15 +1554,19 @@ def _variant_ids(ids: list[str]) -> str:
     return ", ".join(ids) if ids else "none"
 
 
-def _selected_buckets(row: dict[str, Any]) -> str:
-    bucket_types = row.get("selected_bucket_types", {})
+def _bucket_ids_with_types(bucket_ids: list[str], bucket_types: dict[str, str] | None = None) -> str:
+    bucket_types = bucket_types or {}
     labels = [
         f"{bucket_id} ({bucket_types[bucket_id]})"
         if bucket_id in bucket_types
         else bucket_id
-        for bucket_id in row["selected_bucket_ids"]
+        for bucket_id in bucket_ids
     ]
     return ", ".join(labels) if labels else "none"
+
+
+def _selected_buckets(row: dict[str, Any]) -> str:
+    return _bucket_ids_with_types(row["selected_bucket_ids"], row.get("selected_bucket_types", {}))
 
 
 def _overlay_costs(profile: dict[str, Any]) -> str:
@@ -1478,6 +1653,66 @@ def _extend_p1c5_markdown(lines: list[str], summary: dict[str, Any]) -> None:
                     f"{_format_value(row['profile_value'])} | "
                     f"{_format_value(row['gap'])} |"
                 )
+
+    profile_selection = stress["profile_conditioned_bucket_selection_by_profile"]
+    lines.extend(
+        [
+            "",
+            "### Profile-Conditioned Bucket Selection",
+            "",
+            "This nested diagnostic compares each P1c5 cost profile against the P1c3 baseline selected-bucket report.",
+            "It does not replace top-level `adversarial_bucket_selection` and does not define a weighted payoff, regret, minimax, equilibrium, or formal payoff model.",
+            "",
+            "| profile | policy | metric | baseline selected buckets | profile selected buckets | shifted | baseline value | profile value | gap | diagnostic_variant_ids |",
+            "|---|---|---|---|---|---:|---:|---:|---:|---|",
+        ]
+    )
+    for profile_id, report in profile_selection.items():
+        selected_by_policy = report["selected_buckets_by_policy"]
+        for policy in summary["policies_evaluated"]:
+            for metric in P1C3_SELECTED_BUCKET_METRICS:
+                row = selected_by_policy[policy][metric]
+                baseline_buckets = _bucket_ids_with_types(
+                    row["baseline_selected_bucket_ids"],
+                    row.get("baseline_selected_bucket_types", {}),
+                )
+                profile_buckets = _bucket_ids_with_types(
+                    row["profile_selected_bucket_ids"],
+                    row.get("profile_selected_bucket_types", {}),
+                )
+                shifted = str(row["bucket_shifted_from_baseline"]).lower()
+                lines.append(
+                    f"| {profile_id} | {policy} | {metric} | "
+                    f"{baseline_buckets} | {profile_buckets} | {shifted} | "
+                    f"{_format_value(row['baseline_selected_value'])} | "
+                    f"{_format_value(row['profile_selected_value'])} | "
+                    f"{_format_value(row['profile_vs_baseline_selected_value_gap'])} | "
+                    f"{_variant_ids(row['diagnostic_variant_ids'])} |"
+                )
+
+    lines.extend(
+        [
+            "",
+            "### Profile-Conditioned Clean False-Positive Stress",
+            "",
+            "Clean false-positive stress remains separate from buggy metric bucket selection.",
+            "",
+            "| profile | policy | baseline_false_positive_rate | profile_false_positive_rate | gap | diagnostic_variant_ids | note |",
+            "|---|---|---:|---:|---:|---|---|",
+        ]
+    )
+    for profile_id, report in profile_selection.items():
+        clean = report["clean_false_positive_stress"]
+        for policy in summary["policies_evaluated"]:
+            row = clean["by_policy"][policy]
+            lines.append(
+                f"| {profile_id} | {policy} | "
+                f"{_format_value(row['baseline_false_positive_rate'])} | "
+                f"{_format_value(row['profile_false_positive_rate'])} | "
+                f"{_format_value(row['profile_vs_baseline_gap'])} | "
+                f"{_variant_ids(row['diagnostic_variant_ids'])} | "
+                f"{row.get('note', '')} |"
+            )
 
     lines.extend(
         [
