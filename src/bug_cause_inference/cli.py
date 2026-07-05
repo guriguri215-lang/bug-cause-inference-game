@@ -24,6 +24,13 @@ from bug_cause_inference.p1b.reports import (
     p1b_variants_to_json,
     p1b_variants_to_markdown,
 )
+from bug_cause_inference.p1c.evaluation import (
+    P1C_DEFAULT_OBSERVATION_MODE,
+    P1C_OBSERVATION_MODES,
+    evaluate_p1c,
+    p1c_evaluation_to_json,
+    p1c_evaluation_to_markdown,
+)
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
 from bug_cause_inference.reports import build_decision_report, report_to_json, report_to_markdown
 from bug_cause_inference.synthetic_cases import DEFAULT_SEED, generate_synthetic_cases, load_cases, save_cases
@@ -33,6 +40,11 @@ def _load_or_generate(path: str | None, seed: int):
     if path:
         return load_cases(path)
     return generate_synthetic_cases(seed)
+
+
+def _write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
 
 
 def command_generate_cases(args: argparse.Namespace) -> None:
@@ -51,9 +63,9 @@ def command_report(args: argparse.Namespace) -> None:
     result = run_investigation(case, policy=args.policy, rng_seed=args.rng_seed) if args.simulate_to_stop else None
     report = build_decision_report(case, result=result, policy=args.policy)
     if args.json_output:
-        args.json_output.write_text(report_to_json(report), encoding="utf-8")
+        _write_text(args.json_output, report_to_json(report))
     if args.markdown_output:
-        args.markdown_output.write_text(report_to_markdown(report), encoding="utf-8")
+        _write_text(args.markdown_output, report_to_markdown(report))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -68,9 +80,9 @@ def command_evaluate(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else POLICIES
     summary = evaluate_policies(cases, policies=policies, random_repeats=args.random_repeats)
     if args.json_output:
-        args.json_output.write_text(evaluation_to_json(summary), encoding="utf-8")
+        _write_text(args.json_output, evaluation_to_json(summary))
     if args.markdown_output:
-        args.markdown_output.write_text(evaluation_to_markdown(summary), encoding="utf-8")
+        _write_text(args.markdown_output, evaluation_to_markdown(summary))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -85,9 +97,9 @@ def command_analyze(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else None
     summary = build_analysis_summary(cases, policies=policies) if policies else build_analysis_summary(cases)
     if args.json_output:
-        args.json_output.write_text(analysis_to_json(summary), encoding="utf-8")
+        _write_text(args.json_output, analysis_to_json(summary))
     if args.markdown_output:
-        args.markdown_output.write_text(analysis_to_markdown(summary), encoding="utf-8")
+        _write_text(args.markdown_output, analysis_to_markdown(summary))
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -102,9 +114,9 @@ def _write_or_print(
     args: argparse.Namespace,
 ) -> None:
     if args.json_output:
-        args.json_output.write_text(data_json, encoding="utf-8")
+        _write_text(args.json_output, data_json)
     if args.markdown_output:
-        args.markdown_output.write_text(data_markdown, encoding="utf-8")
+        _write_text(args.markdown_output, data_markdown)
     if args.json_output or args.markdown_output:
         return
     if args.format == "json":
@@ -130,6 +142,12 @@ def command_p1b_evaluate(args: argparse.Namespace) -> None:
     policies = tuple(args.policies) if args.policies else P1B_POLICIES
     summary = evaluate_p1b(policies=policies, observation_mode=args.observation_mode)
     _write_or_print(p1b_evaluation_to_json(summary), p1b_evaluation_to_markdown(summary), args)
+
+
+def command_p1c_evaluate(args: argparse.Namespace) -> None:
+    policies = tuple(args.policies) if args.policies else P1B_POLICIES
+    summary = evaluate_p1c(policies=policies, observation_mode=args.observation_mode)
+    _write_or_print(p1c_evaluation_to_json(summary), p1c_evaluation_to_markdown(summary), args)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -202,6 +220,14 @@ def build_parser() -> argparse.ArgumentParser:
     p1b_evaluate.add_argument("--json-output", type=Path, default=None)
     p1b_evaluate.add_argument("--markdown-output", type=Path, default=None)
     p1b_evaluate.set_defaults(func=command_p1b_evaluate)
+
+    p1c_evaluate = subparsers.add_parser("p1c-evaluate", help="Evaluate P1c worst-case bucket robustness.")
+    p1c_evaluate.add_argument("--policies", nargs="*", choices=P1B_POLICIES)
+    p1c_evaluate.add_argument("--observation-mode", choices=P1C_OBSERVATION_MODES, default=P1C_DEFAULT_OBSERVATION_MODE)
+    p1c_evaluate.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1c_evaluate.add_argument("--json-output", type=Path, default=None)
+    p1c_evaluate.add_argument("--markdown-output", type=Path, default=None)
+    p1c_evaluate.set_defaults(func=command_p1c_evaluate)
 
     return parser
 

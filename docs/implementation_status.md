@@ -26,11 +26,14 @@
 - P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
 - Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
+- P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
+- P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
+- P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
 - Wrong-stop diagnostic for the primary policy.
-- CLI output saving with either JSON or Markdown output paths independently.
+- CLI output saving with either JSON or Markdown output paths independently, creating parent directories when needed.
 - Per-step trace logging for executed investigation actions.
 - CLI commands for case generation, report generation, and evaluation.
 - Pytest coverage for the core MVP requirements.
@@ -78,6 +81,7 @@
 - P1b `execution_grounded` observations are derived from checkout test results, exceptions, traced checkout functions, function-level Ochiai coverage suspicion, and Phase C real-diff artifacts for `inspect_recent_diff`. They still run inside a small injected benchmark scaffold rather than real project histories.
 - P1b `metadata_synth` keeps synthetic recent-diff observations as the frozen baseline; only `execution_grounded` reads real-diff artifacts.
 - P1b predicts fix-intent categories but does not generate patches.
+- P1c1 is analysis-only. It does not add variants, alter P1b execution logic, tune policies, or provide a formal game-theoretic guarantee.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -97,23 +101,24 @@ python -m bug_cause_inference.cli p1b-list-variants --output examples/p1b/varian
 python -m bug_cause_inference.cli p1b-report --variant-id P1B-BUG-001 --json-output examples/p1b/reports/p1b_report_P1B-BUG-001.json --markdown-output examples/p1b/reports/p1b_report_P1B-BUG-001.md
 python -m bug_cause_inference.cli p1b-evaluate --observation-mode execution_grounded --format markdown
 python -m bug_cause_inference.cli p1b-evaluate --observation-mode both --json-output examples/p1b/reports/p1b_evaluation_summary.json --markdown-output examples/p1b/reports/p1b_evaluation_summary.md
+python -m bug_cause_inference.cli p1c-evaluate --format markdown
+python -m bug_cause_inference.cli p1c-evaluate --observation-mode execution_grounded --json-output examples/p1c/reports/p1c_worst_case_summary.json --markdown-output examples/p1c/reports/p1c_worst_case_summary.md
 python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
 
-Passed on 2026-07-04 after adding the minimal CI workflow:
+Passed on 2026-07-05 after adding the P1c1 review follow-ups:
 
 ```bash
-.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
+.\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 187 passed.
+Result: 198 passed.
 
 In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
 
 ```text
-174 passed, 13 errors
 PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
 ```
 

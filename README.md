@@ -98,6 +98,13 @@ python -m bug_cause_inference.cli p1b-evaluate --observation-mode both --format 
 python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
+Generate the P1c1 analysis-only worst-case report over existing P1b runs:
+
+```bash
+python -m bug_cause_inference.cli p1c-evaluate --format markdown
+python -m bug_cause_inference.cli p1c-evaluate --observation-mode execution_grounded --json-output examples/p1c/reports/p1c_worst_case_summary.json --markdown-output examples/p1c/reports/p1c_worst_case_summary.md
+```
+
 ## Example Command
 
 ```bash
@@ -186,6 +193,15 @@ P1b location metrics are function-level only. Line-span hints are explanatory an
 
 With `--observation-mode both`, the P1b evaluator also reports a primary-policy comparison for `metadata_synth` versus `execution_grounded`, including `execution_minus_metadata_delta` and `metadata_optimism_gap`. Positive `metadata_optimism_gap` means the metadata-synth baseline made the primary policy look better than execution-grounded evidence. For lower-is-better metrics such as false-positive rate and mean cost, the gap is `execution_grounded_value - metadata_synth_value`; otherwise it is `metadata_synth_value - execution_grounded_value`.
 
+P1c1 evaluator reports:
+
+- raw variant worst-case IDs
+- bucket-level discovery, cost, localization, cause, fix-intent, wrong-cause, false-positive, and mean-cost metrics
+- headline worst-case bucket summaries
+- average-versus-worst gaps
+
+P1c1 is analysis-only. Its primary observation mode is `execution_grounded`; `metadata_synth` is only diagnostic when requested.
+
 ## Analysis Reports
 
 The `analyze` command adds diagnostic reports without changing the model, dataset, default thresholds, or policies. It is an analysis-only companion to the existing evaluation command.
@@ -254,6 +270,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P1b keeps synthetic recent-diff observations only in `metadata_synth`; `execution_grounded` reads the real-diff artifacts and reports changed files, changed functions, and a diff excerpt.
 - P1b `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.
 - P1b predicts fix-intent categories but does not generate patches.
+- P1c1 reports worst-case bucket diagnostics over the existing P1b scaffold only; it does not add an adversarial generator or a formal game-theoretic guarantee.
 
 ## Reproducibility Notes
 
