@@ -131,7 +131,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-06 after adding the P1c9 bounded observation dropout/delay stress report:
+Full pytest last passed on 2026-07-06 after adding the P1c9 bounded observation dropout/delay stress report:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
@@ -139,15 +139,15 @@ Passed on 2026-07-06 after adding the P1c9 bounded observation dropout/delay str
 
 Result: 219 passed.
 
-P1c targeted tests also passed with normal permissions:
+P1c targeted tests passed on 2026-07-07 after the P1c result interpretation and public-boundary status review, with normal permissions:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest tests\test_p1c_labels.py tests\test_p1c_evaluation.py tests\test_p1c_cli.py -q -p no:cacheprovider
 ```
 
-Result: 32 passed.
+Result: 34 passed.
 
-In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
+In the Codex sandbox, the same targeted command reported Temp-directory permission errors for `tmp_path` tests after 33 tests passed:
 
 ```text
 PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
@@ -176,13 +176,14 @@ See [`p1a_evaluation_notes.md`](p1a_evaluation_notes.md) for the current interpr
 
 Latest P1b Phase C status:
 
+- Phase B/C capabilities are implemented in the current repository state. The historical local commit IDs below are retained as checkpoint notes from the pre-PR workflow.
+
 - Phase B1 local commit: `6610738` (`feat: add P1b execution-grounded observation harness`).
 - Phase B2 local commit: `2669530` (`feat: add P1b coverage spectrum localization`).
 - Phase B3 local commit: `6359f07` (`feat: add P1b observation-mode comparison reports`).
 - Phase C1 local commit: `cabc086` (`feat: add P1b real diff artifact generator`).
 - Phase C2 local commit: `4469213` (`feat: wire P1b real diff observations`).
 - Phase C3 refreshed README/status/devlog and regenerated P1b examples around the C2 outputs.
-- B1/B2/B3/C1/C2/C3 remain local until the user approves push/PR.
 - `p1b-list-variants` generated `examples/p1b/variants/p1b_variants.json` and `.md`.
 - `p1b-report --policy recent_diff_first --observation-mode execution_grounded` generated `examples/p1b/reports/p1b_report_P1B-BUG-001.json` and `.md`.
 - `p1b-evaluate --observation-mode both` generated `examples/p1b/reports/p1b_evaluation_summary.json` and `.md`.
