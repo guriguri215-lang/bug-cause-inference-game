@@ -35,6 +35,7 @@
 - P1c6 cost-profile bucket-selection diagnostic specification: [`docs/p1c6_cost_profile_bucket_selection_spec.md`](p1c6_cost_profile_bucket_selection_spec.md).
 - P1c7 profile-conditioned bucket-selection diagnostic integrated under `observation_cost_stress`, adding profile-specific selected-bucket shifts against the P1c3 baseline as analysis-only output.
 - P1c8 bounded observation dropout/delay specification: [`docs/p1c8_bounded_observation_dropout_delay_spec.md`](p1c8_bounded_observation_dropout_delay_spec.md).
+- P1c9 bounded observation dropout/delay stress report integrated into `p1c-evaluate` as the analysis-only `observation_dropout_delay_stress` object, using deterministic P1c-only copied-observation perturbation profiles.
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
@@ -64,14 +65,13 @@
 - Dedicated P1c adversarial-selection CLI command; P1c3 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c observation-cost stress CLI command; P1c5 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c profile-conditioned bucket-selection CLI command; P1c7 is integrated into the existing `p1c-evaluate` output.
-- Dedicated P1c observation dropout/delay CLI command or runtime report; P1c8 is specification-only.
+- Dedicated P1c observation dropout/delay CLI command; P1c9 is integrated into the existing `p1c-evaluate` output.
 
 ## Deferred To Future Work
 
 - `oracle_policy` or `dynamic_programming_upper_bound` as an upper-bound comparison.
 - Learned or calibrated likelihood tables.
 - Noisy, missing, or probabilistic observations.
-- Bounded observation dropout/delay stress reporting as a future P1c-only `p1c-evaluate` extension candidate.
 - Case-specific investigation costs.
 - Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
@@ -102,6 +102,7 @@
 - P1c6 is specification-only. It defines a future profile-conditioned bucket-selection diagnostic derived from existing P1c5 profile bucket metrics, keeps the P1c3 baseline selection and P1c5 cost-stress objects separate, recommends nesting the diagnostic under `observation_cost_stress`, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c7 implements the P1c6 profile-conditioned bucket-selection diagnostic as an analysis-only nested addition under `observation_cost_stress`. It keeps the P1c3 baseline selected-bucket report unchanged, derives profile-selected buckets from existing P1c5 profile bucket metrics, keeps clean false-positive stress separate from buggy metrics, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c8 is specification-only. It defines deterministic, reproducible, bounded future observation dropout/delay profiles as P1c-only copied-observation perturbations, keeps P1b default observations, execution traces, real-diff artifacts, P1c3 bucket selection, P1c5 cost stress, and P1c7 nested diagnostics unchanged, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
+- P1c9 implements the P1c8 bounded observation dropout/delay report candidate as an analysis-only `observation_dropout_delay_stress` addition to `p1c-evaluate`. It applies deterministic P1c-only copied-observation dropout/delay profiles, retains source observations, keeps clean false-positive stress separate from buggy metrics, leaves P1b defaults unchanged, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -129,13 +130,13 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Passed on 2026-07-05 after adding the P1c7 profile-conditioned bucket-selection diagnostic:
+Passed on 2026-07-06 after adding the P1c9 bounded observation dropout/delay stress report:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 211 passed.
+Result: 219 passed.
 
 P1c targeted tests also passed with normal permissions:
 
@@ -143,7 +144,7 @@ P1c targeted tests also passed with normal permissions:
 .\.venv\Scripts\python.exe -B -m pytest tests\test_p1c_labels.py tests\test_p1c_evaluation.py tests\test_p1c_cli.py -q -p no:cacheprovider
 ```
 
-Result: 24 passed.
+Result: 32 passed.
 
 In the Codex sandbox, the same command reported Temp-directory permission errors for `tmp_path` tests:
 
@@ -151,7 +152,9 @@ In the Codex sandbox, the same command reported Temp-directory permission errors
 PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
 ```
 
-The standard command passed when rerun with normal permissions.
+- The standard targeted command passed when rerun with normal permissions.
+- `python -m bug_cause_inference.p1b.real_diff --validate` passed for all 25 variants.
+- P1c9 CLI Markdown, JSON, and `both` mode JSON checks passed.
 
 Latest generated evaluation summary:
 

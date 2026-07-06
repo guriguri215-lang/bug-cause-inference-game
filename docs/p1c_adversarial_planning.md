@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5/P1c7 follow-through notes plus P1c4/P1c6/P1c8 specification links.
+Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5/P1c7/P1c9 follow-through notes plus P1c4/P1c6/P1c8 specification links.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -103,6 +103,8 @@ P1c7 implements that P1c6 nested diagnostic inside the existing `p1c-evaluate` o
 
 P1c8 records the next slice as specification-only bounded observation dropout/delay. See [`p1c8_bounded_observation_dropout_delay_spec.md`](p1c8_bounded_observation_dropout_delay_spec.md). It defines deterministic, reproducible, bounded future profiles for P1c-only observation visibility or arrival-timing perturbations, keeps P1b default observations and traces unchanged, keeps P1c3/P1c5/P1c7 objects separate, and avoids weighted payoff, regret, minimax, equilibrium, or formal payoff framing.
 
+P1c9 implements the P1c8 report candidate as an analysis-only `observation_dropout_delay_stress` extension to the existing `p1c-evaluate` output. It applies four deterministic copied-observation profiles, retains source observations while perturbing only policy-facing visible copies, keeps clean false-positive stress separate from buggy metrics, preserves `execution_grounded` as the headline primary mode with `metadata_synth` diagnostic only, and keeps P1c3/P1c5/P1c7 report objects separate.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -148,4 +150,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review the P1c8 bounded observation dropout/delay specification before deciding whether to implement an analysis-only `observation_dropout_delay_stress` report, run a larger design review, or pause P1c expansion.
+Review the P1c9 `observation_dropout_delay_stress` results before deciding whether to run a larger design review, add a new specification-only P1c slice, or pause P1c expansion.

@@ -78,6 +78,75 @@ P1C7_ANALYSIS_PHASE = "p1c7_profile_conditioned_bucket_selection_report"
 P1C7_SELECTOR_MODEL = "profile_conditioned_metric_specific_bucket_selection"
 P1C7_BASELINE_SELECTION_SOURCE = "adversarial_bucket_selection"
 
+P1C9_ANALYSIS_PHASE = "p1c9_bounded_observation_dropout_delay_stress_report"
+P1C9_STRESS_MODEL = "bounded_observation_visibility_or_delay_profile"
+P1C9_PERTURBATION_VISIBILITY = "policy_visible_p1c_only"
+P1C9_PRIMARY_OBSERVATION_MODE = "execution_grounded"
+P1C9_BASELINE_SOURCE = "unperturbed_p1c_report"
+
+P1C9_DROPOUT_DELAY_PROFILES: tuple[dict[str, Any], ...] = (
+    {
+        "profile_id": "traceback_signal_dropout",
+        "perturbation_type": "dropout",
+        "target_action_ids": ("inspect_traceback", "run_null_missing_tests"),
+        "target_observation_families": ("exception_trace",),
+        "delay_steps": None,
+        "bounded": True,
+        "deterministic_rule": (
+            "copy the first matching exception-trace observation per run with exception "
+            "detail, stack functions, and exception-derived score fields empty"
+        ),
+        "expected_diagnostic_signal": (
+            "tests recovery when traceback detail is missing but source failures remain retained"
+        ),
+    },
+    {
+        "profile_id": "recent_diff_signal_delay",
+        "perturbation_type": "delay",
+        "target_action_ids": ("inspect_recent_diff",),
+        "target_observation_families": ("recent_diff_signal",),
+        "delay_steps": 1,
+        "bounded": True,
+        "deterministic_rule": (
+            "release named recent-diff fields exactly one investigation step after "
+            "inspect_recent_diff if the run continues"
+        ),
+        "expected_diagnostic_signal": (
+            "tests reliance on immediate real-diff location and fix-intent evidence"
+        ),
+    },
+    {
+        "profile_id": "coverage_signal_dropout",
+        "perturbation_type": "dropout",
+        "target_action_ids": ("inspect_coverage_spectrum",),
+        "target_observation_families": ("coverage_suspicious_location",),
+        "delay_steps": None,
+        "bounded": True,
+        "deterministic_rule": (
+            "copy the first matching coverage observation per run with coverage suspicion, "
+            "coverage counts, and coverage-derived location scores empty"
+        ),
+        "expected_diagnostic_signal": (
+            "tests localization and cause recovery when spectrum evidence is unavailable"
+        ),
+    },
+    {
+        "profile_id": "sequence_reproduction_delay",
+        "perturbation_type": "delay",
+        "target_action_ids": ("run_state_sequence_tests",),
+        "target_observation_families": ("state_sequence_counterexample",),
+        "delay_steps": 1,
+        "bounded": True,
+        "deterministic_rule": (
+            "release named state-sequence reproduction fields exactly one investigation "
+            "step after run_state_sequence_tests if the run continues"
+        ),
+        "expected_diagnostic_signal": (
+            "tests recovery from late sequence reproduction evidence without changing tests"
+        ),
+    },
+)
+
 P1C5_COST_PROFILES: tuple[dict[str, Any], ...] = (
     {
         "profile_id": "trace_access_expensive",
@@ -202,6 +271,27 @@ class _P1CCostOverlayState:
     current_step: int
     bug_detected: bool
     execution_context: P1BExecutionContext | None = None
+
+
+@dataclass
+class _P1C9DelayedPayload:
+    source_observation: Any
+    remaining_steps: int
+
+
+@dataclass
+class _P1C9RunDiagnostics:
+    source_observation_count: int = 0
+    perturbed_observation_count: int = 0
+    dropout_applied_count: int = 0
+    delayed_payload_count: int = 0
+    delayed_payload_released_count: int = 0
+    delayed_payload_stop_before_release_count: int = 0
+    source_actions_with_perturbation: list[str] | None = None
+
+    def __post_init__(self) -> None:
+        if self.source_actions_with_perturbation is None:
+            self.source_actions_with_perturbation = []
 
 
 def _effective_costs_for_profile(overlay: dict[str, int]) -> dict[str, int]:
@@ -523,6 +613,294 @@ def _run_p1c_cost_overlay_investigation(
         trace=trace,
         first_failure_cost=first_failure_cost,
         cost_to_true_cause_top1=cost_to_true_cause_top1,
+    )
+
+
+def _p1c9_default_effective_costs() -> dict[str, int]:
+    return {action_id: spec.cost for action_id, spec in P1B_ACTION_SPECS.items()}
+
+
+def _p1c9_profile_to_dict(profile: dict[str, Any]) -> dict[str, Any]:
+    data = {
+        "profile_id": profile["profile_id"],
+        "perturbation_type": profile["perturbation_type"],
+        "target_action_ids": list(profile["target_action_ids"]),
+        "target_observation_families": list(profile["target_observation_families"]),
+        "bounded": profile["bounded"],
+        "deterministic": True,
+        "deterministic_rule": profile["deterministic_rule"],
+        "source_observation_retained": True,
+        "visible_observation_is_copy": True,
+        "expected_diagnostic_signal": profile["expected_diagnostic_signal"],
+    }
+    if profile["delay_steps"] is not None:
+        data["delay_steps"] = profile["delay_steps"]
+    return data
+
+
+def _p1c9_profile_matches_observation(profile: dict[str, Any], observation: Any) -> bool:
+    base_match = (
+        observation.action_id in profile["target_action_ids"]
+        and observation.observation_type in profile["target_observation_families"]
+    )
+    if not base_match:
+        return False
+    if profile["profile_id"] == "sequence_reproduction_delay":
+        return _p1c9_observation_is_failure_bearing(observation)
+    return True
+
+
+def _p1c9_observation_is_failure_bearing(observation: Any) -> bool:
+    return bool(
+        observation.bug_detected
+        or observation.failure_found
+        or observation.reproduction_input
+        or observation.exception_type
+        or observation.failed_test_ids
+    )
+
+
+def _p1c9_dropout_observation(source_observation: Any, profile_id: str) -> Any:
+    if profile_id == "traceback_signal_dropout":
+        return replace(
+            source_observation,
+            summary=(
+                f"{source_observation.action_id} produced a P1c9 visible-observation copy "
+                "with traceback detail dropped; source observation retained for diagnostics."
+            ),
+            reproduction_input=None,
+            exception_type=None,
+            cause_scores={},
+            location_scores={},
+            fix_intent_scores={},
+            test_results=[],
+            stack_functions=[],
+        )
+    if profile_id == "coverage_signal_dropout":
+        return replace(
+            source_observation,
+            summary=(
+                f"{source_observation.action_id} produced a P1c9 visible-observation copy "
+                "with coverage suspicion dropped; source observation retained for diagnostics."
+            ),
+            location_scores={},
+            coverage_suspicion={},
+            coverage_counts={},
+        )
+    raise ValueError(f"Unknown P1c9 dropout profile: {profile_id}")
+
+
+def _p1c9_delay_placeholder(source_observation: Any, profile_id: str) -> Any:
+    if profile_id == "recent_diff_signal_delay":
+        return replace(
+            source_observation,
+            summary=(
+                f"{source_observation.action_id} produced a P1c9 delayed visible-observation "
+                "placeholder; recent-diff fields release after one later investigation step."
+            ),
+            location_scores={},
+            diff_artifact_path=None,
+            changed_files=[],
+            changed_functions=[],
+            diff_excerpt=None,
+        )
+    if profile_id == "sequence_reproduction_delay":
+        return replace(
+            source_observation,
+            summary=(
+                f"{source_observation.action_id} produced a P1c9 delayed visible-observation "
+                "placeholder; state-sequence reproduction evidence releases after one later "
+                "investigation step."
+            ),
+            bug_detected=False,
+            failure_found=False,
+            no_bug_evidence=False,
+            reproduction_input=None,
+            exception_type=None,
+            cause_scores={},
+            location_scores={},
+            fix_intent_scores={},
+            test_results=[],
+            failed_test_ids=[],
+            passed_test_ids=[],
+            executed_functions=[],
+            failing_executed_functions=[],
+            passing_executed_functions=[],
+            stack_functions=[],
+            coverage_suspicion={},
+            coverage_counts={},
+        )
+    raise ValueError(f"Unknown P1c9 delay profile: {profile_id}")
+
+
+def _run_p1c9_dropout_delay_investigation(
+    variant: P1BVariant,
+    *,
+    policy: str,
+    settings: P1BSettings,
+    observation_mode: str,
+    profile: dict[str, Any],
+) -> tuple[P1BRunResult, _P1C9RunDiagnostics]:
+    if observation_mode not in P1B_OBSERVATION_MODES:
+        raise ValueError(f"Unknown P1b observation mode: {observation_mode}")
+    effective_costs = _p1c9_default_effective_costs()
+    rng = random.Random(_cost_overlay_stable_seed(variant.variant_id, settings.rng_seed))
+    state = _P1CCostOverlayState(
+        bug_presence=0.50,
+        cause_posterior=uniform_distribution(P1B_CAUSE_CATEGORIES),
+        location_posterior=uniform_distribution(LOCATION_CANDIDATES),
+        fix_intent_posterior=uniform_distribution(P1B_FIX_INTENT_CATEGORIES),
+        executed_actions=[],
+        cumulative_cost=0,
+        current_step=0,
+        bug_detected=False,
+        execution_context=P1BExecutionContext() if observation_mode == "execution_grounded" else None,
+    )
+    trace: list[P1BStepTrace] = []
+    reproduction_input: str | None = None
+    first_failure_cost: int | None = None
+    cost_to_true_cause_top1: int | None = None
+    stop_reason = "not_started"
+    diagnostics = _P1C9RunDiagnostics()
+    pending_payloads: list[_P1C9DelayedPayload] = []
+    profile_already_applied = False
+
+    def apply_visible_observation(observation: Any) -> None:
+        nonlocal reproduction_input, first_failure_cost, cost_to_true_cause_top1
+        state.bug_detected = state.bug_detected or observation.bug_detected
+        state.bug_presence = _cost_overlay_update_bug_presence(
+            state.bug_presence,
+            observation.bug_detected,
+            observation.no_bug_evidence,
+        )
+        state.cause_posterior = update_distribution(state.cause_posterior, observation.cause_scores)
+        state.location_posterior = update_distribution(state.location_posterior, observation.location_scores)
+        state.fix_intent_posterior = update_distribution(state.fix_intent_posterior, observation.fix_intent_scores)
+        if observation.reproduction_input and reproduction_input is None:
+            reproduction_input = observation.reproduction_input
+        if observation.failure_found and first_failure_cost is None:
+            first_failure_cost = state.cumulative_cost
+        if (
+            variant.is_buggy
+            and variant.true_cause_category
+            and rank_distribution(state.cause_posterior)[0][0] == variant.true_cause_category
+            and cost_to_true_cause_top1 is None
+            and state.cumulative_cost <= settings.budget_limit
+        ):
+            cost_to_true_cause_top1 = state.cumulative_cost
+
+    def release_due_payloads(payloads_to_tick: list[_P1C9DelayedPayload]) -> None:
+        for payload in payloads_to_tick:
+            if not any(payload is item for item in pending_payloads):
+                continue
+            payload.remaining_steps -= 1
+            if payload.remaining_steps <= 0:
+                apply_visible_observation(payload.source_observation)
+                diagnostics.delayed_payload_released_count += 1
+                pending_payloads[:] = [item for item in pending_payloads if item is not payload]
+
+    while True:
+        remaining_budget = settings.budget_limit - state.cumulative_cost
+        action_scores = _cost_overlay_score_actions(state, remaining_budget, effective_costs)
+        best_score = action_scores[0]["expected_utility_per_cost"] if action_scores else None
+        stop_reason = _cost_overlay_check_stop(state, settings, best_score)
+        if stop_reason is not None:
+            diagnostics.delayed_payload_stop_before_release_count += len(pending_payloads)
+            break
+        action_id = _cost_overlay_choose_action(policy, state, remaining_budget, effective_costs, rng)
+        if action_id is None:
+            stop_reason = "no_available_actions"
+            diagnostics.delayed_payload_stop_before_release_count += len(pending_payloads)
+            break
+
+        prior_bug = state.bug_presence
+        prior_cause = dict(state.cause_posterior)
+        prior_location = dict(state.location_posterior)
+        prior_fix = dict(state.fix_intent_posterior)
+        pending_before_action = list(pending_payloads)
+        source_observation = run_action(
+            variant,
+            action_id,
+            observation_mode=observation_mode,
+            execution_context=state.execution_context,
+        )
+        diagnostics.source_observation_count += 1
+        visible_observation = source_observation
+        if (
+            not profile_already_applied
+            and _p1c9_profile_matches_observation(profile, source_observation)
+        ):
+            profile_already_applied = True
+            diagnostics.perturbed_observation_count += 1
+            diagnostics.source_actions_with_perturbation.append(action_id)
+            if profile["perturbation_type"] == "dropout":
+                visible_observation = _p1c9_dropout_observation(
+                    source_observation,
+                    profile["profile_id"],
+                )
+                diagnostics.dropout_applied_count += 1
+            elif profile["perturbation_type"] == "delay":
+                visible_observation = _p1c9_delay_placeholder(
+                    source_observation,
+                    profile["profile_id"],
+                )
+                pending_payloads.append(
+                    _P1C9DelayedPayload(
+                        source_observation=source_observation,
+                        remaining_steps=profile["delay_steps"],
+                    )
+                )
+                diagnostics.delayed_payload_count += 1
+            else:
+                raise ValueError(f"Unknown P1c9 perturbation type: {profile['perturbation_type']}")
+
+        state.executed_actions.append(action_id)
+        state.cumulative_cost += visible_observation.cost
+        state.current_step += 1
+        apply_visible_observation(visible_observation)
+
+        trace.append(
+            P1BStepTrace(
+                step=state.current_step,
+                policy=policy,
+                selected_action=action_id,
+                observation=visible_observation,
+                prior_bug_presence_posterior=prior_bug,
+                updated_bug_presence_posterior=state.bug_presence,
+                prior_cause_posterior=prior_cause,
+                updated_cause_posterior=dict(state.cause_posterior),
+                prior_location_posterior=prior_location,
+                updated_location_posterior=dict(state.location_posterior),
+                prior_fix_intent_posterior=prior_fix,
+                updated_fix_intent_posterior=dict(state.fix_intent_posterior),
+                cumulative_cost=state.cumulative_cost,
+                action_scores=action_scores,
+            )
+        )
+        release_due_payloads(pending_before_action)
+
+    if variant.is_buggy and cost_to_true_cause_top1 is None:
+        cost_to_true_cause_top1 = settings.failure_cost
+    return (
+        P1BRunResult(
+            variant_id=variant.variant_id,
+            is_buggy=variant.is_buggy,
+            policy=policy,
+            bug_detected=state.bug_detected,
+            reproduction_input=reproduction_input,
+            bug_presence_posterior=state.bug_presence,
+            cause_posterior=state.cause_posterior,
+            location_posterior=state.location_posterior,
+            fix_intent_posterior=state.fix_intent_posterior,
+            executed_actions=state.executed_actions,
+            cumulative_cost=state.cumulative_cost,
+            current_step=state.current_step,
+            stop_reason=stop_reason,
+            trace=trace,
+            first_failure_cost=first_failure_cost,
+            cost_to_true_cause_top1=cost_to_true_cause_top1,
+        ),
+        diagnostics,
     )
 
 
@@ -1007,6 +1385,86 @@ def _p1c5_clean_false_positive_row(
     return row
 
 
+def _p1c9_clean_false_positive_row(
+    *,
+    outcomes: list[dict[str, Any]],
+    aggregate: dict[str, float | None],
+    bucket_metrics: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    clean_metrics = bucket_metrics["clean_false_positive"]
+    diagnostic_ids = _clean_false_positive_variant_ids(outcomes)
+    row: dict[str, Any] = {
+        "metric": "false_positive_rate_on_clean_cases",
+        "direction": "lower_is_better",
+        "allowed_bucket_set": "clean_false_positive_only",
+        "allowed_bucket_ids": ["clean_false_positive"],
+        "selected_bucket_ids": ["clean_false_positive"],
+        "false_positive_rate_on_clean_cases": aggregate["false_positive_rate_on_clean_cases"],
+        "clean_bucket_false_positive_rate": clean_metrics["bucket_false_positive_rate"],
+        "clean_bucket_mean_investigation_cost": clean_metrics["bucket_mean_investigation_cost"],
+        "clean_no_bug_stop_rate": _clean_no_bug_stop_rate(outcomes),
+        "diagnostic_variant_ids": diagnostic_ids,
+    }
+    if not diagnostic_ids:
+        row["note"] = "Clean false positives are not triggered in the current dropout/delay profile."
+    return row
+
+
+def _p1c9_recovery_diagnostics_row(
+    *,
+    outcomes: list[dict[str, Any]],
+    diagnostics: list[_P1C9RunDiagnostics],
+) -> dict[str, Any]:
+    perturbed_run_count = sum(1 for item in diagnostics if item.perturbed_observation_count > 0)
+    perturbed_buggy_pairs = [
+        (outcome, diagnostic)
+        for outcome, diagnostic in zip(outcomes, diagnostics, strict=True)
+        if outcome["is_buggy"] and diagnostic.perturbed_observation_count > 0
+    ]
+    recovered_count = sum(
+        1 for outcome, _ in perturbed_buggy_pairs if outcome["discovered_within_budget"]
+    )
+    perturbed_observation_count = sum(item.perturbed_observation_count for item in diagnostics)
+    delayed_payload_count = sum(item.delayed_payload_count for item in diagnostics)
+    delayed_released_count = sum(item.delayed_payload_released_count for item in diagnostics)
+    delayed_stop_count = sum(item.delayed_payload_stop_before_release_count for item in diagnostics)
+    row: dict[str, Any] = {
+        "source_observation_count": sum(item.source_observation_count for item in diagnostics),
+        "perturbed_observation_count": perturbed_observation_count,
+        "perturbed_run_count": perturbed_run_count,
+        "perturbed_buggy_run_count": len(perturbed_buggy_pairs),
+        "recovered_after_missing_observation_count": recovered_count,
+        "dropout_applied_count": sum(item.dropout_applied_count for item in diagnostics),
+        "delayed_payload_count": delayed_payload_count,
+        "delayed_payload_released_count": delayed_released_count,
+        "delayed_payload_stop_before_release_count": delayed_stop_count,
+        "recovery_rate_after_missing_observation": _safe_rate(
+            recovered_count,
+            len(perturbed_buggy_pairs),
+        ),
+        "delayed_evidence_released_rate": _safe_rate(
+            delayed_released_count,
+            delayed_payload_count,
+        ),
+        "stop_before_delayed_evidence_rate": _safe_rate(
+            delayed_stop_count,
+            delayed_payload_count,
+        ),
+        "source_actions_with_perturbation": sorted(
+            {
+                action_id
+                for diagnostic in diagnostics
+                for action_id in (diagnostic.source_actions_with_perturbation or [])
+            }
+        ),
+    }
+    if perturbed_observation_count == 0:
+        row["note"] = "This profile did not match any policy-facing observation in this mode."
+    elif delayed_payload_count == 0:
+        row["delayed_evidence_note"] = "This dropout profile has no delayed payload denominator."
+    return row
+
+
 def _selected_value_gap(
     *,
     direction: str,
@@ -1301,6 +1759,148 @@ def _observation_cost_stress(
     }
 
 
+def _p1c9_profile_outcomes(
+    *,
+    variants: list[P1BVariant],
+    policies: tuple[str, ...],
+    settings: P1BSettings,
+    observation_mode: str,
+    profile: dict[str, Any],
+) -> tuple[dict[str, list[dict[str, Any]]], dict[str, list[_P1C9RunDiagnostics]]]:
+    labels = load_p1c_variant_labels(variants)
+    outcomes_by_policy: dict[str, list[dict[str, Any]]] = {}
+    diagnostics_by_policy: dict[str, list[_P1C9RunDiagnostics]] = {}
+    for policy in policies:
+        outcomes: list[dict[str, Any]] = []
+        diagnostics: list[_P1C9RunDiagnostics] = []
+        for variant in variants:
+            result, run_diagnostics = _run_p1c9_dropout_delay_investigation(
+                variant,
+                policy=policy,
+                settings=settings,
+                observation_mode=observation_mode,
+                profile=profile,
+            )
+            label = labels[variant.variant_id]
+            outcomes.append(_variant_outcome(variant, result, settings, label.primary_bucket))
+            diagnostics.append(run_diagnostics)
+        outcomes_by_policy[policy] = outcomes
+        diagnostics_by_policy[policy] = diagnostics
+    return outcomes_by_policy, diagnostics_by_policy
+
+
+def _observation_dropout_delay_stress(
+    *,
+    observation_mode: str,
+    variants: list[P1BVariant],
+    policies: tuple[str, ...],
+    settings: P1BSettings,
+    baseline_aggregate_metrics: dict[str, dict[str, float | None]],
+    baseline_bucket_metrics: dict[str, dict[str, dict[str, Any]]],
+) -> dict[str, Any]:
+    profile_dicts = [_p1c9_profile_to_dict(profile) for profile in P1C9_DROPOUT_DELAY_PROFILES]
+    results_by_profile: dict[str, dict[str, Any]] = {}
+    gaps_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+    clean_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+    recovery_by_profile: dict[str, dict[str, dict[str, Any]]] = {}
+
+    for profile, profile_dict in zip(P1C9_DROPOUT_DELAY_PROFILES, profile_dicts, strict=True):
+        profile_id = profile["profile_id"]
+        outcomes_by_policy, diagnostics_by_policy = _p1c9_profile_outcomes(
+            variants=variants,
+            policies=policies,
+            settings=settings,
+            observation_mode=observation_mode,
+            profile=profile,
+        )
+
+        aggregate_by_policy: dict[str, dict[str, float | None]] = {}
+        bucket_by_policy: dict[str, dict[str, dict[str, Any]]] = {}
+        raw_by_policy: dict[str, dict[str, list[str]]] = {}
+        gap_by_policy: dict[str, dict[str, Any]] = {}
+        clean_by_policy: dict[str, dict[str, Any]] = {}
+        recovery_by_policy: dict[str, dict[str, Any]] = {}
+
+        for policy in policies:
+            outcomes = outcomes_by_policy[policy]
+            aggregate = _aggregate_metrics(outcomes)
+            buckets = _bucket_metrics(outcomes)
+            aggregate_by_policy[policy] = aggregate
+            bucket_by_policy[policy] = buckets
+            raw_by_policy[policy] = _raw_variant_worst_cases(outcomes)
+            gap_by_policy[policy] = _profile_vs_baseline_gap(
+                baseline_aggregate_metrics[policy],
+                aggregate,
+            )
+            clean_by_policy[policy] = _p1c9_clean_false_positive_row(
+                outcomes=outcomes,
+                aggregate=aggregate,
+                bucket_metrics=buckets,
+            )
+            recovery_by_policy[policy] = _p1c9_recovery_diagnostics_row(
+                outcomes=outcomes,
+                diagnostics=diagnostics_by_policy[policy],
+            )
+
+        gaps_by_profile[profile_id] = gap_by_policy
+        clean_by_profile[profile_id] = clean_by_policy
+        recovery_by_profile[profile_id] = recovery_by_policy
+        results_by_profile[profile_id] = {
+            "profile": profile_dict,
+            "aggregate_metrics_by_policy": aggregate_by_policy,
+            "bucket_metrics_by_policy": bucket_by_policy,
+            "raw_variant_worst_cases_by_policy": raw_by_policy,
+            "profile_vs_baseline_gap_by_policy": gap_by_policy,
+            "recovery_diagnostics_by_policy": recovery_by_policy,
+            "clean_false_positive_stress_by_policy": clean_by_policy,
+        }
+
+    notes = [
+        "P1c9 is analysis-only and applies bounded observation visibility or delay profiles in a P1c-only run path.",
+        "Source P1b observations are retained; only policy-facing visible observations are copied and perturbed.",
+        "P1b default observations, action costs, P1B_ACTION_SPECS, action_cost(), execution traces, and real-diff artifacts are not mutated.",
+        "Delay release timing is fixed: a delayed payload is released after one later investigation action, before the next stop check, if the run continues.",
+        "observation_dropout_delay_stress is separate from P1c3 adversarial_bucket_selection and P1c5 observation_cost_stress.",
+        "P1c7 profile_conditioned_bucket_selection_by_profile remains nested under observation_cost_stress and is not replaced.",
+        "Clean false-positive stress is reported separately from buggy bucket metrics.",
+        "execution_grounded is the headline primary observation mode; metadata_synth is diagnostic when requested.",
+        "The report does not introduce a single weighted payoff, regret, minimax, equilibrium, or formal payoff model.",
+    ]
+    if all(
+        not row["diagnostic_variant_ids"]
+        for profile_rows in clean_by_profile.values()
+        for row in profile_rows.values()
+    ):
+        notes.append("Clean false positives are not triggered in the current dropout/delay profiles.")
+
+    return {
+        "analysis_phase": P1C9_ANALYSIS_PHASE,
+        "stress_model": P1C9_STRESS_MODEL,
+        "perturbation_visibility": P1C9_PERTURBATION_VISIBILITY,
+        "primary_observation_mode": P1C9_PRIMARY_OBSERVATION_MODE,
+        "source_observation_mode": observation_mode,
+        "baseline_source": P1C9_BASELINE_SOURCE,
+        "report_role": "headline_primary"
+        if observation_mode == P1C9_PRIMARY_OBSERVATION_MODE
+        else "diagnostic",
+        "source_observation_retained": True,
+        "visible_observation_is_copy": True,
+        "release_timing_rule": (
+            "delay profiles release the named source payload after exactly one later "
+            "investigation action, before the next stop check, if the run continues"
+        ),
+        "profiles": profile_dicts,
+        "baseline_aggregate_metrics_by_policy": baseline_aggregate_metrics,
+        "baseline_bucket_metrics_by_policy": baseline_bucket_metrics,
+        "results_by_profile": results_by_profile,
+        "profile_vs_baseline_gap_by_policy": gaps_by_profile,
+        "recovery_diagnostics_by_policy": recovery_by_profile,
+        "clean_false_positive_stress_by_policy": clean_by_profile,
+        "diagnostic_reports_by_observation_mode": {},
+        "notes": notes,
+    }
+
+
 def _adversarial_bucket_selection(
     *,
     observation_mode: str,
@@ -1453,6 +2053,14 @@ def _evaluate_single_mode(
         baseline_bucket_metrics=bucket_metrics,
         baseline_adversarial_bucket_selection=adversarial_selection,
     )
+    observation_dropout_delay_stress = _observation_dropout_delay_stress(
+        observation_mode=observation_mode,
+        variants=variants,
+        policies=policies,
+        settings=settings,
+        baseline_aggregate_metrics=aggregate_metrics,
+        baseline_bucket_metrics=bucket_metrics,
+    )
 
     return {
         "benchmark": "p1b_injected_bug_benchmark",
@@ -1471,6 +2079,7 @@ def _evaluate_single_mode(
         "average_vs_worst_gap": average_vs_worst,
         "adversarial_bucket_selection": adversarial_selection,
         "observation_cost_stress": observation_cost_stress,
+        "observation_dropout_delay_stress": observation_dropout_delay_stress,
         "notes": [
             "P1c1 is an analysis-only report over existing P1b variants, policies, settings, and run results.",
             "execution_grounded is the primary observation mode; metadata_synth is diagnostic when requested.",
@@ -1741,6 +2350,139 @@ def _extend_p1c5_markdown(lines: list[str], summary: dict[str, Any]) -> None:
     lines.extend(f"- {note}" for note in stress["notes"])
 
 
+def _extend_p1c9_markdown(lines: list[str], summary: dict[str, Any]) -> None:
+    stress = summary["observation_dropout_delay_stress"]
+    lines.extend(
+        [
+            "",
+            "## P1c9 Observation Dropout/Delay Stress",
+            "",
+            "P1c9 adds an analysis-only bounded observation dropout/delay report over the existing P1b/P1c scaffold.",
+            "It uses a P1c-only copied-observation run path: source observations are retained, while policy-facing visible observations are copied and perturbed.",
+            "`execution_grounded` is the headline primary observation mode; `metadata_synth` remains diagnostic when requested.",
+            "",
+            f"- analysis_phase: {stress['analysis_phase']}",
+            f"- stress_model: {stress['stress_model']}",
+            f"- perturbation_visibility: {stress['perturbation_visibility']}",
+            f"- baseline_source: {stress['baseline_source']}",
+            f"- primary_observation_mode: {stress['primary_observation_mode']}",
+            f"- source_observation_mode: {stress['source_observation_mode']}",
+            f"- release_timing_rule: {stress['release_timing_rule']}",
+            "",
+            "### Profiles",
+            "",
+            "| profile | perturbation | target actions | target observation families | delay_steps | deterministic_rule |",
+            "|---|---|---|---|---:|---|",
+        ]
+    )
+    for profile in stress["profiles"]:
+        lines.append(
+            f"| {profile['profile_id']} | {profile['perturbation_type']} | "
+            f"{', '.join(profile['target_action_ids'])} | "
+            f"{', '.join(profile['target_observation_families'])} | "
+            f"{_format_value(profile.get('delay_steps'))} | "
+            f"{profile['deterministic_rule']} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "### Profile Metrics",
+            "",
+            "| profile | policy | discovery | first_failure_cost | location_top3 | cause_top1 | fix_intent_top1 | wrong_cause_high_conf | clean_false_positive | mean_cost |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for profile_id, profile_result in stress["results_by_profile"].items():
+        aggregates = profile_result["aggregate_metrics_by_policy"]
+        for policy in summary["policies_evaluated"]:
+            metrics = aggregates[policy]
+            lines.append(
+                f"| {profile_id} | {policy} | "
+                f"{_format_value(metrics['bug_discovery_rate_within_budget'])} | "
+                f"{_format_value(metrics['cost_to_first_failure'])} | "
+                f"{_format_value(metrics['location_top3_accuracy'])} | "
+                f"{_format_value(metrics['cause_top1_accuracy'])} | "
+                f"{_format_value(metrics['fix_intent_top1_accuracy'])} | "
+                f"{_format_value(metrics['wrong_cause_high_confidence_rate'])} | "
+                f"{_format_value(metrics['false_positive_rate_on_clean_cases'])} | "
+                f"{_format_value(metrics['mean_investigation_cost'])} |"
+            )
+
+    lines.extend(
+        [
+            "",
+            "### Profile-Vs-Baseline Gaps",
+            "",
+            "Positive gaps mean the dropout/delay profile made the metric worse under the metric-specific direction.",
+            "",
+            "| profile | policy | metric | direction | baseline | profile_value | gap |",
+            "|---|---|---|---|---:|---:|---:|",
+        ]
+    )
+    for profile_id, gaps_by_policy in stress["profile_vs_baseline_gap_by_policy"].items():
+        for policy in summary["policies_evaluated"]:
+            for metric in P1C5_PROFILE_GAP_METRICS:
+                row = gaps_by_policy[policy][metric]
+                lines.append(
+                    f"| {profile_id} | {policy} | {metric} | {row['direction']} | "
+                    f"{_format_value(row['baseline_value'])} | "
+                    f"{_format_value(row['profile_value'])} | "
+                    f"{_format_value(row['gap'])} |"
+                )
+
+    lines.extend(
+        [
+            "",
+            "### Recovery Diagnostics",
+            "",
+            "| profile | policy | perturbed_observations | dropout_applied | delayed_payloads | released | stop_before_release | recovery_rate | release_rate | stop_before_release_rate | source_actions |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|",
+        ]
+    )
+    for profile_id, rows_by_policy in stress["recovery_diagnostics_by_policy"].items():
+        for policy in summary["policies_evaluated"]:
+            row = rows_by_policy[policy]
+            lines.append(
+                f"| {profile_id} | {policy} | "
+                f"{row['perturbed_observation_count']} | "
+                f"{row['dropout_applied_count']} | "
+                f"{row['delayed_payload_count']} | "
+                f"{row['delayed_payload_released_count']} | "
+                f"{row['delayed_payload_stop_before_release_count']} | "
+                f"{_format_value(row['recovery_rate_after_missing_observation'])} | "
+                f"{_format_value(row['delayed_evidence_released_rate'])} | "
+                f"{_format_value(row['stop_before_delayed_evidence_rate'])} | "
+                f"{_variant_ids(row['source_actions_with_perturbation'])} |"
+            )
+
+    lines.extend(
+        [
+            "",
+            "### Clean False-Positive Dropout/Delay Stress",
+            "",
+            "Clean false-positive stress is kept separate from buggy discovery, localization, cause, and fix-intent metrics.",
+            "",
+            "| profile | policy | allowed_bucket_set | false_positive_rate | clean_mean_cost | clean_no_bug_stop_rate | diagnostic_variant_ids | note |",
+            "|---|---|---|---:|---:|---:|---|---|",
+        ]
+    )
+    for profile_id, rows_by_policy in stress["clean_false_positive_stress_by_policy"].items():
+        for policy in summary["policies_evaluated"]:
+            row = rows_by_policy[policy]
+            lines.append(
+                f"| {profile_id} | {policy} | {row['allowed_bucket_set']} | "
+                f"{_format_value(row['false_positive_rate_on_clean_cases'])} | "
+                f"{_format_value(row['clean_bucket_mean_investigation_cost'])} | "
+                f"{_format_value(row['clean_no_bug_stop_rate'])} | "
+                f"{_variant_ids(row['diagnostic_variant_ids'])} | "
+                f"{row.get('note', '')} |"
+            )
+
+    lines.extend(["", "### Scope/Non-Claim Notes", ""])
+    lines.extend(f"- {note}" for note in stress["notes"])
+
+
 def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
     lines = [
         "# P1c1 Worst-Case Analysis Report",
@@ -1910,6 +2652,7 @@ def p1c_evaluation_to_markdown(summary: dict[str, Any]) -> str:
     lines.extend(f"- {note}" for note in selection["notes"])
 
     _extend_p1c5_markdown(lines, summary)
+    _extend_p1c9_markdown(lines, summary)
 
     lines.extend(["", "## Notes", ""])
     lines.extend(f"- {note}" for note in summary["notes"])
