@@ -1,6 +1,6 @@
 # P1c Adversarial Planning Notes
 
-Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5/P1c7/P1c9 follow-through notes plus P1c4/P1c6/P1c8 specification links.
+Status: planning memo with implemented P1c1/P1c2/P1c3/P1c5/P1c7/P1c9 follow-through notes, P1c4/P1c6/P1c8 specification links, and a post-P1c9 interpretation note.
 
 This memo starts P1c without implementing it. It records a safe design direction for adversarial or worst-case bug models after P1a and P1b, while preserving the current public boundary: the project is not yet a formal game-theoretic debugging system and does not claim a minimax guarantee.
 
@@ -105,6 +105,8 @@ P1c8 records the next slice as specification-only bounded observation dropout/de
 
 P1c9 implements the P1c8 report candidate as an analysis-only `observation_dropout_delay_stress` extension to the existing `p1c-evaluate` output. It applies four deterministic copied-observation profiles, retains source observations while perturbing only policy-facing visible copies, keeps clean false-positive stress separate from buggy metrics, preserves `execution_grounded` as the headline primary mode with `metadata_synth` diagnostic only, and keeps P1c3/P1c5/P1c7 report objects separate.
 
+After P1c9, the next step is interpretation and consolidation rather than another immediate stress model. See [`p1c_result_interpretation.md`](p1c_result_interpretation.md) for the current reading of P1c1/P1c3/P1c5/P1c7/P1c9 results, the main bucket-level weaknesses, and why any combined cost plus dropout/delay interaction should wait for a later design review.
+
 ## Proposed P1c0 Deliverable
 
 Before implementation, create a compact specification with:
@@ -150,4 +152,4 @@ Before any P1c implementation, verify:
 
 ## Suggested Next Step
 
-Review the P1c9 `observation_dropout_delay_stress` results before deciding whether to run a larger design review, add a new specification-only P1c slice, or pause P1c expansion.
+Pause P1c expansion after P1c9 and review the consolidated interpretation note before deciding whether to run a larger design review, add a new specification-only P1c slice, or shift to documentation/benchmark stabilization.

@@ -36,6 +36,7 @@
 - P1c7 profile-conditioned bucket-selection diagnostic integrated under `observation_cost_stress`, adding profile-specific selected-bucket shifts against the P1c3 baseline as analysis-only output.
 - P1c8 bounded observation dropout/delay specification: [`docs/p1c8_bounded_observation_dropout_delay_spec.md`](p1c8_bounded_observation_dropout_delay_spec.md).
 - P1c9 bounded observation dropout/delay stress report integrated into `p1c-evaluate` as the analysis-only `observation_dropout_delay_stress` object, using deterministic P1c-only copied-observation perturbation profiles.
+- P1c consolidated result interpretation note: [`docs/p1c_result_interpretation.md`](p1c_result_interpretation.md).
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
