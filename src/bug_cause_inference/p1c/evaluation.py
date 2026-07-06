@@ -639,9 +639,24 @@ def _p1c9_profile_to_dict(profile: dict[str, Any]) -> dict[str, Any]:
 
 
 def _p1c9_profile_matches_observation(profile: dict[str, Any], observation: Any) -> bool:
-    return (
+    base_match = (
         observation.action_id in profile["target_action_ids"]
         and observation.observation_type in profile["target_observation_families"]
+    )
+    if not base_match:
+        return False
+    if profile["profile_id"] == "sequence_reproduction_delay":
+        return _p1c9_observation_is_failure_bearing(observation)
+    return True
+
+
+def _p1c9_observation_is_failure_bearing(observation: Any) -> bool:
+    return bool(
+        observation.bug_detected
+        or observation.failure_found
+        or observation.reproduction_input
+        or observation.exception_type
+        or observation.failed_test_ids
     )
 
 

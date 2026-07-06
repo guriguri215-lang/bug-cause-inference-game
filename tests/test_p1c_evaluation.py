@@ -2,14 +2,26 @@ from dataclasses import asdict
 
 from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS
 from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants
+from bug_cause_inference.p1b.models import P1BObservation
 from bug_cause_inference.p1b.policies import P1B_POLICIES, run_p1b_investigation
 from bug_cause_inference.p1c.evaluation import (
     HEADLINE_KEYS,
+    P1C9_DROPOUT_DELAY_PROFILES,
     RAW_WORST_CASE_KEYS,
+    _p1c9_delay_placeholder,
+    _p1c9_profile_matches_observation,
     evaluate_p1c,
     p1c_evaluation_to_markdown,
 )
 from bug_cause_inference.p1c.labels import BUGGY_PRIMARY_BUCKETS, PRIMARY_BUCKETS
+
+
+def _p1c9_profile(profile_id):
+    return next(
+        profile
+        for profile in P1C9_DROPOUT_DELAY_PROFILES
+        if profile["profile_id"] == profile_id
+    )
 
 
 def test_p1c_default_evaluation_uses_execution_grounded_and_all_policies():
@@ -134,6 +146,62 @@ def test_p1c_dropout_delay_profiles_are_bounded_deterministic_and_spec_mapped():
         assert profile["source_observation_retained"] is True
         assert profile["visible_observation_is_copy"] is True
         assert "deterministic_rule" in profile
+
+
+def test_p1c_sequence_reproduction_delay_skips_pass_no_bug_source_observation():
+    source_observation = P1BObservation(
+        action_id="run_state_sequence_tests",
+        cost=4,
+        observation_type="state_sequence_counterexample",
+        summary="run_state_sequence_tests passed all execution-grounded tests.",
+        no_bug_evidence=True,
+        evidence_source="execution_grounded",
+        passed_test_ids=["state_sequence_happy_path"],
+    )
+
+    assert (
+        _p1c9_profile_matches_observation(
+            _p1c9_profile("sequence_reproduction_delay"),
+            source_observation,
+        )
+        is False
+    )
+
+
+def test_p1c_sequence_reproduction_delay_matches_failure_bearing_source_observation():
+    source_observation = P1BObservation(
+        action_id="run_state_sequence_tests",
+        cost=4,
+        observation_type="state_sequence_counterexample",
+        summary="run_state_sequence_tests failed 1/2 execution-grounded tests.",
+        bug_detected=True,
+        failure_found=True,
+        no_bug_evidence=False,
+        reproduction_input="cart state transition sequence",
+        cause_scores={"state_transition": 8.0},
+        location_scores={"checkout.cart.apply_discount": 4.0},
+        evidence_source="execution_grounded",
+        failed_test_ids=["state_sequence_reproduction"],
+        passed_test_ids=["state_sequence_happy_path"],
+        test_results=[
+            {"test_id": "state_sequence_reproduction", "passed": False},
+            {"test_id": "state_sequence_happy_path", "passed": True},
+        ],
+    )
+    profile = _p1c9_profile("sequence_reproduction_delay")
+
+    assert _p1c9_profile_matches_observation(profile, source_observation) is True
+    visible_observation = _p1c9_delay_placeholder(
+        source_observation,
+        profile["profile_id"],
+    )
+    assert visible_observation.bug_detected is False
+    assert visible_observation.failure_found is False
+    assert visible_observation.no_bug_evidence is False
+    assert visible_observation.reproduction_input is None
+    assert visible_observation.failed_test_ids == []
+    assert source_observation.reproduction_input == "cart state transition sequence"
+    assert source_observation.failed_test_ids == ["state_sequence_reproduction"]
 
 
 def test_p1c_cost_profiles_are_bounded_and_do_not_mutate_default_costs():
