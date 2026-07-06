@@ -1,6 +1,8 @@
+from dataclasses import asdict
+
 from bug_cause_inference.p1b.actions import P1B_ACTION_SPECS
-from bug_cause_inference.p1b.dataset import load_p1b_variants
-from bug_cause_inference.p1b.policies import P1B_POLICIES
+from bug_cause_inference.p1b.dataset import get_variant, load_p1b_variants
+from bug_cause_inference.p1b.policies import P1B_POLICIES, run_p1b_investigation
 from bug_cause_inference.p1c.evaluation import (
     HEADLINE_KEYS,
     RAW_WORST_CASE_KEYS,
@@ -65,6 +67,75 @@ def test_p1c_observation_cost_stress_shape_is_present_and_separate():
     )
 
 
+def test_p1c_observation_dropout_delay_stress_shape_is_present_and_separate():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    stress = summary["observation_dropout_delay_stress"]
+
+    assert stress is not summary["adversarial_bucket_selection"]
+    assert stress is not summary["observation_cost_stress"]
+    assert stress["analysis_phase"] == "p1c9_bounded_observation_dropout_delay_stress_report"
+    assert stress["stress_model"] == "bounded_observation_visibility_or_delay_profile"
+    assert stress["perturbation_visibility"] == "policy_visible_p1c_only"
+    assert stress["primary_observation_mode"] == "execution_grounded"
+    assert stress["source_observation_mode"] == "execution_grounded"
+    assert stress["baseline_source"] == "unperturbed_p1c_report"
+    assert stress["report_role"] == "headline_primary"
+    assert stress["source_observation_retained"] is True
+    assert stress["visible_observation_is_copy"] is True
+    assert set(stress["results_by_profile"]) == {
+        "traceback_signal_dropout",
+        "recent_diff_signal_delay",
+        "coverage_signal_dropout",
+        "sequence_reproduction_delay",
+    }
+    assert "profile_conditioned_bucket_selection_by_profile" in summary["observation_cost_stress"]
+    assert "profile_conditioned_bucket_selection_by_profile" not in stress
+
+
+def test_p1c_dropout_delay_profiles_are_bounded_deterministic_and_spec_mapped():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    profiles = {
+        profile["profile_id"]: profile
+        for profile in summary["observation_dropout_delay_stress"]["profiles"]
+    }
+
+    assert profiles["traceback_signal_dropout"]["perturbation_type"] == "dropout"
+    assert profiles["traceback_signal_dropout"]["target_action_ids"] == [
+        "inspect_traceback",
+        "run_null_missing_tests",
+    ]
+    assert profiles["traceback_signal_dropout"]["target_observation_families"] == [
+        "exception_trace"
+    ]
+    assert profiles["recent_diff_signal_delay"]["perturbation_type"] == "delay"
+    assert profiles["recent_diff_signal_delay"]["target_action_ids"] == ["inspect_recent_diff"]
+    assert profiles["recent_diff_signal_delay"]["target_observation_families"] == [
+        "recent_diff_signal"
+    ]
+    assert profiles["recent_diff_signal_delay"]["delay_steps"] == 1
+    assert profiles["coverage_signal_dropout"]["perturbation_type"] == "dropout"
+    assert profiles["coverage_signal_dropout"]["target_action_ids"] == [
+        "inspect_coverage_spectrum"
+    ]
+    assert profiles["coverage_signal_dropout"]["target_observation_families"] == [
+        "coverage_suspicious_location"
+    ]
+    assert profiles["sequence_reproduction_delay"]["perturbation_type"] == "delay"
+    assert profiles["sequence_reproduction_delay"]["target_action_ids"] == [
+        "run_state_sequence_tests"
+    ]
+    assert profiles["sequence_reproduction_delay"]["target_observation_families"] == [
+        "state_sequence_counterexample"
+    ]
+    assert profiles["sequence_reproduction_delay"]["delay_steps"] == 1
+    for profile in profiles.values():
+        assert profile["bounded"] is True
+        assert profile["deterministic"] is True
+        assert profile["source_observation_retained"] is True
+        assert profile["visible_observation_is_copy"] is True
+        assert "deterministic_rule" in profile
+
+
 def test_p1c_cost_profiles_are_bounded_and_do_not_mutate_default_costs():
     before_costs = {action_id: spec.cost for action_id, spec in P1B_ACTION_SPECS.items()}
 
@@ -76,6 +147,27 @@ def test_p1c_cost_profiles_are_bounded_and_do_not_mutate_default_costs():
         cost_range = profile["cost_range"]
         assert 1 <= cost_range["min"] <= cost_range["max"] <= 8
         assert all(1 <= cost <= 8 for cost in profile["effective_costs_by_action"].values())
+
+
+def test_p1c_dropout_delay_report_does_not_mutate_p1b_defaults():
+    before_specs = {action_id: asdict(spec) for action_id, spec in P1B_ACTION_SPECS.items()}
+    variant = get_variant("P1B-BUG-001")
+    before_result = run_p1b_investigation(
+        variant,
+        policy="expected_utility_per_cost",
+        observation_mode="execution_grounded",
+    ).to_dict()
+
+    evaluate_p1c(policies=("expected_utility_per_cost",))
+
+    after_specs = {action_id: asdict(spec) for action_id, spec in P1B_ACTION_SPECS.items()}
+    after_result = run_p1b_investigation(
+        variant,
+        policy="expected_utility_per_cost",
+        observation_mode="execution_grounded",
+    ).to_dict()
+    assert after_specs == before_specs
+    assert after_result == before_result
 
 
 def test_p1c_raw_worst_case_lists_are_present_and_use_valid_variant_ids():
@@ -126,6 +218,22 @@ def test_p1c_markdown_includes_p1c5_section_and_non_claim_notes():
     assert "Scope/Non-Claim Notes" in markdown
     assert "separate slice from P1c3" in markdown
     assert "does not replace top-level `adversarial_bucket_selection`" in markdown
+    assert "does not introduce a single weighted payoff" in markdown
+    assert "formal payoff model" in markdown
+
+
+def test_p1c_markdown_includes_p1c9_section_and_scope_notes():
+    markdown = p1c_evaluation_to_markdown(evaluate_p1c(policies=("expected_utility_per_cost",)))
+
+    assert "## P1c9 Observation Dropout/Delay Stress" in markdown
+    assert "bounded observation dropout/delay report" in markdown
+    assert "source observations are retained" in markdown
+    assert "policy-facing visible observations are copied" in markdown
+    assert "Profile-Vs-Baseline Gaps" in markdown
+    assert "Recovery Diagnostics" in markdown
+    assert "Clean False-Positive Dropout/Delay Stress" in markdown
+    assert "separate from P1c3 adversarial_bucket_selection" in markdown
+    assert "P1c7 profile_conditioned_bucket_selection_by_profile remains nested" in markdown
     assert "does not introduce a single weighted payoff" in markdown
     assert "formal payoff model" in markdown
 
@@ -284,6 +392,65 @@ def test_p1c_observation_cost_clean_false_positive_stress_stays_separate():
         assert clean_metrics["bucket_false_positive_rate"] == 0.0
 
 
+def test_p1c_observation_dropout_delay_clean_false_positive_stress_stays_separate():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="execution_grounded",
+    )
+    stress = summary["observation_dropout_delay_stress"]
+
+    for profile_id, rows_by_policy in stress["clean_false_positive_stress_by_policy"].items():
+        row = rows_by_policy["expected_utility_per_cost"]
+        assert row["allowed_bucket_set"] == "clean_false_positive_only"
+        assert row["selected_bucket_ids"] == ["clean_false_positive"]
+        assert row["false_positive_rate_on_clean_cases"] == 0.0
+        assert row["diagnostic_variant_ids"] == []
+        assert "not triggered" in row["note"]
+
+        clean_metrics = stress["results_by_profile"][profile_id]["bucket_metrics_by_policy"][
+            "expected_utility_per_cost"
+        ]["clean_false_positive"]
+        for metric_name in (
+            "bucket_bug_discovery_rate",
+            "bucket_cost_to_first_failure",
+            "bucket_location_top3_accuracy",
+            "bucket_cause_top1_accuracy",
+            "bucket_fix_intent_top1_accuracy",
+            "bucket_wrong_cause_high_confidence_rate",
+        ):
+            assert clean_metrics[metric_name] is None
+        for bucket in BUGGY_PRIMARY_BUCKETS:
+            bucket_metrics = stress["results_by_profile"][profile_id]["bucket_metrics_by_policy"][
+                "expected_utility_per_cost"
+            ][bucket]
+            assert bucket_metrics["bucket_false_positive_rate"] is None
+
+
+def test_p1c_observation_dropout_delay_recovery_diagnostics_are_auditable():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    stress = summary["observation_dropout_delay_stress"]
+    diagnostics = stress["recovery_diagnostics_by_policy"]
+
+    for profile_id, rows_by_policy in diagnostics.items():
+        row = rows_by_policy["expected_utility_per_cost"]
+        assert "source_observation_count" in row
+        assert "perturbed_observation_count" in row
+        assert "dropout_applied_count" in row
+        assert "delayed_payload_count" in row
+        assert "delayed_payload_released_count" in row
+        assert "delayed_payload_stop_before_release_count" in row
+        assert "recovery_rate_after_missing_observation" in row
+        assert "delayed_evidence_released_rate" in row
+        assert "stop_before_delayed_evidence_rate" in row
+        assert row["source_observation_count"] >= row["perturbed_observation_count"]
+        if profile_id.endswith("_dropout"):
+            assert row["dropout_applied_count"] == row["perturbed_observation_count"]
+            assert row["delayed_payload_count"] == 0
+            assert row["delayed_evidence_released_rate"] is None
+        if profile_id.endswith("_delay") and row["delayed_payload_count"] == 0:
+            assert row["delayed_evidence_released_rate"] is None
+
+
 def test_p1c_profile_conditioned_bucket_selection_matches_p1c3_baseline():
     summary = evaluate_p1c(
         policies=("expected_utility_per_cost",),
@@ -402,6 +569,23 @@ def test_p1c_observation_cost_report_avoids_formal_payoff_fields():
     )
 
 
+def test_p1c_observation_dropout_delay_report_avoids_formal_payoff_fields():
+    summary = evaluate_p1c(policies=("expected_utility_per_cost",))
+    stress_text = str(summary["observation_dropout_delay_stress"])
+
+    for forbidden_key in (
+        "'weighted_payoff'",
+        "'regret'",
+        "'minimax'",
+        "'equilibrium'",
+        "'formal_payoff'",
+    ):
+        assert forbidden_key not in stress_text
+    assert "does not introduce a single weighted payoff" in " ".join(
+        summary["observation_dropout_delay_stress"]["notes"]
+    )
+
+
 def test_p1c_both_mode_keeps_execution_grounded_as_primary_report():
     summary = evaluate_p1c(
         policies=("expected_utility_per_cost",),
@@ -453,3 +637,21 @@ def test_p1c_both_mode_keeps_observation_cost_execution_grounded_primary():
     for report in metadata_profile_reports.values():
         assert report["report_role"] == "diagnostic"
         assert report["source_observation_mode"] == "metadata_synth"
+
+
+def test_p1c_both_mode_keeps_observation_dropout_delay_execution_grounded_primary():
+    summary = evaluate_p1c(
+        policies=("expected_utility_per_cost",),
+        observation_mode="both",
+    )
+    stress = summary["observation_dropout_delay_stress"]
+    diagnostics = summary["diagnostic_reports_by_observation_mode"]
+
+    assert stress == diagnostics["execution_grounded"]["observation_dropout_delay_stress"]
+    assert stress["primary_observation_mode"] == "execution_grounded"
+    assert stress["source_observation_mode"] == "execution_grounded"
+    assert stress["report_role"] == "headline_primary"
+    metadata_stress = diagnostics["metadata_synth"]["observation_dropout_delay_stress"]
+    assert metadata_stress["report_role"] == "diagnostic"
+    assert metadata_stress["source_observation_mode"] == "metadata_synth"
+    assert "metadata_synth" not in stress["diagnostic_reports_by_observation_mode"]
