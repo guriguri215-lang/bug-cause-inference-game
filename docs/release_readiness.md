@@ -55,6 +55,33 @@ git status -sb
 
 If a Codex sandbox run hits the known Windows Temp-directory permission issue for pytest `tmp_path` tests, rerun the same command with normal permissions or explicit approval and record both results. Do not change production code, pytest configuration, CI, or test coverage for that local constraint.
 
+## Package Artifact Smoke
+
+For a local release-artifact boundary check, build outputs should stay under ignored paths:
+
+```bash
+python -m pip wheel . --no-deps -w tmp/wheelhouse
+python -m build --sdist --wheel --outdir tmp/dist
+```
+
+If a no-isolation build fails because the active environment cannot import `setuptools.build_meta`, treat that as a local build-tool constraint. Do not add build backends or build frontends to runtime requirements only for this smoke; use build isolation or a temporary build environment instead.
+
+Before publishing or tagging, inspect the built wheel and verify that it:
+
+- includes `bug_cause_inference/p1b/artifacts/real_diff/manifest.json`;
+- includes the six baseline checkout Python files under `bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/`;
+- includes the 25 real-diff patch files under `bug_cause_inference/p1b/artifacts/real_diff/patches/`;
+- excludes generated checkout trees, `tmp/`, `temp/`, `.venv/`, pytest caches, local outputs, `examples/`, and `tests/`.
+
+The source distribution may include source and test files, but it should still exclude local scratch output, generated checkout trees, virtual environments, and build/cache directories.
+
+Install the wheel into a temporary environment under `tmp/` and run at least:
+
+```bash
+python -m bug_cause_inference.cli --help
+python -m bug_cause_inference.p1b.real_diff --validate
+```
+
 ## Current Constraints
 
 - P1c9 does not require an immediate follow-up based on the current interpretation note.
