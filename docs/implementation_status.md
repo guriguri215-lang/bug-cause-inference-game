@@ -26,6 +26,7 @@
 - P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
 - Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
+- Test operations guidance for verification tiers, CI expectations, and Codex sandbox Temp fallback: [`docs/test_operations.md`](test_operations.md).
 - P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
 - P1c1 result interpretation note: [`docs/p1c1_result_interpretation.md`](p1c1_result_interpretation.md).
 - P1c2 adversarial bucket selection specification: [`docs/p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md).
@@ -95,6 +96,7 @@
 - P1b `execution_grounded` observations are derived from checkout test results, exceptions, traced checkout functions, function-level Ochiai coverage suspicion, and Phase C real-diff artifacts for `inspect_recent_diff`. They still run inside a small injected benchmark scaffold rather than real project histories.
 - P1b `metadata_synth` keeps synthetic recent-diff observations as the frozen baseline; only `execution_grounded` reads real-diff artifacts.
 - P1b predicts fix-intent categories but does not generate patches.
+- Codex sandbox pytest runs can hit Windows Temp-directory permission errors for `tmp_path` tests. Treat that as a local execution constraint when the same command passes with normal permissions; see [`docs/test_operations.md`](test_operations.md).
 - P1c1 is analysis-only. It does not add variants, alter P1b execution logic, tune policies, or provide a formal game-theoretic guarantee.
 - P1c2 is specification-only. It defines metric-specific bucket selection but does not implement a report, change P1b/P1c1 behavior, or introduce a weighted payoff, regret, minimax, or equilibrium model.
 - P1c3 implements the P1c2 bucket-selection report as an analysis-only addition to P1c1 output. It selects buckets per policy and metric, keeps clean false-positive stress separate, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal game-theoretic guarantee.
@@ -108,6 +110,8 @@
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
 ## Verification Commands
+
+See [`docs/test_operations.md`](test_operations.md) for the verification tiers, CI expectations, and the sandbox Temp fallback rule.
 
 ```bash
 python -m venv .venv
@@ -131,13 +135,21 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-Full pytest last passed on 2026-07-06 after adding the P1c9 bounded observation dropout/delay stress report:
+Full pytest last passed on 2026-07-07 after adding the test-operations guidance, with normal permissions:
 
 ```bash
 .\.venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider
 ```
 
-Result: 219 passed.
+Result: 221 passed.
+
+CLI/file-output and P1b real-diff targeted tests passed on 2026-07-07 with normal permissions:
+
+```bash
+.\.venv\Scripts\python.exe -B -m pytest tests\test_cli.py tests\test_p1b_cli.py tests\test_p1c_cli.py tests\test_p1b_real_diff.py -q -p no:cacheprovider
+```
+
+Result: 18 passed.
 
 P1c targeted tests passed on 2026-07-07 after the P1c result interpretation and public-boundary status review, with normal permissions:
 
@@ -147,13 +159,13 @@ P1c targeted tests passed on 2026-07-07 after the P1c result interpretation and 
 
 Result: 34 passed.
 
-In the Codex sandbox, the same targeted command reported Temp-directory permission errors for `tmp_path` tests after 33 tests passed:
+In the Codex sandbox, `tmp_path` commands can report Temp-directory permission errors such as:
 
 ```text
 PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
 ```
 
-- The standard targeted command passed when rerun with normal permissions.
+- During the test-operations review, the targeted CLI/file-output command hit this sandbox error (`4 passed, 14 errors`) and passed when rerun with normal permissions (`18 passed`).
 - `python -m bug_cause_inference.p1b.real_diff --validate` passed for all 25 variants.
 - P1c9 CLI Markdown, JSON, and `both` mode JSON checks passed.
 
