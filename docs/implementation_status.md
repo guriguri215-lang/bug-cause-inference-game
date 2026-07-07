@@ -27,6 +27,7 @@
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
 - Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
 - Test operations guidance for verification tiers, CI expectations, and Codex sandbox Temp fallback: [`docs/test_operations.md`](test_operations.md).
+- Public-release hygiene notes for tracked artifacts, ignored local outputs, CI expectations, known constraints, and public non-claims: [`docs/release_readiness.md`](release_readiness.md).
 - P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
 - P1c1 result interpretation note: [`docs/p1c1_result_interpretation.md`](p1c1_result_interpretation.md).
 - P1c2 adversarial bucket selection specification: [`docs/p1c2_adversarial_bucket_selection_spec.md`](p1c2_adversarial_bucket_selection_spec.md).
