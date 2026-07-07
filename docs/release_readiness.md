@@ -73,6 +73,8 @@ Before publishing or tagging, inspect the built wheel and verify that it:
 - includes the 25 real-diff patch files under `bug_cause_inference/p1b/artifacts/real_diff/patches/`;
 - excludes generated checkout trees, `tmp/`, `temp/`, `.venv/`, pytest caches, local outputs, `examples/`, and `tests/`.
 
+Also confirm that package metadata builds without setuptools license deprecation warnings: `pyproject.toml` should use the SPDX license expression `MIT`, include `LICENSE` as a license file, and avoid deprecated license classifiers.
+
 The source distribution may include source and test files, but it should still exclude local scratch output, generated checkout trees, virtual environments, and build/cache directories.
 
 Install the wheel into a temporary environment under `tmp/` and run at least:
