@@ -107,6 +107,15 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode execution_grou
 
 See [`docs/p1c_result_interpretation.md`](docs/p1c_result_interpretation.md) for a consolidated reading of the current P1c1/P1c3/P1c5/P1c7/P1c9 reports.
 
+## Project Status
+
+For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
+
+- [`docs/implementation_status.md`](docs/implementation_status.md)
+- [`docs/test_operations.md`](docs/test_operations.md)
+- [`docs/release_readiness.md`](docs/release_readiness.md)
+- [`docs/p1c_result_interpretation.md`](docs/p1c_result_interpretation.md)
+
 ## Example Command
 
 ```bash
