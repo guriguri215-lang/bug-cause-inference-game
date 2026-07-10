@@ -31,6 +31,11 @@ from bug_cause_inference.p1c.evaluation import (
     p1c_evaluation_to_json,
     p1c_evaluation_to_markdown,
 )
+from bug_cause_inference.p1d.evaluation import (
+    build_p1d1_summary,
+    p1d1_summary_to_json,
+    p1d1_summary_to_markdown,
+)
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
 from bug_cause_inference.reports import build_decision_report, report_to_json, report_to_markdown
 from bug_cause_inference.synthetic_cases import DEFAULT_SEED, generate_synthetic_cases, load_cases, save_cases
@@ -150,6 +155,11 @@ def command_p1c_evaluate(args: argparse.Namespace) -> None:
     _write_or_print(p1c_evaluation_to_json(summary), p1c_evaluation_to_markdown(summary), args)
 
 
+def command_p1d1_report(args: argparse.Namespace) -> None:
+    summary = build_p1d1_summary()
+    _write_or_print(p1d1_summary_to_json(summary), p1d1_summary_to_markdown(summary), args)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bug-cause-inference",
@@ -228,6 +238,15 @@ def build_parser() -> argparse.ArgumentParser:
     p1c_evaluate.add_argument("--json-output", type=Path, default=None)
     p1c_evaluate.add_argument("--markdown-output", type=Path, default=None)
     p1c_evaluate.set_defaults(func=command_p1c_evaluate)
+
+    p1d1_report = subparsers.add_parser(
+        "p1d1-report",
+        help="Generate the P1d1 analysis-only finite-game report.",
+    )
+    p1d1_report.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1d1_report.add_argument("--json-output", type=Path, default=None)
+    p1d1_report.add_argument("--markdown-output", type=Path, default=None)
+    p1d1_report.set_defaults(func=command_p1d1_report)
 
     return parser
 
