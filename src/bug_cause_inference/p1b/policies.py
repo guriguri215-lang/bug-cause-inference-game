@@ -35,6 +35,13 @@ P1B_POLICIES = (
 
 P1B_PRIMARY_POLICY = "expected_utility_per_cost"
 
+# P1d2-only policy ID. It is intentionally excluded from P1B_POLICIES and all
+# existing P1b/P1c CLI choices and defaults.
+STATE_SEQUENCE_GUARD_POLICY_ID = "state_sequence_guard"
+_STATE_SEQUENCE_GUARD_TARGET_ACTION = "run_state_sequence_tests"
+_STATE_SEQUENCE_GUARD_RESERVE = 4
+_STATE_SEQUENCE_GUARD_MAX_STEPS = 6
+
 FIXED_CHECKLIST_ORDER = (
     "run_smoke_tests",
     "run_boundary_tests",
@@ -80,6 +87,20 @@ class _State:
     current_step: int
     bug_detected: bool
     execution_context: P1BExecutionContext | None = None
+
+
+@dataclass(frozen=True)
+class _StateSequenceGuardHistory:
+    """Policy-visible projection used by the preregistered P1d2 selector."""
+
+    bug_presence_posterior: float
+    cause_posterior: dict[str, float]
+    location_posterior: dict[str, float]
+    fix_intent_posterior: dict[str, float]
+    executed_action_ids: tuple[str, ...]
+    cumulative_cost: int
+    current_step: int
+    bug_detected: bool
 
 
 def _entropy(distribution: dict[str, float]) -> float:
@@ -140,6 +161,73 @@ def _first_available(order: tuple[str, ...], state: _State, remaining_budget: in
     return None
 
 
+def _state_sequence_guard_history(state: _State) -> _StateSequenceGuardHistory:
+    return _StateSequenceGuardHistory(
+        bug_presence_posterior=state.bug_presence,
+        cause_posterior=dict(state.cause_posterior),
+        location_posterior=dict(state.location_posterior),
+        fix_intent_posterior=dict(state.fix_intent_posterior),
+        executed_action_ids=tuple(state.executed_actions),
+        cumulative_cost=state.cumulative_cost,
+        current_step=state.current_step,
+        bug_detected=state.bug_detected,
+    )
+
+
+def _choose_state_sequence_guard(
+    history: _StateSequenceGuardHistory,
+    remaining_budget: int,
+) -> str:
+    """Return the exact preregistered P1d2 state-sequence-guard action.
+
+    The runner calls this helper only after the common stop predicate is false,
+    so at least one feasible action must exist. The helper receives no variant,
+    bucket, ground-truth, execution-context, or report-only field.
+    """
+
+    scoring_state = _State(
+        bug_presence=history.bug_presence_posterior,
+        cause_posterior=dict(history.cause_posterior),
+        location_posterior=dict(history.location_posterior),
+        fix_intent_posterior=dict(history.fix_intent_posterior),
+        executed_actions=list(history.executed_action_ids),
+        cumulative_cost=history.cumulative_cost,
+        current_step=history.current_step,
+        bug_detected=history.bug_detected,
+    )
+    ranked = score_actions(scoring_state, remaining_budget)
+    if not ranked:
+        raise RuntimeError(
+            "state_sequence_guard requires a nonterminal history with a feasible action"
+        )
+
+    target = _STATE_SEQUENCE_GUARD_TARGET_ACTION
+    feasible_ids = {item["action"] for item in ranked}
+    reserve_active = (
+        not history.bug_detected
+        and target not in history.executed_action_ids
+        and target in feasible_ids
+    )
+    if not reserve_active:
+        return ranked[0]["action"]
+
+    reserve_preserving = [
+        item["action"]
+        for item in ranked
+        if item["action"] != target
+        and item["cost"] <= remaining_budget - _STATE_SEQUENCE_GUARD_RESERVE
+    ]
+    if (
+        not reserve_preserving
+        or history.current_step >= _STATE_SEQUENCE_GUARD_MAX_STEPS - 1
+    ):
+        return target
+
+    candidate_pool = set(reserve_preserving)
+    candidate_pool.add(target)
+    return next(item["action"] for item in ranked if item["action"] in candidate_pool)
+
+
 def choose_action(policy: str, state: _State, remaining_budget: int, rng: random.Random) -> str | None:
     available = _remaining_actions(state, remaining_budget)
     if not available:
@@ -156,6 +244,11 @@ def choose_action(policy: str, state: _State, remaining_budget: int, rng: random
         return _first_available(TEST_FIRST_ORDER, state, remaining_budget) or available[0]
     if policy == "recent_diff_first":
         return _first_available(RECENT_DIFF_FIRST_ORDER, state, remaining_budget) or available[0]
+    if policy == STATE_SEQUENCE_GUARD_POLICY_ID:
+        return _choose_state_sequence_guard(
+            _state_sequence_guard_history(state),
+            remaining_budget,
+        )
     scores = score_actions(state, remaining_budget)
     if policy == "cause_only_p1a_style":
         cause_scores = []
