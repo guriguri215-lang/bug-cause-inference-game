@@ -41,6 +41,11 @@ from bug_cause_inference.p1d.p1d2_evaluation import (
     p1d2_summary_to_json,
     p1d2_summary_to_markdown,
 )
+from bug_cause_inference.p1d.p1d3a_evaluation import (
+    build_p1d3a_summary,
+    p1d3a_summary_to_json,
+    p1d3a_summary_to_markdown,
+)
 from bug_cause_inference.policies import POLICIES, PRIMARY_POLICY, run_investigation
 from bug_cause_inference.reports import build_decision_report, report_to_json, report_to_markdown
 from bug_cause_inference.synthetic_cases import DEFAULT_SEED, generate_synthetic_cases, load_cases, save_cases
@@ -170,6 +175,11 @@ def command_p1d2_report(args: argparse.Namespace) -> None:
     _write_or_print(p1d2_summary_to_json(summary), p1d2_summary_to_markdown(summary), args)
 
 
+def command_p1d3a_report(args: argparse.Namespace) -> None:
+    summary = build_p1d3a_summary()
+    _write_or_print(p1d3a_summary_to_json(summary), p1d3a_summary_to_markdown(summary), args)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bug-cause-inference",
@@ -266,6 +276,15 @@ def build_parser() -> argparse.ArgumentParser:
     p1d2_report.add_argument("--json-output", type=Path, default=None)
     p1d2_report.add_argument("--markdown-output", type=Path, default=None)
     p1d2_report.set_defaults(func=command_p1d2_report)
+
+    p1d3a_report = subparsers.add_parser(
+        "p1d3a-report",
+        help="Generate the retrospective P1d3a G1 cost-profile family report.",
+    )
+    p1d3a_report.add_argument("--format", choices=("json", "markdown"), default="markdown")
+    p1d3a_report.add_argument("--json-output", type=Path, default=None)
+    p1d3a_report.add_argument("--markdown-output", type=Path, default=None)
+    p1d3a_report.set_defaults(func=command_p1d3a_report)
 
     return parser
 

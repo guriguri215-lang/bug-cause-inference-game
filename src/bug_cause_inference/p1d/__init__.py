@@ -10,6 +10,11 @@ from bug_cause_inference.p1d.p1d2_evaluation import (
     p1d2_summary_to_json,
     p1d2_summary_to_markdown,
 )
+from bug_cause_inference.p1d.p1d3a_evaluation import (
+    build_p1d3a_summary,
+    p1d3a_summary_to_json,
+    p1d3a_summary_to_markdown,
+)
 
 __all__ = [
     "build_p1d1_summary",
@@ -18,4 +23,7 @@ __all__ = [
     "build_p1d2_summary",
     "p1d2_summary_to_json",
     "p1d2_summary_to_markdown",
+    "build_p1d3a_summary",
+    "p1d3a_summary_to_json",
+    "p1d3a_summary_to_markdown",
 ]
