@@ -10,7 +10,9 @@ The repository is ready to be reviewed as a small reproducible prototype when th
 - P1b is a small injected checkout/pricing benchmark scaffold with function-level location metrics.
 - P1b real-diff artifacts are clean baseline source plus per-variant unified patches, not real repository histories.
 - P1c is analysis-only robustness reporting over the existing P1b scaffold.
-- The project does not claim production fault localization, automated repair, LLM agent benchmarking, real-world debugging accuracy, a minimax-optimal policy, or a formal game-theoretic guarantee.
+- P1d1, P1d2, P1d3a, and P1d3b are dedicated analysis-only reports and CLI commands over the same fixed scaffold.
+- P1d3a cost-profile matrices and P1d3b dropout/delay-profile matrices are separate retrospective families. They do not define a combined interaction, joint profile-by-bucket game, or cross-profile winner or ranking.
+- The project does not claim production fault localization, automated repair, LLM agent benchmarking, real-world debugging accuracy, general minimax optimality, a general Nash equilibrium, regret optimality, or a game-theoretic guarantee beyond each explicitly fixed empirical matrix.
 
 ## Tracked Public Artifacts
 
@@ -35,6 +37,7 @@ Local outputs should stay out of commits unless they are deliberately refreshed 
 - temporary validation work roots;
 - generated real-diff checkout trees;
 - ad hoc CLI output files created during investigation.
+- P1d JSON/Markdown reports created for local review or smoke testing; these are ignored/local outputs, not required tracked release artifacts.
 
 Use `tmp/` or `temp/` for local scratch output when possible. Generated checkout trees from `bug_cause_inference.p1b.real_diff` should remain temporary or live under an ignored scratch directory.
 
@@ -49,9 +52,19 @@ python -B -m pytest -q -p no:cacheprovider
 python -m bug_cause_inference.p1b.real_diff --validate
 python -m bug_cause_inference.cli p1b-evaluate --observation-mode both --format markdown
 python -m bug_cause_inference.cli p1c-evaluate --format markdown
+python -m bug_cause_inference.cli p1d1-report --format json
+python -m bug_cause_inference.cli p1d1-report --format markdown
+python -m bug_cause_inference.cli p1d2-report --format json
+python -m bug_cause_inference.cli p1d2-report --format markdown
+python -m bug_cause_inference.cli p1d3a-report --format json
+python -m bug_cause_inference.cli p1d3a-report --format markdown
+python -m bug_cause_inference.cli p1d3b-report --format json
+python -m bug_cause_inference.cli p1d3b-report --format markdown
 git diff --check
 git status -sb
 ```
+
+Before a public release, complete the full test and real-diff checks above, exercise all four P1d CLI commands in both formats, and complete the package-artifact checks below. A documentation closeout or a previously reviewed local report hash does not replace those release-time checks.
 
 If a Codex sandbox run hits the known Windows Temp-directory permission issue for pytest `tmp_path` tests, rerun the same command with normal permissions or explicit approval and record both results. Do not change production code, pytest configuration, CI, or test coverage for that local constraint.
 
@@ -88,5 +101,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 - P1c9 does not require an immediate follow-up based on the current interpretation note.
 - A combined cost plus dropout/delay interaction remains a plausible future design-review topic, not a current implementation target.
+- P1d3a and P1d3b release wording must preserve their separate-family boundary and their retrospective, fixed-scaffold, non-causal, and non-generalization limitations.
+- Local reviewed P1d report files and hashes are not tracked-artifact requirements; source, serializers, tests, and reproducible CLI behavior are the release boundary.
 - Public release preparation should not modify P1b/P1c runtime behavior, metric semantics, policy thresholds, dataset metadata, or real-diff artifacts.
 - Public documentation should keep limitations and non-claims visible rather than broadening README claims.

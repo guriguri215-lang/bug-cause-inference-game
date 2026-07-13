@@ -36,6 +36,28 @@ python -m bug_cause_inference.cli p1c-evaluate --format json
 python -m bug_cause_inference.cli p1c-evaluate --format markdown
 ```
 
+Targeted P1d report checks:
+
+```bash
+python -m pytest tests/test_p1d1_evaluation.py tests/test_p1d1_cli.py -q
+python -m pytest tests/test_p1d2_evaluation.py tests/test_p1d2_cli.py -q
+python -m pytest tests/test_p1d3a_evaluation.py tests/test_p1d3a_cli.py -q
+python -m pytest tests/test_p1d3b_evaluation.py tests/test_p1d3b_cli.py -q
+```
+
+P1d JSON/Markdown CLI smoke checks:
+
+```bash
+python -m bug_cause_inference.cli p1d1-report --format json
+python -m bug_cause_inference.cli p1d1-report --format markdown
+python -m bug_cause_inference.cli p1d2-report --format json
+python -m bug_cause_inference.cli p1d2-report --format markdown
+python -m bug_cause_inference.cli p1d3a-report --format json
+python -m bug_cause_inference.cli p1d3a-report --format markdown
+python -m bug_cause_inference.cli p1d3b-report --format json
+python -m bug_cause_inference.cli p1d3b-report --format markdown
+```
+
 Representative smoke checks for generated outputs:
 
 ```bash
@@ -70,5 +92,12 @@ Operational rule:
 
 - Do not change production code, pytest configuration, CI, or `tmp_path` tests to work around the sandbox Temp permission failure.
 - Rerun the same pytest command with normal permissions or explicit approval.
+- If normal Temp remains inaccessible, create the ignored parent `tmp/pytest/` if needed and rerun the unchanged command with a unique workspace-local base such as `--basetemp tmp/pytest/<unique-run-id>`. Use a fresh path for each rerun and record the original Temp failure separately from the fallback result.
 - Record both the sandbox failure and the normal-permission rerun result.
 - If the same command fails with normal permissions, treat it as a repository or test failure and investigate normally.
+
+## Ruff Result Separation
+
+Run narrow lint checks against changed supported files and run `python -m ruff check .` as a separate repository-wide check. Markdown paths may be unsupported or outside the configured Ruff file set; an unsupported Markdown invocation is not a passed Python changed-file lint check.
+
+The accepted P1d3b baseline recorded three pre-existing repository-wide `F401` failures. Reconfirm and report them separately from any new failure. This baseline is not permission to suppress, expand, or ignore lint debt, and documentation-only work must not edit unrelated prior-phase Python files merely to make the repository-wide command green.
