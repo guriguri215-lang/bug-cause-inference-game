@@ -18,6 +18,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A policy comparison harness for action-selection strategies.
 - A report generator for JSON and Markdown `DecisionReport` outputs.
 - A P1b small injected-bug benchmark scaffold for checkout/pricing variants.
+- Analysis-only P1c robustness reports and P1d fixed empirical finite-game reports over that scaffold.
 
 ## What This Project Is Not
 
@@ -25,7 +26,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - This is not an automated program repair tool.
 - This is not an LLM debugging benchmark.
 - This is not a fuzzing or property-based testing framework.
-- This is not yet a formal game-theoretic debugging system.
+- This is not a general or production game-theoretic debugging system.
 - P1a does not discover bugs or identify source-code locations.
 - P1b uses a small injected checkout/pricing benchmark scaffold; it does not claim real-world debugging accuracy.
 - P1b only ranks function-level locations inside that scaffold.
@@ -106,6 +107,20 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode execution_grou
 ```
 
 See [`docs/p1c_result_interpretation.md`](docs/p1c_result_interpretation.md) for a consolidated reading of the current P1c1/P1c3/P1c5/P1c7/P1c9 reports.
+
+Generate the P1d analysis-only reports over the fixed execution-grounded scaffold:
+
+```bash
+python -m bug_cause_inference.cli p1d1-report --format markdown
+python -m bug_cause_inference.cli p1d2-report --format json
+python -m bug_cause_inference.cli p1d3a-report --format markdown
+python -m bug_cause_inference.cli p1d3b-report --format json
+python -m bug_cause_inference.cli p1d3b-report --format markdown --json-output tmp/p1d3b/report.json --markdown-output tmp/p1d3b/report.md
+```
+
+P1d1 reports the fixed six-policy by five-buggy-bucket discovery-loss matrix and its restricted-pure analysis. P1d2 evaluates the preregistered `state_sequence_guard` candidate; the directional hypothesis result is `not_supported`, separately from the accepted software implementation. P1d3a and P1d3b retrospectively report four separate 6 by 5 matrices for cost profiles and dropout/delay profiles, respectively.
+
+All four P1d report stages are analysis-only work on the fixed P1b scaffold. P1d3a and P1d3b are separate families: there is no combined cost-plus-dropout/delay interaction, joint profile-by-bucket game, cross-profile winner or ranking, weighted loss, mixed solution, Nash result, regret result, or general minimax claim.
 
 ## Project Status
 
@@ -285,6 +300,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P1b `run_property_search` uses deterministic enumerated cases, not randomized Hypothesis-style generation.
 - P1b predicts fix-intent categories but does not generate patches.
 - P1c reports robustness diagnostics over the existing P1b scaffold only; it does not add an adversarial generator, a combined stress model, or a formal game-theoretic guarantee.
+- P1d reports are fixed-scaffold analysis only. P1d3a and P1d3b are retrospective, separate profile-conditioned families and do not establish causal effects, unseen-profile or unseen-variant generalization, combined-profile robustness, or production performance.
 
 ## Reproducibility Notes
 

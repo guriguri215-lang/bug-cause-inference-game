@@ -41,6 +41,12 @@
 - P1c consolidated result interpretation note: [`docs/p1c_result_interpretation.md`](p1c_result_interpretation.md).
 - P1c variant label table for the 25 existing P1b variants, grouped into five buggy buckets and one clean false-positive bucket.
 - P1c CLI command: `p1c-evaluate`.
+- P1d0 reviewed specification for a fixed execution-grounded empirical finite loss game over the existing P1b/P1c scaffold.
+- P1d1 analysis-only `headline_primary` report (`p1d1_finite_game_report.v1`) through `p1d1-report`: a six-policy by five-buggy-bucket discovery-loss matrix, restricted-pure security analysis, separate clean stress and secondary matrices, and an explicitly uncomputed mixed solution.
+- P1d2 analysis-only `preregistered_candidate_headline_primary` report (`p1d2_preregistered_policy_evaluation.v1`) through `p1d2-report`: the preregistered `state_sequence_guard` candidate appended to the six baseline policies on the same five buckets. The valid directional result is `not_supported`; software acceptance is independently `accepted`.
+- P1d3a retrospective analysis-only `retrospective_profile_conditioned_headline_primary` report (`p1d3a_g1_cost_profile_family_report.v1`) through `p1d3a-report`: four separate cost-profile-conditioned 6 by 5 matrices, 30 primary cells per profile and 120 primary cells total.
+- P1d3b retrospective analysis-only `retrospective_dropout_delay_profile_conditioned_headline_primary` report (`p1d3b_g1_dropout_delay_profile_family_report.v1`) through `p1d3b-report`: four separate dropout/delay-profile-conditioned 6 by 5 matrices, 30 primary cells per profile and 120 primary cells total.
+- P1d3a cost profiles and P1d3b dropout/delay profiles remain separate families. Each profile is fixed externally for its matrix; neither report creates a combined interaction, profile adversary action, or cross-profile optimization result.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -69,6 +75,10 @@
 - Dedicated P1c observation-cost stress CLI command; P1c5 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c profile-conditioned bucket-selection CLI command; P1c7 is integrated into the existing `p1c-evaluate` output.
 - Dedicated P1c observation dropout/delay CLI command; P1c9 is integrated into the existing `p1c-evaluate` output.
+- Combined cost plus dropout/delay evaluation or report.
+- A joint profile-by-bucket game or cross-profile maximum, ranking, winner, or optimization result.
+- P1d mixed-solution solver, general Nash-equilibrium result, regret analysis, or weighted discovery-cost loss.
+- Additional P1d policy candidates, policy tuning, new variants, relabeling, or dataset expansion beyond the accepted fixed-scaffold studies.
 
 ## Deferred To Future Work
 
@@ -78,6 +88,8 @@
 - Case-specific investigation costs.
 - Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
+- A separately reviewed design for any future combined cost plus dropout/delay interaction.
+- Any benchmark expansion, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
 
 ## Known Limitations
 
@@ -107,6 +119,9 @@
 - P1c7 implements the P1c6 profile-conditioned bucket-selection diagnostic as an analysis-only nested addition under `observation_cost_stress`. It keeps the P1c3 baseline selected-bucket report unchanged, derives profile-selected buckets from existing P1c5 profile bucket metrics, keeps clean false-positive stress separate from buggy metrics, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c8 is specification-only. It defines deterministic, reproducible, bounded future observation dropout/delay profiles as P1c-only copied-observation perturbations, keeps P1b default observations, execution traces, real-diff artifacts, P1c3 bucket selection, P1c5 cost stress, and P1c7 nested diagnostics unchanged, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
 - P1c9 implements the P1c8 bounded observation dropout/delay report candidate as an analysis-only `observation_dropout_delay_stress` addition to `p1c-evaluate`. It applies deterministic P1c-only copied-observation dropout/delay profiles, retains source observations, keeps clean false-positive stress separate from buggy metrics, leaves P1b defaults unchanged, and does not introduce a weighted payoff, regret, minimax, equilibrium, or formal payoff model.
+- P1d1 and P1d2 are analysis-only evaluations on the fixed execution-grounded P1b scaffold. P1d2 is in-sample and exploratory; `not_supported` is the research result, not a software rejection.
+- P1d3a and P1d3b retrospectively re-express already-observed P1c outcomes as separate profile-conditioned finite empirical matrix families. Profile-specific changes or their absence are not causal evidence and do not establish unseen-variant, unseen-profile, arbitrary-program, or real-world generalization.
+- P1d restricted-pure results are qualified to the fixed policies, buckets, variants, settings, and externally fixed profiles. No P1d mixed solution, general Nash equilibrium, regret guarantee, general minimax-optimal debugger, joint profile-by-bucket robustness, or combined cost-plus-dropout/delay robustness is implemented or claimed.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -131,10 +146,31 @@ python -m bug_cause_inference.cli p1b-evaluate --observation-mode both --json-ou
 python -m bug_cause_inference.cli p1c-evaluate --format markdown
 python -m bug_cause_inference.cli p1c-evaluate --observation-mode execution_grounded --json-output examples/p1c/reports/p1c_worst_case_summary.json --markdown-output examples/p1c/reports/p1c_worst_case_summary.md
 python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policies expected_utility_per_cost --format json
+python -m pytest tests/test_p1d1_evaluation.py tests/test_p1d1_cli.py -q
+python -m pytest tests/test_p1d2_evaluation.py tests/test_p1d2_cli.py -q
+python -m pytest tests/test_p1d3a_evaluation.py tests/test_p1d3a_cli.py -q
+python -m pytest tests/test_p1d3b_evaluation.py tests/test_p1d3b_cli.py -q
+python -m bug_cause_inference.cli p1d1-report --format markdown
+python -m bug_cause_inference.cli p1d2-report --format json
+python -m bug_cause_inference.cli p1d3a-report --format markdown
+python -m bug_cause_inference.cli p1d3b-report --format json
 python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+P1d closeout verification completed on 2026-07-13 at 22:15 JST. The standard Windows Temp runs hit the documented local permission constraint, and the unchanged suites passed with unique workspace-local base directories:
+
+```bash
+.\.venv\Scripts\python.exe -m pytest tests/test_p1d1_evaluation.py tests/test_p1d2_evaluation.py tests/test_p1d3a_evaluation.py tests/test_p1d3a_cli.py tests/test_p1d3b_evaluation.py tests/test_p1d3b_cli.py -q --basetemp tmp/pytest/p1d-closeout-targeted-20260713-02
+.\.venv\Scripts\python.exe -m pytest -q --basetemp tmp/pytest/p1d-closeout-full-20260713-01
+```
+
+Results: `1080 passed` targeted and `1318 passed` full suite. The standard-Temp attempts produced `1078 passed, 2 errors` and `1300 passed, 18 errors`, respectively; every error was the known `PermissionError` while accessing `C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig`.
+
+The documentation-path Ruff command exited successfully but reported `No Python files found under the given path(s)`, so it is not recorded as a Python changed-file lint pass. Repository-wide Ruff reported only the three pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; no file was changed to suppress them.
+
+Older P1a/P1b/P1c checkpoints below remain historical records.
 
 Full pytest last passed on 2026-07-07 after adding the test-operations guidance, with normal permissions:
 
