@@ -17,7 +17,9 @@ from bug_cause_inference.p1d.evaluation import (
     p1d1_summary_to_json,
     p1d1_summary_to_markdown,
 )
+from bug_cause_inference.p2a import compatibility as p2a_compatibility
 from bug_cause_inference.p2a.compatibility import (
+    CompatibilityMismatch,
     EXPECTED_LEGACY_ARTIFACT_DIGEST,
     EXPECTED_LEGACY_CATALOG_DIGEST,
     EXPECTED_LEGACY_RUNTIME_DIGEST,
@@ -33,6 +35,23 @@ from bug_cause_inference.p2a.compatibility import (
     validate_exact_pair_coverage,
     validate_frozen_legacy_contracts,
     validate_canonical_path_boundary,
+)
+
+
+CHECKOUT_RUNTIME_PATHS = (
+    "p1b/checkout/__init__.py",
+    "p1b/checkout/cart.py",
+    "p1b/checkout/config.py",
+    "p1b/checkout/discounts.py",
+    "p1b/checkout/inventory.py",
+    "p1b/checkout/shipping.py",
+)
+LOCAL_PATH_CASES = (
+    r"C:\Users\name\tree\cart.py",
+    r"\\server\share\tree\cart.py",
+    "file:///C:/Users/name/tree/cart.py",
+    "file:///home/name/tree/cart.py",
+    "/home/name/tree/cart.py",
 )
 
 
@@ -99,6 +118,55 @@ def test_frozen_contract_digests_cover_catalog_runtime_and_artifacts(compatibili
     assert compatibility_report.artifact_digest == EXPECTED_LEGACY_ARTIFACT_DIGEST
 
 
+def test_runtime_contract_includes_checkout_sources_exactly_once_in_stable_order():
+    source_paths = [
+        row["path"]
+        for row in p2a_compatibility._runtime_contract()["source_hashes"]
+    ]
+    checkout_paths = [path for path in source_paths if path.startswith("p1b/checkout/")]
+
+    assert tuple(checkout_paths) == CHECKOUT_RUNTIME_PATHS
+    assert all(source_paths.count(path) == 1 for path in CHECKOUT_RUNTIME_PATHS)
+    assert all("\\" not in path and not path.startswith("/") for path in source_paths)
+
+
+def test_checkout_source_hash_drift_fails_public_gate_before_execution_with_invalid_report(
+    monkeypatch,
+):
+    original_hash = p2a_compatibility._normalized_text_hash
+
+    def drift_one_checkout_hash(path):
+        if path.as_posix().endswith("/p1b/checkout/cart.py"):
+            return "0" * 64
+        return original_hash(path)
+
+    def execution_must_not_start(*args, **kwargs):
+        raise AssertionError("adapter execution started before runtime validation")
+
+    monkeypatch.setattr(
+        p2a_compatibility,
+        "_normalized_text_hash",
+        drift_one_checkout_hash,
+    )
+    monkeypatch.setattr(
+        p2a_compatibility,
+        "isolated_legacy_checkout",
+        execution_must_not_start,
+    )
+
+    with pytest.raises(LegacyCompatibilityError, match="runtime_digest") as error:
+        run_legacy_exact_compatibility()
+
+    report = error.value.report
+    assert report is not None
+    assert report.status == "invalid"
+    assert report.observed_pair_count == 0
+    assert report.matched_pair_count == 0
+    assert report.runtime_digest != EXPECTED_LEGACY_RUNTIME_DIGEST
+    assert report.catalog_digest == EXPECTED_LEGACY_CATALOG_DIGEST
+    assert report.artifact_digest == EXPECTED_LEGACY_ARTIFACT_DIGEST
+
+
 def test_diagnostic_digest_is_separate_and_exact_for_every_projected_step(canonical_run):
     for step in canonical_run["steps"]:
         assert step["diagnostic_digest"] == canonical_digest(step["diagnostic_cases"])
@@ -120,11 +188,121 @@ def test_presentation_provenance_fields_are_excluded_but_recent_diff_signal_is_r
     assert observation["changed_functions"]
 
 
-def test_absolute_generated_or_cache_path_is_rejected_from_canonical_identity(canonical_run):
-    changed = deepcopy(canonical_run)
-    changed["final_run"]["reproduction_input"] = r"C:\local\generated\checkout.py"
+@pytest.mark.parametrize("raw_path", LOCAL_PATH_CASES)
+@pytest.mark.parametrize("placement", ("key", "value"))
+def test_local_absolute_path_categories_are_rejected_from_nested_canonical_identity(
+    raw_path,
+    placement,
+):
+    nested = (
+        {raw_path: "safe"}
+        if placement == "key"
+        else {"safe": f"artifact={raw_path};source=canonical"}
+    )
     with pytest.raises(LegacyCompatibilityError, match="Absolute local path"):
-        validate_canonical_path_boundary(changed)
+        validate_canonical_path_boundary({"outer": [("inner", nested)]})
+
+
+def test_relative_canonical_provenance_paths_are_accepted():
+    validate_canonical_path_boundary(
+        {
+            "artifact": "p1b/artifacts/real_diff/patches/P1B-BUG-001.patch",
+            "changed": ["checkout/cart.py", ("checkout/shipping.py",)],
+        }
+    )
+
+
+@pytest.mark.parametrize("raw_path", LOCAL_PATH_CASES)
+def test_embedded_local_paths_are_redacted_from_comparator_diagnostics(
+    canonical_run,
+    raw_path,
+):
+    changed = deepcopy(canonical_run)
+    changed["final_run"]["reproduction_input"] = (
+        f"artifact={raw_path};source=adapter"
+    )
+
+    with pytest.raises(LegacyCompatibilityError) as error:
+        assert_canonical_runs_equal(
+            canonical_run,
+            changed,
+            variant_id=canonical_run["variant_id"],
+            policy=canonical_run["policy"],
+        )
+
+    mismatch = error.value.mismatch
+    assert mismatch is not None
+    assert mismatch.adapter_value == "<redacted-local-path>"
+    assert raw_path not in str(error.value)
+    assert raw_path not in repr(mismatch.current_value)
+    assert raw_path not in repr(mismatch.adapter_value)
+
+
+@pytest.mark.parametrize("raw_path", LOCAL_PATH_CASES)
+def test_nested_local_path_keys_are_redacted_from_comparator_diagnostics(raw_path):
+    current = {"nested": {"safe-key": {"value": 1}}}
+    adapter = {"nested": {f"artifact={raw_path}": {"value": 1}}}
+
+    with pytest.raises(LegacyCompatibilityError) as error:
+        assert_canonical_runs_equal(
+            current,
+            adapter,
+            variant_id="P1B-BUG-001",
+            policy="fixed_checklist",
+        )
+
+    mismatch = error.value.mismatch
+    assert mismatch is not None
+    assert raw_path not in str(error.value)
+    assert raw_path not in repr(mismatch.current_value)
+    assert raw_path not in repr(mismatch.adapter_value)
+    assert mismatch.adapter_value == ["<redacted-local-path>"]
+
+
+@pytest.mark.parametrize("raw_path", LOCAL_PATH_CASES)
+def test_local_path_in_comparator_field_path_is_redacted(raw_path):
+    current = {"nested": {raw_path: {"value": 1}}}
+    adapter = {"nested": {raw_path: {"value": 2}}}
+
+    with pytest.raises(LegacyCompatibilityError) as error:
+        assert_canonical_runs_equal(
+            current,
+            adapter,
+            variant_id="P1B-BUG-001",
+            policy="fixed_checklist",
+        )
+
+    mismatch = error.value.mismatch
+    assert mismatch is not None
+    assert mismatch.field_path == "<redacted-local-path>"
+    assert raw_path not in str(error.value)
+
+
+def test_canonical_path_rejection_from_public_gate_has_safe_invalid_report(
+    monkeypatch,
+):
+    raw_path = r"C:\Users\name\generated\checkout.py"
+
+    def reject_projection(*args, **kwargs):
+        validate_canonical_path_boundary(
+            {"nested": [f"artifact={raw_path};source=adapter"]}
+        )
+
+    monkeypatch.setattr(
+        p2a_compatibility,
+        "canonical_run_projection",
+        reject_projection,
+    )
+
+    with pytest.raises(LegacyCompatibilityError) as error:
+        run_legacy_exact_compatibility()
+
+    report = error.value.report
+    assert report is not None
+    assert report.status == "invalid"
+    assert report.observed_pair_count == 0
+    assert raw_path not in str(error.value)
+    assert raw_path not in repr(report)
 
 
 @pytest.mark.parametrize("mutation", ("remove", "add", "rename"))
@@ -287,6 +465,80 @@ def test_pair_coverage_remove_duplicate_and_extra_fail_closed(mutation):
 def test_representative_trace_only_probe_is_rejected():
     with pytest.raises(LegacyCompatibilityError, match="exactly 25 x 6 = 150"):
         validate_exact_pair_coverage(expected_legacy_pairs()[:6])
+
+
+def test_pair_coverage_failure_from_public_gate_has_invalid_report(monkeypatch):
+    monkeypatch.setattr(
+        p2a_compatibility,
+        "validate_frozen_legacy_contracts",
+        lambda digests=None: digests,
+    )
+    monkeypatch.setattr(p2a_compatibility, "load_p1b_variants", lambda: [])
+
+    with pytest.raises(
+        LegacyCompatibilityError,
+        match="exactly 25 x 6 = 150",
+    ) as error:
+        run_legacy_exact_compatibility()
+
+    report = error.value.report
+    assert report is not None
+    assert report.status == "invalid"
+    assert report.expected_pair_count == 150
+    assert report.observed_pair_count == 0
+    assert report.matched_pair_count == 0
+
+
+def test_comparator_mismatch_from_public_gate_preserves_details_and_invalid_report(
+    monkeypatch,
+):
+    expected_mismatch = CompatibilityMismatch(
+        variant_id="P1B-BUG-001",
+        policy="fixed_checklist",
+        step=1,
+        action_id="run_boundary_tests",
+        field_path="$.steps[0].observation.cost",
+        current_value=2,
+        adapter_value=3,
+    )
+
+    def reject_comparison(*args, **kwargs):
+        raise LegacyCompatibilityError(
+            "Legacy compatibility mismatch",
+            mismatch=expected_mismatch,
+        )
+
+    monkeypatch.setattr(
+        p2a_compatibility,
+        "assert_canonical_runs_equal",
+        reject_comparison,
+    )
+
+    with pytest.raises(LegacyCompatibilityError) as error:
+        run_legacy_exact_compatibility()
+
+    report = error.value.report
+    assert report is not None
+    assert report.status == "invalid"
+    assert report.observed_pair_count == 1
+    assert report.matched_pair_count == 0
+    assert report.mismatch_count == 1
+    assert error.value.mismatch == expected_mismatch
+    assert report.mismatches == (expected_mismatch,)
+
+
+@pytest.mark.parametrize("control_flow_error", (KeyboardInterrupt, SystemExit))
+def test_public_gate_does_not_convert_process_control_exceptions(
+    monkeypatch,
+    control_flow_error,
+):
+    def interrupt():
+        raise control_flow_error()
+
+    monkeypatch.setattr(p2a_compatibility, "current_contract_digests", interrupt)
+
+    with pytest.raises(control_flow_error):
+        run_legacy_exact_compatibility()
 
 
 def test_catalog_case_and_action_mapping_drift_fail_before_execution(monkeypatch):

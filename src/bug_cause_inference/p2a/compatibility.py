@@ -110,7 +110,7 @@ STATE_FIELD_IDS = (
 # Filled from the controlling base revision. Contract validation runs before any
 # adapter execution, so drift cannot be normalized into a new accepted result.
 EXPECTED_LEGACY_CATALOG_DIGEST = "a62d0c6a11ae5f57cffa572bd06277d863e52df6a5367235a6a804adc8bc01dd"
-EXPECTED_LEGACY_RUNTIME_DIGEST = "755e97d46b9aa67c771d77548e996ec02e98d9eb91a87db7d273821465fb5563"
+EXPECTED_LEGACY_RUNTIME_DIGEST = "a7eede0058030e83b1552b71a83aff55596b16b03d05522e61375d32fa67987d"
 EXPECTED_LEGACY_ARTIFACT_DIGEST = "87f5fc00cde1cb8d02f4df7651b98c4e0e75ace833da82e256c29e1f90ad3d8c"
 
 _P1B_SOURCE_FILES = (
@@ -121,10 +121,24 @@ _P1B_SOURCE_FILES = (
     "p1b/policies.py",
     "p1b/evaluation.py",
     "p1b/real_diff.py",
+    "p1b/checkout/__init__.py",
+    "p1b/checkout/cart.py",
+    "p1b/checkout/config.py",
+    "p1b/checkout/discounts.py",
+    "p1b/checkout/inventory.py",
+    "p1b/checkout/shipping.py",
     "p1c/labels.py",
     "p1c/evaluation.py",
 )
-_ABSOLUTE_PATH_RE = re.compile(r"(?:^|\s)(?:[A-Za-z]:[\\/]|/[^\s])")
+_LOCAL_ABSOLUTE_PATH_RE = re.compile(
+    r"(?:"
+    r"[A-Za-z]:[\\/]"
+    r"|\\\\[^\\/\s]+[\\/][^\\/\s]+"
+    r"|\bfile://[^\s]+"
+    r"|(?<![A-Za-z0-9_/\\])/(?!/)[^\s]+"
+    r")",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -147,9 +161,9 @@ class LegacyCompatibilityReport:
     mismatch_count: int
     variant_ids: tuple[str, ...]
     policy_ids: tuple[str, ...]
-    catalog_digest: str
-    runtime_digest: str
-    artifact_digest: str
+    catalog_digest: str | None
+    runtime_digest: str | None
+    artifact_digest: str | None
     generated_paths_in_identity: bool
     mismatches: tuple[CompatibilityMismatch, ...] = ()
 
@@ -274,7 +288,9 @@ def current_contract_digests() -> dict[str, str]:
     }
 
 
-def validate_frozen_legacy_contracts() -> dict[str, str]:
+def validate_frozen_legacy_contracts(
+    digests: dict[str, str] | None = None,
+) -> dict[str, str]:
     variants = tuple(variant.variant_id for variant in load_p1b_variants())
     if variants != LEGACY_VARIANT_IDS:
         raise LegacyCompatibilityError(
@@ -284,7 +300,8 @@ def validate_frozen_legacy_contracts() -> dict[str, str]:
         raise LegacyCompatibilityError("Formal six policy IDs/order drifted.")
     if len(set(variants)) != 25 or len(set(FORMAL_SIX_POLICY_IDS)) != 6:
         raise LegacyCompatibilityError("Legacy variant or policy registry contains duplicates.")
-    digests = current_contract_digests()
+    if digests is None:
+        digests = current_contract_digests()
     expected = {
         "catalog_digest": EXPECTED_LEGACY_CATALOG_DIGEST,
         "runtime_digest": EXPECTED_LEGACY_RUNTIME_DIGEST,
@@ -513,7 +530,7 @@ def canonical_run_projection(
 
 def _safe_value(value: Any) -> Any:
     if type(value) is str:
-        if _ABSOLUTE_PATH_RE.search(value):
+        if _contains_local_absolute_path(value):
             return "<redacted-local-path>"
         return value if len(value) <= 240 else f"{value[:237]}..."
     if type(value) is list:
@@ -521,8 +538,27 @@ def _safe_value(value: Any) -> Any:
     if type(value) is tuple:
         return tuple(_safe_value(item) for item in value[:12])
     if type(value) is dict:
-        return {key: _safe_value(child) for key, child in list(value.items())[:12]}
+        return {
+            _safe_value(key): _safe_value(child)
+            for key, child in list(value.items())[:12]
+        }
     return value
+
+
+def _contains_local_absolute_path(value: str) -> bool:
+    return _LOCAL_ABSOLUTE_PATH_RE.search(value) is not None
+
+
+def _safe_mismatch(mismatch: CompatibilityMismatch) -> CompatibilityMismatch:
+    return CompatibilityMismatch(
+        variant_id=_safe_value(mismatch.variant_id),
+        policy=_safe_value(mismatch.policy),
+        step=mismatch.step,
+        action_id=_safe_value(mismatch.action_id),
+        field_path=_safe_value(mismatch.field_path),
+        current_value=_safe_value(mismatch.current_value),
+        adapter_value=_safe_value(mismatch.adapter_value),
+    )
 
 
 def _first_difference(left: Any, right: Any, path: str = "$" ) -> tuple[str, Any, Any] | None:
@@ -568,19 +604,22 @@ def assert_canonical_runs_equal(
     action_id = None
     if step_index is not None and step_index < len(current.get("steps", [])):
         action_id = current["steps"][step_index].get("selected_action")
-    diagnostic = CompatibilityMismatch(
-        variant_id=variant_id,
-        policy=policy,
-        step=step,
-        action_id=action_id,
-        field_path=path,
-        current_value=_safe_value(current_value),
-        adapter_value=_safe_value(adapter_value),
+    diagnostic = _safe_mismatch(
+        CompatibilityMismatch(
+            variant_id=variant_id,
+            policy=policy,
+            step=step,
+            action_id=action_id,
+            field_path=path,
+            current_value=current_value,
+            adapter_value=adapter_value,
+        )
     )
     raise LegacyCompatibilityError(
         "Legacy compatibility mismatch: "
-        f"variant={variant_id}, policy={policy}, step={step}, action={action_id}, "
-        f"field={path}, current={diagnostic.current_value!r}, "
+        f"variant={diagnostic.variant_id}, policy={diagnostic.policy}, "
+        f"step={diagnostic.step}, action={diagnostic.action_id}, "
+        f"field={diagnostic.field_path}, current={diagnostic.current_value!r}, "
         f"adapter={diagnostic.adapter_value!r}",
         mismatch=diagnostic,
     )
@@ -613,8 +652,11 @@ def validate_exact_pair_coverage(pairs: list[tuple[str, str]]) -> None:
 def validate_canonical_path_boundary(value: Any, path: str = "$") -> None:
     """Reject absolute local paths anywhere in a canonical identity value."""
 
-    if type(value) is str and _ABSOLUTE_PATH_RE.search(value):
-        raise LegacyCompatibilityError(f"Absolute local path entered canonical identity at {path}.")
+    if type(value) is str and _contains_local_absolute_path(value):
+        safe_path = _safe_value(path)
+        raise LegacyCompatibilityError(
+            f"Absolute local path entered canonical identity at {safe_path}."
+        )
     if type(value) is dict:
         for key, child in value.items():
             validate_canonical_path_boundary(key, f"{path}.<key>")
@@ -743,75 +785,98 @@ def run_patch_grounded_legacy_investigation(
     )
 
 
-def run_legacy_exact_compatibility() -> LegacyCompatibilityReport:
-    """Execute and compare every ordered legacy variant-policy pair exactly once."""
-
-    digests = validate_frozen_legacy_contracts()
-    variants = load_p1b_variants()
-    settings = P1BSettings()
-    observed_pairs: list[tuple[str, str]] = []
-    mismatches: list[CompatibilityMismatch] = []
-    matched = 0
-    for variant in variants:
-        with isolated_legacy_checkout(variant.variant_id) as (modules, module_prefix):
-            for policy in FORMAL_SIX_POLICY_IDS:
-                observed_pairs.append((variant.variant_id, policy))
-                current_result = p1b_policies.run_p1b_investigation(
-                    variant,
-                    policy=policy,
-                    settings=settings,
-                    observation_mode="execution_grounded",
-                )
-                adapter_result = run_patch_grounded_legacy_investigation(
-                    variant,
-                    policy,
-                    settings,
-                    modules,
-                    module_prefix,
-                )
-                current = canonical_run_projection(variant, current_result, settings)
-                adapter = canonical_run_projection(variant, adapter_result, settings)
-                try:
-                    assert_canonical_runs_equal(
-                        current,
-                        adapter,
-                        variant_id=variant.variant_id,
-                        policy=policy,
-                    )
-                except LegacyCompatibilityError as exc:
-                    if exc.mismatch is not None:
-                        mismatches.append(exc.mismatch)
-                    invalid_report = LegacyCompatibilityReport(
-                        status="invalid",
-                        expected_pair_count=150,
-                        observed_pair_count=len(observed_pairs),
-                        matched_pair_count=matched,
-                        mismatch_count=len(mismatches),
-                        variant_ids=LEGACY_VARIANT_IDS,
-                        policy_ids=FORMAL_SIX_POLICY_IDS,
-                        catalog_digest=digests["catalog_digest"],
-                        runtime_digest=digests["runtime_digest"],
-                        artifact_digest=digests["artifact_digest"],
-                        generated_paths_in_identity=False,
-                        mismatches=tuple(mismatches),
-                    )
-                    raise LegacyCompatibilityError(
-                        str(exc),
-                        exc.mismatch,
-                        invalid_report,
-                    ) from exc
-                matched += 1
-    validate_exact_pair_coverage(observed_pairs)
+def _compatibility_report(
+    *,
+    status: str,
+    digests: dict[str, str | None],
+    observed_pairs: list[tuple[str, str]],
+    matched_pair_count: int,
+    mismatches: list[CompatibilityMismatch],
+) -> LegacyCompatibilityReport:
     return LegacyCompatibilityReport(
-        status="valid",
-        expected_pair_count=150,
+        status=status,
+        expected_pair_count=len(LEGACY_VARIANT_IDS) * len(FORMAL_SIX_POLICY_IDS),
         observed_pair_count=len(observed_pairs),
-        matched_pair_count=matched,
-        mismatch_count=0,
+        matched_pair_count=matched_pair_count,
+        mismatch_count=len(mismatches),
         variant_ids=LEGACY_VARIANT_IDS,
         policy_ids=FORMAL_SIX_POLICY_IDS,
         catalog_digest=digests["catalog_digest"],
         runtime_digest=digests["runtime_digest"],
         artifact_digest=digests["artifact_digest"],
         generated_paths_in_identity=False,
+        mismatches=tuple(mismatches),
+    )
+
+
+def run_legacy_exact_compatibility() -> LegacyCompatibilityReport:
+    """Execute and compare every ordered legacy variant-policy pair exactly once."""
+
+    digests: dict[str, str | None] = {
+        "catalog_digest": None,
+        "runtime_digest": None,
+        "artifact_digest": None,
+    }
+    observed_pairs: list[tuple[str, str]] = []
+    mismatches: list[CompatibilityMismatch] = []
+    matched = 0
+    try:
+        current_digests = current_contract_digests()
+        digests.update(current_digests)
+        validate_frozen_legacy_contracts(current_digests)
+        variants = load_p1b_variants()
+        settings = P1BSettings()
+        for variant in variants:
+            with isolated_legacy_checkout(variant.variant_id) as (modules, module_prefix):
+                for policy in FORMAL_SIX_POLICY_IDS:
+                    current_result = p1b_policies.run_p1b_investigation(
+                        variant,
+                        policy=policy,
+                        settings=settings,
+                        observation_mode="execution_grounded",
+                    )
+                    adapter_result = run_patch_grounded_legacy_investigation(
+                        variant,
+                        policy,
+                        settings,
+                        modules,
+                        module_prefix,
+                    )
+                    current = canonical_run_projection(variant, current_result, settings)
+                    adapter = canonical_run_projection(variant, adapter_result, settings)
+                    observed_pairs.append((variant.variant_id, policy))
+                    assert_canonical_runs_equal(
+                        current,
+                        adapter,
+                        variant_id=variant.variant_id,
+                        policy=policy,
+                    )
+                    matched += 1
+        validate_exact_pair_coverage(observed_pairs)
+    except Exception as exc:  # noqa: BLE001 - fail-closed public validation boundary
+        if isinstance(exc, LegacyCompatibilityError) and exc.report is not None:
+            raise
+        mismatch = exc.mismatch if isinstance(exc, LegacyCompatibilityError) else None
+        if mismatch is not None:
+            mismatch = _safe_mismatch(mismatch)
+            mismatches.append(mismatch)
+        invalid_report = _compatibility_report(
+            status="invalid",
+            digests=digests,
+            observed_pairs=observed_pairs,
+            matched_pair_count=matched,
+            mismatches=mismatches,
+        )
+        safe_message = _safe_value(str(exc))
+        raise LegacyCompatibilityError(
+            safe_message,
+            mismatch,
+            invalid_report,
+        ) from exc
+    return _compatibility_report(
+        status="valid",
+        digests=digests,
+        observed_pairs=observed_pairs,
+        matched_pair_count=matched,
+        mismatches=mismatches,
     )
