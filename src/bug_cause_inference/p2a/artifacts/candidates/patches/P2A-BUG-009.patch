@@ -1,0 +1,5 @@
+--- a/checkout/shipping.py
++++ b/checkout/shipping.py
+@@ -17 +17 @@
+-    return int(config.get("region_rates", {}).get(region, config["region_rates"]["domestic"]))
++    return int(config.get("region_rates", {}).get(region, config["region_rates"]["international"]))

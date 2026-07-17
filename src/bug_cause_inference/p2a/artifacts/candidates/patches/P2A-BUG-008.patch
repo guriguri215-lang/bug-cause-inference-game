@@ -1,0 +1,5 @@
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -23 +23 @@
+-    return {**cart_state, "applied_coupons": applied}
++    return {"applied_coupons": applied}

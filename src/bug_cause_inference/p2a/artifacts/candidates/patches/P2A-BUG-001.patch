@@ -1,0 +1,11 @@
+--- a/checkout/cart.py
++++ b/checkout/cart.py
+@@ -12,7 +12,7 @@
+ 
+ def validate_item(item: dict[str, Any]) -> None:
+     quantity = int(item.get("quantity", 0))
+-    if quantity <= 0:
++    if quantity < 0:
+         raise ValueError("quantity must be positive")
+     if quantity > 99:
+         raise ValueError("quantity exceeds maximum")

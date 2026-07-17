@@ -1,0 +1,11 @@
+--- a/checkout/config.py
++++ b/checkout/config.py
+@@ -30,7 +30,7 @@
+ def get_tax_rate(config: dict[str, Any], region: str) -> float:
+     rates = config.get("tax_rates", {})
+     if region in rates:
+-        return float(rates[region])
++        return float(int(rates[region]))
+     if region == "JP":
+         return 0.10
+     return 0.0

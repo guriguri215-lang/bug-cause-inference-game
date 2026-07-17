@@ -1,0 +1,12 @@
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -18,7 +18,8 @@
+     if not normalized:
+         return cart_state
+     applied = list(cart_state.get("applied_coupons", []))
+-    if normalized not in applied:
++    already_applied = normalized in applied
++    if not already_applied:
+         applied.append(normalized)
+     return {**cart_state, "applied_coupons": applied}
+ 

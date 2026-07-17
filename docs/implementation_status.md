@@ -47,6 +47,12 @@
 - P1d3a retrospective analysis-only `retrospective_profile_conditioned_headline_primary` report (`p1d3a_g1_cost_profile_family_report.v1`) through `p1d3a-report`: four separate cost-profile-conditioned 6 by 5 matrices, 30 primary cells per profile and 120 primary cells total.
 - P1d3b retrospective analysis-only `retrospective_dropout_delay_profile_conditioned_headline_primary` report (`p1d3b_g1_dropout_delay_profile_family_report.v1`) through `p1d3b-report`: four separate dropout/delay-profile-conditioned 6 by 5 matrices, 30 primary cells per profile and 120 primary cells total.
 - P1d3a cost profiles and P1d3b dropout/delay profiles remain separate families. Each profile is fixed externally for its matrix; neither report creates a combined interaction, profile adversary action, or cross-profile optimization result.
+- P2a-only patch-grounded adapter and frozen action-test catalog, including accepted exact legacy compatibility evidence for all 150 ordered legacy policy/variant pairs.
+- P2a candidate authoring and adequacy/freeze tooling for a hand-authored same-domain expansion of 10 buggy and 5 clean checkout/pricing variants.
+- P2a official freeze realization with versioned candidate, patch, artifact-manifest, and freeze-bundle evidence.
+- P2a-B versioned evaluation and deterministic JSON/Markdown reporting with separate accepted-reference, P2a-replay, expansion-only, and combined identities for both buggy and clean evidence.
+- P2a-B corrective fail-closed gate validation and saved-outcome-only LOVO reporting: 20 buggy and 10 clean descriptive influence projections without policy reruns.
+- P2a result interpretation note: [`docs/p2a_result_interpretation.md`](p2a_result_interpretation.md).
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -79,6 +85,9 @@
 - A joint profile-by-bucket game or cross-profile maximum, ranking, winner, or optimization result.
 - P1d mixed-solution solver, general Nash-equilibrium result, regret analysis, or weighted discovery-cost loss.
 - Additional P1d policy candidates, policy tuning, new variants, relabeling, or dataset expansion beyond the accepted fixed-scaffold studies.
+- A public P2a CLI command. The accepted P2a evidence is published as versioned repository artifacts, not through a reporting command.
+- A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
+- P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 
 ## Deferred To Future Work
 
@@ -89,7 +98,7 @@
 - Larger real-code fault localization beyond the small P1b injected-bug scaffold.
 - Adversarial or worst-case bug models for P1c.
 - A separately reviewed design for any future combined cost plus dropout/delay interaction.
-- Any benchmark expansion, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
+- Any benchmark expansion beyond the accepted P2a same-domain cohort, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
 
 ## Known Limitations
 
@@ -122,6 +131,12 @@
 - P1d1 and P1d2 are analysis-only evaluations on the fixed execution-grounded P1b scaffold. P1d2 is in-sample and exploratory; `not_supported` is the research result, not a software rejection.
 - P1d3a and P1d3b retrospectively re-express already-observed P1c outcomes as separate profile-conditioned finite empirical matrix families. Profile-specific changes or their absence are not causal evidence and do not establish unseen-variant, unseen-profile, arbitrary-program, or real-world generalization.
 - P1d restricted-pure results are qualified to the fixed policies, buckets, variants, settings, and externally fixed profiles. No P1d mixed solution, general Nash equilibrium, regret guarantee, general minimax-optimal debugger, joint profile-by-bucket robustness, or combined cost-plus-dropout/delay robustness is implemented or claimed.
+- P2a is a hand-authored, stratified, same-domain, non-iid evidence expansion. Its location evidence is function-level and its real-diff artifacts are synthetic baseline-plus-patch artifacts rather than real repository histories.
+- P2a provides no second-domain or unseen-variant generalization, statistical significance, confidence interval, bootstrap result, production performance, policy-superiority, general minimax, Nash, regret, or mixed-strategy claim.
+- Expansion-only and combined P2a buggy evidence both have worst-bucket loss `1` for all six policies, yielding a restricted-pure empirical six-policy tie. This describes only the fixed matrices.
+- P2a clean false positives were `0/5` and no-bug stops were `5/5` for every formal policy only in the included five-variant clean expansion cohort.
+- P2a LOVO is descriptive influence analysis over saved frozen outcomes, not uncertainty estimation. Accepted-reference versus replay differences are catalog/context deltas, not expansion effects.
+- The fixed legacy fix-intent posterior label space does not contain the expansion authoring labels.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -158,6 +173,41 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current accepted P2a implementation evidence
+
+The accepted P2a implementation checkpoint on 2026-07-17 records the following implementation-session verification. These counts are P2a evidence and do not replace or rewrite the historical P1d checkpoint below.
+
+```text
+targeted evaluation/report  127 passed
+freeze realization           25 passed
+candidate                     92 passed
+tooling                      235 passed
+adapter                       79 passed
+full suite                  1876 passed
+ruff                         pass
+P1b real-diff               25/25
+skip / xfail                 0 / 0
+```
+
+The accepted saved outcome identity contains 150 ordered legacy policy/variant pairs and 90 ordered expansion pairs. Its canonical outcome snapshot digest is `2a1b09b38de6b2e17943726508ebc1f6728290506165cfa263a78dbb57383755`.
+
+Current versioned evaluation artifacts:
+
+- JSON: 1,699,240 bytes, SHA-256 `d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df`.
+- Markdown: 1,701,581 bytes, SHA-256 `017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a`.
+- Validated-summary digest: `3dea5aaf38e1d9a46fd1a9ed973cb02c3fabf7ec933f2bb1c6df4f97446a9629`.
+
+Current accepted frozen dataset identities:
+
+- Dataset schema: `p2a_same_domain_dataset.v1`; benchmark: `p2a_checkout_pricing_same_domain_expansion_v1`.
+- Candidate manifest digest: `97c2d0c0379d69010195a4b7448137e566214d88638b0f7642ee59677389cd47`.
+- Artifact manifest digest: `674c3f56fbd2d4148a3e63367e4bba63ed7de634f5a219ec82a79a1c878a9544`.
+- Official freeze digest: `d335f3f3a4731ee0f4d9b4648e2085eb9c687b7b2a3065d2b08eb2f65370cd9d`.
+
+Software acceptance, official frozen dataset acceptance, and descriptive result acceptance are separate decisions. Software acceptance covers contract conformance; dataset acceptance covers the frozen 10-buggy/5-clean expansion identity; result acceptance covers only the exact descriptive observations in [`p2a_result_interpretation.md`](p2a_result_interpretation.md).
+
+### Historical P1d closeout checkpoint
 
 P1d closeout verification completed on 2026-07-13 at 22:15 JST. The standard Windows Temp runs hit the documented local permission constraint, and the unchanged suites passed with unique workspace-local base directories:
 

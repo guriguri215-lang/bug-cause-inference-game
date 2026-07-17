@@ -1,0 +1,14 @@
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -51,7 +51,9 @@
+ 
+ 
+ def apply_bogo_discount(items: list[dict[str, Any]]) -> int:
+-    prices = [int(item["unit_price"]) for item in items if item.get("bogo_eligible", True)]
+-    if len(prices) < 2:
++    eligible_prices = [int(item["unit_price"]) for item in items if item.get("bogo_eligible", True)]
++    if len(eligible_prices) < 2:
+         return 0
+-    return min(prices)
++    cheapest_eligible_price = min(eligible_prices)
++    return cheapest_eligible_price
