@@ -8,6 +8,8 @@ P1b adds a small injected-bug checkout/pricing benchmark scaffold. It evaluates 
 
 P1b currently has two observation modes. `metadata_synth` is the frozen Phase A/B baseline that synthesizes evidence from variant metadata, while `execution_grounded` builds observations from checkout test results, exceptions, traced checkout functions, coverage-spectrum suspicion, and Phase C real-diff artifacts for `inspect_recent_diff`. `p1b-evaluate --observation-mode both` runs both modes on the same dataset and policies so the report can show how much the metadata-synth baseline was optimistic.
 
+P2a is a frozen, versioned same-domain evidence expansion of the small checkout/pricing benchmark. It adds 10 buggy and 5 clean hand-authored variants, keeps accepted legacy references separate from P2a replay and expansion results, and reports only descriptive evidence for the fixed cohort and six deterministic policies. See [`docs/p2a_result_interpretation.md`](docs/p2a_result_interpretation.md) and the versioned [JSON](src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.json) and [Markdown](src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.md) evidence artifacts.
+
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
 ## What This Project Is
@@ -19,6 +21,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A report generator for JSON and Markdown `DecisionReport` outputs.
 - A P1b small injected-bug benchmark scaffold for checkout/pricing variants.
 - Analysis-only P1c robustness reports and P1d fixed empirical finite-game reports over that scaffold.
+- A frozen P2a same-domain benchmark expansion with versioned candidate, freeze, evaluation, and report evidence.
 
 ## What This Project Is Not
 
@@ -32,6 +35,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - P1b only ranks function-level locations inside that scaffold.
 - P1b real-diff artifacts are not real repository histories.
 - P1b predicts fix-intent categories but does not generate patches.
+- P2a does not establish unseen-variant or second-domain generalization, statistical significance, production performance, general minimax or Nash results, regret guarantees, or policy superiority.
 
 ## Related Work
 
@@ -122,6 +126,8 @@ P1d1 reports the fixed six-policy by five-buggy-bucket discovery-loss matrix and
 
 All four P1d report stages are analysis-only work on the fixed P1b scaffold. P1d3a and P1d3b are separate families: there is no combined cost-plus-dropout/delay interaction, joint profile-by-bucket game, cross-profile winner or ranking, weighted loss, mixed solution, Nash result, regret result, or general minimax claim.
 
+P2a has no public CLI command. Its accepted public evidence is the frozen, versioned repository artifact pair linked above. Expansion-only buggy evidence is primary and the combined P2a-derived cohort is descriptive. All six policies have worst-bucket loss `1` on both cohorts, so the restricted-pure empirical result is a six-policy tie; this is not a policy-superiority or general minimax claim.
+
 ## Project Status
 
 For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
@@ -130,6 +136,7 @@ For the current implementation state, verification guidance, public-release boun
 - [`docs/test_operations.md`](docs/test_operations.md)
 - [`docs/release_readiness.md`](docs/release_readiness.md)
 - [`docs/p1c_result_interpretation.md`](docs/p1c_result_interpretation.md)
+- [`docs/p2a_result_interpretation.md`](docs/p2a_result_interpretation.md)
 
 ## Example Command
 
@@ -301,6 +308,10 @@ The P1b main policy is `expected_utility_per_cost`.
 - P1b predicts fix-intent categories but does not generate patches.
 - P1c reports robustness diagnostics over the existing P1b scaffold only; it does not add an adversarial generator, a combined stress model, or a formal game-theoretic guarantee.
 - P1d reports are fixed-scaffold analysis only. P1d3a and P1d3b are retrospective, separate profile-conditioned families and do not establish causal effects, unseen-profile or unseen-variant generalization, combined-profile robustness, or production performance.
+- P2a variants are hand-authored, stratified, same-domain, and non-iid. The expansion contains 10 buggy and 5 clean checkout/pricing variants, and location evaluation remains function-level.
+- P2a real-diff artifacts are synthetic baseline-plus-patch artifacts, not real repository histories. Its LOVO analysis is descriptive influence only, not inferential uncertainty or significance.
+- P2a clean false positives were `0/5` for every formal policy only within the included clean cohort. The result does not establish production safety or unseen-clean behavior.
+- Accepted-reference versus P2a-replay differences are catalog/context deltas, not expansion effects. The fixed legacy fix-intent posterior label space does not contain the expansion authoring labels.
 
 ## Reproducibility Notes
 
