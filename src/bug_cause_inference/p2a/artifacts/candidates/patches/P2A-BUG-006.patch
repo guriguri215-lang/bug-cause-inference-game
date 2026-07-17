@@ -1,0 +1,11 @@
+--- a/checkout/config.py
++++ b/checkout/config.py
+@@ -22,7 +22,7 @@
+     overrides = overrides or {}
+     for key, value in overrides.items():
+         if key == "FREE_SHIPPING_THRESHOLD":
+-            config["shipping_threshold"] = int(value)
++            config["shipping_threshold"] = round(float(value), -3)
+         else:
+             config[key] = value
+     return config

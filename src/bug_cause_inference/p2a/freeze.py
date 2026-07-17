@@ -19,6 +19,7 @@ from bug_cause_inference.p2a.adequacy import (
     COVERAGE_GAP_REGISTRY_VERSION,
     DATASET_SCHEMA_VERSION,
     POLICY_OUTCOME_FIELD_IDS,
+    TRUSTED_REFERENCE_REGISTRY_VERSION,
     AdequacyValidationError,
     ReasonCode,
     ValidationIssue,
@@ -26,6 +27,7 @@ from bug_cause_inference.p2a.adequacy import (
     canonical_json,
     clean_family_definitions,
     coverage_gap_registry_digest,
+    trusted_reference_registry_digest,
     validate_candidate_cohort,
     validate_portable_value,
     validate_sha256,
@@ -51,6 +53,7 @@ _DRAFT_FIELD_IDS = (
     "metric_identity",
     "serializer_identity",
     "coverage_registry_identity",
+    "trusted_reference_registry_identity",
     "freeze_timestamp",
     "buggy_bucket_ids",
     "clean_family_definitions",
@@ -111,6 +114,12 @@ _IDENTITY_CONTRACTS = (
         "coverage_registry_identity",
         ("registry_version", "registry_digest"),
         {"registry_version": COVERAGE_GAP_REGISTRY_VERSION},
+        "registry_digest",
+    ),
+    (
+        "trusted_reference_registry_identity",
+        ("registry_version", "registry_digest"),
+        {"registry_version": TRUSTED_REFERENCE_REGISTRY_VERSION},
         "registry_digest",
     ),
 )
@@ -182,6 +191,8 @@ def candidate_manifest_payload(
     return {
         "dataset_schema_version": DATASET_SCHEMA_VERSION,
         "benchmark_id": BENCHMARK_ID,
+        "trusted_reference_registry_version": TRUSTED_REFERENCE_REGISTRY_VERSION,
+        "trusted_reference_registry_digest": trusted_reference_registry_digest(),
         "variant_ids": variant_ids,
         "buggy_bucket_ids": list(BUGGY_BUCKET_IDS),
         "clean_family_definitions": clean_family_definitions(),
@@ -232,6 +243,8 @@ def validate_freeze_draft(draft: Any) -> FreezeDraftValidationResult:
     manifest_payload = {
         "dataset_schema_version": DATASET_SCHEMA_VERSION,
         "benchmark_id": BENCHMARK_ID,
+        "trusted_reference_registry_version": TRUSTED_REFERENCE_REGISTRY_VERSION,
+        "trusted_reference_registry_digest": trusted_reference_registry_digest(),
         "variant_ids": expected_variant_ids,
         "buggy_bucket_ids": list(BUGGY_BUCKET_IDS),
         "clean_family_definitions": clean_family_definitions(),
@@ -251,6 +264,16 @@ def validate_freeze_draft(draft: Any) -> FreezeDraftValidationResult:
             ReasonCode.WRONG_DIGEST,
             "draft.coverage_registry_identity.registry_digest",
             "coverage registry digest does not match the stable P2a registry",
+        )
+    expected_reference_registry_digest = trusted_reference_registry_digest()
+    if (
+        canonical_identities["trusted_reference_registry_identity"]["registry_digest"]
+        != expected_reference_registry_digest
+    ):
+        _fail(
+            ReasonCode.WRONG_DIGEST,
+            "draft.trusted_reference_registry_identity.registry_digest",
+            "trusted reference registry digest does not match the reviewed legacy contract",
         )
     freeze_timestamp = _validate_timestamp(value["freeze_timestamp"])
 

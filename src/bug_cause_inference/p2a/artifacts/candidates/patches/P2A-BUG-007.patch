@@ -1,0 +1,5 @@
+--- a/checkout/inventory.py
++++ b/checkout/inventory.py
+@@ -19 +19 @@
+-    return {**record, "reserved": max(0, reserved - quantity)}
++    return {**record, "reserved": reserved - quantity}

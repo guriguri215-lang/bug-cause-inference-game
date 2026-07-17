@@ -1,0 +1,596 @@
+{
+  "schema_version": "p2a_candidate_authoring_manifest.v2",
+  "status": "review_pending",
+  "patch_operation_schema_version": "p2a_patch_operation.v1",
+  "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+  "dataset_identity": {
+    "schema_version": "p2a_same_domain_dataset.v1",
+    "benchmark_id": "p2a_checkout_pricing_same_domain_expansion_v1"
+  },
+  "trusted_reference_registry_identity": {
+    "registry_version": "p2a_trusted_reference_registry.v1",
+    "registry_digest": "e430974d39f7b137a0a2d0c754a43613a42a081cc4800ec2ca4a90b172e6d203"
+  },
+  "coverage_gap_registry_identity": {
+    "registry_version": "p2a_coverage_gap_registry.v1",
+    "registry_digest": "3e36bad4553da16ab3053fc0f976a5dad80d055422339add6a80df5b2c89ed15"
+  },
+  "candidate_manifest_digest": "97c2d0c0379d69010195a4b7448137e566214d88638b0f7642ee59677389cd47",
+  "variant_ids": [
+    "P2A-BUG-001",
+    "P2A-BUG-002",
+    "P2A-BUG-003",
+    "P2A-BUG-004",
+    "P2A-BUG-005",
+    "P2A-BUG-006",
+    "P2A-BUG-007",
+    "P2A-BUG-008",
+    "P2A-BUG-009",
+    "P2A-BUG-010",
+    "P2A-CLEAN-001",
+    "P2A-CLEAN-002",
+    "P2A-CLEAN-003",
+    "P2A-CLEAN-004",
+    "P2A-CLEAN-005"
+  ],
+  "buggy_bucket_membership": [
+    {
+      "bucket_id": "boundary_precision",
+      "candidate_ids": [
+        "P2A-BUG-001",
+        "P2A-BUG-002"
+      ]
+    },
+    {
+      "bucket_id": "missing_optional_input",
+      "candidate_ids": [
+        "P2A-BUG-003",
+        "P2A-BUG-004"
+      ]
+    },
+    {
+      "bucket_id": "config_normalization",
+      "candidate_ids": [
+        "P2A-BUG-005",
+        "P2A-BUG-006"
+      ]
+    },
+    {
+      "bucket_id": "state_sequence",
+      "candidate_ids": [
+        "P2A-BUG-007",
+        "P2A-BUG-008"
+      ]
+    },
+    {
+      "bucket_id": "spec_semantics",
+      "candidate_ids": [
+        "P2A-BUG-009",
+        "P2A-BUG-010"
+      ]
+    }
+  ],
+  "clean_family_membership": [
+    {
+      "family_id": "boundary_adjacent_valid_behavior",
+      "candidate_ids": [
+        "P2A-CLEAN-001"
+      ]
+    },
+    {
+      "family_id": "optional_input_valid_absence",
+      "candidate_ids": [
+        "P2A-CLEAN-002"
+      ]
+    },
+    {
+      "family_id": "config_equivalent_normalization",
+      "candidate_ids": [
+        "P2A-CLEAN-003"
+      ]
+    },
+    {
+      "family_id": "valid_state_sequence",
+      "candidate_ids": [
+        "P2A-CLEAN-004"
+      ]
+    },
+    {
+      "family_id": "nonintuitive_spec_conformance",
+      "candidate_ids": [
+        "P2A-CLEAN-005"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "variant_id": "P2A-BUG-001",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "boundary_precision",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-001.patch",
+      "patch_sha256": "fb828c07825746dab12831dc90504b4471894e4d24ae5381425e26a60d56ecb1",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "189e5a9e407db27253d0da93360ae90bb727076c3906670e19ab78a18d0fe172",
+      "changed_files": [
+        "checkout/cart.py"
+      ],
+      "changed_functions": [
+        "cart.validate_item"
+      ],
+      "oracle_ids": [
+        "boundary.quantity_zero_rejected"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "522d5fc6c4ca95e8c24b005470bb55def7a4328469bc052a78d53388a5948883",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "boundary.quantity_zero_rejected",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-002",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "boundary_precision",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-002.patch",
+      "patch_sha256": "57168b75361ff6ca8039aa41a0326edc0136758dabb78329f8ddc2eaf3a10cea",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "acfd75933f3ec5017403dbb6f26f4db6023fb5ed7da2f8a46662eb10e545126c",
+      "changed_files": [
+        "checkout/cart.py"
+      ],
+      "changed_functions": [
+        "cart.validate_item"
+      ],
+      "oracle_ids": [
+        "boundary.quantity_over_max_rejected"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "fb2a6d316edd52d5432e24a0d0b60ec2b45a5a48179be67560a27d2ce9673ad4",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "boundary.quantity_over_max_rejected",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-003",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "missing_optional_input",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-003.patch",
+      "patch_sha256": "68cdd7a8b9d5e1f4fac818d16fdcb7d12c999d40e2bd480d4b962449740c4a92",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "7adb19ad567b0c6d3c66431409008473be0869d8f2c9e632a240aa9cd3027a2c",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.get_region_defaults"
+      ],
+      "oracle_ids": [
+        "missing.region_defaults_domestic"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "b6e55149b21cf2a3afb9adc159ad46212141cd52780f9c18ab47411db7615f5d",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "missing.region_defaults_domestic",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-004",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "missing_optional_input",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-004.patch",
+      "patch_sha256": "62e7bc6bc3f9855299f7413d3530373f13008a6658682285dbb44af2bfe4a2cf",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "36bc8209347d1232a67479936562981c705ffb3505087f22130650ca8a393024",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.get_tax_rate"
+      ],
+      "oracle_ids": [
+        "missing.tax_rates_absent_us_zero"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "178d5c3e14af4829d91da70b138cc4caa0b89e9b57f8419805226789e0c3b185",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "missing.tax_rates_absent_us_zero",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-005",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "config_normalization",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-005.patch",
+      "patch_sha256": "8bcbc4fcdccd41ffd92fe27fa25a8f6a0d95a66770832b779c35fa837d62c147",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "b9f8643e752f3b7eed6d7bc2562d390383dc24b36c94072af1c21189ec76e7ba",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.get_tax_rate"
+      ],
+      "oracle_ids": [
+        "config.explicit_fractional_tax_rate"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "5a197f089bcccb6bd139de55d9f853b91537f520a16d5acb179858f567c4b94d",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "config.explicit_fractional_tax_rate",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-006",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "config_normalization",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-006.patch",
+      "patch_sha256": "095a4ecc21fb5408aceaf62f009e113ccaecff1bd81a2455ab3665bb8ef0cc87",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "352b9cce6910d2c3b531242c84733ed0e2913ef15b77a6fd475657a29eb2eb29",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.load_config"
+      ],
+      "oracle_ids": [
+        "config.threshold_override_exact_value"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "8f63e8b2ccb8a2a54b9c538fcbde0a25fdf70fc38235257d3a9901ded35e3fb3",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "config.threshold_override_exact_value",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-007",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "state_sequence",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-007.patch",
+      "patch_sha256": "85646fa091547497bc12f523a4f6f95d6cda5d07f63ec7b66327cdeda77f2c6f",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "d4313e02c323f5bb024439575ddd93f7e751f356c3cdf0c39cda03cc8ba9f742",
+      "changed_files": [
+        "checkout/inventory.py"
+      ],
+      "changed_functions": [
+        "inventory.cancel_reservation"
+      ],
+      "oracle_ids": [
+        "state.over_cancel_clamps_reserved_zero"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "8fa20873081ad4066e9fa4b63b02d8211ebcf18c25943f12805a90f44cb8a949",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "state.over_cancel_clamps_reserved_zero",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-008",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "state_sequence",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-008.patch",
+      "patch_sha256": "7c11b70025dcfdef22898103a8656f2d8afa6d492403ac24c52c075967cb374c",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "f706550df1d3b2fdb015c29e5199e77b8a2f16ab29d145ef839b3f4e88f378f0",
+      "changed_files": [
+        "checkout/discounts.py"
+      ],
+      "changed_functions": [
+        "discounts.apply_coupon"
+      ],
+      "oracle_ids": [
+        "state.coupon_preserves_unrelated_state"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "cbb3c0c0182d8ceddc6d813161d576dec14f15be7c0887165a16c09ebed9c054",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "state.coupon_preserves_unrelated_state",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-009",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "spec_semantics",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-009.patch",
+      "patch_sha256": "68903ccc686878bdae8b73489596978006c2a422ed6ac17bbbb5d7db88c45030",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "84f1278ddc8d9cee2f1f30ad750b55fe4781abbe7eef4d7a943a41eee525d8df",
+      "changed_files": [
+        "checkout/shipping.py"
+      ],
+      "changed_functions": [
+        "shipping.resolve_region_rate"
+      ],
+      "oracle_ids": [
+        "spec.unknown_region_uses_domestic_rate"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "6a69224f8acc85aa26d6207061a3f8ee8cb8b5955f5cf8a562e25cb5aac66840",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "spec.unknown_region_uses_domestic_rate",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-BUG-010",
+      "cohort_kind": "buggy",
+      "primary_taxonomy_id": "spec_semantics",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-010.patch",
+      "patch_sha256": "843ec18c88a2fcfd45e8ea7a04c4c5302472b9856cc3fe3a0c5b793672eeffd7",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "adffa621ae4bf0fd83ef5bab4d95aef4927e5e94f8f059fe678bce6d19ba2580",
+      "changed_files": [
+        "checkout/discounts.py"
+      ],
+      "changed_functions": [
+        "discounts.compute_discount"
+      ],
+      "oracle_ids": [
+        "spec.nonstacking_chooses_larger_discount"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "3fb254a8e916d5c32981b2fa6ad634b6736e1c7981a60e0055d020ee849cade5",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "required_fail_observed",
+      "oracle_statuses": [
+        {
+          "oracle_id": "spec.nonstacking_chooses_larger_discount",
+          "baseline_status": "pass",
+          "candidate_status": "fail"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-CLEAN-001",
+      "cohort_kind": "clean_stress",
+      "primary_taxonomy_id": "boundary_adjacent_valid_behavior",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-001.patch",
+      "patch_sha256": "c0a1b7d75e313d91ec0653ddd361f926e1f69ad5025e78878e80aa114c8e3caa",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "f66047aca4a74e563fe501b7e798dd89d3560a2234f934cb2f5d08b54ad3c11d",
+      "changed_files": [
+        "checkout/cart.py"
+      ],
+      "changed_functions": [
+        "cart.validate_item"
+      ],
+      "oracle_ids": [
+        "clean.boundary_max_accepted",
+        "clean.boundary_over_max_rejected"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "bd5afe368cb585362cb4eb4402ce926d6241981288f219701f685f3e04c5982f",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "all_pass",
+      "oracle_statuses": [
+        {
+          "oracle_id": "clean.boundary_max_accepted",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.boundary_over_max_rejected",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-CLEAN-002",
+      "cohort_kind": "clean_stress",
+      "primary_taxonomy_id": "optional_input_valid_absence",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-002.patch",
+      "patch_sha256": "ef17bf8a5eb330d52e7ef9b122c4b574b01141bf23d15b6bc90fefa25ddd39f1",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "f542903930a9b5b70ad20e9a01c095addd1d93e0a360561a6ede884b72050485",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.get_region_aliases"
+      ],
+      "oracle_ids": [
+        "clean.optional_alias_copy_isolated",
+        "clean.optional_aliases_absent_empty"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "70c11c90fe09217bfa81f5e215dd91e91e3c92936884f90778b6be1c3d702bd3",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "all_pass",
+      "oracle_statuses": [
+        {
+          "oracle_id": "clean.optional_alias_copy_isolated",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.optional_aliases_absent_empty",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-CLEAN-003",
+      "cohort_kind": "clean_stress",
+      "primary_taxonomy_id": "config_equivalent_normalization",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-003.patch",
+      "patch_sha256": "2ab2975d1537a7ea841ca2744515020f12d914b8a88668c967bcd664d64adea9",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "a1416cffd9e3933ab19b1ac076b0be2a19380c7d4616765631e54254a9431ddc",
+      "changed_files": [
+        "checkout/config.py"
+      ],
+      "changed_functions": [
+        "config.get_tax_rate"
+      ],
+      "oracle_ids": [
+        "clean.config_absent_jp_fallback",
+        "clean.config_absent_us_fallback",
+        "clean.config_explicit_zero_rate",
+        "clean.config_present_none_jp_raises",
+        "clean.config_present_none_us_raises",
+        "clean.config_string_rate_equivalence"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "ced7810b6c41e4787a01e1ace7eef3a0326bbe191ee482d63180171308b666a8",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "all_pass",
+      "oracle_statuses": [
+        {
+          "oracle_id": "clean.config_absent_jp_fallback",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.config_absent_us_fallback",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.config_explicit_zero_rate",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.config_present_none_jp_raises",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.config_present_none_us_raises",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.config_string_rate_equivalence",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-CLEAN-004",
+      "cohort_kind": "clean_stress",
+      "primary_taxonomy_id": "valid_state_sequence",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-004.patch",
+      "patch_sha256": "eb614f960d83f19a7ddccfc4f7162397f008c42dd2e2089cb3c09753c468b65d",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "def17ae48faea672b1c5f9f1db81040136490e8c1557bbdf1079cbe84100af0b",
+      "changed_files": [
+        "checkout/discounts.py"
+      ],
+      "changed_functions": [
+        "discounts.apply_coupon"
+      ],
+      "oracle_ids": [
+        "clean.state_coupon_idempotent",
+        "clean.state_coupon_preserves_session"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "9e89b5618b4307ef6557f63bac9090008757e3ab0d28e09713e007d87b2025f3",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "all_pass",
+      "oracle_statuses": [
+        {
+          "oracle_id": "clean.state_coupon_idempotent",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.state_coupon_preserves_session",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        }
+      ]
+    },
+    {
+      "variant_id": "P2A-CLEAN-005",
+      "cohort_kind": "clean_stress",
+      "primary_taxonomy_id": "nonintuitive_spec_conformance",
+      "patch_path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-005.patch",
+      "patch_sha256": "b78e400beeffcd5a9a9c84bf39c25f3b67a4b2c03eb41605700806b9331c8778",
+      "patch_operation_schema_version": "p2a_patch_operation.v1",
+      "patch_operation_digest": "8d3124fe6de3ef4e497edcbe122d09eccdb579a1b60527a7d463b17c93e3d989",
+      "changed_files": [
+        "checkout/discounts.py"
+      ],
+      "changed_functions": [
+        "discounts.apply_bogo_discount"
+      ],
+      "oracle_ids": [
+        "clean.spec_bogo_ignores_ineligible",
+        "clean.spec_bogo_selects_cheapest"
+      ],
+      "oracle_definition_schema_version": "p2a_ground_truth_oracle.v2",
+      "oracle_definition_digest": "74260f864f63fc6fd2215acab19b50a000b42c49300774c6c9bacfb95a129314",
+      "baseline_ground_truth_status": "all_pass",
+      "candidate_ground_truth_status": "all_pass",
+      "oracle_statuses": [
+        {
+          "oracle_id": "clean.spec_bogo_ignores_ineligible",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        },
+        {
+          "oracle_id": "clean.spec_bogo_selects_cheapest",
+          "baseline_status": "pass",
+          "candidate_status": "pass"
+        }
+      ]
+    }
+  ]
+}

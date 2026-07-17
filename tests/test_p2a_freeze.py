@@ -14,10 +14,13 @@ from bug_cause_inference.p2a.adequacy import (
     CLEAN_STRESS_FAMILY_IDS,
     COVERAGE_GAP_REGISTRY_VERSION,
     DATASET_SCHEMA_VERSION,
+    TRUSTED_REFERENCE_REGISTRY_VERSION,
     AdequacyValidationError,
     ReasonCode,
     clean_family_definitions,
     coverage_gap_registry_digest,
+    trusted_reference_by_id,
+    trusted_reference_registry_digest,
 )
 from bug_cause_inference.p2a.freeze import (
     ARTIFACT_MANIFEST_SCHEMA_VERSION,
@@ -37,21 +40,24 @@ def _digest(label: str) -> str:
 
 def _fingerprint(seed: str, *, legacy: bool = False) -> dict[str, object]:
     prefix = "legacy" if legacy else "candidate"
+    oracle_id = f"synthetic.oracle.{seed}"
     return {
         "spec_rule": f"{prefix} rule {seed}",
         "causal_mechanism": f"{prefix} mechanism {seed}",
         "target_function_set": [f"checkout.{prefix}_{seed}.target"],
         "trigger_shape": f"{prefix} trigger {seed}",
         "observable_behavior": f"{prefix} observable {seed}",
-        "oracle_outcome_vector": [f"{prefix}-oracle-{seed}:pass"],
+        "oracle_outcome_vector": [{"oracle_id": oracle_id, "expected_outcome": "fail"}],
         "normalized_patch_operation": f"replace {prefix} operation {seed}",
-        "interaction_depth": "single_function" if legacy else "cross_function",
+        "interaction_depth": f"synthetic_depth_{seed}" if not legacy else "single_function",
     }
 
 
 def _synthetic_not_admitted_bug(bucket: str, index: int) -> dict[str, object]:
     bucket_order = BUGGY_BUCKET_IDS.index(bucket) + 1
     seed = f"bug-{bucket_order}-{index}"
+    nearest = trusted_reference_by_id("P1B-BUG-001")
+    fingerprint = _fingerprint(seed)
     return {
         "variant_id": f"P2A-BUG-SYNTHETIC-{bucket_order:02d}-{index:02d}",
         "cohort": "buggy_expansion",
@@ -72,20 +78,26 @@ def _synthetic_not_admitted_bug(bucket: str, index: int) -> dict[str, object]:
         "patch_semantic_fingerprint": f"synthetic patch {seed}",
         "changed_files": ["checkout/candidate_fixture.py"],
         "changed_functions": [f"checkout.candidate_fixture.target_{seed}"],
-        "interaction_depth": "cross_function",
+        "interaction_depth": fingerprint["interaction_depth"],
         "fix_intent_category": "synthetic_fix",
         "difficulty": "synthetic",
         "nearest_legacy_or_admitted_variant_id": "P1B-BUG-001",
         "material_difference_dimensions": ["spec/mechanism", "target_function_set"],
         "diversity_rationale": f"synthetic rule and target differences {seed}",
-        "core_fingerprint": _fingerprint(seed),
-        "nearest_reference_core_fingerprint": _fingerprint(seed, legacy=True),
+        "core_fingerprint": fingerprint,
+        "nearest_reference_core_fingerprint": deepcopy(nearest.core_fingerprint),
+        "nearest_reference_core_fingerprint_digest": nearest.core_fingerprint_digest,
     }
 
 
 def _synthetic_not_admitted_clean(family_id: str) -> dict[str, object]:
     family_order = CLEAN_STRESS_FAMILY_IDS.index(family_id) + 1
     seed = f"clean-{family_order}"
+    nearest = trusted_reference_by_id("P1B-CLEAN-021")
+    fingerprint = _fingerprint(seed)
+    fingerprint["oracle_outcome_vector"] = [
+        {"oracle_id": f"synthetic.no_bug.{seed}", "expected_outcome": "pass"}
+    ]
     return {
         "variant_id": f"P2A-CLEAN-SYNTHETIC-{family_order:02d}-01",
         "cohort": "clean_stress_expansion",
@@ -105,12 +117,13 @@ def _synthetic_not_admitted_clean(family_id: str) -> dict[str, object]:
         "patch_semantic_fingerprint": f"synthetic benign patch {seed}",
         "changed_files": ["checkout/clean_fixture.py"],
         "changed_functions": [f"checkout.clean_fixture.touched_{seed}"],
-        "interaction_depth": "cross_function",
+        "interaction_depth": fingerprint["interaction_depth"],
         "nearest_legacy_or_admitted_clean_variant_id": "P1B-CLEAN-021",
         "material_difference_dimensions": ["spec/mechanism", "target_function_set"],
         "diversity_rationale": f"synthetic clean rule and target differences {seed}",
-        "core_fingerprint": _fingerprint(seed),
-        "nearest_reference_core_fingerprint": _fingerprint(seed, legacy=True),
+        "core_fingerprint": fingerprint,
+        "nearest_reference_core_fingerprint": deepcopy(nearest.core_fingerprint),
+        "nearest_reference_core_fingerprint_digest": nearest.core_fingerprint_digest,
     }
 
 
@@ -166,6 +179,10 @@ def _draft() -> dict[str, object]:
             "registry_version": COVERAGE_GAP_REGISTRY_VERSION,
             "registry_digest": coverage_gap_registry_digest(),
         },
+        "trusted_reference_registry_identity": {
+            "registry_version": TRUSTED_REFERENCE_REGISTRY_VERSION,
+            "registry_digest": trusted_reference_registry_digest(),
+        },
         "freeze_timestamp": "2000-01-01T00:00:00Z",
         "buggy_bucket_ids": list(BUGGY_BUCKET_IDS),
         "clean_family_definitions": clean_family_definitions(),
@@ -179,6 +196,13 @@ def _assert_reason(code: ReasonCode, draft: dict[str, object]) -> None:
     with pytest.raises(AdequacyValidationError) as exc_info:
         validate_freeze_draft(draft)
     assert exc_info.value.issue.code == code.value
+
+
+_OUTCOME_QUALIFIED_MATRIX_IDENTIFIERS = (
+    "policy outcome matrix",
+    "outcome matrix",
+    "policy_outcome_matrix",
+)
 
 
 def test_synthetic_draft_validation_is_deterministic_and_never_claims_official_status():
@@ -203,6 +227,23 @@ def test_mapping_key_insertion_order_does_not_change_canonical_draft_identity():
         for key in reversed(original["dataset_identity"])
     }
     assert validate_freeze_draft(original).draft_digest == validate_freeze_draft(reversed_top).draft_digest
+
+
+def test_core_and_oracle_mapping_insertion_order_do_not_change_manifest_or_draft_digest():
+    original = _draft()
+    reversed_draft = deepcopy(original)
+    fingerprint = reversed_draft["buggy_candidates"][0]["core_fingerprint"]
+    fingerprint["oracle_outcome_vector"][0] = {
+        key: fingerprint["oracle_outcome_vector"][0][key]
+        for key in reversed(fingerprint["oracle_outcome_vector"][0])
+    }
+    reversed_draft["buggy_candidates"][0]["core_fingerprint"] = {
+        key: fingerprint[key] for key in reversed(fingerprint)
+    }
+    original_result = validate_freeze_draft(original)
+    reversed_result = validate_freeze_draft(reversed_draft)
+    assert original_result.candidate_manifest_digest == reversed_result.candidate_manifest_digest
+    assert original_result.draft_digest == reversed_result.draft_digest
 
 
 def test_list_order_mutation_is_rejected_instead_of_normalized():
@@ -274,6 +315,7 @@ def test_repository_relative_provenance_paths_are_allowed():
         ("metric_identity", "identity_version"),
         ("serializer_identity", "identity_version"),
         ("coverage_registry_identity", "registry_version"),
+        ("trusted_reference_registry_identity", "registry_version"),
     ],
 )
 def test_wrong_identity_versions_are_rejected(identity_name: str, version_field: str):
@@ -294,6 +336,7 @@ def test_wrong_identity_versions_are_rejected(identity_name: str, version_field:
         ("metric_identity", "digest"),
         ("serializer_identity", "digest"),
         ("coverage_registry_identity", "registry_digest"),
+        ("trusted_reference_registry_identity", "registry_digest"),
     ],
 )
 def test_missing_identity_digests_are_rejected(identity_name: str, digest_field: str):
@@ -308,6 +351,9 @@ def test_wrong_candidate_manifest_and_registry_digests_are_rejected():
     _assert_reason(ReasonCode.WRONG_DIGEST, draft)
     draft = _draft()
     draft["coverage_registry_identity"]["registry_digest"] = _digest("wrong registry")
+    _assert_reason(ReasonCode.WRONG_DIGEST, draft)
+    draft = _draft()
+    draft["trusted_reference_registry_identity"]["registry_digest"] = _digest("wrong trusted registry")
     _assert_reason(ReasonCode.WRONG_DIGEST, draft)
 
 
@@ -334,4 +380,102 @@ def test_freeze_timestamp_is_caller_supplied_canonical_utc_only(timestamp: str):
 def test_unknown_nested_identity_field_is_not_silently_hashed():
     draft = _draft()
     draft["metric_identity"]["unknown"] = "not canonical"
+    _assert_reason(ReasonCode.UNKNOWN_FIELD, draft)
+
+
+@pytest.mark.parametrize(
+    "policy_id",
+    [
+        "fixed_checklist",
+        "test_first",
+        "coverage_first",
+        "recent_diff_first",
+        "cause_only_p1a_style",
+        "expected_utility_per_cost",
+        "random_action",
+        "state_sequence_guard",
+    ],
+)
+def test_formal_policy_id_embedding_is_rejected_at_freeze_value_boundary(policy_id: str):
+    draft = _draft()
+    draft["buggy_candidates"][0]["diversity_rationale"] = f"nested narrative embeds {policy_id}"
+    _assert_reason(ReasonCode.FORMAL_POLICY_ID_FORBIDDEN, draft)
+
+
+@pytest.mark.parametrize(
+    "outcome_text",
+    [
+        "clean false-positive rate = 0.0",
+        "clean_false_positive_outcome: 0/5",
+        "clean false positive 0%",
+    ],
+)
+def test_clean_false_positive_result_encodings_are_rejected_at_freeze_boundary(outcome_text: str):
+    draft = _draft()
+    draft["clean_candidates"][0]["recommended_no_bug_evidence"] = outcome_text
+    _assert_reason(ReasonCode.CLEAN_FALSE_POSITIVE_OUTCOME_FORBIDDEN, draft)
+
+
+@pytest.mark.parametrize(
+    "field_context",
+    [
+        "action_test_catalog_ids",
+        "buggy_oracle_ids",
+        "buggy_nested_oracle_id",
+        "clean_no_bug_oracle_ids",
+        "clean_nested_oracle_id",
+    ],
+)
+@pytest.mark.parametrize(
+    "outcome_identity",
+    _OUTCOME_QUALIFIED_MATRIX_IDENTIFIERS,
+)
+def test_outcome_qualified_matrix_identity_is_rejected_at_public_freeze_boundary(
+    field_context: str,
+    outcome_identity: str,
+):
+    draft = _draft()
+    if field_context == "action_test_catalog_ids":
+        draft["buggy_candidates"][0]["action_test_catalog_ids"] = [
+            outcome_identity
+        ]
+    elif field_context == "buggy_oracle_ids":
+        draft["buggy_candidates"][0]["oracle_ids"] = [outcome_identity]
+    elif field_context == "buggy_nested_oracle_id":
+        draft["buggy_candidates"][0]["core_fingerprint"][
+            "oracle_outcome_vector"
+        ][0]["oracle_id"] = outcome_identity
+    elif field_context == "clean_no_bug_oracle_ids":
+        draft["clean_candidates"][0]["no_bug_oracle_ids"] = [outcome_identity]
+    else:
+        draft["clean_candidates"][0]["core_fingerprint"][
+            "oracle_outcome_vector"
+        ][0]["oracle_id"] = outcome_identity
+    _assert_reason(ReasonCode.POLICY_OUTCOME_FIELD_FORBIDDEN, draft)
+
+
+def test_oracle_list_order_is_semantic_and_reordered_records_are_rejected():
+    draft = _draft()
+    candidate = draft["buggy_candidates"][0]
+    candidate["core_fingerprint"]["oracle_outcome_vector"] = [
+        {"oracle_id": "synthetic.oracle.a", "expected_outcome": "fail"},
+        {"oracle_id": "synthetic.oracle.b", "expected_outcome": "pass"},
+    ]
+    candidate["oracle_ids"] = ["synthetic.oracle.a", "synthetic.oracle.b"]
+    draft["dataset_identity"]["candidate_manifest_digest"] = candidate_manifest_digest(
+        draft["buggy_candidates"],
+        draft["clean_candidates"],
+    )
+    candidate["core_fingerprint"]["oracle_outcome_vector"].reverse()
+    _assert_reason(ReasonCode.WRONG_IDENTITY, draft)
+
+
+def test_unknown_oracle_nested_field_never_reaches_manifest_digest():
+    buggy, clean = _synthetic_not_admitted_candidates()
+    buggy[0]["core_fingerprint"]["oracle_outcome_vector"][0]["unknown"] = "must not hash"
+    with pytest.raises(AdequacyValidationError) as exc_info:
+        candidate_manifest_digest(buggy, clean)
+    assert exc_info.value.issue.code == ReasonCode.UNKNOWN_FIELD.value
+    draft = _draft()
+    draft["buggy_candidates"][0]["core_fingerprint"]["oracle_outcome_vector"][0]["unknown"] = "must not hash"
     _assert_reason(ReasonCode.UNKNOWN_FIELD, draft)

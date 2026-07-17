@@ -1,0 +1,6 @@
+--- a/checkout/config.py
++++ b/checkout/config.py
+@@ -55 +55,2 @@
+-    return dict(config.get("region_aliases", {}))
++    aliases = config.get("region_aliases", {})
++    return dict(aliases)

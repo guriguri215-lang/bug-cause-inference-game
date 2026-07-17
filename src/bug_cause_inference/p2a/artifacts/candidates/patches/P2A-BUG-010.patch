@@ -1,0 +1,5 @@
+--- a/checkout/discounts.py
++++ b/checkout/discounts.py
+@@ -45 +45 @@
+-        return max(member_discount, coupon_discount)
++        return min(member_discount, coupon_discount)

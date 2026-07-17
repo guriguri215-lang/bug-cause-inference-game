@@ -1,0 +1,5 @@
+--- a/checkout/config.py
++++ b/checkout/config.py
+@@ -51 +51 @@
+-    return dict(config.get("region_defaults", {"missing": "domestic"}))
++    return dict(config["region_defaults"])
