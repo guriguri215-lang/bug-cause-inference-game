@@ -57,6 +57,8 @@
 - P2b exact descriptive diagnostic: 240 case evaluations, catalog reachability `10/10`, one-step budget feasibility `10/10`, minimum costs `2,2,2,2,3,3,4,4,2,2`, and saved-policy ceiling gaps `4/5,4/5,4/5,4/5,1,1`.
 - P2b software conformance, versioned artifact identity, descriptive result, and public documentation were accepted as four separate decisions; the documentation decision followed independent documentation review and required verification.
 - P2b result interpretation note: [`docs/p2b_result_interpretation.md`](p2b_result_interpretation.md).
+- P2c frozen-policy trajectory audit source, tests, and proposed versioned JSON/Markdown evidence for the accepted expansion-only `10 × 6 = 60` trajectories. The replay exactly matches accepted P2a discovery outcomes and accepted P2b detector mappings.
+- P2c software conformance remains pending independent implementation review. Its artifact identity and descriptive result remain proposed evidence pending separate post-merge acceptance, and public result interpretation remains a separate closeout slice.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -93,7 +95,7 @@
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 - A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
-- P2c, a second domain, no-diff clean stress, inferential P2b analysis, or P2b production-readiness claim.
+- A public P2c result-interpretation closeout, new or tuned policy, P2c counterfactual/DP analysis, a second domain, no-diff clean stress, inferential analysis, or production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -146,6 +148,7 @@
 - The fixed legacy fix-intent posterior label space does not contain the expansion authoring labels.
 - P2b is an analysis-only, ground-truth-informed, non-deployable one-step diagnostic over the fixed P2a cohort and catalog. It does not establish a seventh policy, policy winner, causal policy inferiority, general upper bound, unseen-variant behavior, or production readiness.
 - P2b `catalog_reachable_policy_missed` means only a selection/order/stop trajectory limitation under the fixed contract. The one-step ceiling does not identify which trajectory mechanism caused a miss and ignores multi-step context-dependent evidence.
+- P2c selection, recorded budget feasibility, and termination are overlapping descriptive axes, not mutually exclusive causal explanations. Terminal budget feasibility does not imply that an action remains selectable after the runner's stop condition fires.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
