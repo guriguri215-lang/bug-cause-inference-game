@@ -32,7 +32,6 @@ from bug_cause_inference.p1b.models import (
     P1BStepTrace,
     rank_distribution,
     uniform_distribution,
-    update_distribution,
 )
 from bug_cause_inference.p2a import evaluation as p2a_evaluation
 from bug_cause_inference.p2a.adequacy import validate_portable_value
@@ -537,6 +536,24 @@ def terminal_state_digest(state: Any) -> str:
     return _canonical_digest(_terminal_state_payload(state))
 
 
+def _update_distribution_portable(
+    prior: Mapping[str, float], weights: Mapping[str, float]
+) -> dict[str, float]:
+    """Reproduce the frozen normalization independently of ``sum`` version."""
+
+    combined = {
+        label: probability * weights.get(label, 1.0)
+        for label, probability in prior.items()
+    }
+    total = math.fsum(max(value, 0.0) for value in combined.values())
+    if total <= 0:
+        if not combined:
+            return {}
+        value = 1.0 / len(combined)
+        return {key: value for key in combined}
+    return {key: max(value, 0.0) / total for key, value in combined.items()}
+
+
 def _run_policy_to_terminal(
     variant: Any,
     policy: str,
@@ -596,13 +613,13 @@ def _run_policy_to_terminal(
         state.bug_presence = p1b_policies._update_bug_presence(
             state.bug_presence, observation.bug_detected, observation.no_bug_evidence
         )
-        state.cause_posterior = update_distribution(
+        state.cause_posterior = _update_distribution_portable(
             state.cause_posterior, observation.cause_scores
         )
-        state.location_posterior = update_distribution(
+        state.location_posterior = _update_distribution_portable(
             state.location_posterior, observation.location_scores
         )
-        state.fix_intent_posterior = update_distribution(
+        state.fix_intent_posterior = _update_distribution_portable(
             state.fix_intent_posterior, observation.fix_intent_scores
         )
         if observation.reproduction_input and reproduction_input is None:
@@ -710,13 +727,13 @@ def _execute_one_action(
     state.bug_presence = p1b_policies._update_bug_presence(
         state.bug_presence, observation.bug_detected, observation.no_bug_evidence
     )
-    state.cause_posterior = update_distribution(
+    state.cause_posterior = _update_distribution_portable(
         state.cause_posterior, observation.cause_scores
     )
-    state.location_posterior = update_distribution(
+    state.location_posterior = _update_distribution_portable(
         state.location_posterior, observation.location_scores
     )
-    state.fix_intent_posterior = update_distribution(
+    state.fix_intent_posterior = _update_distribution_portable(
         state.fix_intent_posterior, observation.fix_intent_scores
     )
     post_remaining = settings.budget_limit - state.cumulative_cost

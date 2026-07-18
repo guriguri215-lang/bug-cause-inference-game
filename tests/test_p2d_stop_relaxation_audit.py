@@ -173,6 +173,24 @@ def test_residual_stop_precedence_and_fresh_score_semantics(monkeypatch) -> None
     assert rows[-1]["fired"] is True
 
 
+def test_portable_distribution_update_has_frozen_reference_values() -> None:
+    prior = {
+        "major": 0.2,
+        "minor_1": 0.2,
+        "minor_2": 0.2,
+        "minor_3": 0.2,
+        "minor_4": 0.2,
+    }
+    weights = {"major": 3.0}
+    assert audit._update_distribution_portable(prior, weights) == {
+        "major": 0.4285714285714286,
+        "minor_1": 0.14285714285714285,
+        "minor_2": 0.14285714285714285,
+        "minor_3": 0.14285714285714285,
+        "minor_4": 0.14285714285714285,
+    }
+
+
 def test_policy_selector_receives_only_frozen_visible_arguments(monkeypatch) -> None:
     calls: list[tuple] = []
     events: list[dict] = []

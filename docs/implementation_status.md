@@ -200,7 +200,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 The implementation-time P2d checkpoint records:
 
 ```text
-P2d targeted                          33 passed
+P2d targeted                          34 passed
 ordered support                       60 / 60
 accepted P2c replay agreement         60 / 60
 intervention candidates               52 / 60
@@ -215,9 +215,9 @@ accepted input identities             50 / 50
 
 Proposed versioned P2d artifacts:
 
-- JSON: 248,450 bytes, SHA-256 `70cab63accec4db04829bb789c537d77187ad8af51c26d23f407ad8eb4c7bd42`.
-- Markdown: 249,662 bytes, SHA-256 `ca8cee11533ec277396733a2f6fdf7975bcb8f4407d2dfe1fe940d6652fc0b1c`.
-- Validated-summary digest: `9e7a503adbc131825632f923c0976c9c0debf829b19872983fa578f009c2f9b4`.
+- JSON: 248,450 bytes, SHA-256 `5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93`.
+- Markdown: 249,662 bytes, SHA-256 `633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4`.
+- Validated-summary digest: `fab660ba884ec3c1b1bc0ba5348dff168a850cb6e305f9eb708b03c3205e4fc0`.
 - 50-file identity-contract digest: `7d127bcedb58f59487e16b3ec9c3a300753fe48108ef2d8a676b4c8b059217b8`.
 
 Two isolated fresh runs match both tracked files byte-for-byte and semantically. Software conformance is accepted by independent implementation review; artifact identity, descriptive result, and public documentation remain pending separate acceptance. This evidence does not establish causal attribution, policy ranking or improvement, multi-step reachability, or deployability.
