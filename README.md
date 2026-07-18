@@ -10,6 +10,8 @@ P1b currently has two observation modes. `metadata_synth` is the frozen Phase A/
 
 P2a is a frozen, versioned same-domain evidence expansion of the small checkout/pricing benchmark. It adds 10 buggy and 5 clean hand-authored variants, keeps accepted legacy references separate from P2a replay and expansion results, and reports only descriptive evidence for the fixed cohort and six deterministic policies. See [`docs/p2a_result_interpretation.md`](docs/p2a_result_interpretation.md) and the versioned [JSON](src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.json) and [Markdown](src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.md) evidence artifacts.
 
+P2b adds a fixed-catalog solvability ceiling diagnostic over the accepted P2a inputs. Across 240 case evaluations, all 10 buggy variants have at least one direct catalog detector within the fixed budget; their minimum detecting costs are `2,2,2,2,3,3,4,4,2,2`. The saved six-policy ceiling gaps are `4/5,4/5,4/5,4/5,1,1` in formal policy order. This is an analysis-only, ground-truth-informed, non-deployable result for the fixed catalog and cohort. It does not show that the six policies solve every variant, establish production readiness, or provide a general solvability bound. See [`docs/p2b_result_interpretation.md`](docs/p2b_result_interpretation.md).
+
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
 ## What This Project Is
@@ -22,6 +24,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A P1b small injected-bug benchmark scaffold for checkout/pricing variants.
 - Analysis-only P1c robustness reports and P1d fixed empirical finite-game reports over that scaffold.
 - A frozen P2a same-domain benchmark expansion with versioned candidate, freeze, evaluation, and report evidence.
+- A P2b fixed-catalog diagnostic with versioned JSON/Markdown evidence and explicit artifact/result acceptance boundaries.
 
 ## What This Project Is Not
 
@@ -36,6 +39,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - P1b real-diff artifacts are not real repository histories.
 - P1b predicts fix-intent categories but does not generate patches.
 - P2a does not establish unseen-variant or second-domain generalization, statistical significance, production performance, general minimax or Nash results, regret guarantees, or policy superiority.
+- P2b catalog reachability is not a seventh policy, deployable strategy, general upper bound, or production-readiness claim.
 
 ## Related Work
 
@@ -128,6 +132,8 @@ All four P1d report stages are analysis-only work on the fixed P1b scaffold. P1d
 
 P2a has no public CLI command. Its accepted public evidence is the frozen, versioned repository artifact pair linked above. Expansion-only buggy evidence is primary and the combined P2a-derived cohort is descriptive. All six policies have worst-bucket loss `1` on both cohorts, so the restricted-pure empirical result is a six-policy tie; this is not a policy-superiority or general minimax claim.
 
+P2b also has no public CLI command. Its tracked artifact pair is validated through the targeted tests. `Catalog reachable` means that a direct failure-producing case exists somewhere in the frozen catalog for the included variant. It does not mean that a saved policy selected that action, that a deployable policy knows the variant identity, or that multi-step/general solvability has been established.
+
 ## Project Status
 
 For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
@@ -137,6 +143,7 @@ For the current implementation state, verification guidance, public-release boun
 - [`docs/release_readiness.md`](docs/release_readiness.md)
 - [`docs/p1c_result_interpretation.md`](docs/p1c_result_interpretation.md)
 - [`docs/p2a_result_interpretation.md`](docs/p2a_result_interpretation.md)
+- [`docs/p2b_result_interpretation.md`](docs/p2b_result_interpretation.md)
 
 ## Example Command
 
@@ -312,6 +319,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P2a real-diff artifacts are synthetic baseline-plus-patch artifacts, not real repository histories. Its LOVO analysis is descriptive influence only, not inferential uncertainty or significance.
 - P2a clean false positives were `0/5` for every formal policy only within the included clean cohort. The result does not establish production safety or unseen-clean behavior.
 - Accepted-reference versus P2a-replay differences are catalog/context deltas, not expansion effects. The fixed legacy fix-intent posterior label space does not contain the expansion authoring labels.
+- P2b is a direct one-step, ground-truth-informed fixed-catalog diagnostic. It ignores multi-step context-dependent evidence, uses variant information unavailable to deployable policies, and does not establish generalization, policy superiority, causal effects, or production performance.
 
 ## Reproducibility Notes
 

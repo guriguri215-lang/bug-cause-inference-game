@@ -53,6 +53,10 @@
 - P2a-B versioned evaluation and deterministic JSON/Markdown reporting with separate accepted-reference, P2a-replay, expansion-only, and combined identities for both buggy and clean evidence.
 - P2a-B corrective fail-closed gate validation and saved-outcome-only LOVO reporting: 20 buggy and 10 clean descriptive influence projections without policy reruns.
 - P2a result interpretation note: [`docs/p2a_result_interpretation.md`](p2a_result_interpretation.md).
+- P2b fixed-catalog solvability ceiling source, tests, and versioned JSON/Markdown artifacts, merged by PR #28 after the cross-platform identity correction.
+- P2b exact descriptive diagnostic: 240 case evaluations, catalog reachability `10/10`, one-step budget feasibility `10/10`, minimum costs `2,2,2,2,3,3,4,4,2,2`, and saved-policy ceiling gaps `4/5,4/5,4/5,4/5,1,1`.
+- P2b software conformance, versioned artifact identity, descriptive result, and public documentation were accepted as four separate decisions; the documentation decision followed independent documentation review and required verification.
+- P2b result interpretation note: [`docs/p2b_result_interpretation.md`](p2b_result_interpretation.md).
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -88,6 +92,8 @@
 - A public P2a CLI command. The accepted P2a evidence is published as versioned repository artifacts, not through a reporting command.
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
+- A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
+- P2c, a second domain, no-diff clean stress, inferential P2b analysis, or P2b production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -99,6 +105,7 @@
 - Adversarial or worst-case bug models for P1c.
 - A separately reviewed design for any future combined cost plus dropout/delay interaction.
 - Any benchmark expansion beyond the accepted P2a same-domain cohort, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
+- Any P2b follow-up involving a sequence/DP ceiling, deployable policy candidate, second domain, clean stress, or inference requires a separate pre-outcome specification and review.
 
 ## Known Limitations
 
@@ -137,6 +144,8 @@
 - P2a clean false positives were `0/5` and no-bug stops were `5/5` for every formal policy only in the included five-variant clean expansion cohort.
 - P2a LOVO is descriptive influence analysis over saved frozen outcomes, not uncertainty estimation. Accepted-reference versus replay differences are catalog/context deltas, not expansion effects.
 - The fixed legacy fix-intent posterior label space does not contain the expansion authoring labels.
+- P2b is an analysis-only, ground-truth-informed, non-deployable one-step diagnostic over the fixed P2a cohort and catalog. It does not establish a seventh policy, policy winner, causal policy inferiority, general upper bound, unseen-variant behavior, or production readiness.
+- P2b `catalog_reachable_policy_missed` means only a selection/order/stop trajectory limitation under the fixed contract. The one-step ceiling does not identify which trajectory mechanism caused a miss and ignores multi-step context-dependent evidence.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -165,6 +174,7 @@ python -m pytest tests/test_p1d1_evaluation.py tests/test_p1d1_cli.py -q
 python -m pytest tests/test_p1d2_evaluation.py tests/test_p1d2_cli.py -q
 python -m pytest tests/test_p1d3a_evaluation.py tests/test_p1d3a_cli.py -q
 python -m pytest tests/test_p1d3b_evaluation.py tests/test_p1d3b_cli.py -q
+python -m pytest tests/test_p2b_solvability_ceiling.py tests/test_p2b_reports.py -q -p no:cacheprovider
 python -m bug_cause_inference.cli p1d1-report --format markdown
 python -m bug_cause_inference.cli p1d2-report --format json
 python -m bug_cause_inference.cli p1d3a-report --format markdown
@@ -173,6 +183,28 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current accepted P2b evidence
+
+The final merged P2b checkpoint includes the Windows/Linux portability correction and records:
+
+```text
+P2b targeted                 46 passed
+case evaluations             240
+catalog reachable            10/10
+budget feasible              10/10
+minimum costs                2,2,2,2,3,3,4,4,2,2
+policy ceiling gaps          4/5,4/5,4/5,4/5,1,1
+accepted input identities    39/39
+```
+
+Current versioned P2b artifacts:
+
+- JSON: 144,393 bytes, SHA-256 `1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d`.
+- Markdown: 146,660 bytes, SHA-256 `ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b`.
+- Validated-summary digest: `873423a2cd15908300d604a970664152d931a8a306f64c797122851f887702e2`.
+
+The artifact pair repeats byte-for-byte and has exact semantic agreement. Accepted identities use LF-canonical bytes for cross-platform identity and raw working-tree bytes for cache keys and pre/post drift detection. Accepted P2a source, tests, artifacts, dataset, catalog, settings, and outcomes are unchanged.
 
 ### Current accepted P2a implementation evidence
 
