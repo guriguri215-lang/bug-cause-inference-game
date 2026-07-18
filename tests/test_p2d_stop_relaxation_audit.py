@@ -21,8 +21,8 @@ def audit_run() -> tuple[dict, list[dict]]:
     events: list[dict] = []
     summary = audit.run_stop_relaxation_audit(event_log=events)
     assert summary["validation_status"]["status"] == audit.VALID_STATUS, (
-        summary,
-        events,
+        summary["reason_codes"],
+        events[-1],
     )
     return summary, events
 
@@ -185,8 +185,8 @@ def test_policy_selector_receives_only_frozen_visible_arguments(monkeypatch) -> 
     monkeypatch.setattr(p1b_policies, "choose_action", spy)
     summary = audit.run_stop_relaxation_audit(event_log=events)
     assert summary["validation_status"]["status"] == audit.VALID_STATUS, (
-        summary,
-        events,
+        summary["reason_codes"],
+        events[-1],
     )
     assert calls
     assert all(len(call) == 4 for call in calls)

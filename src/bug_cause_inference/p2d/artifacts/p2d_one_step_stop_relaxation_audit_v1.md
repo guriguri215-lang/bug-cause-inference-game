@@ -305,7 +305,7 @@ This one-step result does not establish stop causality, a policy defect or ranki
       "src/bug_cause_inference/p2d/__init__.py": "ab08a163455be343d89ca5e1ffe4b266453d2c335c447a8f79c2f198c05f2ab3",
       "src/bug_cause_inference/p2d/stop_relaxation_audit.py": "1b6d459a28ad6fe30c2fb3de20602983a4f226c85dff7954e6b6a7a28603732f",
       "src/bug_cause_inference/p2d/reports.py": "b1382ab2874f282011ee69c9b231e4285c426b8b282f7b43c66884314fda2b59",
-      "tests/test_p2d_stop_relaxation_audit.py": "0e7258657c5e2eec00074fccd697628d6f513a241ba7d7db0b3b748f4aa3af06",
+      "tests/test_p2d_stop_relaxation_audit.py": "f56d43d5620cef53399a3a2b384365e713d76190db490970561921a4ecc07fa1",
       "tests/test_p2d_reports.py": "4ca535f46306aab77aca48e4df49a12ba4a2cd64716743502ba286bc413440e0"
     }
   },

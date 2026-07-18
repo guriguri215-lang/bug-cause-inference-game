@@ -215,9 +215,9 @@ accepted input identities             50 / 50
 
 Proposed versioned P2d artifacts:
 
-- JSON: 248,450 bytes, SHA-256 `8b3b53c4ad60e19a8902633d2b6478b2858722a8f8ac316034403e9a42ae403a`.
-- Markdown: 249,662 bytes, SHA-256 `0a5c95e354418c8127c9ea4c7d87d90bb8041f6da2252ffdd542caaf5ff8bab0`.
-- Validated-summary digest: `d4300a83f0b71161af3102777e056011a73b4511f061a1ab4c37c40b18a2ba9d`.
+- JSON: 248,450 bytes, SHA-256 `70cab63accec4db04829bb789c537d77187ad8af51c26d23f407ad8eb4c7bd42`.
+- Markdown: 249,662 bytes, SHA-256 `ca8cee11533ec277396733a2f6fdf7975bcb8f4407d2dfe1fe940d6652fc0b1c`.
+- Validated-summary digest: `9e7a503adbc131825632f923c0976c9c0debf829b19872983fa578f009c2f9b4`.
 - 50-file identity-contract digest: `7d127bcedb58f59487e16b3ec9c3a300753fe48108ef2d8a676b4c8b059217b8`.
 
 Two isolated fresh runs match both tracked files byte-for-byte and semantically. Software conformance is accepted by independent implementation review; artifact identity, descriptive result, and public documentation remain pending separate acceptance. This evidence does not establish causal attribution, policy ranking or improvement, multi-step reachability, or deployability.
