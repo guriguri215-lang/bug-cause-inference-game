@@ -1,0 +1,10832 @@
+# P2c Frozen-Policy Trajectory Miss Audit
+
+This is an analysis-only, fixed-input, descriptive, non-causal, and non-deployable audit of the accepted formal six policies.
+
+Validation status: `valid`.
+
+## Frozen Population
+
+- Population: `10` expansion-only buggy variants × `6` accepted formal policies = `60` trajectories.
+- Runner, seed, settings, catalog, policies, and variant-level module-context lifetime are unchanged.
+- Accepted P2a discovery rows and P2b detector mapping are exact validation anchors.
+
+## Overlapping Descriptive Axes
+
+- Direct detector selected: 2/15 (0.133333333333).
+- Direct detector not selected: 13/15 (0.866666666667).
+- Unselected detector still budget-feasible at terminal state: 1/1 (1).
+- Replayed discoveries: 2/15 (0.133333333333).
+
+Selection, recorded budget feasibility, and termination overlap. They are not mutually exclusive causal explanations.
+
+## Policy Summary
+
+| Policy | Support | Detector selected | Unselected terminal-feasible | Replayed discovered |
+|---|---:|---:|---:|---:|
+| `fixed_checklist` | 10 | 2 | 8 | 2 |
+| `test_first` | 10 | 2 | 8 | 2 |
+| `coverage_first` | 10 | 2 | 8 | 2 |
+| `recent_diff_first` | 10 | 2 | 8 | 2 |
+| `cause_only_p1a_style` | 10 | 0 | 10 | 0 |
+| `expected_utility_per_cost` | 10 | 0 | 10 | 0 |
+
+This audit does not rank policies, identify causal policy defects, add a policy, compute a counterfactual or DP ceiling, or establish inference, generalization, or production readiness.
+
+## Canonical Validated Summary
+
+<!-- P2C_VALIDATED_SUMMARY_BEGIN -->
+```json
+{
+  "schema_version": "p2c_frozen_policy_trajectory_audit.v1",
+  "analysis_phase": "p2c_frozen_policy_trajectory_audit",
+  "report_role": "analysis_only_fixed_input_descriptive_non_causal_non_deployable_audit",
+  "validation_status": {
+    "status": "valid"
+  },
+  "input_identity": {
+    "base_commit": "f6d4933caf7b0c1067b2c2d788a7fb86d6d8f45e",
+    "identity_hash_mode": "sha256_after_crlf_to_lf_normalization",
+    "raw_drift_mode": "exact_working_tree_sha256_pre_post_same_run",
+    "identity_contract_digest": "1a7c59b40dc837b1c2199a6f1fe8fc8016b87400df89eda05c00e28f0b0767bc",
+    "identity_support_count": 43,
+    "identity_rows": [
+      {
+        "identity": "p1b_actions_source",
+        "path": "src/bug_cause_inference/p1b/actions.py",
+        "sha256_lf": "cb191a6834f75e87835a2f9b3e164b2e05b48a6168a515455be57680f3d738fe"
+      },
+      {
+        "identity": "p1b_execution_source",
+        "path": "src/bug_cause_inference/p1b/execution.py",
+        "sha256_lf": "820847852f623f91870c824c5218bf5a0c20643868f99131b40c63413b992a91"
+      },
+      {
+        "identity": "p1b_dataset_source",
+        "path": "src/bug_cause_inference/p1b/dataset.py",
+        "sha256_lf": "2c164076148d590c86893da4bfeaedfc82f09c4df5ef7f461c892d2438e17050"
+      },
+      {
+        "identity": "p1b_models_source",
+        "path": "src/bug_cause_inference/p1b/models.py",
+        "sha256_lf": "895a9be33fd8502b8532554c4ca12b92db86b08a3074b54a8233d7ee25104fde"
+      },
+      {
+        "identity": "p1b_policies_source",
+        "path": "src/bug_cause_inference/p1b/policies.py",
+        "sha256_lf": "b039dff408f4fa26f6de86ffe1924fad6dd652c68092bcc08e59e8aa478e4ecd"
+      },
+      {
+        "identity": "p1b_real_diff_source",
+        "path": "src/bug_cause_inference/p1b/real_diff.py",
+        "sha256_lf": "b9b59a58ecf08a251e4281e3c7ffcd0f1b8f6b1707dbac6c98660b816593f4f4"
+      },
+      {
+        "identity": "p2a_adequacy_source",
+        "path": "src/bug_cause_inference/p2a/adequacy.py",
+        "sha256_lf": "bdef79f373a6398fa6756f1b77661b4dbd394d5470ea5ca84b80e0286ea6d400"
+      },
+      {
+        "identity": "p2a_candidate_authoring_source",
+        "path": "src/bug_cause_inference/p2a/candidate_authoring.py",
+        "sha256_lf": "c5a8f6801901d535c2bbde61603aa4de66c9d6ccc2005c30e13592733ae46701"
+      },
+      {
+        "identity": "p2a_candidate_oracles_source",
+        "path": "src/bug_cause_inference/p2a/candidate_oracles.py",
+        "sha256_lf": "0361aefc33fd6a5d0be2dc8fc8e79e1ae290886568113f824598ccbe154c1732"
+      },
+      {
+        "identity": "p2a_candidates_source",
+        "path": "src/bug_cause_inference/p2a/candidates.py",
+        "sha256_lf": "47e0bfccff06819efc66384d9528be0828ca95943f63498bca1eb6aed68f6351"
+      },
+      {
+        "identity": "p2a_freeze_realization_source",
+        "path": "src/bug_cause_inference/p2a/freeze_realization.py",
+        "sha256_lf": "a8c1dea78ad1e592c8823219aa3e074b3284ec48eac722bc7979d993ff04db1b"
+      },
+      {
+        "identity": "p2a_evaluation_source",
+        "path": "src/bug_cause_inference/p2a/evaluation.py",
+        "sha256_lf": "02db9095416885f865229f13ba52d2c7e1d794fac07b5cc2e1651d6593866785"
+      },
+      {
+        "identity": "p2a_reports_source",
+        "path": "src/bug_cause_inference/p2a/reports.py",
+        "sha256_lf": "51c5b873a5562badbb4bc5653686c4b94f3cd7f7f2d2f03f37482c11f6d16992"
+      },
+      {
+        "identity": "p2a_authoring_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/authoring_manifest.json",
+        "sha256_lf": "ccf05cd8c4179ee2b84b68dffa1d576e59f717e4fd314a4cccb0136d9ffb7e3b"
+      },
+      {
+        "identity": "p2a_artifact_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/artifact_manifest.json",
+        "sha256_lf": "ff519a4f5bd7985e0b8f3929fcaa0ded3bd98f742e52bb85d7866f21a2cf1b0d"
+      },
+      {
+        "identity": "p2a_official_freeze_bundle",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/official_freeze_bundle.json",
+        "sha256_lf": "8a5197288c60329af2667fba8c541edd39ccc068b3ecf6393afdaddf8ebdb5a4"
+      },
+      {
+        "identity": "p2a_evaluation_json",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.json",
+        "sha256_lf": "d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df"
+      },
+      {
+        "identity": "p2a_evaluation_markdown",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.md",
+        "sha256_lf": "017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-001.patch",
+        "sha256_lf": "fb828c07825746dab12831dc90504b4471894e4d24ae5381425e26a60d56ecb1"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-002.patch",
+        "sha256_lf": "57168b75361ff6ca8039aa41a0326edc0136758dabb78329f8ddc2eaf3a10cea"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-003.patch",
+        "sha256_lf": "68cdd7a8b9d5e1f4fac818d16fdcb7d12c999d40e2bd480d4b962449740c4a92"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-004.patch",
+        "sha256_lf": "62e7bc6bc3f9855299f7413d3530373f13008a6658682285dbb44af2bfe4a2cf"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-005.patch",
+        "sha256_lf": "8bcbc4fcdccd41ffd92fe27fa25a8f6a0d95a66770832b779c35fa837d62c147"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_006",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-006.patch",
+        "sha256_lf": "095a4ecc21fb5408aceaf62f009e113ccaecff1bd81a2455ab3665bb8ef0cc87"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_007",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-007.patch",
+        "sha256_lf": "85646fa091547497bc12f523a4f6f95d6cda5d07f63ec7b66327cdeda77f2c6f"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_008",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-008.patch",
+        "sha256_lf": "7c11b70025dcfdef22898103a8656f2d8afa6d492403ac24c52c075967cb374c"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_009",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-009.patch",
+        "sha256_lf": "68903ccc686878bdae8b73489596978006c2a422ed6ac17bbbb5d7db88c45030"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_010",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-010.patch",
+        "sha256_lf": "843ec18c88a2fcfd45e8ea7a04c4c5302472b9856cc3fe3a0c5b793672eeffd7"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-001.patch",
+        "sha256_lf": "c0a1b7d75e313d91ec0653ddd361f926e1f69ad5025e78878e80aa114c8e3caa"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-002.patch",
+        "sha256_lf": "ef17bf8a5eb330d52e7ef9b122c4b574b01141bf23d15b6bc90fefa25ddd39f1"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-003.patch",
+        "sha256_lf": "2ab2975d1537a7ea841ca2744515020f12d914b8a88668c967bcd664d64adea9"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-004.patch",
+        "sha256_lf": "eb614f960d83f19a7ddccfc4f7162397f008c42dd2e2089cb3c09753c468b65d"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-005.patch",
+        "sha256_lf": "b78e400beeffcd5a9a9c84bf39c25f3b67a4b2c03eb41605700806b9331c8778"
+      },
+      {
+        "identity": "p1b_baseline_checkout_init",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/__init__.py",
+        "sha256_lf": "41234f3dc364631d4c77ac22af1f07de9099314b0e69551ef0300b00df4f6ae5"
+      },
+      {
+        "identity": "p1b_baseline_checkout_cart",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/cart.py",
+        "sha256_lf": "350cd07ed621cc22ba78e5915d4e956123e75d7246858f3502cfe9a7f9092e93"
+      },
+      {
+        "identity": "p1b_baseline_checkout_config",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/config.py",
+        "sha256_lf": "548a57f4ecd3f85e922fc62901d4b5a3a0c9f33cf6da6c3a15137f3dab83c231"
+      },
+      {
+        "identity": "p1b_baseline_checkout_discounts",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/discounts.py",
+        "sha256_lf": "4900a6cd8a14c87d2b2a66dfa6bb0017adfdfdd9513f3c08d1104612ec945ea2"
+      },
+      {
+        "identity": "p1b_baseline_checkout_inventory",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/inventory.py",
+        "sha256_lf": "a62be8ae4c24b43adfc38da8e9c695483cfe80230102fc3dde55225bfc9b00b9"
+      },
+      {
+        "identity": "p1b_baseline_checkout_shipping",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/shipping.py",
+        "sha256_lf": "f0549311d9b41d298185a366ac92943b9b62eef75cc768fcccdc4fa0a380b439"
+      },
+      {
+        "identity": "p2b_solvability_source",
+        "path": "src/bug_cause_inference/p2b/solvability_ceiling.py",
+        "sha256_lf": "cc7155407288a9d9045b49eb4a9f151808961ec58bd1c841e48ba076799e5b60"
+      },
+      {
+        "identity": "p2b_reports_source",
+        "path": "src/bug_cause_inference/p2b/reports.py",
+        "sha256_lf": "3680c63c58356c792c45c1c5c04a1931dea0c2ebb610dde7f21024e790915b9b"
+      },
+      {
+        "identity": "p2b_json",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.json",
+        "sha256_lf": "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d"
+      },
+      {
+        "identity": "p2b_markdown",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.md",
+        "sha256_lf": "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b"
+      }
+    ],
+    "p2a_summary_digest": "3dea5aaf38e1d9a46fd1a9ed973cb02c3fabf7ec933f2bb1c6df4f97446a9629",
+    "p2a_json_sha256": "d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df",
+    "p2a_markdown_sha256": "017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a",
+    "p2b_summary_digest": "873423a2cd15908300d604a970664152d931a8a306f64c797122851f887702e2",
+    "p2b_json_sha256": "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d",
+    "p2b_markdown_sha256": "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b",
+    "p2b_accepted_identity_count": 39,
+    "implementation_file_sha256_lf": {
+      "src/bug_cause_inference/p2c/__init__.py": "9f5368cfffca746c19874a7f6cd68ff8e92ecacee1db7ded9dcd068bfd3eae59",
+      "src/bug_cause_inference/p2c/trajectory_audit.py": "32d4387053fb277178d648a67e4d8e913e15c0b00bb7df2fa2ffbeb6b4ad7c17",
+      "src/bug_cause_inference/p2c/reports.py": "5fc076ca798f6e7cb023b090713f668cd99b665cd17d933e3bc594a587753d49"
+    }
+  },
+  "pre_outcome_freeze": {
+    "specification_sha256": "c285d0a42454699ecd01399a25a327d628ec13e4b347aee83909f866f36b529b",
+    "review_prompt_sha256": "a7b2b28c0cf85be6a1370f7486e7674825db4d90182e51f2bd3f4aecfe38d99e",
+    "review_record_sha256": "3ee8f6cbca2cab0240e2150008544a22fe3532f17f7c1590bd3723113856dd4d",
+    "specification_review_verdict": "accept",
+    "first_pair_index": 1,
+    "first_variant_id": "P2A-BUG-001",
+    "first_policy_id": "fixed_checklist",
+    "schema_version": "p2c_frozen_policy_trajectory_audit.v1"
+  },
+  "execution_boundary": {
+    "first_execution_point": "P2A-BUG-001::fixed_checklist",
+    "pair_execution_count": 60,
+    "variant_context_count": 10,
+    "policies_per_variant": 6,
+    "raw_identity_pre_post_match": true,
+    "implementation_raw_pre_post_match": true,
+    "policy_runner_semantic_change": false
+  },
+  "population": {
+    "variant_ids": [
+      "P2A-BUG-001",
+      "P2A-BUG-002",
+      "P2A-BUG-003",
+      "P2A-BUG-004",
+      "P2A-BUG-005",
+      "P2A-BUG-006",
+      "P2A-BUG-007",
+      "P2A-BUG-008",
+      "P2A-BUG-009",
+      "P2A-BUG-010"
+    ],
+    "policy_ids": [
+      "fixed_checklist",
+      "test_first",
+      "coverage_first",
+      "recent_diff_first",
+      "cause_only_p1a_style",
+      "expected_utility_per_cost"
+    ],
+    "bucket_ids": [
+      "boundary_precision",
+      "missing_optional_input",
+      "config_normalization",
+      "state_sequence",
+      "spec_semantics"
+    ],
+    "pair_order": "variant_major_then_policy_minor",
+    "pair_count": 60,
+    "overall_denominator": 60,
+    "policy_denominator": 10,
+    "variant_denominator": 6,
+    "bucket_denominator": 12
+  },
+  "definitions": {
+    "selection_axis": "whether an accepted P2b direct detector was selected",
+    "budget_state_axis": "cost/executed-state feasibility at recorded decisions, not post-stop selectability",
+    "termination_axis": "exact accepted runner stop reason, step, and cost",
+    "axis_relationship": "overlapping descriptive observations, not mutually exclusive causal causes"
+  },
+  "pair_trajectories": [
+    {
+      "pair_index": 1,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "step_count": 5,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_state_sequence_tests",
+          "selected_action_cost": 4,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "027f409924abc36335eedeb861a842e7e782e3afea034bc318f0e0996e4e05d2",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 2,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "step_count": 5,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_state_sequence_tests",
+          "selected_action_cost": 4,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "027f409924abc36335eedeb861a842e7e782e3afea034bc318f0e0996e4e05d2",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 3,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "inspect_coverage_spectrum",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "inspect_traceback"
+      ],
+      "step_count": 6,
+      "cumulative_cost": 12,
+      "stop_reason": "budget_limit",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "budget_limit",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_coverage_spectrum",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 6
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum"
+          ],
+          "cumulative_cost_before": 6,
+          "remaining_budget_before": 6,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 11
+        },
+        {
+          "decision_step": 6,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 11,
+          "remaining_budget_before": 1,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "2e963ece2393bac61cf0423e105129522c7fefcf83d4fbe879cd90cf2e5ef0ee",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 4,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_config_matrix_tests",
+        "run_null_missing_tests",
+        "inspect_spec_clause"
+      ],
+      "step_count": 6,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 3,
+      "first_selected_direct_detector_cumulative_cost": 5,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 10
+        },
+        {
+          "decision_step": 6,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_config_matrix_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 10,
+          "remaining_budget_before": 2,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_spec_clause",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "fcbe5495f87a029b325e8e982c1d1620cc5ce725c054ae373b696001ec5b3ba3",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 5,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "74cd6f6c65125a0c70dc5f389ad7f5af7ea59829571df2ec6d09c9ab0589cddb",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 6,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "74cd6f6c65125a0c70dc5f389ad7f5af7ea59829571df2ec6d09c9ab0589cddb",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 7,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "step_count": 5,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_state_sequence_tests",
+          "selected_action_cost": 4,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "027f409924abc36335eedeb861a842e7e782e3afea034bc318f0e0996e4e05d2",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 8,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "step_count": 5,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_state_sequence_tests",
+          "selected_action_cost": 4,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "027f409924abc36335eedeb861a842e7e782e3afea034bc318f0e0996e4e05d2",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 9,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "inspect_coverage_spectrum",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "inspect_traceback"
+      ],
+      "step_count": 6,
+      "cumulative_cost": 12,
+      "stop_reason": "budget_limit",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 2,
+      "first_selected_direct_detector_cumulative_cost": 3,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "budget_limit",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_coverage_spectrum",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 6
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum"
+          ],
+          "cumulative_cost_before": 6,
+          "remaining_budget_before": 6,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 11
+        },
+        {
+          "decision_step": 6,
+          "executed_action_ids_before": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "inspect_coverage_spectrum",
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 11,
+          "remaining_budget_before": 1,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "2e963ece2393bac61cf0423e105129522c7fefcf83d4fbe879cd90cf2e5ef0ee",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 10,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": true,
+      "replayed_discovered_within_budget": true,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_config_matrix_tests",
+        "run_null_missing_tests",
+        "inspect_spec_clause"
+      ],
+      "step_count": 6,
+      "cumulative_cost": 12,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": true,
+      "first_selected_direct_detector_action_id": "run_boundary_tests",
+      "first_selected_direct_detector_step": 3,
+      "first_selected_direct_detector_cumulative_cost": 5,
+      "first_selected_direct_detector_observation_detected": true,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": false,
+      "terminal_feasible_direct_detector_ids": [],
+      "terminal_direct_detector_budget_feasible": false,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": true,
+          "observation_bug_detected": true,
+          "cumulative_cost_after": 5
+        },
+        {
+          "decision_step": 4,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests"
+          ],
+          "cumulative_cost_before": 5,
+          "remaining_budget_before": 7,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_config_matrix_tests",
+          "selected_action_cost": 3,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 8
+        },
+        {
+          "decision_step": 5,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_config_matrix_tests"
+          ],
+          "cumulative_cost_before": 8,
+          "remaining_budget_before": 4,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "run_null_missing_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 10
+        },
+        {
+          "decision_step": 6,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_config_matrix_tests",
+            "run_null_missing_tests"
+          ],
+          "cumulative_cost_before": 10,
+          "remaining_budget_before": 2,
+          "feasible_direct_detector_ids": [],
+          "direct_detector_budget_feasible": false,
+          "selected_action_id": "inspect_spec_clause",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 12
+        }
+      ],
+      "pair_trace_digest": "fcbe5495f87a029b325e8e982c1d1620cc5ce725c054ae373b696001ec5b3ba3",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 11,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "74cd6f6c65125a0c70dc5f389ad7f5af7ea59829571df2ec6d09c9ab0589cddb",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 12,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_boundary_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_boundary_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_boundary_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "74cd6f6c65125a0c70dc5f389ad7f5af7ea59829571df2ec6d09c9ab0589cddb",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 13,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "8eaeeedf02105d9c14a5abc75d9f8cb6f48bcaafdd3dfcb5497046ba5292cad6",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 14,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "8eaeeedf02105d9c14a5abc75d9f8cb6f48bcaafdd3dfcb5497046ba5292cad6",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 15,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "8eaeeedf02105d9c14a5abc75d9f8cb6f48bcaafdd3dfcb5497046ba5292cad6",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 16,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "c1fdb85bd60573fdd22f79b7186163cc225f7de454f983c30086af005edb95b0",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 17,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "ce5abec65a0e8b75c26f96a1ffcd0d80df06dd112bed39157a8bf8adb1ea3a80",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 18,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "ce5abec65a0e8b75c26f96a1ffcd0d80df06dd112bed39157a8bf8adb1ea3a80",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 19,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1d67c1821abaae4abe6e781f5a43c8323faee44f2a200949db8ec52725753977",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 20,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1d67c1821abaae4abe6e781f5a43c8323faee44f2a200949db8ec52725753977",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 21,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1d67c1821abaae4abe6e781f5a43c8323faee44f2a200949db8ec52725753977",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 22,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "65207e7f552b27e19925abd71971bd97e5ec75ae2573e7743f18cf85fddb167f",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 23,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "8628c73b44dbc7896aca966e66ddc7eab8d7ffbe403038550b7bea68b531beb5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 24,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_null_missing_tests",
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "8628c73b44dbc7896aca966e66ddc7eab8d7ffbe403038550b7bea68b531beb5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 25,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 26,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 27,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 28,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "bf6b4bf0daf578bd6250bd5ed9ef2aed4232ec9e03a9c4b8b9485ebf8c5cb727",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 29,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "2f8cbef43376d839e8fb6287eb917803483a49f7134b8afc363b3a876d123ab9",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 30,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "2f8cbef43376d839e8fb6287eb917803483a49f7134b8afc363b3a876d123ab9",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 31,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 32,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 33,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "9ea81bb0495890fb42e27057cb72b4ae77e5018319369eda4c5191e92095357b",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 34,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "bf6b4bf0daf578bd6250bd5ed9ef2aed4232ec9e03a9c4b8b9485ebf8c5cb727",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 35,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "2f8cbef43376d839e8fb6287eb917803483a49f7134b8afc363b3a876d123ab9",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 36,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_config_matrix_tests"
+      ],
+      "minimum_detecting_cost": 3,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_config_matrix_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_config_matrix_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "2f8cbef43376d839e8fb6287eb917803483a49f7134b8afc363b3a876d123ab9",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 37,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 38,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 39,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 40,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "72c15b2419844afc89ce78bba60f7f2e3166d5dc7b8d4d6726f1c3818239e945",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 41,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "090727bdc3a3ef1d3a7980b8f73daf2b25ed557b2d0c15fb895674343f4d893f",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 42,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "090727bdc3a3ef1d3a7980b8f73daf2b25ed557b2d0c15fb895674343f4d893f",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 43,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 44,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 45,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "53800dece074f837d15660b332e0d07e959a905c4f17fd47f9337d5a295752c5",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 46,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "72c15b2419844afc89ce78bba60f7f2e3166d5dc7b8d4d6726f1c3818239e945",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 47,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "090727bdc3a3ef1d3a7980b8f73daf2b25ed557b2d0c15fb895674343f4d893f",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 48,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "run_state_sequence_tests"
+      ],
+      "minimum_detecting_cost": 4,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "run_state_sequence_tests"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "run_state_sequence_tests"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "090727bdc3a3ef1d3a7980b8f73daf2b25ed557b2d0c15fb895674343f4d893f",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 49,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 50,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 51,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 52,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "25d7f51c833439d9fae00c055b2bbd1b93ff104ef4b57834f1aa22854bc5a5ef",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 53,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "f8fbaea308d4108b15128260125fb813f7edb98c6442adfd3f340a423caa66b1",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 54,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "f8fbaea308d4108b15128260125fb813f7edb98c6442adfd3f340a423caa66b1",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 55,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "fixed_checklist",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 56,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "test_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 57,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "coverage_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 3,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        }
+      ],
+      "pair_trace_digest": "1c8dd60856fab55053a045a22cc53e7ed721b0effac6f6ceb375ee58b8ba7e62",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 58,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "recent_diff_first",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "step_count": 3,
+      "cumulative_cost": 5,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_recent_diff",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_recent_diff"
+          ],
+          "cumulative_cost_before": 2,
+          "remaining_budget_before": 10,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 3
+        },
+        {
+          "decision_step": 3,
+          "executed_action_ids_before": [
+            "inspect_recent_diff",
+            "run_smoke_tests"
+          ],
+          "cumulative_cost_before": 3,
+          "remaining_budget_before": 9,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_boundary_tests",
+          "selected_action_cost": 2,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 5
+        }
+      ],
+      "pair_trace_digest": "25d7f51c833439d9fae00c055b2bbd1b93ff104ef4b57834f1aa22854bc5a5ef",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 59,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "cause_only_p1a_style",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "f8fbaea308d4108b15128260125fb813f7edb98c6442adfd3f340a423caa66b1",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    },
+    {
+      "pair_index": 60,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "expected_utility_per_cost",
+      "accepted_p2a_discovered_within_budget": false,
+      "replayed_discovered_within_budget": false,
+      "accepted_replay_agreement": true,
+      "direct_detecting_action_ids": [
+        "inspect_spec_clause"
+      ],
+      "minimum_detecting_cost": 2,
+      "executed_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "step_count": 2,
+      "cumulative_cost": 2,
+      "stop_reason": "no_bug_probability_threshold",
+      "direct_detector_selected": false,
+      "first_selected_direct_detector_action_id": null,
+      "first_selected_direct_detector_step": null,
+      "first_selected_direct_detector_cumulative_cost": null,
+      "first_selected_direct_detector_observation_detected": null,
+      "initial_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "any_pre_action_direct_detector_budget_feasible": true,
+      "all_pre_action_states_direct_detector_budget_feasible": true,
+      "terminal_feasible_direct_detector_ids": [
+        "inspect_spec_clause"
+      ],
+      "terminal_direct_detector_budget_feasible": true,
+      "terminal_common_stop_result": "no_bug_probability_threshold",
+      "pre_action_states": [
+        {
+          "decision_step": 1,
+          "executed_action_ids_before": [],
+          "cumulative_cost_before": 0,
+          "remaining_budget_before": 12,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "inspect_traceback",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 1
+        },
+        {
+          "decision_step": 2,
+          "executed_action_ids_before": [
+            "inspect_traceback"
+          ],
+          "cumulative_cost_before": 1,
+          "remaining_budget_before": 11,
+          "feasible_direct_detector_ids": [
+            "inspect_spec_clause"
+          ],
+          "direct_detector_budget_feasible": true,
+          "selected_action_id": "run_smoke_tests",
+          "selected_action_cost": 1,
+          "selected_action_is_direct_detector": false,
+          "observation_bug_detected": false,
+          "cumulative_cost_after": 2
+        }
+      ],
+      "pair_trace_digest": "f8fbaea308d4108b15128260125fb813f7edb98c6442adfd3f340a423caa66b1",
+      "consistency_checks": {
+        "accepted_p2a_outcome_matches_replay": true,
+        "p2b_mapping_complete": true,
+        "selected_detector_observation_consistent": true,
+        "discovery_requires_selected_detector": true,
+        "stop_reason_reconstruction_matches": true,
+        "cost_step_action_consistent": true
+      }
+    }
+  ],
+  "aggregate_axes": {
+    "overall": {
+      "support_pair_count": 60,
+      "detector_selected_count": {
+        "numerator": 8,
+        "denominator": 60,
+        "fraction": "2/15",
+        "decimal": "0.133333333333",
+        "undefined_reason": null
+      },
+      "detector_not_selected_count": {
+        "numerator": 52,
+        "denominator": 60,
+        "fraction": "13/15",
+        "decimal": "0.866666666667",
+        "undefined_reason": null
+      },
+      "initial_detector_budget_feasible_count": {
+        "numerator": 60,
+        "denominator": 60,
+        "fraction": "1/1",
+        "decimal": "1",
+        "undefined_reason": null
+      },
+      "any_pre_action_detector_budget_feasible_count": {
+        "numerator": 60,
+        "denominator": 60,
+        "fraction": "1/1",
+        "decimal": "1",
+        "undefined_reason": null
+      },
+      "all_pre_action_states_detector_budget_feasible_count": {
+        "numerator": 52,
+        "denominator": 60,
+        "fraction": "13/15",
+        "decimal": "0.866666666667",
+        "undefined_reason": null
+      },
+      "terminal_detector_budget_feasible_count": {
+        "numerator": 52,
+        "denominator": 60,
+        "fraction": "13/15",
+        "decimal": "0.866666666667",
+        "undefined_reason": null
+      },
+      "detector_not_selected_terminal_feasible_count": {
+        "numerator": 52,
+        "denominator": 52,
+        "fraction": "1/1",
+        "decimal": "1",
+        "undefined_reason": null
+      },
+      "detector_not_selected_terminal_infeasible_count": {
+        "numerator": 0,
+        "denominator": 52,
+        "fraction": "0/1",
+        "decimal": "0",
+        "undefined_reason": null
+      },
+      "replayed_discovered_count": {
+        "numerator": 8,
+        "denominator": 60,
+        "fraction": "2/15",
+        "decimal": "0.133333333333",
+        "undefined_reason": null
+      },
+      "stop_reason_counts": {
+        "no_bug_probability_threshold": 58,
+        "bug_confidence_threshold": 0,
+        "budget_limit": 2,
+        "max_steps": 0,
+        "low_expected_utility": 0,
+        "no_available_actions": 0
+      },
+      "unselected_stop_reason_counts": {
+        "no_bug_probability_threshold": 52,
+        "bug_confidence_threshold": 0,
+        "budget_limit": 0,
+        "max_steps": 0,
+        "low_expected_utility": 0,
+        "no_available_actions": 0
+      },
+      "selection_terminal_budget_stop_crosstab": [
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "no_bug_probability_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "bug_confidence_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "budget_limit",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "max_steps",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "low_expected_utility",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "no_available_actions",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "no_bug_probability_threshold",
+          "count": 52
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "bug_confidence_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "budget_limit",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "max_steps",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "low_expected_utility",
+          "count": 0
+        },
+        {
+          "detector_selected": false,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "no_available_actions",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "no_bug_probability_threshold",
+          "count": 6
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "bug_confidence_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "budget_limit",
+          "count": 2
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "max_steps",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "low_expected_utility",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": false,
+          "stop_reason": "no_available_actions",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "no_bug_probability_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "bug_confidence_threshold",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "budget_limit",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "max_steps",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "low_expected_utility",
+          "count": 0
+        },
+        {
+          "detector_selected": true,
+          "terminal_direct_detector_budget_feasible": true,
+          "stop_reason": "no_available_actions",
+          "count": 0
+        }
+      ]
+    },
+    "by_policy": [
+      {
+        "policy_id": "fixed_checklist",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 8,
+            "denominator": 8,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 8,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 8,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 8
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 2
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy_id": "test_first",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 8,
+            "denominator": 8,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 8,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 8,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 8
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 2
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy_id": "coverage_first",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 8,
+            "denominator": 8,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 8,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 8,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 8,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 8
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 2
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy_id": "recent_diff_first",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 8,
+            "denominator": 10,
+            "fraction": "4/5",
+            "decimal": "0.8",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 8,
+            "denominator": 8,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 8,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 8,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 8
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 2
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy_id": "cause_only_p1a_style",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 10
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy_id": "expected_utility_per_cost",
+        "axes": {
+          "support_pair_count": 10,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 10,
+            "denominator": 10,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 10,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 10
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      }
+    ],
+    "by_variant": [
+      {
+        "variant_id": "P2A-BUG-001",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 2,
+            "denominator": 2,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 2,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 5,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 1,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 2
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 3
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 1
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-002",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 2,
+            "denominator": 6,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 2,
+            "denominator": 2,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 2,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 5,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 1,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 2
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 3
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 1
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-003",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-004",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-005",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-006",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-007",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-008",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-009",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-010",
+        "axes": {
+          "support_pair_count": 6,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 6,
+            "denominator": 6,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 6,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      }
+    ],
+    "by_bucket": [
+      {
+        "bucket_id": "boundary_precision",
+        "axes": {
+          "support_pair_count": 12,
+          "detector_selected_count": {
+            "numerator": 8,
+            "denominator": 12,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 4,
+            "denominator": 12,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 4,
+            "denominator": 12,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 4,
+            "denominator": 12,
+            "fraction": "1/3",
+            "decimal": "0.333333333333",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 4,
+            "denominator": 4,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 4,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 8,
+            "denominator": 12,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 10,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 4
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 6
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 2
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "bucket_id": "missing_optional_input",
+        "axes": {
+          "support_pair_count": 12,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 12
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "bucket_id": "config_normalization",
+        "axes": {
+          "support_pair_count": 12,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 12
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "bucket_id": "state_sequence",
+        "axes": {
+          "support_pair_count": 12,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 12
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      },
+      {
+        "bucket_id": "spec_semantics",
+        "axes": {
+          "support_pair_count": 12,
+          "detector_selected_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "detector_not_selected_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "initial_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "any_pre_action_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "all_pre_action_states_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "terminal_detector_budget_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_feasible_count": {
+            "numerator": 12,
+            "denominator": 12,
+            "fraction": "1/1",
+            "decimal": "1",
+            "undefined_reason": null
+          },
+          "detector_not_selected_terminal_infeasible_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "replayed_discovered_count": {
+            "numerator": 0,
+            "denominator": 12,
+            "fraction": "0/1",
+            "decimal": "0",
+            "undefined_reason": null
+          },
+          "stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "unselected_stop_reason_counts": {
+            "no_bug_probability_threshold": 12,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "selection_terminal_budget_stop_crosstab": [
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 12
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": false,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": false,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_bug_probability_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "bug_confidence_threshold",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "budget_limit",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "max_steps",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "low_expected_utility",
+              "count": 0
+            },
+            {
+              "detector_selected": true,
+              "terminal_direct_detector_budget_feasible": true,
+              "stop_reason": "no_available_actions",
+              "count": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "software_acceptance": {
+    "scope": "software_conformance",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "artifact_identity_acceptance": {
+    "scope": "versioned_artifact_identity",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "result_acceptance": {
+    "scope": "descriptive_result",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "documentation_acceptance": {
+    "scope": "public_result_documentation",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "limitations": [
+    "The audit covers only 60 fixed same-domain policy/variant pairs.",
+    "Detector mapping is ground-truth-informed and unavailable to deployable policies.",
+    "Terminal budget feasibility does not imply that the runner may select after a stop condition.",
+    "Only reduced recorded decision states are preserved; full posteriors and action scores are excluded."
+  ],
+  "non_claims": [
+    "The selection, budget-state, and termination axes are not causal attributions.",
+    "This audit does not rank policies or establish policy superiority, inferiority, or defects.",
+    "This audit is not a new policy, counterfactual replay, sequence/DP ceiling, or optimality result.",
+    "This fixed-cohort result does not establish inference, generalization, or production readiness."
+  ],
+  "notes": [
+    "Accepted P2a/P2b inputs, policies, artifacts, and results remain unchanged.",
+    "Artifact identity, descriptive result, and public documentation require separate post-merge acceptance."
+  ]
+}
+```
+<!-- P2C_VALIDATED_SUMMARY_END -->
