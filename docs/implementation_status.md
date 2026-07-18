@@ -61,9 +61,10 @@
 - P2c exact descriptive result: accepted P2a replay and P2b mapping agreement `60/60`, direct detector selected/discovered `8/60`, not selected `52/60`, unselected terminal detector feasible `52/52`, and stops `58` no-bug probability threshold / `2` budget limit.
 - P2c software conformance final audit, versioned artifact identity, descriptive result, and public documentation were accepted as four separate decisions; the documentation decision followed independent documentation review, required verification, and status-closure re-review.
 - P2c result interpretation note: [`docs/p2c_result_interpretation.md`](p2c_result_interpretation.md).
-- P2d one-step stop-relaxation audit source, tests, and proposed versioned JSON/Markdown evidence over the same accepted 60 pairs. The 52 preregistered candidates suppress only the terminal no-bug-probability predicate once and execute at most one frozen-policy action.
+- P2d one-step stop-relaxation audit source, tests, and versioned JSON/Markdown evidence, merged by PR #32 over the same accepted 60 pairs. The 52 preregistered candidates suppress only the terminal no-bug-probability predicate once and execute at most one frozen-policy action; the remaining 8 rows stay in overall support as not applicable.
 - P2d implementation evidence observes 0 alternate residual stops, 52 action decisions, 11 direct-detector selections, 11 detected observations, and post-action outcomes of 41 no-bug threshold stops plus 11 one-step horizons. These fixed-input observations are model-internal, non-causal, and non-deployable.
-- P2d software conformance is accepted by independent implementation review. Its artifact identity and descriptive result remain proposed evidence pending separate post-merge acceptance, and public result interpretation remains a separate closeout slice.
+- P2d final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions; the documentation decision followed independent documentation review, required verification, and status-closure re-review.
+- P2d result interpretation note: [`docs/p2d_result_interpretation.md`](p2d_result_interpretation.md).
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -195,9 +196,9 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-### Current proposed P2d implementation evidence
+### Current accepted P2d evidence
 
-The implementation-time P2d checkpoint records:
+The final merged-tree P2d checkpoint records:
 
 ```text
 P2d targeted                          34 passed
@@ -213,14 +214,23 @@ post-action outcomes                  41 threshold / 11 one-step horizon
 accepted input identities             50 / 50
 ```
 
-Proposed versioned P2d artifacts:
+Accepted versioned P2d artifacts:
 
 - JSON: 248,450 bytes, SHA-256 `5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93`.
 - Markdown: 249,662 bytes, SHA-256 `633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4`.
 - Validated-summary digest: `fab660ba884ec3c1b1bc0ba5348dff168a850cb6e305f9eb708b03c3205e4fc0`.
 - 50-file identity-contract digest: `7d127bcedb58f59487e16b3ec9c3a300753fe48108ef2d8a676b4c8b059217b8`.
 
-Two isolated fresh runs match both tracked files byte-for-byte and semantically. Software conformance is accepted by independent implementation review; artifact identity, descriptive result, and public documentation remain pending separate acceptance. This evidence does not establish causal attribution, policy ranking or improvement, multi-step reachability, or deployability.
+Two isolated fresh runs match both tracked files byte-for-byte and semantically. The four decisions remain separate:
+
+```text
+P2d software conformance final audit        accepted
+P2d versioned artifact identity             accepted
+P2d descriptive result                      accepted
+P2d public documentation                    accepted
+```
+
+Accepted P2a/P2b/P2c identities and results remain unchanged. This evidence does not establish causal attribution, policy ranking or improvement, multi-step reachability, or deployability.
 
 ### Current accepted P2c evidence
 

@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c inputs, artifacts, results, catalog cases, action costs, settings, or policy outcomes.
+- change accepted P2a/P2b/P2c/P2d inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
 
 ## Verification Tiers
 
@@ -37,6 +37,22 @@ python -B -m pytest tests/test_p2c_trajectory_audit.py tests/test_p2c_reports.py
 ```
 
 The targeted P2c command verifies the 60-pair order and support, exact P2a replay and P2b mapping agreement, selected/feasible/termination aggregates, the 24-row overlap cross-tab, fail-closed trajectory and termination validation, 43 accepted input identities, deterministic JSON/Markdown bytes, semantic agreement, and accepted P2a/P2b non-regression.
+
+Targeted P2d stop-relaxation and artifact checks:
+
+```bash
+python -B -m pytest tests/test_p2d_stop_relaxation_audit.py tests/test_p2d_reports.py -q -p no:cacheprovider
+```
+
+The targeted P2d command verifies the exact 60-pair order and accepted P2c replay, `52/8` eligibility, exactly-one target suppression, residual-stop precedence, zero-or-one-action horizon, separate selection and observation-detection aggregates, 60 authoritative pair digests, five-file implementation drift protection, 50 accepted input identities, deterministic JSON/Markdown bytes, semantic agreement, Python-portable normalization fixtures, and accepted P2a/P2b/P2c non-regression.
+
+Relevant P2a/P2b/P2c regression for the complete accepted-input boundary:
+
+```bash
+python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py -q -p no:cacheprovider
+```
+
+This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b and P2c diagnostics. P2d closeout uses it as read-only non-regression evidence; it does not rerun the P2a or P2b outcome runners.
 
 Targeted P1b/P1c CLI and real-diff checks:
 
@@ -89,7 +105,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b and P2c. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b, P2c, and P2d. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -129,6 +145,31 @@ Run two P2c audits into isolated temporary directories and compare both candidat
 6. Confirm the accepted P2a/P2b bytes, hashes, and semantic digests remain unchanged.
 
 Do not overwrite or regenerate the tracked P2c artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2c closeout. P2c fresh replay is permitted because it is the audit under verification; it must remain fixed-input and must not be followed by metric, catalog, policy, or claim tuning.
+
+## P2d Artifact, Fresh-Run, and Portability Checks
+
+P2d retains the portable LF-canonical identity/raw same-run drift separation and adds 60 authoritative pair-result digests. Its accepted identities are:
+
+```text
+JSON      248450 bytes / 5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93
+Markdown  249662 bytes / 633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4
+summary                 / fab660ba884ec3c1b1bc0ba5348dff168a850cb6e305f9eb708b03c3205e4fc0
+50-file contract        / 7d127bcedb58f59487e16b3ec9c3a300753fe48108ef2d8a676b4c8b059217b8
+```
+
+Run two P2d audits into isolated temporary directories and compare both output pairs with the tracked files. The complete safe example is in [`docs/p2d_result_interpretation.md`](p2d_result_interpretation.md#reproduction-and-verification). Required checks are:
+
+- both fresh JSON files equal the tracked JSON byte-for-byte;
+- both fresh Markdown files equal the tracked Markdown byte-for-byte;
+- JSON and Markdown recover the same validated summary;
+- the compact canonical digest and 50-file identity contract match exactly;
+- all 60 authoritative pair digests, 60 accepted P2c replays, and row consistency checks match;
+- accepted P2a/P2b/P2c artifact identities and results remain unchanged;
+- the five-file implementation raw snapshot is unchanged before and after each run.
+
+Python 3.10 and 3.12 must produce the same accepted rows and artifacts. P2d's reviewed `math.fsum` normalization is confined to the P2d replay/update wrapper; do not modify accepted upstream update semantics to accommodate a platform. Portable identity normalizes CRLF to LF, while raw drift uses exact checkout bytes.
+
+Do not overwrite or regenerate tracked P2d artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2d closeout. A fixed-input P2d fresh replay is permitted, but it must not be followed by metric, catalog, policy, eligibility, intervention, or claim tuning.
 
 ## `tmp_path` Tests
 
