@@ -1,0 +1,11479 @@
+# P2e Bounded Threshold-Relaxation Continuation Audit
+
+This is an analysis-only, fixed-input, ground-truth-informed, model-internal, bounded-sequence, non-causal, and non-deployable audit.
+
+Validation status: `valid`.
+
+## Frozen Population and Continuation
+
+- Population: `10` variants × `6` accepted formal policies = `60` ordered pairs.
+- Continuation candidates: `41`; P2d detector endpoints: `11`; P2d not applicable: `8`.
+- Only `no_bug_probability_threshold` is suppressed at every later pre-action decision.
+- The same retained policy state, RNG, execution context, costs, budget, and max-step contract are preserved.
+
+## Descriptive Bounded Outcome
+
+- Direct detector observed endpoints: `21`.
+- Direct detector selected among continuation candidates: 21/41 (0.512195121951).
+- Observation detection is recorded separately from detector selection: 21/41 (0.512195121951).
+
+This result does not establish stop causality, a policy defect or ranking, deployable improvement, sequence optimality, inference, generalization, or production readiness.
+
+## Canonical Validated Summary
+
+<!-- P2E_VALIDATED_SUMMARY_BEGIN -->
+```json
+{
+  "schema_version": "p2e_bounded_threshold_relaxation_continuation_audit.v1",
+  "analysis_phase": "p2e_bounded_threshold_relaxation_continuation_audit",
+  "report_role": "analysis_only_fixed_input_ground_truth_informed_model_internal_bounded_sequence_non_causal_non_deployable_audit",
+  "validation_status": {
+    "status": "valid"
+  },
+  "input_identity": {
+    "base_commit": "fe2b80dda8430f85485a3fde67cfd5ca56964b29",
+    "identity_hash_mode": "sha256_after_crlf_to_lf_normalization",
+    "raw_drift_mode": "exact_working_tree_sha256_pre_post_same_run",
+    "identity_contract_digest": "10151569d670f0ada06ae167df1d82f4c77ce66c086c778a299b50ce61e4add5",
+    "identity_support_count": 57,
+    "identity_rows": [
+      {
+        "identity": "p1b_actions_source",
+        "path": "src/bug_cause_inference/p1b/actions.py",
+        "sha256_lf": "cb191a6834f75e87835a2f9b3e164b2e05b48a6168a515455be57680f3d738fe"
+      },
+      {
+        "identity": "p1b_execution_source",
+        "path": "src/bug_cause_inference/p1b/execution.py",
+        "sha256_lf": "820847852f623f91870c824c5218bf5a0c20643868f99131b40c63413b992a91"
+      },
+      {
+        "identity": "p1b_dataset_source",
+        "path": "src/bug_cause_inference/p1b/dataset.py",
+        "sha256_lf": "2c164076148d590c86893da4bfeaedfc82f09c4df5ef7f461c892d2438e17050"
+      },
+      {
+        "identity": "p1b_models_source",
+        "path": "src/bug_cause_inference/p1b/models.py",
+        "sha256_lf": "895a9be33fd8502b8532554c4ca12b92db86b08a3074b54a8233d7ee25104fde"
+      },
+      {
+        "identity": "p1b_policies_source",
+        "path": "src/bug_cause_inference/p1b/policies.py",
+        "sha256_lf": "b039dff408f4fa26f6de86ffe1924fad6dd652c68092bcc08e59e8aa478e4ecd"
+      },
+      {
+        "identity": "p1b_real_diff_source",
+        "path": "src/bug_cause_inference/p1b/real_diff.py",
+        "sha256_lf": "b9b59a58ecf08a251e4281e3c7ffcd0f1b8f6b1707dbac6c98660b816593f4f4"
+      },
+      {
+        "identity": "p2a_adequacy_source",
+        "path": "src/bug_cause_inference/p2a/adequacy.py",
+        "sha256_lf": "bdef79f373a6398fa6756f1b77661b4dbd394d5470ea5ca84b80e0286ea6d400"
+      },
+      {
+        "identity": "p2a_candidate_authoring_source",
+        "path": "src/bug_cause_inference/p2a/candidate_authoring.py",
+        "sha256_lf": "c5a8f6801901d535c2bbde61603aa4de66c9d6ccc2005c30e13592733ae46701"
+      },
+      {
+        "identity": "p2a_candidate_oracles_source",
+        "path": "src/bug_cause_inference/p2a/candidate_oracles.py",
+        "sha256_lf": "0361aefc33fd6a5d0be2dc8fc8e79e1ae290886568113f824598ccbe154c1732"
+      },
+      {
+        "identity": "p2a_candidates_source",
+        "path": "src/bug_cause_inference/p2a/candidates.py",
+        "sha256_lf": "47e0bfccff06819efc66384d9528be0828ca95943f63498bca1eb6aed68f6351"
+      },
+      {
+        "identity": "p2a_freeze_realization_source",
+        "path": "src/bug_cause_inference/p2a/freeze_realization.py",
+        "sha256_lf": "a8c1dea78ad1e592c8823219aa3e074b3284ec48eac722bc7979d993ff04db1b"
+      },
+      {
+        "identity": "p2a_evaluation_source",
+        "path": "src/bug_cause_inference/p2a/evaluation.py",
+        "sha256_lf": "02db9095416885f865229f13ba52d2c7e1d794fac07b5cc2e1651d6593866785"
+      },
+      {
+        "identity": "p2a_reports_source",
+        "path": "src/bug_cause_inference/p2a/reports.py",
+        "sha256_lf": "51c5b873a5562badbb4bc5653686c4b94f3cd7f7f2d2f03f37482c11f6d16992"
+      },
+      {
+        "identity": "p2a_authoring_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/authoring_manifest.json",
+        "sha256_lf": "ccf05cd8c4179ee2b84b68dffa1d576e59f717e4fd314a4cccb0136d9ffb7e3b"
+      },
+      {
+        "identity": "p2a_artifact_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/artifact_manifest.json",
+        "sha256_lf": "ff519a4f5bd7985e0b8f3929fcaa0ded3bd98f742e52bb85d7866f21a2cf1b0d"
+      },
+      {
+        "identity": "p2a_official_freeze_bundle",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/official_freeze_bundle.json",
+        "sha256_lf": "8a5197288c60329af2667fba8c541edd39ccc068b3ecf6393afdaddf8ebdb5a4"
+      },
+      {
+        "identity": "p2a_evaluation_json",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.json",
+        "sha256_lf": "d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df"
+      },
+      {
+        "identity": "p2a_evaluation_markdown",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.md",
+        "sha256_lf": "017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-001.patch",
+        "sha256_lf": "fb828c07825746dab12831dc90504b4471894e4d24ae5381425e26a60d56ecb1"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-002.patch",
+        "sha256_lf": "57168b75361ff6ca8039aa41a0326edc0136758dabb78329f8ddc2eaf3a10cea"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-003.patch",
+        "sha256_lf": "68cdd7a8b9d5e1f4fac818d16fdcb7d12c999d40e2bd480d4b962449740c4a92"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-004.patch",
+        "sha256_lf": "62e7bc6bc3f9855299f7413d3530373f13008a6658682285dbb44af2bfe4a2cf"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-005.patch",
+        "sha256_lf": "8bcbc4fcdccd41ffd92fe27fa25a8f6a0d95a66770832b779c35fa837d62c147"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_006",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-006.patch",
+        "sha256_lf": "095a4ecc21fb5408aceaf62f009e113ccaecff1bd81a2455ab3665bb8ef0cc87"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_007",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-007.patch",
+        "sha256_lf": "85646fa091547497bc12f523a4f6f95d6cda5d07f63ec7b66327cdeda77f2c6f"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_008",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-008.patch",
+        "sha256_lf": "7c11b70025dcfdef22898103a8656f2d8afa6d492403ac24c52c075967cb374c"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_009",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-009.patch",
+        "sha256_lf": "68903ccc686878bdae8b73489596978006c2a422ed6ac17bbbb5d7db88c45030"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_010",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-010.patch",
+        "sha256_lf": "843ec18c88a2fcfd45e8ea7a04c4c5302472b9856cc3fe3a0c5b793672eeffd7"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-001.patch",
+        "sha256_lf": "c0a1b7d75e313d91ec0653ddd361f926e1f69ad5025e78878e80aa114c8e3caa"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-002.patch",
+        "sha256_lf": "ef17bf8a5eb330d52e7ef9b122c4b574b01141bf23d15b6bc90fefa25ddd39f1"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-003.patch",
+        "sha256_lf": "2ab2975d1537a7ea841ca2744515020f12d914b8a88668c967bcd664d64adea9"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-004.patch",
+        "sha256_lf": "eb614f960d83f19a7ddccfc4f7162397f008c42dd2e2089cb3c09753c468b65d"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-005.patch",
+        "sha256_lf": "b78e400beeffcd5a9a9c84bf39c25f3b67a4b2c03eb41605700806b9331c8778"
+      },
+      {
+        "identity": "p1b_baseline_checkout_init",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/__init__.py",
+        "sha256_lf": "41234f3dc364631d4c77ac22af1f07de9099314b0e69551ef0300b00df4f6ae5"
+      },
+      {
+        "identity": "p1b_baseline_checkout_cart",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/cart.py",
+        "sha256_lf": "350cd07ed621cc22ba78e5915d4e956123e75d7246858f3502cfe9a7f9092e93"
+      },
+      {
+        "identity": "p1b_baseline_checkout_config",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/config.py",
+        "sha256_lf": "548a57f4ecd3f85e922fc62901d4b5a3a0c9f33cf6da6c3a15137f3dab83c231"
+      },
+      {
+        "identity": "p1b_baseline_checkout_discounts",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/discounts.py",
+        "sha256_lf": "4900a6cd8a14c87d2b2a66dfa6bb0017adfdfdd9513f3c08d1104612ec945ea2"
+      },
+      {
+        "identity": "p1b_baseline_checkout_inventory",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/inventory.py",
+        "sha256_lf": "a62be8ae4c24b43adfc38da8e9c695483cfe80230102fc3dde55225bfc9b00b9"
+      },
+      {
+        "identity": "p1b_baseline_checkout_shipping",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/shipping.py",
+        "sha256_lf": "f0549311d9b41d298185a366ac92943b9b62eef75cc768fcccdc4fa0a380b439"
+      },
+      {
+        "identity": "p2b_solvability_source",
+        "path": "src/bug_cause_inference/p2b/solvability_ceiling.py",
+        "sha256_lf": "cc7155407288a9d9045b49eb4a9f151808961ec58bd1c841e48ba076799e5b60"
+      },
+      {
+        "identity": "p2b_reports_source",
+        "path": "src/bug_cause_inference/p2b/reports.py",
+        "sha256_lf": "3680c63c58356c792c45c1c5c04a1931dea0c2ebb610dde7f21024e790915b9b"
+      },
+      {
+        "identity": "p2b_json",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.json",
+        "sha256_lf": "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d"
+      },
+      {
+        "identity": "p2b_markdown",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.md",
+        "sha256_lf": "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b"
+      },
+      {
+        "identity": "p2c_init_source",
+        "path": "src/bug_cause_inference/p2c/__init__.py",
+        "sha256_lf": "9f5368cfffca746c19874a7f6cd68ff8e92ecacee1db7ded9dcd068bfd3eae59"
+      },
+      {
+        "identity": "p2c_trajectory_audit_source",
+        "path": "src/bug_cause_inference/p2c/trajectory_audit.py",
+        "sha256_lf": "32d4387053fb277178d648a67e4d8e913e15c0b00bb7df2fa2ffbeb6b4ad7c17"
+      },
+      {
+        "identity": "p2c_reports_source",
+        "path": "src/bug_cause_inference/p2c/reports.py",
+        "sha256_lf": "5fc076ca798f6e7cb023b090713f668cd99b665cd17d933e3bc594a587753d49"
+      },
+      {
+        "identity": "p2c_json",
+        "path": "src/bug_cause_inference/p2c/artifacts/p2c_frozen_policy_trajectory_audit_v1.json",
+        "sha256_lf": "1ebfb62edd5034fd57ea69e18c3eb647a3a8746946ecb98d80b66fa127d989d7"
+      },
+      {
+        "identity": "p2c_markdown",
+        "path": "src/bug_cause_inference/p2c/artifacts/p2c_frozen_policy_trajectory_audit_v1.md",
+        "sha256_lf": "ee9bfda6a7b352ff770fa3025dff4d4feb94e4e36201d256a76de6d569286666"
+      },
+      {
+        "identity": "p2c_trajectory_tests",
+        "path": "tests/test_p2c_trajectory_audit.py",
+        "sha256_lf": "bd1115bf689453541811c6703325b2333bcab12cccc314f89e82a6ee99843c61"
+      },
+      {
+        "identity": "p2c_reports_tests",
+        "path": "tests/test_p2c_reports.py",
+        "sha256_lf": "1251cf34767e2068c4e83beb266866f59f1101efbdefc47dc4a2cef4e7573d24"
+      },
+      {
+        "identity": "p2d_init_source",
+        "path": "src/bug_cause_inference/p2d/__init__.py",
+        "sha256_lf": "ab08a163455be343d89ca5e1ffe4b266453d2c335c447a8f79c2f198c05f2ab3"
+      },
+      {
+        "identity": "p2d_stop_relaxation_source",
+        "path": "src/bug_cause_inference/p2d/stop_relaxation_audit.py",
+        "sha256_lf": "0fc32737233388c3d26f228f2b3048eef1807df05af0148ad2c9eedf834ba9a5"
+      },
+      {
+        "identity": "p2d_reports_source",
+        "path": "src/bug_cause_inference/p2d/reports.py",
+        "sha256_lf": "b1382ab2874f282011ee69c9b231e4285c426b8b282f7b43c66884314fda2b59"
+      },
+      {
+        "identity": "p2d_json",
+        "path": "src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.json",
+        "sha256_lf": "5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93"
+      },
+      {
+        "identity": "p2d_markdown",
+        "path": "src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.md",
+        "sha256_lf": "633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4"
+      },
+      {
+        "identity": "p2d_stop_relaxation_tests",
+        "path": "tests/test_p2d_stop_relaxation_audit.py",
+        "sha256_lf": "147f932602a73ef0465b6d76bcef7ad0403c8ee77f10cea6a3090a5a026d9cc9"
+      },
+      {
+        "identity": "p2d_reports_tests",
+        "path": "tests/test_p2d_reports.py",
+        "sha256_lf": "4ca535f46306aab77aca48e4df49a12ba4a2cd64716743502ba286bc413440e0"
+      }
+    ],
+    "p2a_summary_digest": "3dea5aaf38e1d9a46fd1a9ed973cb02c3fabf7ec933f2bb1c6df4f97446a9629",
+    "p2a_json_sha256": "d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df",
+    "p2a_markdown_sha256": "017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a",
+    "p2b_summary_digest": "873423a2cd15908300d604a970664152d931a8a306f64c797122851f887702e2",
+    "p2b_json_sha256": "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d",
+    "p2b_markdown_sha256": "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b",
+    "p2c_summary_digest": "3872257449d76453f6910b56d28f8e4fdf6c7bb7de30410b2d26335143c0392c",
+    "p2c_json_sha256": "1ebfb62edd5034fd57ea69e18c3eb647a3a8746946ecb98d80b66fa127d989d7",
+    "p2c_markdown_sha256": "ee9bfda6a7b352ff770fa3025dff4d4feb94e4e36201d256a76de6d569286666",
+    "p2d_summary_digest": "fab660ba884ec3c1b1bc0ba5348dff168a850cb6e305f9eb708b03c3205e4fc0",
+    "p2d_json_sha256": "5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93",
+    "p2d_markdown_sha256": "633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4",
+    "p2d_pair_count": 60,
+    "p2d_action_decision_reached_count": 52,
+    "p2d_direct_detector_endpoint_count": 11,
+    "p2d_post_action_threshold_candidate_count": 41,
+    "implementation_file_sha256_lf": {
+      "src/bug_cause_inference/p2e/__init__.py": "bed9dc32d78fd419c34929a425d09800e53b536792dec16bac8c2eec398b98ff",
+      "src/bug_cause_inference/p2e/continuation_audit.py": "15b2e7525399e609de95a13c9ce4e747c38acef88f8cf937ff7e6764dc7f9ca9",
+      "src/bug_cause_inference/p2e/reports.py": "48477174f16ad1caeaedfe5c5b165bb6c45a0c743592faaa46ea2dc2d1eb7566",
+      "tests/test_p2e_continuation_audit.py": "17775c3ca167a6a8dbc1e340b6b4192640f2766a4c17c4befeca11a411aab1a9",
+      "tests/test_p2e_reports.py": "81af3c35c5be84ba8c33d8ee0e54922ba4e521696e666904d6d98615a74c9b4c"
+    }
+  },
+  "pre_outcome_freeze": {
+    "specification_sha256": "d3edfed2db20aacc390eacb4c0c377139015334d1f6547096f0ac33620249af9",
+    "review_record_sha256": "f98f8b1fad8dc652ed9b487a5b48011bfac61bbb2b7bb159f8022257dcc2aa82",
+    "specification_review_verdict": "accept",
+    "identity_contract_digest": "10151569d670f0ada06ae167df1d82f4c77ce66c086c778a299b50ce61e4add5",
+    "implementation_file_sha256_lf": {
+      "src/bug_cause_inference/p2e/__init__.py": "bed9dc32d78fd419c34929a425d09800e53b536792dec16bac8c2eec398b98ff",
+      "src/bug_cause_inference/p2e/continuation_audit.py": "15b2e7525399e609de95a13c9ce4e747c38acef88f8cf937ff7e6764dc7f9ca9",
+      "src/bug_cause_inference/p2e/reports.py": "48477174f16ad1caeaedfe5c5b165bb6c45a0c743592faaa46ea2dc2d1eb7566",
+      "tests/test_p2e_continuation_audit.py": "17775c3ca167a6a8dbc1e340b6b4192640f2766a4c17c4befeca11a411aab1a9",
+      "tests/test_p2e_reports.py": "81af3c35c5be84ba8c33d8ee0e54922ba4e521696e666904d6d98615a74c9b4c"
+    },
+    "implementation_file_sha256_raw": {
+      "src/bug_cause_inference/p2e/__init__.py": "bed9dc32d78fd419c34929a425d09800e53b536792dec16bac8c2eec398b98ff",
+      "src/bug_cause_inference/p2e/continuation_audit.py": "15b2e7525399e609de95a13c9ce4e747c38acef88f8cf937ff7e6764dc7f9ca9",
+      "src/bug_cause_inference/p2e/reports.py": "48477174f16ad1caeaedfe5c5b165bb6c45a0c743592faaa46ea2dc2d1eb7566",
+      "tests/test_p2e_continuation_audit.py": "17775c3ca167a6a8dbc1e340b6b4192640f2766a4c17c4befeca11a411aab1a9",
+      "tests/test_p2e_reports.py": "81af3c35c5be84ba8c33d8ee0e54922ba4e521696e666904d6d98615a74c9b4c"
+    },
+    "first_original_replay_pair_index": 1,
+    "first_continuation_pair_index": 5,
+    "schema_version": "p2e_bounded_threshold_relaxation_continuation_audit.v1"
+  },
+  "execution_boundary": {
+    "original_replay_count": 60,
+    "p2d_post_action_reconstruction_count": 52,
+    "continuation_candidate_count": 41,
+    "p2d_direct_detector_endpoint_count": 11,
+    "p2d_not_applicable_count": 8,
+    "preflight_state_rng_context_checkpoint_count": 41,
+    "continuation_execution_count": 41,
+    "suppressed_stop_id": "no_bug_probability_threshold",
+    "suppression_mode": "every_later_pre_action_decision",
+    "maximum_additional_action_count_per_pair": 6,
+    "raw_identity_pre_post_match": true,
+    "implementation_raw_pre_post_match": true,
+    "accepted_runner_semantic_change": false
+  },
+  "population": {
+    "variant_ids": [
+      "P2A-BUG-001",
+      "P2A-BUG-002",
+      "P2A-BUG-003",
+      "P2A-BUG-004",
+      "P2A-BUG-005",
+      "P2A-BUG-006",
+      "P2A-BUG-007",
+      "P2A-BUG-008",
+      "P2A-BUG-009",
+      "P2A-BUG-010"
+    ],
+    "policy_ids": [
+      "fixed_checklist",
+      "test_first",
+      "coverage_first",
+      "recent_diff_first",
+      "cause_only_p1a_style",
+      "expected_utility_per_cost"
+    ],
+    "bucket_ids": [
+      "boundary_precision",
+      "missing_optional_input",
+      "config_normalization",
+      "state_sequence",
+      "spec_semantics"
+    ],
+    "pair_order": "variant_major_then_policy_minor",
+    "pair_count": 60,
+    "continuation_candidate_count": 41,
+    "p2d_direct_detector_endpoint_count": 11,
+    "p2d_not_applicable_count": 8,
+    "continuation_candidate_indices": [
+      5,
+      6,
+      11,
+      12,
+      16,
+      17,
+      18,
+      23,
+      24,
+      25,
+      26,
+      27,
+      29,
+      30,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      55,
+      56,
+      57,
+      58,
+      59
+    ],
+    "first_continuation_pair_index": 5
+  },
+  "definitions": {
+    "continuation_candidate": "Accepted P2d action-decision row whose one non-detector action did not detect a bug and whose post-action common stop is no_bug_probability_threshold.",
+    "p2e_start": "The retained post-action state, RNG, and execution context immediately after the accepted P2d non-detector action.",
+    "repeated_suppression": "Suppress only no_bug_probability_threshold at every later pre-action decision while preserving all other accepted semantics.",
+    "policy_visibility": "The selector receives only policy ID, retained state, remaining budget, and retained RNG; detector mapping is post-selection audit labeling.",
+    "direct_detector_endpoint": "Stop immediately after a mapped direct-detector action returns the accepted bug-detected observation.",
+    "termination_boundary": "End at direct-detector observation, the first accepted non-target stop, or no available action within accepted budget, max-step, and finite-action bounds."
+  },
+  "pair_results": [
+    {
+      "pair_index": 1,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "fe9e8b71e42b4443eb1bfc74b779bcc680c1f995cf4ba36e7040a6389ce75c9c",
+      "replayed_p2d_row_sha256": "fe9e8b71e42b4443eb1bfc74b779bcc680c1f995cf4ba36e7040a6389ce75c9c",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 2,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "3fdaaa0d7aa9cc398a4971bcd2c4e5b5905e6006876cc35fe17a0a8a1688442f",
+      "replayed_p2d_row_sha256": "3fdaaa0d7aa9cc398a4971bcd2c4e5b5905e6006876cc35fe17a0a8a1688442f",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 3,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "58cf227303a5d564ad293432b7128a1f757f8863e0acee089328961d82f2339e",
+      "replayed_p2d_row_sha256": "58cf227303a5d564ad293432b7128a1f757f8863e0acee089328961d82f2339e",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 4,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "7d4b45066d718b31821e24514daa77909f9e659d489216fc64744194d6fac293",
+      "replayed_p2d_row_sha256": "7d4b45066d718b31821e24514daa77909f9e659d489216fc64744194d6fac293",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 5,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "41b37e7081caf7ef3c39d3544094b2d0adf8e58012975db483a4987a197769a6",
+      "replayed_p2d_row_sha256": "41b37e7081caf7ef3c39d3544094b2d0adf8e58012975db483a4987a197769a6",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "13e620eccf3aaf2ba1968847d922147532337d92debca32ffcca29685039adfe",
+      "p2e_start_rng_state_digest": "c09755a3b0c102e313bf4dac0b95c5d90a4ad0cd8e5bf58801bc484154dc8577",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_boundary_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "13e620eccf3aaf2ba1968847d922147532337d92debca32ffcca29685039adfe",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "39bf0f267f9ea8b83b5ab5cb30ebf4b9adfbab17ea83c63b7ce717b77f0e5286",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "39bf0f267f9ea8b83b5ab5cb30ebf4b9adfbab17ea83c63b7ce717b77f0e5286",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b9bc0224d27bd6951573e68a0587a32b2a893b86d5b0f7a99fd5466b5b3e602d",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "b9bc0224d27bd6951573e68a0587a32b2a893b86d5b0f7a99fd5466b5b3e602d",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "b0a102c2966f19e501532ad81a40a5734b6462084b149d60c8cc0d310aef9856"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 6,
+      "variant_id": "P2A-BUG-001",
+      "bucket_id": "boundary_precision",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "67444940d986508d0b392275f0efd28b5348318de18b1440a9baa6cd239eeb8f",
+      "replayed_p2d_row_sha256": "67444940d986508d0b392275f0efd28b5348318de18b1440a9baa6cd239eeb8f",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "c09755a3b0c102e313bf4dac0b95c5d90a4ad0cd8e5bf58801bc484154dc8577",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_boundary_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 3,
+        "direct_detector_selected_action_id": "run_boundary_tests",
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "7350c814f6afc1e5ea157f91eb48e52be615eba9961b092011cbccd71ba0f483",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "7350c814f6afc1e5ea157f91eb48e52be615eba9961b092011cbccd71ba0f483",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "cbec60a789f0ba3b12f165ca3e1d15aa649473b871a23e8a33dc40c9638fad76",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "max_steps",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "707245232ee59f9f6afe8cd70c8c6291f6b619ca9798b8598fc27cc053cb1ac7"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 7,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "ebf19efb4e2901958b891b3c933ae09c2afa6e142fd8b5158a0dc9813236a405",
+      "replayed_p2d_row_sha256": "ebf19efb4e2901958b891b3c933ae09c2afa6e142fd8b5158a0dc9813236a405",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 8,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "138c7165ed3dca86e07fcb49abf524487f299ac16a5d5c9506e6aed2c818813d",
+      "replayed_p2d_row_sha256": "138c7165ed3dca86e07fcb49abf524487f299ac16a5d5c9506e6aed2c818813d",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 9,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "64abd35bbc4d1519aa31113e1e0736b4cddc20771657995963dcc543c3895402",
+      "replayed_p2d_row_sha256": "64abd35bbc4d1519aa31113e1e0736b4cddc20771657995963dcc543c3895402",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 10,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "6367044cd5ec1e6d90656718d331d04f1d626c70da9fe283ecb35875a8efad1b",
+      "replayed_p2d_row_sha256": "6367044cd5ec1e6d90656718d331d04f1d626c70da9fe283ecb35875a8efad1b",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_not_applicable",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": false,
+        "p2d_outcome_class": null,
+        "p2d_selected_action_id": null,
+        "p2d_selected_action_cost": null,
+        "p2d_selected_action_is_direct_detector": null,
+        "p2d_observation_bug_detected": null,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": null,
+        "p2d_post_action_cumulative_cost": null,
+        "p2d_post_action_remaining_budget": null,
+        "p2d_not_applicable_reason": "direct_detector_already_selected"
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 11,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "60820a547ee7afc89f371b712f59886e95ea66520d29ae7081b5154335021265",
+      "replayed_p2d_row_sha256": "60820a547ee7afc89f371b712f59886e95ea66520d29ae7081b5154335021265",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "13e620eccf3aaf2ba1968847d922147532337d92debca32ffcca29685039adfe",
+      "p2e_start_rng_state_digest": "cdedff48ac61513dbb8e0b1e8118bfbdda5c14725216c6e7b8f4c04167034a73",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_boundary_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "13e620eccf3aaf2ba1968847d922147532337d92debca32ffcca29685039adfe",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "39bf0f267f9ea8b83b5ab5cb30ebf4b9adfbab17ea83c63b7ce717b77f0e5286",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "39bf0f267f9ea8b83b5ab5cb30ebf4b9adfbab17ea83c63b7ce717b77f0e5286",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b9bc0224d27bd6951573e68a0587a32b2a893b86d5b0f7a99fd5466b5b3e602d",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "b9bc0224d27bd6951573e68a0587a32b2a893b86d5b0f7a99fd5466b5b3e602d",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "b0a102c2966f19e501532ad81a40a5734b6462084b149d60c8cc0d310aef9856"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 12,
+      "variant_id": "P2A-BUG-002",
+      "bucket_id": "boundary_precision",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "686f1411018d6d231715df4f196b67c611e2af9f167876da382223f914d5fcd4",
+      "replayed_p2d_row_sha256": "686f1411018d6d231715df4f196b67c611e2af9f167876da382223f914d5fcd4",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "cdedff48ac61513dbb8e0b1e8118bfbdda5c14725216c6e7b8f4c04167034a73",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_boundary_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 3,
+        "direct_detector_selected_action_id": "run_boundary_tests",
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "7350c814f6afc1e5ea157f91eb48e52be615eba9961b092011cbccd71ba0f483",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "7350c814f6afc1e5ea157f91eb48e52be615eba9961b092011cbccd71ba0f483",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_boundary_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "10a19549c0e899a1e9095fbcb4a6e5d34f0b363fba9b594f3058139347300877",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "max_steps",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "8a839b9092f3e81c4bc8f9ab3f76debb7de9a6a3cd11f440be28ed99b5b32ce3"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 13,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "e71607249b62d4668df3d9d6b1121817ffac699c81b4e3fd3d4aa97dc5fc4c7a",
+      "replayed_p2d_row_sha256": "e71607249b62d4668df3d9d6b1121817ffac699c81b4e3fd3d4aa97dc5fc4c7a",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 14,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "b274e632f6abf484882e52b2d64ee542da0e6f962d3c972a7e38f2fa4cd014f2",
+      "replayed_p2d_row_sha256": "b274e632f6abf484882e52b2d64ee542da0e6f962d3c972a7e38f2fa4cd014f2",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 15,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "634d0041ceda9a1a1d56d0514ea09837e4472a50e91a09660a536fc6539f23dd",
+      "replayed_p2d_row_sha256": "634d0041ceda9a1a1d56d0514ea09837e4472a50e91a09660a536fc6539f23dd",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 16,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "a5ee9745ce4ecc27469347ed55334975eb908a75fb8f4b30b4831e333dd1a284",
+      "replayed_p2d_row_sha256": "a5ee9745ce4ecc27469347ed55334975eb908a75fb8f4b30b4831e333dd1a284",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "e0e203236e6175c64ac93e2296f8cbc9cdc4bd6496495f509c40f6c962c606b9",
+      "p2e_start_rng_state_digest": "b9ef1ff86e70cc0b295950cab2b93b31ac988c0f7f6b448fe92a2ee5c171fac6",
+      "p2e_start_execution_context_digest": "871e6d6c3c9b038784c970ec837509e42cb0b74000b007b2f2222ff95e067a1d",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_null_missing_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_null_missing_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 2,
+        "final_step": 5,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 2,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "e0e203236e6175c64ac93e2296f8cbc9cdc4bd6496495f509c40f6c962c606b9",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "3c34464943da17047506e330ccdd06ef027c69aa122c5a4457a3650e594a8828",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 5,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "8ff568c93ee70224428155eaf82a70abafa7ba7231d55c77e1f764b079f91a17"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 17,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "d94dc2b3969054c5f062a748daf510c6a1aa6c9a48a6e8a51254d55ac8139181",
+      "replayed_p2d_row_sha256": "d94dc2b3969054c5f062a748daf510c6a1aa6c9a48a6e8a51254d55ac8139181",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "ff6c0b328bf2d9b260e1e9f80ceb1baf29a0599753cad48acd10cbb61d10ff19",
+      "p2e_start_rng_state_digest": "b9ef1ff86e70cc0b295950cab2b93b31ac988c0f7f6b448fe92a2ee5c171fac6",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_null_missing_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "ff6c0b328bf2d9b260e1e9f80ceb1baf29a0599753cad48acd10cbb61d10ff19",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "825f134ecc5603477dfc2da39f5015d4cb882b6ea20fc5fe328ef40625daeb27",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "825f134ecc5603477dfc2da39f5015d4cb882b6ea20fc5fe328ef40625daeb27",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "daabab0cffe6482d16cc991de0d95802b73fc1e65215f661f8a86b3b7c62b4e0",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "daabab0cffe6482d16cc991de0d95802b73fc1e65215f661f8a86b3b7c62b4e0",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "d7138492c2a2523965a92d5a1dc689479395ca6c65442030270eede07fba3c8c"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 18,
+      "variant_id": "P2A-BUG-003",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "91f12f96d96aebf2e2e57bddffd29132ff8ce2e7640b1f11b1fc94053069165e",
+      "replayed_p2d_row_sha256": "91f12f96d96aebf2e2e57bddffd29132ff8ce2e7640b1f11b1fc94053069165e",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "b9ef1ff86e70cc0b295950cab2b93b31ac988c0f7f6b448fe92a2ee5c171fac6",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_null_missing_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_null_missing_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 2,
+        "final_step": 4,
+        "final_cumulative_cost": 6,
+        "final_remaining_budget": 6,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "dc0aaef195b2d5f2c96bdfcb26bd78813e4083c277ae6b8f47d687b5cd202c4c",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "ba25916e662b6b37782899f2553f516675653e8a5bb574cc87b42f7684dab24a"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 19,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "28779eddaab93fa1eb0349a410fe5673b5f502c2b3eea07244f24b7b619b3b75",
+      "replayed_p2d_row_sha256": "28779eddaab93fa1eb0349a410fe5673b5f502c2b3eea07244f24b7b619b3b75",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 20,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "e65e1a0478d8b468821cddc5578e5c47823a504bf89e836198b44be96dae2d06",
+      "replayed_p2d_row_sha256": "e65e1a0478d8b468821cddc5578e5c47823a504bf89e836198b44be96dae2d06",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 21,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "f74521c224136e1685d2d16cac202267355e612092ba575d217a3d5edc56faa4",
+      "replayed_p2d_row_sha256": "f74521c224136e1685d2d16cac202267355e612092ba575d217a3d5edc56faa4",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 22,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "1c838ddda33f56f4ffac530dfceb5ebe1263e07538f91e15dfe7176686ee261b",
+      "replayed_p2d_row_sha256": "1c838ddda33f56f4ffac530dfceb5ebe1263e07538f91e15dfe7176686ee261b",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 23,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "41185afe690cdffd775103bbbd3cf9ec098754a97eeca3d41a8587aae0798d19",
+      "replayed_p2d_row_sha256": "41185afe690cdffd775103bbbd3cf9ec098754a97eeca3d41a8587aae0798d19",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "a523c9f75251b1c409c986976c59e2fc8ca44cfb2a9d958d90ba0a442f45750a",
+      "p2e_start_rng_state_digest": "c856bb415772842bec8281d30da2002f77734e83e53d301f031b6ab64491d24a",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_null_missing_tests",
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "a523c9f75251b1c409c986976c59e2fc8ca44cfb2a9d958d90ba0a442f45750a",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests",
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "2f916e9394369710310cc391e3ab0fcbad3d6596729cda9eb18ffb3d00d3f285",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "2f916e9394369710310cc391e3ab0fcbad3d6596729cda9eb18ffb3d00d3f285",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests",
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "aa47183b88324c3883f83bf65dc8481d170e85db412745b234aa735b81298d0b",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "aa47183b88324c3883f83bf65dc8481d170e85db412745b234aa735b81298d0b",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "e83c8daedc3921d2a61a58f57dbcdf4cecb744c27443c15f91c6287443f28e89"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 24,
+      "variant_id": "P2A-BUG-004",
+      "bucket_id": "missing_optional_input",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "7f16c5fb4d8d0f6f3c625fb918176838e8fa72afc552d1c3e94981602f3cb170",
+      "replayed_p2d_row_sha256": "7f16c5fb4d8d0f6f3c625fb918176838e8fa72afc552d1c3e94981602f3cb170",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "c856bb415772842bec8281d30da2002f77734e83e53d301f031b6ab64491d24a",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_null_missing_tests",
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_null_missing_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 2,
+        "final_step": 4,
+        "final_cumulative_cost": 6,
+        "final_remaining_budget": 6,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_null_missing_tests",
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "9d885e590ae4cb06064a6da02cad93f43d7627fedc7fc04f6a2b4f1cf6dc88e5",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "55745512bd913a8ec89bb2ed6f301ebbcea7e9e409178feea170602127f36d80"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 25,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "72b40c8cd1feafebdae959d1e415e2d6e345bb4b4a0585491de115ee51e91a79",
+      "replayed_p2d_row_sha256": "72b40c8cd1feafebdae959d1e415e2d6e345bb4b4a0585491de115ee51e91a79",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "e8db343dc0df2dfbef99944d0048dfe8f01787f62a4b690cb4f720c82435d10b",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "7fe93dd913d80a62f391d1b4c9f55aaabac3df548811d1cfde7ec0232e195d02",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "0a8023f227e570adb8f0c0bcf47ba87b38c1e60073e94062b0700e9d3399938e"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 26,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "d1c4c3a95f60f05d8f673a3cf8f6d47d2dc4985f7e06a463c60fc8b28e02b635",
+      "replayed_p2d_row_sha256": "d1c4c3a95f60f05d8f673a3cf8f6d47d2dc4985f7e06a463c60fc8b28e02b635",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "e8db343dc0df2dfbef99944d0048dfe8f01787f62a4b690cb4f720c82435d10b",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "7fe93dd913d80a62f391d1b4c9f55aaabac3df548811d1cfde7ec0232e195d02",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "0a8023f227e570adb8f0c0bcf47ba87b38c1e60073e94062b0700e9d3399938e"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 27,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "3e8436a157c3f4476c3622c1e5f6a250a025da084952766af756a48dbb22a9d8",
+      "replayed_p2d_row_sha256": "3e8436a157c3f4476c3622c1e5f6a250a025da084952766af756a48dbb22a9d8",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "e8db343dc0df2dfbef99944d0048dfe8f01787f62a4b690cb4f720c82435d10b",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "7fe93dd913d80a62f391d1b4c9f55aaabac3df548811d1cfde7ec0232e195d02",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "0a8023f227e570adb8f0c0bcf47ba87b38c1e60073e94062b0700e9d3399938e"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 28,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "6650d05d49410e9230b3f329cc104d3bf55d3c40dcf7b705897b9e4d9fd5519d",
+      "replayed_p2d_row_sha256": "6650d05d49410e9230b3f329cc104d3bf55d3c40dcf7b705897b9e4d9fd5519d",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 29,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "b46714b3df5b6de261dea0d2c3e2c025d064a7a8f9db8cd5fcc69f9c644cd4ce",
+      "replayed_p2d_row_sha256": "b46714b3df5b6de261dea0d2c3e2c025d064a7a8f9db8cd5fcc69f9c644cd4ce",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "a523c9f75251b1c409c986976c59e2fc8ca44cfb2a9d958d90ba0a442f45750a",
+      "p2e_start_rng_state_digest": "e8db343dc0df2dfbef99944d0048dfe8f01787f62a4b690cb4f720c82435d10b",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "a523c9f75251b1c409c986976c59e2fc8ca44cfb2a9d958d90ba0a442f45750a",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "2f916e9394369710310cc391e3ab0fcbad3d6596729cda9eb18ffb3d00d3f285",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "2f916e9394369710310cc391e3ab0fcbad3d6596729cda9eb18ffb3d00d3f285",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "aa47183b88324c3883f83bf65dc8481d170e85db412745b234aa735b81298d0b",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "aa47183b88324c3883f83bf65dc8481d170e85db412745b234aa735b81298d0b",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "c682c0d776197cd8c8d920889c325358685a901acee770ccdab41e501b3c4fc5"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 30,
+      "variant_id": "P2A-BUG-005",
+      "bucket_id": "config_normalization",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "747a0431875aeef0a5a84d4f14c8eea43ec783cd48c9c87b1c681795563bfce3",
+      "replayed_p2d_row_sha256": "747a0431875aeef0a5a84d4f14c8eea43ec783cd48c9c87b1c681795563bfce3",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "e8db343dc0df2dfbef99944d0048dfe8f01787f62a4b690cb4f720c82435d10b",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "max_steps",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "ef39c44b03132ddd77edc9240ea0b65111d1c329db29825e7a314e1dbc0d4e5c",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "ef39c44b03132ddd77edc9240ea0b65111d1c329db29825e7a314e1dbc0d4e5c",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "cf1acf580e24ca0ffb88398c5d129334578edceee6e9badec233366823600e82",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 4,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 3,
+            "cumulative_additional_cost_before": 6,
+            "state_digest_before": "cf1acf580e24ca0ffb88398c5d129334578edceee6e9badec233366823600e82",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "max_steps",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "max_steps"
+          }
+        ],
+        "continuation_trace_digest": "35d843b8cfc867a0dfb4fe1d40897d8ef444cdda5a9fb4883d5af2db5f64d519"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 31,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "f085fcfbe52c73c84073caf2b9ec64bdf413cd62ea811c1ac7a17587bd5a5764",
+      "replayed_p2d_row_sha256": "f085fcfbe52c73c84073caf2b9ec64bdf413cd62ea811c1ac7a17587bd5a5764",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1e7a33711a644f992d7b6ae7d6197fcfff1a2f6c13c767fd6092ea6eea3a94a0",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "fe89bf5a19f84f263423a685636967c1102524ce0c8c1510238eabf99cf3a2b8",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "93a59c80e9b3361e3ee078426500d2b1f9eade93aec0c129da2c07cc98f9a197"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 32,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "6f65b85858b67773a20e27c1ab991b185c78d2a624e93f48c5a35ba5cf458f86",
+      "replayed_p2d_row_sha256": "6f65b85858b67773a20e27c1ab991b185c78d2a624e93f48c5a35ba5cf458f86",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1e7a33711a644f992d7b6ae7d6197fcfff1a2f6c13c767fd6092ea6eea3a94a0",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "fe89bf5a19f84f263423a685636967c1102524ce0c8c1510238eabf99cf3a2b8",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "93a59c80e9b3361e3ee078426500d2b1f9eade93aec0c129da2c07cc98f9a197"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 33,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "5360659132fcd3d8ceed62af5e682f0dbaa84014dbd0dd8f1e753e52d7c621f2",
+      "replayed_p2d_row_sha256": "5360659132fcd3d8ceed62af5e682f0dbaa84014dbd0dd8f1e753e52d7c621f2",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1e7a33711a644f992d7b6ae7d6197fcfff1a2f6c13c767fd6092ea6eea3a94a0",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "run_config_matrix_tests",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 3,
+        "final_step": 4,
+        "final_cumulative_cost": 8,
+        "final_remaining_budget": 4,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "fe89bf5a19f84f263423a685636967c1102524ce0c8c1510238eabf99cf3a2b8",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "93a59c80e9b3361e3ee078426500d2b1f9eade93aec0c129da2c07cc98f9a197"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 34,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "7092f9fb37998f5ad14628be1f03e61e394a423abc0eec3ae523f631c69548ea",
+      "replayed_p2d_row_sha256": "7092f9fb37998f5ad14628be1f03e61e394a423abc0eec3ae523f631c69548ea",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 35,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "248ac2ddaeaf19ebe501e2c8ff0180ce4a66e3710bb89be2f81e5c344aad610a",
+      "replayed_p2d_row_sha256": "248ac2ddaeaf19ebe501e2c8ff0180ce4a66e3710bb89be2f81e5c344aad610a",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "097e0ada10b9fdaa998c8e5d2796bb57e96a0649b724b29fc6e5ba76dd973038",
+      "p2e_start_rng_state_digest": "1e7a33711a644f992d7b6ae7d6197fcfff1a2f6c13c767fd6092ea6eea3a94a0",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "097e0ada10b9fdaa998c8e5d2796bb57e96a0649b724b29fc6e5ba76dd973038",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "44e4c26b85a7df6c47618317aab356d5752ccd1fa69c6aae1403f8b48769744b",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "44e4c26b85a7df6c47618317aab356d5752ccd1fa69c6aae1403f8b48769744b",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "d9d7fabdf5b01c398a129b4dee6e63579e9914c99389dd5a7bc8829d15586b74",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "d9d7fabdf5b01c398a129b4dee6e63579e9914c99389dd5a7bc8829d15586b74",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "c1e01b0642644419577d71fcf1fafe201b6a0794c827302f966ecdb8e73153e7"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 36,
+      "variant_id": "P2A-BUG-006",
+      "bucket_id": "config_normalization",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "2f9c8b2437501d0d16cea4115b851d554677224cd5b159d0eb5b06cc36017f28",
+      "replayed_p2d_row_sha256": "2f9c8b2437501d0d16cea4115b851d554677224cd5b159d0eb5b06cc36017f28",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "1e7a33711a644f992d7b6ae7d6197fcfff1a2f6c13c767fd6092ea6eea3a94a0",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_config_matrix_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "max_steps",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "29e31d49ced0d35efbc0d170822a570f52217990dbb7937677e9698f499510bc",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "29e31d49ced0d35efbc0d170822a570f52217990dbb7937677e9698f499510bc",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_config_matrix_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "8b84b7044a3aa57b43a1c57c0a78bc0cd4edee70ee120300ea5e09cfea2a39be",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 4,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 3,
+            "cumulative_additional_cost_before": 6,
+            "state_digest_before": "8b84b7044a3aa57b43a1c57c0a78bc0cd4edee70ee120300ea5e09cfea2a39be",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "max_steps",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "max_steps"
+          }
+        ],
+        "continuation_trace_digest": "1521934738825c6ba7726064d70af9500555b4328fbdb1f968525608deda6ce0"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 37,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "d36f7ea1d4a4c99e14f4efc9785c3b788c55f59b6751c83a1066b3405856676d",
+      "replayed_p2d_row_sha256": "d36f7ea1d4a4c99e14f4efc9785c3b788c55f59b6751c83a1066b3405856676d",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "9b7a2c627654236468958d36a86f3fa0824211461dee9c576381543380e6dc29",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "cb55b888964097889b7dbe8207f0082c7057d7c1bc61ea03944bace9683652dc"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 38,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "c9e8536e137fec4deadda1ca525ea1fd8965874ff4299b5b3dc0205bed73650b",
+      "replayed_p2d_row_sha256": "c9e8536e137fec4deadda1ca525ea1fd8965874ff4299b5b3dc0205bed73650b",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "9b7a2c627654236468958d36a86f3fa0824211461dee9c576381543380e6dc29",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "cb55b888964097889b7dbe8207f0082c7057d7c1bc61ea03944bace9683652dc"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 39,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "dc0b811436d44be8b92fd81f4328794f94ce872b46eac443dc2af95ef92b4f7c",
+      "replayed_p2d_row_sha256": "dc0b811436d44be8b92fd81f4328794f94ce872b46eac443dc2af95ef92b4f7c",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "9b7a2c627654236468958d36a86f3fa0824211461dee9c576381543380e6dc29",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "cb55b888964097889b7dbe8207f0082c7057d7c1bc61ea03944bace9683652dc"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 40,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "b05e154a118ad3fb83b3a49c89d5cdd14f8a7955099ac581919be6ddd95cb3ca",
+      "replayed_p2d_row_sha256": "b05e154a118ad3fb83b3a49c89d5cdd14f8a7955099ac581919be6ddd95cb3ca",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "524bbbfb47cd31e8845f2316a0fee1bdf8663e9fbaa4a2e86133ad6e18d30f4a",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "871e6d6c3c9b038784c970ec837509e42cb0b74000b007b2f2222ff95e067a1d",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 4,
+        "final_step": 6,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 2,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "524bbbfb47cd31e8845f2316a0fee1bdf8663e9fbaa4a2e86133ad6e18d30f4a",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "3e70379ba44e55321fe4e2ba02e37930dee6bf01e036861db799a1a39f0e967b",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "3e70379ba44e55321fe4e2ba02e37930dee6bf01e036861db799a1a39f0e967b",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "4b24d319e7f4853ef52b870bc3cf79ecf17576c912306d21d29c7bce4431b3ca",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "4b24d319e7f4853ef52b870bc3cf79ecf17576c912306d21d29c7bce4431b3ca",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "07d98ed859919e98e794d4457db9a06aa367964ea5fe8faa216466ebdd858586"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 41,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "be6cd3279b9cb2e16afd1e1578aeca52f277dd8d69466a7c6cbe1663690ce254",
+      "replayed_p2d_row_sha256": "be6cd3279b9cb2e16afd1e1578aeca52f277dd8d69466a7c6cbe1663690ce254",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "ce2722e451c100c55ade373aa7effb88fd26b87ba8a89a58a5573caa902b859d",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "ce2722e451c100c55ade373aa7effb88fd26b87ba8a89a58a5573caa902b859d",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "087eb68de284be6e57c5b9a74ec5dff12bb14504c9ee9ed5a2ebb6f2bc549512",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "087eb68de284be6e57c5b9a74ec5dff12bb14504c9ee9ed5a2ebb6f2bc549512",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "2e927246379e6ef72729f31fc3569c282952ae9a11880bf02ddf39835d8d4305",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "2e927246379e6ef72729f31fc3569c282952ae9a11880bf02ddf39835d8d4305",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "fbacaad5beec0dad2a5eb1c7aa6defd8e623d2c37280605418198f078ada0c06"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 42,
+      "variant_id": "P2A-BUG-007",
+      "bucket_id": "state_sequence",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "15fa9000d2bcdfe09b3266dfdedee7983fa16275e70492e5fdac9f00eb8b5956",
+      "replayed_p2d_row_sha256": "15fa9000d2bcdfe09b3266dfdedee7983fa16275e70492e5fdac9f00eb8b5956",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "ef9a556759db5b65551b7a05ab7da5ae6ab3712541ad47ab5937350f995265a2",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "max_steps",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "a7b6d2c0678ef792ce9fbc09ab053763c3fd3587de2dca4d67e65dcc427c3433",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "a7b6d2c0678ef792ce9fbc09ab053763c3fd3587de2dca4d67e65dcc427c3433",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "8076a780b2a2024ca07cb12180a9ad3d632aab86b6a60ab016ff659da191e18f",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 4,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 3,
+            "cumulative_additional_cost_before": 6,
+            "state_digest_before": "8076a780b2a2024ca07cb12180a9ad3d632aab86b6a60ab016ff659da191e18f",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "max_steps",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "max_steps"
+          }
+        ],
+        "continuation_trace_digest": "32ee3c70175646817be01bb79dd7b9aeba1f337fbd1f0c0fb277690a123c0fa8"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 43,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "2f3ba6c69e9fb1177111e2bc2a4b6066915a3cb7e2e4d97d71aad9e3cc839224",
+      "replayed_p2d_row_sha256": "2f3ba6c69e9fb1177111e2bc2a4b6066915a3cb7e2e4d97d71aad9e3cc839224",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "816d61228797b5ef1fe0dd3067ed5eaf31e454c1f5a841c43d1cf9a7ecd5ed36",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "ec6f7b9fcf55a8fc85bfadb40e3a40ab14d9a99fc1b679e23ab411a423183871"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 44,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "650ae04e250bd544c2987dc1868241ac0f7c7d5ec068ce668350fdf3fea47bb6",
+      "replayed_p2d_row_sha256": "650ae04e250bd544c2987dc1868241ac0f7c7d5ec068ce668350fdf3fea47bb6",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "816d61228797b5ef1fe0dd3067ed5eaf31e454c1f5a841c43d1cf9a7ecd5ed36",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "ec6f7b9fcf55a8fc85bfadb40e3a40ab14d9a99fc1b679e23ab411a423183871"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 45,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "5c86680df2916e14fe981b1cb497626ea1d75eeb29c92b434afc0c001db52551",
+      "replayed_p2d_row_sha256": "5c86680df2916e14fe981b1cb497626ea1d75eeb29c92b434afc0c001db52551",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "run_state_sequence_tests",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "816d61228797b5ef1fe0dd3067ed5eaf31e454c1f5a841c43d1cf9a7ecd5ed36",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "ec6f7b9fcf55a8fc85bfadb40e3a40ab14d9a99fc1b679e23ab411a423183871"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 46,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "c09244862d765a6a8795cce01a1673c76e986e5248f0a76fbef36a90264d4fb1",
+      "replayed_p2d_row_sha256": "c09244862d765a6a8795cce01a1673c76e986e5248f0a76fbef36a90264d4fb1",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "81e74ed077e1935390cf2e360fee7b5afbc741e837a4073bcf84be18e0481c5b",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "871e6d6c3c9b038784c970ec837509e42cb0b74000b007b2f2222ff95e067a1d",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 4,
+        "final_step": 6,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 2,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "81e74ed077e1935390cf2e360fee7b5afbc741e837a4073bcf84be18e0481c5b",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b312f9bf13689545d194a3effa87f4fe249496124bc60702f27954901566fa2d",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b312f9bf13689545d194a3effa87f4fe249496124bc60702f27954901566fa2d",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "04d65802cb3129befac31c553097aa9edc03bbf3a54e113831e46c6cef41f0ba",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "04d65802cb3129befac31c553097aa9edc03bbf3a54e113831e46c6cef41f0ba",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "2e2b68252c0369f8b953a20ad1a173534437c2f63eccb20e17d7c6bc3437bb4d"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 47,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "f86af89bd2004cb421d69097c4c4f9afa2506b86d4cde58d4bf6c984543e3bdf",
+      "replayed_p2d_row_sha256": "f86af89bd2004cb421d69097c4c4f9afa2506b86d4cde58d4bf6c984543e3bdf",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "7868c0c52bded37390ec07bf748b58035abbe3f9864a9d3035997954a0cd9761",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "no_available_actions",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 11,
+        "final_remaining_budget": 1,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "7868c0c52bded37390ec07bf748b58035abbe3f9864a9d3035997954a0cd9761",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "e157c3af3ff383e8c699d737351b00c3d2a448d5786ac8b5d9fb010665b429a9",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "e157c3af3ff383e8c699d737351b00c3d2a448d5786ac8b5d9fb010665b429a9",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_property_search",
+            "selected_action_cost": 5,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b7733a0b171aab8792f1692a8a6c39adce5a29a15f2b4b9eed3df7a96e99a364",
+            "post_action_cumulative_cost": 11,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "b7733a0b171aab8792f1692a8a6c39adce5a29a15f2b4b9eed3df7a96e99a364",
+            "cumulative_cost_before": 11,
+            "remaining_budget_before": 1,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "no_available_actions"
+          }
+        ],
+        "continuation_trace_digest": "c3789f71d35d0e2b4d42fdec27fa16c205732d150553eb6b4804de4b331d0743"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 48,
+      "variant_id": "P2A-BUG-008",
+      "bucket_id": "state_sequence",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "ec40d3e290d6ee49afb360e231c10b49761d37213437f095165e844444646eeb",
+      "replayed_p2d_row_sha256": "ec40d3e290d6ee49afb360e231c10b49761d37213437f095165e844444646eeb",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+      "p2e_start_rng_state_digest": "8b428c93fc3b6d6726ca8ec86da327fece5aae0e50a44c5e1162ab37b612667a",
+      "p2e_start_execution_context_digest": "ac3fdb043523a3cca1b328c3c1dda8e1032eb62338de9022d632247cd93d2718",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "run_state_sequence_tests"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "max_steps",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 3,
+        "cumulative_additional_cost": 6,
+        "final_step": 6,
+        "final_cumulative_cost": 10,
+        "final_remaining_budget": 2,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "c6539c49ff26e31bc46427ed1f744894a38be10c8430fb771f286524bd3e7630",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "b5950e5a95a9ec2c894a5dda65cd98604ffd90450dab2409486b8d496ae829e7",
+            "cumulative_cost_before": 6,
+            "remaining_budget_before": 6,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_recent_diff",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "3ef10406ef2cbf2669f4d4cb3eabd73b01d9da7324d18bc9cb7e8bec378fc2d9",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 4,
+            "state_digest_before": "3ef10406ef2cbf2669f4d4cb3eabd73b01d9da7324d18bc9cb7e8bec378fc2d9",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "run_state_sequence_tests"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_boundary_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "852f505867dc80b41e017a138534597c2a140a10ddfd760097c0f9f96d3dd7cf",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 4,
+            "absolute_decision_step": 7,
+            "additional_actions_executed_before": 3,
+            "cumulative_additional_cost_before": 6,
+            "state_digest_before": "852f505867dc80b41e017a138534597c2a140a10ddfd760097c0f9f96d3dd7cf",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": true
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "max_steps",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "max_steps"
+          }
+        ],
+        "continuation_trace_digest": "18aee50c34dc3d10af1d9afb97e0204a3d0fc76db9238d0e50fe9c18dfabbc4c"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 49,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "ece3300bc4deaa925889bcf97b4cce735b0b942449b7dd93675b572c34a96f44",
+      "replayed_p2d_row_sha256": "ece3300bc4deaa925889bcf97b4cce735b0b942449b7dd93675b572c34a96f44",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1f8f239b889a6dc9415f0e45498163cce99fb0b7669f06d2d1bf556e5ac84218",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 50,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "1f5740611d85887d6cfa8fc92a8990404da9310ba447a41f6ac26f0e8a8ef2a0",
+      "replayed_p2d_row_sha256": "1f5740611d85887d6cfa8fc92a8990404da9310ba447a41f6ac26f0e8a8ef2a0",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1f8f239b889a6dc9415f0e45498163cce99fb0b7669f06d2d1bf556e5ac84218",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 51,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "5ae24ecd976f1253cf5124b05a979d4fd89d22a287d175912b22d39f39ad2dfc",
+      "replayed_p2d_row_sha256": "5ae24ecd976f1253cf5124b05a979d4fd89d22a287d175912b22d39f39ad2dfc",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "1f8f239b889a6dc9415f0e45498163cce99fb0b7669f06d2d1bf556e5ac84218",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 52,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "8e521433b11db0b31fdec62ab8a6dfd7d2ff08059989b34dcb89f430d93d8735",
+      "replayed_p2d_row_sha256": "8e521433b11db0b31fdec62ab8a6dfd7d2ff08059989b34dcb89f430d93d8735",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "6bd656ec55435a3d01351b8ed6dc85be7a03220942238b6033c85603c2a616d8",
+      "p2e_start_rng_state_digest": "1f8f239b889a6dc9415f0e45498163cce99fb0b7669f06d2d1bf556e5ac84218",
+      "p2e_start_execution_context_digest": "871e6d6c3c9b038784c970ec837509e42cb0b74000b007b2f2222ff95e067a1d",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "inspect_spec_clause",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 4,
+        "final_step": 6,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 2,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "6bd656ec55435a3d01351b8ed6dc85be7a03220942238b6033c85603c2a616d8",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "e5ef750ff0d963ba18db1fbeda4dbeaaa08b18bb6680cc3166cdd617b9b377e2",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "e5ef750ff0d963ba18db1fbeda4dbeaaa08b18bb6680cc3166cdd617b9b377e2",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "035b4b993b7d89270a09045b13416b98737c2b92105a50faa89f1e0cf39d5998",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "eecb27d5c42bf1e1bca04bdbdedaabd26afd0d9b9eb763be3fd8fb5104dddbfb"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 53,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "c166e036f230377bd9cadc2e5a19aba3f590f76b258865caddee9dd62c782e6b",
+      "replayed_p2d_row_sha256": "c166e036f230377bd9cadc2e5a19aba3f590f76b258865caddee9dd62c782e6b",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "600427d67670111c90566230384f1e2ac468fb31965160a8fdc1cdea3ff0e8b3",
+      "p2e_start_rng_state_digest": "1f8f239b889a6dc9415f0e45498163cce99fb0b7669f06d2d1bf556e5ac84218",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "inspect_spec_clause",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 2,
+        "final_step": 4,
+        "final_cumulative_cost": 6,
+        "final_remaining_budget": 6,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "600427d67670111c90566230384f1e2ac468fb31965160a8fdc1cdea3ff0e8b3",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "a6dbe6fa3ba4a5da845f7b8c6d22cc00e9e139f2050c65329f04805bbcf2f61f",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "30030dcfdaa0c4a41ff8aabc47ccc08f57c51583aae46676bbb8a9462164b625"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 54,
+      "variant_id": "P2A-BUG-009",
+      "bucket_id": "spec_semantics",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "3fc5011263cdbb7ccaafd49286d87dca4efea2ba124e8941d87188eff6ad9ace",
+      "replayed_p2d_row_sha256": "3fc5011263cdbb7ccaafd49286d87dca4efea2ba124e8941d87188eff6ad9ace",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 55,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "fixed_checklist",
+      "p2d_source_row_sha256": "b1e4224ab9de8f36a10409ebcf6ba1904ef56c69bb136b45087613f78b07daa9",
+      "replayed_p2d_row_sha256": "b1e4224ab9de8f36a10409ebcf6ba1904ef56c69bb136b45087613f78b07daa9",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "6132834bd8f9eecc20ea797363447d51653fbbd96f90ca7e7ec0e6f1d55a5678",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 56,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "test_first",
+      "p2d_source_row_sha256": "2263a24bfe13e523942792d295041c4af869a2cbc05dd62049c08b0c4bca057d",
+      "replayed_p2d_row_sha256": "2263a24bfe13e523942792d295041c4af869a2cbc05dd62049c08b0c4bca057d",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "6132834bd8f9eecc20ea797363447d51653fbbd96f90ca7e7ec0e6f1d55a5678",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 57,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "coverage_first",
+      "p2d_source_row_sha256": "0aa2d24ac907440941755bd966c36ce01a8cd149ac75b82c66589333cd4f9158",
+      "replayed_p2d_row_sha256": "0aa2d24ac907440941755bd966c36ce01a8cd149ac75b82c66589333cd4f9158",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+      "p2e_start_rng_state_digest": "6132834bd8f9eecc20ea797363447d51653fbbd96f90ca7e7ec0e6f1d55a5678",
+      "p2e_start_execution_context_digest": "f785fc009f600fff7ecf2e844b482a758960a42c75e5158aa31ac2986d1a1c84",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_null_missing_tests",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 5,
+        "p2d_post_action_remaining_budget": 7,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "terminated_without_direct_detector",
+        "terminal_reason": "budget_limit",
+        "direct_detector_selected": false,
+        "direct_detector_observation_detected": false,
+        "direct_detector_selected_additional_action_index": null,
+        "direct_detector_selected_action_id": null,
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 7,
+        "final_step": 5,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_became_infeasible_before_selection",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "b861ccf05b76a8d725a8c959be6cd2358acc249ee5da58005f592b962b2f03e3",
+            "cumulative_cost_before": 5,
+            "remaining_budget_before": 7,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_config_matrix_tests",
+            "selected_action_cost": 3,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "post_action_cumulative_cost": 8,
+            "post_action_step": 4,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 3,
+            "state_digest_before": "995002824e7b3dc32e25ff896054b534d20a257d98b909a52c88bb7ddcc69cee",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_state_sequence_tests",
+            "selected_action_cost": 4,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 3,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 2,
+            "cumulative_additional_cost_before": 7,
+            "state_digest_before": "66d1afbcd251e3b9c065f004ae933d5f15636238d291ecdbf63679de7c92efef",
+            "cumulative_cost_before": 12,
+            "remaining_budget_before": 0,
+            "feasible_direct_detector_ids": [],
+            "direct_detector_budget_feasible": false,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": true
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": "budget_limit",
+            "selection_attempted": false,
+            "selected_action_id": null,
+            "selected_action_cost": null,
+            "selected_action_is_direct_detector": null,
+            "observation_bug_detected": null,
+            "state_digest_after": null,
+            "post_action_cumulative_cost": null,
+            "post_action_step": null,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "budget_limit"
+          }
+        ],
+        "continuation_trace_digest": "12fac5a6a787bf113477b4ff1921cfec84258bcb420c682472d6b6038a85d531"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 58,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "recent_diff_first",
+      "p2d_source_row_sha256": "251af4a81c3b30e592fe8e883574947ae99771b17e8b58aa27f628819dec2218",
+      "replayed_p2d_row_sha256": "251af4a81c3b30e592fe8e883574947ae99771b17e8b58aa27f628819dec2218",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "e8619f5bdc4865fc433f7c18949a193b997b99d6d1ba7eb3f769df0dc898afcb",
+      "p2e_start_rng_state_digest": "6132834bd8f9eecc20ea797363447d51653fbbd96f90ca7e7ec0e6f1d55a5678",
+      "p2e_start_execution_context_digest": "871e6d6c3c9b038784c970ec837509e42cb0b74000b007b2f2222ff95e067a1d",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "run_config_matrix_tests",
+        "p2d_selected_action_cost": 3,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 4,
+        "p2d_post_action_cumulative_cost": 8,
+        "p2d_post_action_remaining_budget": 4,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 2,
+        "direct_detector_selected_action_id": "inspect_spec_clause",
+        "additional_action_count": 2,
+        "cumulative_additional_cost": 4,
+        "final_step": 6,
+        "final_cumulative_cost": 12,
+        "final_remaining_budget": 0,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 2,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 5,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "e8619f5bdc4865fc433f7c18949a193b997b99d6d1ba7eb3f769df0dc898afcb",
+            "cumulative_cost_before": 8,
+            "remaining_budget_before": 4,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "run_null_missing_tests",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": false,
+            "observation_bug_detected": false,
+            "state_digest_after": "abe2db3f96762a28cf0d32bb2b38667c10113d558c50176a79c977d56ae07645",
+            "post_action_cumulative_cost": 10,
+            "post_action_step": 5,
+            "post_action_common_stop_result": "no_bug_probability_threshold",
+            "terminal_after_decision": false,
+            "terminal_reason": null
+          },
+          {
+            "decision_index": 2,
+            "absolute_decision_step": 6,
+            "additional_actions_executed_before": 1,
+            "cumulative_additional_cost_before": 2,
+            "state_digest_before": "abe2db3f96762a28cf0d32bb2b38667c10113d558c50176a79c977d56ae07645",
+            "cumulative_cost_before": 10,
+            "remaining_budget_before": 2,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "87b9f7465fc90fb4097278b5de7d0e7851caceb04e211a26cb259c32ba26ea3a",
+            "post_action_cumulative_cost": 12,
+            "post_action_step": 6,
+            "post_action_common_stop_result": "budget_limit",
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "b7d69add02b1b402b7504da7f67a292debbde238ec42a7a939826e3fad19f8f1"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 59,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "cause_only_p1a_style",
+      "p2d_source_row_sha256": "2e8691a285dbbc94f1d9ba53ef192f0ae543673b1dae629d219da13fbdb8584f",
+      "replayed_p2d_row_sha256": "2e8691a285dbbc94f1d9ba53ef192f0ae543673b1dae629d219da13fbdb8584f",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "continuation_candidate",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": "ca42bd4c3c6224cbb8aff6ec6e95981e75a37a4d0f712e8ca64275c0058c5e58",
+      "p2e_start_rng_state_digest": "6132834bd8f9eecc20ea797363447d51653fbbd96f90ca7e7ec0e6f1d55a5678",
+      "p2e_start_execution_context_digest": "203c565ee6bc75cce6077ccf5c8bfa0635aa82da5e4bddfb89ebcfdde2ebf73f",
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_recent_diff",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": false,
+        "p2d_observation_bug_detected": false,
+        "p2d_post_action_common_stop_result": "no_bug_probability_threshold",
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": {
+        "suppressed_stop_id": "no_bug_probability_threshold",
+        "suppression_mode": "every_later_pre_action_decision",
+        "initial_feasible_direct_detector_ids": [
+          "inspect_spec_clause"
+        ],
+        "initial_direct_detector_budget_feasible": true,
+        "terminal_outcome": "direct_detector_observed",
+        "terminal_reason": "direct_detector_observed",
+        "direct_detector_selected": true,
+        "direct_detector_observation_detected": true,
+        "direct_detector_selected_additional_action_index": 1,
+        "direct_detector_selected_action_id": "inspect_spec_clause",
+        "additional_action_count": 1,
+        "cumulative_additional_cost": 2,
+        "final_step": 4,
+        "final_cumulative_cost": 6,
+        "final_remaining_budget": 6,
+        "detector_feasibility_category": "initially_feasible_selected_direct_detector",
+        "maximum_additional_action_count": 3,
+        "decisions": [
+          {
+            "decision_index": 1,
+            "absolute_decision_step": 4,
+            "additional_actions_executed_before": 0,
+            "cumulative_additional_cost_before": 0,
+            "state_digest_before": "ca42bd4c3c6224cbb8aff6ec6e95981e75a37a4d0f712e8ca64275c0058c5e58",
+            "cumulative_cost_before": 4,
+            "remaining_budget_before": 8,
+            "feasible_direct_detector_ids": [
+              "inspect_spec_clause"
+            ],
+            "direct_detector_budget_feasible": true,
+            "suppressed_stop_id": "no_bug_probability_threshold",
+            "residual_stop_predicates": [
+              {
+                "stop_id": "bug_confidence_threshold",
+                "fired": false
+              },
+              {
+                "stop_id": "budget_limit",
+                "fired": false
+              },
+              {
+                "stop_id": "max_steps",
+                "fired": false
+              },
+              {
+                "stop_id": "low_expected_utility",
+                "fired": false
+              }
+            ],
+            "residual_stop_result": null,
+            "selection_attempted": true,
+            "selected_action_id": "inspect_spec_clause",
+            "selected_action_cost": 2,
+            "selected_action_is_direct_detector": true,
+            "observation_bug_detected": true,
+            "state_digest_after": "e829eb33ab7c234f4e4ba6d61f3ee16a7ed82277b8a6a66ae05b023ba7dd7805",
+            "post_action_cumulative_cost": 6,
+            "post_action_step": 4,
+            "post_action_common_stop_result": null,
+            "terminal_after_decision": true,
+            "terminal_reason": "direct_detector_observed"
+          }
+        ],
+        "continuation_trace_digest": "3505129b61485ddc60eae85c1114deba13768b7cbf69705a5acc0939babe1527"
+      },
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    },
+    {
+      "pair_index": 60,
+      "variant_id": "P2A-BUG-010",
+      "bucket_id": "spec_semantics",
+      "policy_id": "expected_utility_per_cost",
+      "p2d_source_row_sha256": "68779a782a388fee0e2f5ea0eb6127d76b0fadefb86031c5feb505fdb2d73800",
+      "replayed_p2d_row_sha256": "68779a782a388fee0e2f5ea0eb6127d76b0fadefb86031c5feb505fdb2d73800",
+      "input_identity_checks": {
+        "accepted_p2a_replay_agreement": true,
+        "accepted_p2b_mapping_agreement": true,
+        "accepted_p2c_replay_agreement": true,
+        "accepted_p2d_row_agreement": true,
+        "source_identity_preflight_passed": true,
+        "p2d_post_action_rng_checkpoint_matches_preflight": true,
+        "p2d_post_action_execution_context_checkpoint_matches_preflight": true
+      },
+      "classification": "p2d_direct_detector_endpoint",
+      "p2d_replay_agreement": true,
+      "p2e_start_state_digest": null,
+      "p2e_start_rng_state_digest": null,
+      "p2e_start_execution_context_digest": null,
+      "baseline": {
+        "p2d_intervention_candidate": true,
+        "p2d_outcome_class": "action_decision_reached",
+        "p2d_selected_action_id": "inspect_spec_clause",
+        "p2d_selected_action_cost": 2,
+        "p2d_selected_action_is_direct_detector": true,
+        "p2d_observation_bug_detected": true,
+        "p2d_post_action_common_stop_result": null,
+        "p2d_post_action_step": 3,
+        "p2d_post_action_cumulative_cost": 4,
+        "p2d_post_action_remaining_budget": 8,
+        "p2d_not_applicable_reason": null
+      },
+      "continuation": null,
+      "row_consistency_checks": {
+        "classification_truth_table_matches": true,
+        "p2d_replay_matches_source": true,
+        "p2e_start_state_matches_p2d_post_action": true,
+        "target_only_repeated_suppression": true,
+        "residual_stop_precedence_matches": true,
+        "policy_visibility_boundary_preserved": true,
+        "decision_payload_matches_outcome": true,
+        "action_cost_step_state_consistent": true,
+        "detector_feasibility_monotone": true,
+        "termination_partition_and_bound_match": true,
+        "detector_endpoint_has_no_later_action": true,
+        "p2e_start_rng_matches_preflight": true,
+        "p2e_start_execution_context_matches_preflight": true,
+        "retained_objects_used_without_clone_or_reseed": true
+      }
+    }
+  ],
+  "aggregate_results": {
+    "overall": {
+      "support_pair_count": 60,
+      "classification_counts": {
+        "continuation_candidate": 41,
+        "p2d_direct_detector_endpoint": 11,
+        "p2d_not_applicable": 8
+      },
+      "candidate_terminal_reason_counts": {
+        "direct_detector_observed": 21,
+        "bug_confidence_threshold": 0,
+        "budget_limit": 8,
+        "max_steps": 4,
+        "low_expected_utility": 0,
+        "no_available_actions": 8
+      },
+      "direct_detector_selected_count": 21,
+      "observation_detected_count": 21,
+      "additional_action_count_distribution": {
+        "0": 0,
+        "1": 11,
+        "2": 24,
+        "3": 6,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "additional_cost_distribution": {
+        "0": 0,
+        "1": 0,
+        "2": 5,
+        "3": 6,
+        "4": 4,
+        "5": 0,
+        "6": 6,
+        "7": 20,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      },
+      "detector_feasibility_category_counts": {
+        "initially_infeasible": 0,
+        "initially_feasible_selected_direct_detector": 21,
+        "initially_feasible_became_infeasible_before_selection": 20,
+        "initially_feasible_through_non_detector_termination": 0
+      },
+      "selected_action_counts": {
+        "run_smoke_tests": 0,
+        "run_boundary_tests": 6,
+        "run_null_missing_tests": 13,
+        "run_config_matrix_tests": 18,
+        "run_state_sequence_tests": 12,
+        "run_property_search": 8,
+        "inspect_traceback": 0,
+        "inspect_coverage_spectrum": 0,
+        "inspect_recent_diff": 6,
+        "inspect_spec_clause": 14
+      },
+      "direct_detector_selected_candidate_ratio": {
+        "numerator": 21,
+        "denominator": 41,
+        "fraction": "21/41",
+        "decimal": "0.512195121951",
+        "undefined_reason": null
+      },
+      "observation_detected_candidate_ratio": {
+        "numerator": 21,
+        "denominator": 41,
+        "fraction": "21/41",
+        "decimal": "0.512195121951",
+        "undefined_reason": null
+      },
+      "terminal_reason_ratios": {
+        "direct_detector_observed": {
+          "numerator": 21,
+          "denominator": 41,
+          "fraction": "21/41",
+          "decimal": "0.512195121951",
+          "undefined_reason": null
+        },
+        "bug_confidence_threshold": {
+          "numerator": 0,
+          "denominator": 41,
+          "fraction": "0/1",
+          "decimal": "0",
+          "undefined_reason": null
+        },
+        "budget_limit": {
+          "numerator": 8,
+          "denominator": 41,
+          "fraction": "8/41",
+          "decimal": "0.19512195122",
+          "undefined_reason": null
+        },
+        "max_steps": {
+          "numerator": 4,
+          "denominator": 41,
+          "fraction": "4/41",
+          "decimal": "0.0975609756098",
+          "undefined_reason": null
+        },
+        "low_expected_utility": {
+          "numerator": 0,
+          "denominator": 41,
+          "fraction": "0/1",
+          "decimal": "0",
+          "undefined_reason": null
+        },
+        "no_available_actions": {
+          "numerator": 8,
+          "denominator": 41,
+          "fraction": "8/41",
+          "decimal": "0.19512195122",
+          "undefined_reason": null
+        }
+      }
+    },
+    "by_policy": [
+      {
+        "policy_id": "fixed_checklist",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 6,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 2
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 4,
+          "observation_detected_count": 4,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 4,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 0,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 4,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 0
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 4,
+              "denominator": 6,
+              "fraction": "2/3",
+              "decimal": "0.666666666667",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 2,
+              "denominator": 6,
+              "fraction": "1/3",
+              "decimal": "0.333333333333",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "policy_id": "test_first",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 6,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 2
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 4,
+          "observation_detected_count": 4,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 4,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 0,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 4,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 0
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 4,
+              "denominator": 6,
+              "fraction": "2/3",
+              "decimal": "0.666666666667",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 2,
+              "denominator": 6,
+              "fraction": "1/3",
+              "decimal": "0.333333333333",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "policy_id": "coverage_first",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 6,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 2
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 4,
+          "observation_detected_count": 4,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 4,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 0,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 4,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 0
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 6,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 4,
+              "denominator": 6,
+              "fraction": "2/3",
+              "decimal": "0.666666666667",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 2,
+              "denominator": 6,
+              "fraction": "1/3",
+              "decimal": "0.333333333333",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "policy_id": "recent_diff_first",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 3,
+            "p2d_not_applicable": 2
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 1,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 0,
+            "4": 4,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 5,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 4
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 2,
+              "denominator": 5,
+              "fraction": "2/5",
+              "decimal": "0.4",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "policy_id": "cause_only_p1a_style",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 10,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 8
+          },
+          "direct_detector_selected_count": 2,
+          "observation_detected_count": 2,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 8,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 8,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 2,
+            "initially_feasible_became_infeasible_before_selection": 8,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 0,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 8,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 10
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 10,
+            "fraction": "1/5",
+            "decimal": "0.2",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 2,
+              "denominator": 10,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 8,
+              "denominator": 10,
+              "fraction": "4/5",
+              "decimal": "0.8",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "policy_id": "expected_utility_per_cost",
+        "axes": {
+          "support_pair_count": 10,
+          "classification_counts": {
+            "continuation_candidate": 8,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 4,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 4,
+          "observation_detected_count": 4,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 0,
+            "3": 6,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 6,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 4,
+            "initially_feasible_became_infeasible_before_selection": 4,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 6,
+            "run_null_missing_tests": 8,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 6,
+            "inspect_spec_clause": 0
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 8,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 8,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 4,
+              "denominator": 8,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 8,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 8,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 4,
+              "denominator": 8,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 8,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 8,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      }
+    ],
+    "by_variant": [
+      {
+        "variant_id": "P2A-BUG-001",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 2,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 4
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 1,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 1,
+          "observation_detected_count": 1,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 1,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 1,
+            "initially_feasible_became_infeasible_before_selection": 1,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-002",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 2,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 4
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 1,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 1,
+          "observation_detected_count": 1,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 1,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 1,
+            "initially_feasible_became_infeasible_before_selection": 1,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-003",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 3,
+            "p2d_direct_detector_endpoint": 3,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 2,
+          "observation_detected_count": 2,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 1,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 2,
+            "initially_feasible_became_infeasible_before_selection": 1,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 3,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 3,
+            "fraction": "2/3",
+            "decimal": "0.666666666667",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 2,
+              "denominator": 3,
+              "fraction": "2/3",
+              "decimal": "0.666666666667",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 3,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 3,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 3,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 3,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 3,
+              "fraction": "1/3",
+              "decimal": "0.333333333333",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-004",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 2,
+            "p2d_direct_detector_endpoint": 4,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 1,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 1,
+          "observation_detected_count": 1,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 1,
+            "2": 1,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 1,
+            "initially_feasible_became_infeasible_before_selection": 1,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 1,
+            "denominator": 2,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 2,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 2,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-005",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 1,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 1,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 3,
+            "2": 1,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 3,
+            "4": 0,
+            "5": 0,
+            "6": 1,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 1,
+              "denominator": 5,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 5,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-006",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 1,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 1,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 3,
+            "2": 1,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 3,
+            "4": 0,
+            "5": 0,
+            "6": 1,
+            "7": 1,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 1
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 1,
+              "denominator": 5,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 5,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-007",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 6,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 1,
+            "max_steps": 1,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 5,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 1,
+            "5": 0,
+            "6": 1,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 3,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 3,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 6,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 6,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 6,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-008",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 6,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 1,
+            "max_steps": 1,
+            "low_expected_utility": 0,
+            "no_available_actions": 1
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 5,
+            "3": 1,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 1,
+            "5": 0,
+            "6": 1,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 3,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 1,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 3,
+            "run_property_search": 1,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 1,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 6,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 6,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 6,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 6,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 1,
+              "denominator": 6,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-009",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 1,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 3,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 2,
+          "observation_detected_count": 2,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 1,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 0,
+            "4": 1,
+            "5": 0,
+            "6": 0,
+            "7": 3,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 2,
+            "initially_feasible_became_infeasible_before_selection": 3,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 3,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 5,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 5,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 2,
+              "denominator": 5,
+              "fraction": "2/5",
+              "decimal": "0.4",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "variant_id": "P2A-BUG-010",
+        "axes": {
+          "support_pair_count": 6,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 1,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 3,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 2,
+          "observation_detected_count": 2,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 1,
+            "2": 4,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 0,
+            "4": 1,
+            "5": 0,
+            "6": 0,
+            "7": 3,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 2,
+            "initially_feasible_became_infeasible_before_selection": 3,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 1,
+            "run_config_matrix_tests": 3,
+            "run_state_sequence_tests": 3,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 5,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 5,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 2,
+              "denominator": 5,
+              "fraction": "2/5",
+              "decimal": "0.4",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      }
+    ],
+    "by_bucket": [
+      {
+        "bucket_id": "boundary_precision",
+        "axes": {
+          "support_pair_count": 12,
+          "classification_counts": {
+            "continuation_candidate": 4,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 8
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 2,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 2
+          },
+          "direct_detector_selected_count": 2,
+          "observation_detected_count": 2,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 2,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 2,
+            "7": 2,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 2,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 2,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 2,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 2,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 4,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 2,
+            "denominator": 4,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 2,
+              "denominator": 4,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 4,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 4,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 4,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 4,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 2,
+              "denominator": 4,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "bucket_id": "missing_optional_input",
+        "axes": {
+          "support_pair_count": 12,
+          "classification_counts": {
+            "continuation_candidate": 5,
+            "p2d_direct_detector_endpoint": 7,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 3,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 2
+          },
+          "direct_detector_selected_count": 3,
+          "observation_detected_count": 3,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 3,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 3,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 2,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 3,
+            "initially_feasible_became_infeasible_before_selection": 2,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 3,
+            "run_config_matrix_tests": 0,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 2,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 3,
+            "denominator": 5,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 3,
+              "denominator": 5,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 5,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 2,
+              "denominator": 5,
+              "fraction": "2/5",
+              "decimal": "0.4",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "bucket_id": "config_normalization",
+        "axes": {
+          "support_pair_count": 12,
+          "classification_counts": {
+            "continuation_candidate": 10,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 0,
+            "max_steps": 2,
+            "low_expected_utility": 0,
+            "no_available_actions": 2
+          },
+          "direct_detector_selected_count": 6,
+          "observation_detected_count": 6,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 6,
+            "2": 2,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 6,
+            "4": 0,
+            "5": 0,
+            "6": 2,
+            "7": 2,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 6,
+            "initially_feasible_became_infeasible_before_selection": 4,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 2,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 0,
+            "run_property_search": 2,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 2,
+            "inspect_spec_clause": 2
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 6,
+            "denominator": 10,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 6,
+            "denominator": 10,
+            "fraction": "3/5",
+            "decimal": "0.6",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 6,
+              "denominator": 10,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 2,
+              "denominator": 10,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 2,
+              "denominator": 10,
+              "fraction": "1/5",
+              "decimal": "0.2",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "bucket_id": "state_sequence",
+        "axes": {
+          "support_pair_count": 12,
+          "classification_counts": {
+            "continuation_candidate": 12,
+            "p2d_direct_detector_endpoint": 0,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 6,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 2,
+            "max_steps": 2,
+            "low_expected_utility": 0,
+            "no_available_actions": 2
+          },
+          "direct_detector_selected_count": 6,
+          "observation_detected_count": 6,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 10,
+            "3": 2,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 2,
+            "5": 0,
+            "6": 2,
+            "7": 8,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 6,
+            "initially_feasible_became_infeasible_before_selection": 6,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 2,
+            "run_null_missing_tests": 4,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 6,
+            "run_property_search": 2,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 2,
+            "inspect_spec_clause": 4
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 6,
+            "denominator": 12,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 6,
+            "denominator": 12,
+            "fraction": "1/2",
+            "decimal": "0.5",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 6,
+              "denominator": 12,
+              "fraction": "1/2",
+              "decimal": "0.5",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 12,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 2,
+              "denominator": 12,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 2,
+              "denominator": 12,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 12,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 2,
+              "denominator": 12,
+              "fraction": "1/6",
+              "decimal": "0.166666666667",
+              "undefined_reason": null
+            }
+          }
+        }
+      },
+      {
+        "bucket_id": "spec_semantics",
+        "axes": {
+          "support_pair_count": 12,
+          "classification_counts": {
+            "continuation_candidate": 10,
+            "p2d_direct_detector_endpoint": 2,
+            "p2d_not_applicable": 0
+          },
+          "candidate_terminal_reason_counts": {
+            "direct_detector_observed": 4,
+            "bug_confidence_threshold": 0,
+            "budget_limit": 6,
+            "max_steps": 0,
+            "low_expected_utility": 0,
+            "no_available_actions": 0
+          },
+          "direct_detector_selected_count": 4,
+          "observation_detected_count": 4,
+          "additional_action_count_distribution": {
+            "0": 0,
+            "1": 2,
+            "2": 8,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "additional_cost_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 2,
+            "5": 0,
+            "6": 0,
+            "7": 6,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "detector_feasibility_category_counts": {
+            "initially_infeasible": 0,
+            "initially_feasible_selected_direct_detector": 4,
+            "initially_feasible_became_infeasible_before_selection": 6,
+            "initially_feasible_through_non_detector_termination": 0
+          },
+          "selected_action_counts": {
+            "run_smoke_tests": 0,
+            "run_boundary_tests": 0,
+            "run_null_missing_tests": 2,
+            "run_config_matrix_tests": 6,
+            "run_state_sequence_tests": 6,
+            "run_property_search": 0,
+            "inspect_traceback": 0,
+            "inspect_coverage_spectrum": 0,
+            "inspect_recent_diff": 0,
+            "inspect_spec_clause": 4
+          },
+          "direct_detector_selected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 10,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "observation_detected_candidate_ratio": {
+            "numerator": 4,
+            "denominator": 10,
+            "fraction": "2/5",
+            "decimal": "0.4",
+            "undefined_reason": null
+          },
+          "terminal_reason_ratios": {
+            "direct_detector_observed": {
+              "numerator": 4,
+              "denominator": 10,
+              "fraction": "2/5",
+              "decimal": "0.4",
+              "undefined_reason": null
+            },
+            "bug_confidence_threshold": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "budget_limit": {
+              "numerator": 6,
+              "denominator": 10,
+              "fraction": "3/5",
+              "decimal": "0.6",
+              "undefined_reason": null
+            },
+            "max_steps": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "low_expected_utility": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            },
+            "no_available_actions": {
+              "numerator": 0,
+              "denominator": 10,
+              "fraction": "0/1",
+              "decimal": "0",
+              "undefined_reason": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "software_acceptance": {
+    "scope": "software_conformance",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "artifact_identity_acceptance": {
+    "scope": "versioned_artifact_identity",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "result_acceptance": {
+    "scope": "descriptive_result",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "documentation_acceptance": {
+    "scope": "public_result_documentation",
+    "accepted": false,
+    "status": "pending_separate_acceptance"
+  },
+  "limitations": [
+    "The audit covers 60 fixed same-domain pairs and 41 fixed continuation candidates.",
+    "The detector mapping is ground-truth-informed and unavailable to deployable policies.",
+    "The repeated threshold suppression is model-internal and bounded by the accepted budget, max-step, and finite-action contract.",
+    "The hand-authored pairs are non-IID and do not establish unseen-variant or second-domain generalization.",
+    "The implementation depends on identity-guarded accepted private helpers.",
+    "The artifact preserves checkpoint digests and reduced traces rather than complete posterior, RNG, or execution-context payloads."
+  ],
+  "non_claims": [
+    "The audit does not establish that the threshold causally produced a miss or is a policy defect.",
+    "The audit does not recommend repeated threshold suppression in production.",
+    "The audit does not rank policies or establish policy superiority, improvement, or deployability.",
+    "The audit does not introduce a new, seventh, tuned, or oracle policy.",
+    "The audit does not identify an optimal or shortest sequence, dynamic-programming ceiling, or general upper bound.",
+    "The audit does not establish clean no-diff safety, second-domain validity, or unseen-variant generalization.",
+    "The audit does not provide confidence intervals, significance tests, causal effects, or production performance estimates."
+  ],
+  "notes": [
+    "P2e preserves all accepted P1b, P2a, P2b, P2c, and P2d inputs and result artifacts unchanged.",
+    "Software, artifact identity, descriptive result, and public documentation acceptance remain separate.",
+    "Unexpected but valid frozen outcomes are reported without tuning."
+  ]
+}
+```
+<!-- P2E_VALIDATED_SUMMARY_END -->
