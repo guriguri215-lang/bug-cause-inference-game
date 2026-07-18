@@ -1479,6 +1479,12 @@ def run_stop_relaxation_audit(
     try:
         inputs = _load_inputs()
     except Exception:  # noqa: BLE001 - fail-closed preflight boundary
+        events.append(
+            {
+                "event": "p2d_preflight_failed",
+                "reason_code": "accepted_input_identity_error",
+            }
+        )
         return _invalid_summary("accepted_input_identity_error")
     input_identity = _input_identity(inputs)
     events.append({"event": "p2d_identity_preflight_passed", "identity_count": 50})
@@ -1550,11 +1556,24 @@ def run_stop_relaxation_audit(
         if _implementation_raw_snapshot() != inputs["implementation_raw_hashes"]:
             raise P2DStopRelaxationAuditError("P2d implementation raw bytes changed")
         summary = _build_valid_summary(inputs, rows)
-    except P2DStopRelaxationAuditError:
+    except P2DStopRelaxationAuditError as exc:
+        events.append(
+            {
+                "event": "p2d_execution_failed",
+                "reason_code": "intervention_contract_error",
+                "diagnostic": str(exc),
+            }
+        )
         return _invalid_summary(
             "intervention_contract_error", input_identity=input_identity
         )
     except Exception:  # noqa: BLE001 - no partial post-intervention claims
+        events.append(
+            {
+                "event": "p2d_execution_failed",
+                "reason_code": "unexpected_audit_error",
+            }
+        )
         return _invalid_summary("unexpected_audit_error", input_identity=input_identity)
     events.append({"event": "p2d_summary_validated"})
     return summary

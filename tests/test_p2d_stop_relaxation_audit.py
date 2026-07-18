@@ -20,7 +20,10 @@ from bug_cause_inference.p2d import stop_relaxation_audit as audit
 def audit_run() -> tuple[dict, list[dict]]:
     events: list[dict] = []
     summary = audit.run_stop_relaxation_audit(event_log=events)
-    assert summary["validation_status"]["status"] == audit.VALID_STATUS
+    assert summary["validation_status"]["status"] == audit.VALID_STATUS, (
+        summary,
+        events,
+    )
     return summary, events
 
 
@@ -172,6 +175,7 @@ def test_residual_stop_precedence_and_fresh_score_semantics(monkeypatch) -> None
 
 def test_policy_selector_receives_only_frozen_visible_arguments(monkeypatch) -> None:
     calls: list[tuple] = []
+    events: list[dict] = []
     original = p1b_policies.choose_action
 
     def spy(policy, state, remaining_budget, rng):
@@ -179,8 +183,11 @@ def test_policy_selector_receives_only_frozen_visible_arguments(monkeypatch) -> 
         return original(policy, state, remaining_budget, rng)
 
     monkeypatch.setattr(p1b_policies, "choose_action", spy)
-    summary = audit.run_stop_relaxation_audit()
-    assert summary["validation_status"]["status"] == audit.VALID_STATUS
+    summary = audit.run_stop_relaxation_audit(event_log=events)
+    assert summary["validation_status"]["status"] == audit.VALID_STATUS, (
+        summary,
+        events,
+    )
     assert calls
     assert all(len(call) == 4 for call in calls)
     assert all(call[0] in audit.FORMAL_POLICY_IDS for call in calls)
