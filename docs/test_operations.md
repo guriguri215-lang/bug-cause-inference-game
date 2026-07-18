@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b inputs, artifacts, results, catalog cases, action costs, settings, or policy outcomes.
+- change accepted P2a/P2b/P2c inputs, artifacts, results, catalog cases, action costs, settings, or policy outcomes.
 
 ## Verification Tiers
 
@@ -29,6 +29,14 @@ python -m pytest tests/test_p2b_solvability_ceiling.py tests/test_p2b_reports.py
 ```
 
 The targeted P2b command verifies the exact 240-case result, deterministic variant order, minimum costs, saved-policy ceiling gaps, invalid-result handling, 39 accepted input identities, deterministic JSON/Markdown bytes, semantic agreement, and accepted P2a non-regression. It does not rerun saved policies, the P2a evaluation, or compatibility evaluation.
+
+Targeted P2c trajectory and artifact checks:
+
+```bash
+python -B -m pytest tests/test_p2c_trajectory_audit.py tests/test_p2c_reports.py -q -p no:cacheprovider
+```
+
+The targeted P2c command verifies the 60-pair order and support, exact P2a replay and P2b mapping agreement, selected/feasible/termination aggregates, the 24-row overlap cross-tab, fail-closed trajectory and termination validation, 43 accepted input identities, deterministic JSON/Markdown bytes, semantic agreement, and accepted P2a/P2b non-regression.
 
 Targeted P1b/P1c CLI and real-diff checks:
 
@@ -81,7 +89,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b and P2c. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -99,6 +107,28 @@ summary                 / 873423a2cd15908300d604a970664152d931a8a306f64c79712285
 ```
 
 The generated JSON and Markdown must repeat byte-for-byte and recover the same validated summary. Accepted P2a identity checks must remain unchanged. Do not regenerate accepted P2a or P2b artifacts merely to accommodate checkout line endings; investigate whether the portable identity or raw drift boundary is being applied incorrectly.
+
+## P2c Artifact, Fresh-Run, and Portability Checks
+
+P2c uses the same separation between LF-canonical portable identity and exact raw working-tree drift detection. Its accepted identities are:
+
+```text
+JSON      387424 bytes / 1ebfb62edd5034fd57ea69e18c3eb647a3a8746946ecb98d80b66fa127d989d7
+Markdown  389004 bytes / ee9bfda6a7b352ff770fa3025dff4d4feb94e4e36201d256a76de6d569286666
+summary                 / 3872257449d76453f6910b56d28f8e4fdf6c7bb7de30410b2d26335143c0392c
+43-file contract        / 1a7c59b40dc837b1c2199a6f1fe8fc8016b87400df89eda05c00e28f0b0767bc
+```
+
+Run two P2c audits into isolated temporary directories and compare both candidate pairs with the tracked files. The complete portable example is in [`docs/p2c_result_interpretation.md`](p2c_result_interpretation.md#reproduction-and-verification). The required safety properties are:
+
+1. Create fresh temporary output directories; never use the tracked artifact paths as output arguments.
+2. Run `run_trajectory_audit()` twice and serialize each result with `save_p2c_report()`.
+3. Compare each candidate JSON and Markdown file byte-for-byte with the tracked pair.
+4. Recover and validate the same summary from JSON and Markdown.
+5. Recompute the compact summary digest and 43-file identity-contract digest.
+6. Confirm the accepted P2a/P2b bytes, hashes, and semantic digests remain unchanged.
+
+Do not overwrite or regenerate the tracked P2c artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2c closeout. P2c fresh replay is permitted because it is the audit under verification; it must remain fixed-input and must not be followed by metric, catalog, policy, or claim tuning.
 
 ## `tmp_path` Tests
 
