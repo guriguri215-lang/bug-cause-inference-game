@@ -65,6 +65,9 @@
 - P2d implementation evidence observes 0 alternate residual stops, 52 action decisions, 11 direct-detector selections, 11 detected observations, and post-action outcomes of 41 no-bug threshold stops plus 11 one-step horizons. These fixed-input observations are model-internal, non-causal, and non-deployable.
 - P2d final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions; the documentation decision followed independent documentation review, required verification, and status-closure re-review.
 - P2d result interpretation note: [`docs/p2d_result_interpretation.md`](p2d_result_interpretation.md).
+- P2e bounded threshold-relaxation continuation audit source, tests, and versioned JSON/Markdown implementation evidence over the same accepted 60 pairs. The 41 P2d post-action threshold rows suppress only that threshold at every later decision while retaining the accepted policy, state, RNG, execution context, costs, budget, max-step, observation, and update contracts; 11 P2d detector endpoints and 8 P2d not-applicable rows remain in overall support.
+- P2e implementation evidence observes 21 direct-detector endpoints, 8 budget stops, 4 max-step stops, and 8 no-available-action terminations among the 41 continuation candidates. Direct-detector selection and observation detection are recorded separately and are both `21/41` in this fixed artifact.
+- P2e independent specification and implementation review verdicts are `accept`, but formal software conformance, versioned artifact identity, descriptive result, and public documentation acceptance all remain pending separate decisions.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -101,7 +104,7 @@
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 - A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
-- A new or tuned policy, multi-step P2c/P2d sequence or DP analysis, a second domain, no-diff clean stress, inferential analysis, or production-readiness claim.
+- A new or tuned policy, optimized/unbounded P2c/P2d/P2e sequence search or DP analysis, a second domain, no-diff clean stress, inferential analysis, or production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -114,7 +117,7 @@
 - A separately reviewed design for any future combined cost plus dropout/delay interaction.
 - Any benchmark expansion beyond the accepted P2a same-domain cohort, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
 - Any P2b follow-up involving a sequence/DP ceiling, deployable policy candidate, second domain, clean stress, or inference requires a separate pre-outcome specification and review.
-- Any P2c/P2d follow-up involving a new or tuned policy, multi-step sequence/DP analysis, second domain, clean stress, inference, or production readiness requires a separate pre-outcome specification and review.
+- Any P2c/P2d/P2e follow-up beyond the accepted bounded P2e continuation contract, including a new or tuned policy, optimized/unbounded sequence or DP analysis, second domain, clean stress, inference, or production readiness, requires a separate pre-outcome specification and review.
 
 ## Known Limitations
 
@@ -157,6 +160,7 @@
 - P2b `catalog_reachable_policy_missed` means only a selection/order/stop trajectory limitation under the fixed contract. The one-step ceiling does not identify which trajectory mechanism caused a miss and ignores multi-step context-dependent evidence.
 - P2c is an analysis-only, fixed-input, ground-truth-informed, non-deployable audit over 60 same-domain pairs. Selection, recorded budget feasibility, and termination are overlapping descriptive axes, not mutually exclusive causal explanations. Terminal budget feasibility does not imply that an action remains selectable after the runner's stop condition fires or that budget caused a miss.
 - P2d is a model-internal one-step counterfactual over the same fixed cohort. Its exactly-once stop suppression and 11/52 direct-detector selections do not establish stop causality, a policy defect or ranking, deployable improvement, multi-step reachability, generalization, or production readiness.
+- P2e is a model-internal bounded continuation over 41 fixed P2d post-action states. Repeated target-only suppression and 21/41 direct-detector endpoints do not establish threshold causality or defect, policy ranking or improvement, sequence optimality, deployability, generalization, inference, or production readiness.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -195,6 +199,42 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current P2e implementation evidence — acceptance pending
+
+The current P2e branch checkpoint records:
+
+```text
+P2e targeted                           43 passed
+P2a-P2e relevant regression           696 passed
+full repository suite                2029 passed
+P1b real-diff validator                25 / 25
+ordered support                        60 / 60
+accepted P2d replay agreement          60 / 60
+continuation candidates                41 / 60
+P2d direct-detector endpoints          11 / 60
+P2d not applicable                      8 / 60
+P2e terminal reasons                  21 detector / 8 budget / 4 max-step / 8 no-action
+accepted input identities              57 / 57
+```
+
+Versioned P2e artifacts:
+
+- JSON: 464,656 bytes, SHA-256 `28af62b91f2a25ee4cb8f7aa4cef8186d6976863ae1fd8f0ac17f1d067befb61`.
+- Markdown: 465,827 bytes, SHA-256 `a99e72e4334d76a74a5fb6c5a1e8b7c9d13975758d14238f178348c0fa135174`.
+- Validated-summary digest: `e7dd83d7579274b19eb9a4af4940b7a26d40c52fcc9da6c44d0f83453220945d`.
+- 57-file identity-contract digest: `10151569d670f0ada06ae167df1d82f4c77ce66c086c778a299b50ce61e4add5`.
+
+Two isolated fresh runs and the independent implementation-review replay match both tracked files byte-for-byte and semantically. The review verdict is `accept`; the four formal decisions remain separate and pending:
+
+```text
+P2e software conformance             pending separate acceptance
+P2e versioned artifact identity      pending separate acceptance
+P2e descriptive result               pending separate acceptance
+P2e public documentation             pending separate acceptance
+```
+
+Repository-wide Ruff still reports only the three pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; all P2e changed Python files pass Ruff. These fixed-input observations do not establish causal attribution, policy ranking or improvement, sequence optimality, generalization, or deployability. Accepted P1b/P2a/P2b/P2c/P2d identities and results remain unchanged.
 
 ### Current accepted P2d evidence
 
