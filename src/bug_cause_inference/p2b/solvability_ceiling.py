@@ -108,27 +108,27 @@ P2A_MARKDOWN_RELATIVE_PATH = PurePosixPath(
 _ACCEPTED_FILE_IDENTITIES = {
     "p1b_actions_source": (
         "src/bug_cause_inference/p1b/actions.py",
-        "dc738b403df5f43f39d3808d6f040548bc971821b71f98f6e629e54da5d6a9e4",
+        "cb191a6834f75e87835a2f9b3e164b2e05b48a6168a515455be57680f3d738fe",
     ),
     "p1b_execution_source": (
         "src/bug_cause_inference/p1b/execution.py",
-        "42dcd7f70041d2576c0c18d426ab933053aa5e560add34b9a2f561cb4e6caba1",
+        "820847852f623f91870c824c5218bf5a0c20643868f99131b40c63413b992a91",
     ),
     "p1b_dataset_source": (
         "src/bug_cause_inference/p1b/dataset.py",
-        "80c22a16dfc6ab5afc368f6b581ba00542e735c815c8f7a65193a3c16aa709f4",
+        "2c164076148d590c86893da4bfeaedfc82f09c4df5ef7f461c892d2438e17050",
     ),
     "p1b_models_source": (
         "src/bug_cause_inference/p1b/models.py",
-        "5a851b136b99c27f7f63e8d5399c0de89a340f60ec1a3e581d5cece25a22cadb",
+        "895a9be33fd8502b8532554c4ca12b92db86b08a3074b54a8233d7ee25104fde",
     ),
     "p1b_policies_source": (
         "src/bug_cause_inference/p1b/policies.py",
-        "879b88693a9ad50c46d5395ee3a9bd7d35aa8520b7f75065414dc642f6aaef09",
+        "b039dff408f4fa26f6de86ffe1924fad6dd652c68092bcc08e59e8aa478e4ecd",
     ),
     "p1b_real_diff_source": (
         "src/bug_cause_inference/p1b/real_diff.py",
-        "a9b173e951af3685a58379e4fe05f5b775eb540950efbca2506ebdd19af55d72",
+        "b9b59a58ecf08a251e4281e3c7ffcd0f1b8f6b1707dbac6c98660b816593f4f4",
     ),
     "p2a_adequacy_source": (
         "src/bug_cause_inference/p2a/adequacy.py",
@@ -244,27 +244,27 @@ _ACCEPTED_FILE_IDENTITIES.update(
         ),
         "p1b_baseline_checkout_init": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/__init__.py",
-            "51e4a52ecf7e463802375a38d90ab015235d4d43ee11996b261cf73e3869e6a4",
+            "41234f3dc364631d4c77ac22af1f07de9099314b0e69551ef0300b00df4f6ae5",
         ),
         "p1b_baseline_checkout_cart": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/cart.py",
-            "b98ef7ea15d1df98c288f34656f15a5f7a0e156220d1fa8d38e5f9a7f44c8a41",
+            "350cd07ed621cc22ba78e5915d4e956123e75d7246858f3502cfe9a7f9092e93",
         ),
         "p1b_baseline_checkout_config": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/config.py",
-            "d02a338aa03a432423621873d3ab6426fa089abcb18d65df182e92bb0cb022b0",
+            "548a57f4ecd3f85e922fc62901d4b5a3a0c9f33cf6da6c3a15137f3dab83c231",
         ),
         "p1b_baseline_checkout_discounts": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/discounts.py",
-            "6a31cb3088dfc26f14123ac84860a83f0860f5bbb142bfe725498f5e0d9e3565",
+            "4900a6cd8a14c87d2b2a66dfa6bb0017adfdfdd9513f3c08d1104612ec945ea2",
         ),
         "p1b_baseline_checkout_inventory": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/inventory.py",
-            "9440765e4d993bef2f6dd4c60ddb9acc9f60eb5a1d9fc34b34c1b565399a48f2",
+            "a62be8ae4c24b43adfc38da8e9c695483cfe80230102fc3dde55225bfc9b00b9",
         ),
         "p1b_baseline_checkout_shipping": (
             "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/shipping.py",
-            "ab3e80ee7a5e92d0150e13681bc9b4c36b4a0027b03d089f198e7a0d00863a7a",
+            "f0549311d9b41d298185a366ac92943b9b62eef75cc768fcccdc4fa0a380b439",
         ),
     }
 )
@@ -346,8 +346,15 @@ def _repository_path(relative_path: str | PurePosixPath) -> Path:
     return target
 
 
-def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def _identity_hashes(data: bytes) -> tuple[str, str]:
+    """Return portable LF-canonical and exact working-tree SHA-256 values."""
+
+    canonical = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(canonical).hexdigest(), hashlib.sha256(data).hexdigest()
+
+
+def _hash_identity_file(path: Path) -> tuple[str, str]:
+    return _identity_hashes(path.read_bytes())
 
 
 def _json_bytes(value: Any, *, pretty: bool = False) -> bytes:
@@ -441,14 +448,24 @@ def _exact_fields(value: Any, fields: tuple[str, ...], path: str) -> dict[str, A
     return value
 
 
-def _accepted_file_hashes() -> dict[str, str]:
-    observed: dict[str, str] = {}
+def _accepted_file_hash_snapshot() -> tuple[dict[str, str], dict[str, str]]:
+    canonical_observed: dict[str, str] = {}
+    working_tree_observed: dict[str, str] = {}
     for identity, (relative_path, expected) in _ACCEPTED_FILE_IDENTITIES.items():
-        actual = _sha256(_repository_path(relative_path))
-        if actual != expected:
+        canonical, working_tree = _hash_identity_file(
+            _repository_path(relative_path)
+        )
+        if canonical != expected:
             raise P2BDiagnosticError(f"accepted input drifted: {identity}")
-        observed[identity] = actual
-    return observed
+        canonical_observed[identity] = canonical
+        working_tree_observed[identity] = working_tree
+    return canonical_observed, working_tree_observed
+
+
+def _accepted_file_hashes() -> dict[str, str]:
+    """Return portable accepted hashes after a fresh raw-byte snapshot."""
+
+    return _accepted_file_hash_snapshot()[0]
 
 
 def _validate_initial_common_stop(settings_payload: Mapping[str, Any]) -> bool:
@@ -472,18 +489,27 @@ def _validate_initial_common_stop(settings_payload: Mapping[str, Any]) -> bool:
 def _load_validated_inputs() -> dict[str, Any]:
     """Freshly hash every accepted input, then reuse only hash-keyed parsed data."""
 
-    accepted_hashes = _accepted_file_hashes()
-    cache_key = tuple(accepted_hashes.items())
-    return deepcopy(_load_validated_input_content(cache_key))
+    accepted_hashes, working_tree_hashes = _accepted_file_hash_snapshot()
+    parsed = deepcopy(
+        _load_validated_input_content(
+            tuple(accepted_hashes.items()),
+            tuple(working_tree_hashes.items()),
+        )
+    )
+    parsed["working_tree_hashes"] = working_tree_hashes
+    return parsed
 
 
 @lru_cache(maxsize=1)
 def _load_validated_input_content(
     accepted_hash_items: tuple[tuple[str, str], ...],
+    working_tree_hash_items: tuple[tuple[str, str], ...],
 ) -> dict[str, Any]:
-    """Parse and cross-validate immutable content fully bound by fresh hashes."""
+    """Parse content cached by both canonical and exact working-tree hashes."""
 
     accepted_hashes = dict(accepted_hash_items)
+    if tuple(dict(working_tree_hash_items)) != tuple(accepted_hashes):
+        raise P2BDiagnosticError("working-tree identity support or order drifted")
     bundle = load_tracked_official_freeze_bundle()
     artifact = load_tracked_artifact_manifest()
     authoring = load_tracked_authoring_manifest()
@@ -608,6 +634,7 @@ def _input_identity(inputs: Mapping[str, Any]) -> dict[str, Any]:
         "dataset_counts": {"total": 15, "buggy": 10, "clean": 5},
         "catalog_case_count": 24,
         "legacy_compatibility": deepcopy(compatibility),
+        "accepted_file_hash_mode": "sha256_after_crlf_to_lf_normalization",
         "accepted_file_sha256": deepcopy(inputs["accepted_hashes"]),
     }
 
@@ -972,6 +999,7 @@ def _build_valid_summary(
                     "policy_outcome_runner_executed": False,
                     "compatibility_runner_executed": False,
                     "p2a_evaluation_runner_executed": False,
+                    "working_tree_raw_pre_post_match": True,
                     "first_execution": "P2A-BUG-001::P2A-BUG-001::boundary.quantity_zero_rejected",
                     "summary_observed_event_ids": [
                         "p2b_pre_diagnostic_gate_passed",
@@ -1153,7 +1181,11 @@ def run_fixed_catalog_diagnostic(
             }
         )
         post_inputs = _load_validated_inputs()
-        if _input_identity(post_inputs) != _input_identity(inputs):
+        if (
+            _input_identity(post_inputs) != _input_identity(inputs)
+            or post_inputs["working_tree_hashes"]
+            != inputs["working_tree_hashes"]
+        ):
             raise P2BDiagnosticError("accepted input identity changed during execution")
         summary = _build_valid_summary(post_inputs, rows_by_variant)
         validate_diagnostic_summary(summary)

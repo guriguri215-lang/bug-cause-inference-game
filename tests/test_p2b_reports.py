@@ -40,16 +40,16 @@ def test_serializers_are_repeat_byte_deterministic_and_semantically_equal(
 def test_tracked_artifacts_are_exact_and_reproducible(tracked_summary) -> None:
     json_bytes = JSON_PATH.read_bytes()
     markdown_bytes = MARKDOWN_PATH.read_bytes()
-    assert len(json_bytes) == 144_276
+    assert len(json_bytes) == 144_393
     assert hashlib.sha256(json_bytes).hexdigest() == (
-        "2d2e7aac4a745b87a8387cd25d668c9756202fb04b2a939075c42d366b0a715e"
+        "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d"
     )
-    assert len(markdown_bytes) == 146_543
+    assert len(markdown_bytes) == 146_660
     assert hashlib.sha256(markdown_bytes).hexdigest() == (
-        "8f8af8b8b547e28f7ec1aa33e3e212fc4b8b9c7c1e736114c72e2afd44e0207a"
+        "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b"
     )
     assert canonical_digest(tracked_summary) == (
-        "f84bc0e5e6d3e4187ae9a9f7c8b6cb1ecc1c121e541edc57fe814e71fef24d50"
+        "873423a2cd15908300d604a970664152d931a8a306f64c797122851f887702e2"
     )
     assert reports.p2b_summary_to_json(tracked_summary).encode("utf-8") == json_bytes
     assert reports.p2b_summary_to_markdown(tracked_summary).encode("utf-8") == markdown_bytes

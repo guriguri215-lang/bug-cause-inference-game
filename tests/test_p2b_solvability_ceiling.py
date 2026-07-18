@@ -31,6 +31,9 @@ def test_pre_diagnostic_gate_fixes_all_accepted_identities() -> None:
     assert identity["official_freeze_digest"] == ceiling.EXPECTED_OFFICIAL_FREEZE_DIGEST
     assert identity["saved_outcome_snapshot_digest"] == ceiling.EXPECTED_SAVED_OUTCOME_DIGEST
     assert identity["accepted_p2a_summary_digest"] == ceiling.EXPECTED_P2A_SUMMARY_DIGEST
+    assert identity["accepted_file_hash_mode"] == (
+        "sha256_after_crlf_to_lf_normalization"
+    )
     assert identity["legacy_compatibility"]["matched_pair_count"] == 150
     assert identity["legacy_compatibility"]["mismatch_count"] == 0
     assert tuple(inputs["bucket_by_variant"].values()) == (
@@ -66,6 +69,7 @@ def test_diagnostic_runs_exact_catalog_only_and_records_boundary(diagnostic) -> 
     assert boundary["policy_outcome_runner_executed"] is False
     assert boundary["compatibility_runner_executed"] is False
     assert boundary["p2a_evaluation_runner_executed"] is False
+    assert boundary["working_tree_raw_pre_post_match"] is True
     assert boundary["summary_observed_event_ids"] == [
         item["event"] for item in events[:3]
     ]
@@ -323,8 +327,8 @@ def test_fresh_post_execution_identity_drift_returns_no_partial_claims(
     tracked, _ = diagnostic
     before = ceiling._load_validated_inputs()
     after = deepcopy(before)
-    first_hash = next(iter(after["accepted_hashes"]))
-    after["accepted_hashes"][first_hash] = "0" * 64
+    first_hash = next(iter(after["working_tree_hashes"]))
+    after["working_tree_hashes"][first_hash] = "0" * 64
     loads = iter((before, after))
     monkeypatch.setattr(ceiling, "_load_validated_inputs", lambda: next(loads))
     rows_by_variant = {
@@ -359,7 +363,7 @@ def test_execution_patch_and_baseline_drift_fail_before_cached_content(
     execution_input_suffix: str,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    real_sha256 = ceiling._sha256
+    real_hash_identity_file = ceiling._hash_identity_file
     matched = False
 
     def drift_one_execution_input(path):
@@ -367,19 +371,31 @@ def test_execution_patch_and_baseline_drift_fail_before_cached_content(
         portable = path.as_posix()
         if portable.endswith(execution_input_suffix):
             matched = True
-            return "0" * 64
-        return real_sha256(path)
+            _, working_tree = real_hash_identity_file(path)
+            return "0" * 64, working_tree
+        return real_hash_identity_file(path)
 
     def forbidden_cache_lookup(*args, **kwargs):
         raise AssertionError("drifted execution input must fail before cache lookup")
 
-    monkeypatch.setattr(ceiling, "_sha256", drift_one_execution_input)
+    monkeypatch.setattr(
+        ceiling, "_hash_identity_file", drift_one_execution_input
+    )
     monkeypatch.setattr(
         ceiling, "_load_validated_input_content", forbidden_cache_lookup
     )
     with pytest.raises(ceiling.P2BDiagnosticError, match="accepted input drifted"):
         ceiling._load_validated_inputs()
     assert matched is True
+
+
+def test_lf_canonical_identity_is_portable_but_raw_identity_is_exact() -> None:
+    lf = b"first line\nsecond line\n"
+    crlf = b"first line\r\nsecond line\r\n"
+    lf_canonical, lf_raw = ceiling._identity_hashes(lf)
+    crlf_canonical, crlf_raw = ceiling._identity_hashes(crlf)
+    assert lf_canonical == crlf_canonical
+    assert lf_raw != crlf_raw
 
 
 def test_case_row_mutations_and_derived_summary_drift_are_rejected(diagnostic) -> None:
