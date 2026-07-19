@@ -65,9 +65,10 @@
 - P2d implementation evidence observes 0 alternate residual stops, 52 action decisions, 11 direct-detector selections, 11 detected observations, and post-action outcomes of 41 no-bug threshold stops plus 11 one-step horizons. These fixed-input observations are model-internal, non-causal, and non-deployable.
 - P2d final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions; the documentation decision followed independent documentation review, required verification, and status-closure re-review.
 - P2d result interpretation note: [`docs/p2d_result_interpretation.md`](p2d_result_interpretation.md).
-- P2e bounded threshold-relaxation continuation audit source, tests, and versioned JSON/Markdown implementation evidence over the same accepted 60 pairs. The 41 P2d post-action threshold rows suppress only that threshold at every later decision while retaining the accepted policy, state, RNG, execution context, costs, budget, max-step, observation, and update contracts; 11 P2d detector endpoints and 8 P2d not-applicable rows remain in overall support.
+- P2e bounded threshold-relaxation continuation audit source, tests, and versioned JSON/Markdown evidence, merged by PR #34 over the same accepted 60 pairs. The 41 P2d post-action threshold rows suppress only that threshold at every later decision while retaining the accepted policy, state, RNG, execution context, costs, budget, max-step, observation, and update contracts; 11 P2d detector endpoints and 8 P2d not-applicable rows remain in overall support.
 - P2e implementation evidence observes 21 direct-detector endpoints, 8 budget stops, 4 max-step stops, and 8 no-available-action terminations among the 41 continuation candidates. Direct-detector selection and observation detection are recorded separately and are both `21/41` in this fixed artifact.
-- P2e independent specification and implementation review verdicts are `accept`, but formal software conformance, versioned artifact identity, descriptive result, and public documentation acceptance all remain pending separate decisions.
+- P2e final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review and required verification.
+- P2e result interpretation note: [`docs/p2e_result_interpretation.md`](p2e_result_interpretation.md).
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -200,7 +201,7 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-### Current P2e implementation evidence — acceptance pending
+### Current P2e accepted implementation, artifact, and result evidence
 
 The current P2e branch checkpoint records:
 
@@ -223,18 +224,20 @@ Versioned P2e artifacts:
 - JSON: 464,656 bytes, SHA-256 `28af62b91f2a25ee4cb8f7aa4cef8186d6976863ae1fd8f0ac17f1d067befb61`.
 - Markdown: 465,827 bytes, SHA-256 `a99e72e4334d76a74a5fb6c5a1e8b7c9d13975758d14238f178348c0fa135174`.
 - Validated-summary digest: `e7dd83d7579274b19eb9a4af4940b7a26d40c52fcc9da6c44d0f83453220945d`.
+- Pair-results digest: `cf6497bdea1c60dc176bab98e96e22a7e162feefc5953c9174948b47d82c4789`.
+- Aggregate-results digest: `349ac974d3ea4bc1bd690d44876129404b2d138f060a90a7693dbb4917cb982a`.
 - 57-file identity-contract digest: `10151569d670f0ada06ae167df1d82f4c77ce66c086c778a299b50ce61e4add5`.
 
-Two isolated fresh runs and the independent implementation-review replay match both tracked files byte-for-byte and semantically. The review verdict is `accept`; the four formal decisions remain separate and pending:
+Two isolated final merged-tree fresh runs and the independent acceptance review match both tracked files byte-for-byte and semantically. The four formal decisions remain separate:
 
 ```text
-P2e software conformance             pending separate acceptance
-P2e versioned artifact identity      pending separate acceptance
-P2e descriptive result               pending separate acceptance
-P2e public documentation             pending separate acceptance
+P2e software conformance final audit  accepted
+P2e versioned artifact identity       accepted
+P2e descriptive result                accepted
+P2e public documentation              accepted
 ```
 
-Repository-wide Ruff still reports only the three pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; all P2e changed Python files pass Ruff. These fixed-input observations do not establish causal attribution, policy ranking or improvement, sequence optimality, generalization, or deployability. Accepted P1b/P2a/P2b/P2c/P2d identities and results remain unchanged.
+The historical pre-outcome five-file identity remains embedded in the artifact. The accepted final merged current LF-canonical map is a separate reviewed identity gate; checkout-specific raw pre/post snapshots separately detect same-run drift. Repository-wide Ruff still reports only the three pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; all P2e changed Python files pass Ruff. These fixed-input observations do not establish causal attribution, policy ranking or improvement, sequence optimality, generalization, or deployability. Accepted P1b/P2a/P2b/P2c/P2d identities and results remain unchanged.
 
 ### Current accepted P2d evidence
 

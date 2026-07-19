@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c/P2d inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
+- change accepted P2a/P2b/P2c/P2d/P2e inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
 
 ## Verification Tiers
 
@@ -46,13 +46,21 @@ python -B -m pytest tests/test_p2d_stop_relaxation_audit.py tests/test_p2d_repor
 
 The targeted P2d command verifies the exact 60-pair order and accepted P2c replay, `52/8` eligibility, exactly-one target suppression, residual-stop precedence, zero-or-one-action horizon, separate selection and observation-detection aggregates, 60 authoritative pair digests, five-file implementation drift protection, 50 accepted input identities, deterministic JSON/Markdown bytes, semantic agreement, Python-portable normalization fixtures, and accepted P2a/P2b/P2c non-regression.
 
-Relevant P2a/P2b/P2c regression for the complete accepted-input boundary:
+Targeted P2e continuation and artifact checks:
 
 ```bash
-python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py -q -p no:cacheprovider
+python -B -m pytest tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py -q -p no:cacheprovider
 ```
 
-This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b and P2c diagnostics. P2d closeout uses it as read-only non-regression evidence; it does not rerun the P2a or P2b outcome runners.
+The targeted P2e command verifies the exact 60-pair order and accepted P2d replay; `41/11/8` classification; 41 state/RNG/execution-context checkpoints; every-later-decision target-only suppression; residual-stop precedence; retained state, RNG, execution context, policy, costs, budget, max-step, observations, and updates; separate selection and observation-detection fields; the exclusive `21/0/8/4/0/8` terminal partition; finite non-repeating continuation; 60 authoritative pair digests; five-file historical/current identity separation and raw same-run drift protection; 57 accepted input identities; deterministic JSON/Markdown bytes and semantics; and accepted P1b/P2a/P2b/P2c/P2d non-regression.
+
+Relevant P2a/P2b/P2c/P2d/P2e regression for the complete accepted-input boundary:
+
+```bash
+python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py tests/test_p2d_reports.py tests/test_p2d_stop_relaxation_audit.py tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py -q -p no:cacheprovider
+```
+
+This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b, P2c, P2d, and P2e diagnostics. P2e closeout uses it as read-only non-regression evidence; it does not invoke the P2a or P2b outcome runners.
 
 Targeted P1b/P1c CLI and real-diff checks:
 
@@ -105,7 +113,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b, P2c, and P2d. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b, P2c, P2d, and P2e. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -170,6 +178,37 @@ Run two P2d audits into isolated temporary directories and compare both output p
 Python 3.10 and 3.12 must produce the same accepted rows and artifacts. P2d's reviewed `math.fsum` normalization is confined to the P2d replay/update wrapper; do not modify accepted upstream update semantics to accommodate a platform. Portable identity normalizes CRLF to LF, while raw drift uses exact checkout bytes.
 
 Do not overwrite or regenerate tracked P2d artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2d closeout. A fixed-input P2d fresh replay is permitted, but it must not be followed by metric, catalog, policy, eligibility, intervention, or claim tuning.
+
+## P2e Artifact, Fresh-Run, and Identity Checks
+
+P2e preserves the historical five-file pre-outcome identity. Verification separately compares the current five-file LF-canonical hashes with the accepted final merged map, while the runner compares checkout-specific raw snapshots before and after each run. Its accepted artifact identities are:
+
+```text
+JSON      464656 bytes / 28af62b91f2a25ee4cb8f7aa4cef8186d6976863ae1fd8f0ac17f1d067befb61
+Markdown  465827 bytes / a99e72e4334d76a74a5fb6c5a1e8b7c9d13975758d14238f178348c0fa135174
+summary                 / e7dd83d7579274b19eb9a4af4940b7a26d40c52fcc9da6c44d0f83453220945d
+pair results            / cf6497bdea1c60dc176bab98e96e22a7e162feefc5953c9174948b47d82c4789
+aggregates              / 349ac974d3ea4bc1bd690d44876129404b2d138f060a90a7693dbb4917cb982a
+57-file contract        / 10151569d670f0ada06ae167df1d82f4c77ce66c086c778a299b50ce61e4add5
+```
+
+Run two P2e audits into isolated temporary directories and compare both output pairs with the tracked files. The complete safe example is in [`docs/p2e_result_interpretation.md`](p2e_result_interpretation.md#reproduction-and-verification). Required checks are:
+
+- both fresh JSON files equal the tracked JSON byte-for-byte;
+- both fresh Markdown files equal the tracked Markdown byte-for-byte;
+- JSON and Markdown recover the same validated summary;
+- canonical, pair-results, aggregate-results, and 57-file digests match exactly;
+- the artifact's historical pre-outcome implementation identity matches the frozen constants;
+- the five current LF-canonical hashes equal the accepted final merged values documented in [`docs/p2e_result_interpretation.md`](p2e_result_interpretation.md#versioned-artifacts-and-identity);
+- the checkout-specific current implementation raw snapshot is unchanged before and after each fresh run;
+- all 60 authoritative rows and 60 accepted P2d replays match;
+- all 41 state/RNG/execution-context starting checkpoints match;
+- `41/11/8`, the exclusive `21/0/8/4/0/8` terminal partition, separate `21/41` selection and detection, selected-action, additional action/cost, and feasibility aggregates recompute exactly;
+- accepted P1b/P2a/P2b/P2c/P2d source, tests, artifacts, identities, and results remain unchanged.
+
+Portable identity normalizes CRLF to LF. Exact raw bytes detect same-run drift within one checkout. The reviewed difference between historical freeze identities and final current identities is expected and must not be treated as drift or used to rebind the historical freeze.
+
+Do not overwrite or regenerate tracked P2e artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2e closeout. A fixed-input P2e fresh replay is permitted, but it must not be followed by metric, catalog, policy, classification, result, or claim tuning.
 
 ## `tmp_path` Tests
 
