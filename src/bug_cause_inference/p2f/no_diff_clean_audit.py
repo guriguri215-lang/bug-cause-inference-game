@@ -13,6 +13,7 @@ import hashlib
 import importlib
 import itertools
 import json
+import math
 import random
 import shutil
 import sys
@@ -35,7 +36,6 @@ from bug_cause_inference.p1b.models import (
     P1BSettings,
     rank_distribution,
     uniform_distribution,
-    update_distribution,
 )
 from bug_cause_inference.p2a import evaluation as p2a_evaluation
 from bug_cause_inference.p2a import execution as p2a_execution
@@ -406,6 +406,24 @@ def _state_digest(state: p1b_policies._State) -> str:
     return _result_digest(_state_payload(state))
 
 
+def _portable_update_distribution(
+    prior: dict[str, float], weights: dict[str, float]
+) -> dict[str, float]:
+    """Apply the accepted update with Python-version-stable normalization."""
+
+    combined = {
+        label: probability * weights.get(label, 1.0)
+        for label, probability in prior.items()
+    }
+    total = math.fsum(max(value, 0.0) for value in combined.values())
+    if total <= 0:
+        if not combined:
+            return {}
+        value = 1.0 / len(combined)
+        return {key: value for key in combined}
+    return {key: max(value, 0.0) / total for key, value in combined.items()}
+
+
 def _truthful_no_diff_observation() -> P1BObservation:
     return P1BObservation(
         action_id="inspect_recent_diff",
@@ -452,13 +470,13 @@ def _run_action(
     state.bug_presence = p1b_policies._update_bug_presence(
         state.bug_presence, observation.bug_detected, observation.no_bug_evidence
     )
-    state.cause_posterior = update_distribution(
+    state.cause_posterior = _portable_update_distribution(
         state.cause_posterior, observation.cause_scores
     )
-    state.location_posterior = update_distribution(
+    state.location_posterior = _portable_update_distribution(
         state.location_posterior, observation.location_scores
     )
-    state.fix_intent_posterior = update_distribution(
+    state.fix_intent_posterior = _portable_update_distribution(
         state.fix_intent_posterior, observation.fix_intent_scores
     )
     return observation
@@ -484,13 +502,13 @@ def _apply_recorded_observation(
         observation["bug_detected"],
         observation["no_bug_evidence"],
     )
-    state.cause_posterior = update_distribution(
+    state.cause_posterior = _portable_update_distribution(
         state.cause_posterior, observation["cause_scores"]
     )
-    state.location_posterior = update_distribution(
+    state.location_posterior = _portable_update_distribution(
         state.location_posterior, observation["location_scores"]
     )
-    state.fix_intent_posterior = update_distribution(
+    state.fix_intent_posterior = _portable_update_distribution(
         state.fix_intent_posterior, observation["fix_intent_scores"]
     )
 

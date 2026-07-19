@@ -423,6 +423,18 @@ def test_baseline_identity_is_portable_across_lf_checkout(tmp_path) -> None:
     assert [path.stat().st_size for path in files] != [row["raw_size"] for row in rows]
 
 
+def test_posterior_normalization_is_portable_across_python_versions() -> None:
+    ten_way = audit._portable_update_distribution(
+        audit.uniform_distribution(list(audit.P1B_FIX_INTENT_CATEGORIES)), {}
+    )
+    twenty_four_way = audit._portable_update_distribution(
+        audit.uniform_distribution(list(audit.LOCATION_CANDIDATES)), {}
+    )
+
+    assert set(ten_way.values()) == {0.1}
+    assert set(twenty_four_way.values()) == {1.0 / 24}
+
+
 @pytest.mark.parametrize("mode", ["reordered", "duplicate"])
 def test_inherited_identity_order_and_duplicates_fail_closed(monkeypatch, mode) -> None:
     original = audit.p2e_audit._identity_rows()
