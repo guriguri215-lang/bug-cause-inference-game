@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c/P2d/P2e/P2f inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
+- change accepted P2a/P2b/P2c/P2d/P2e/P2f inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics, or the frozen P2g candidate contract/result.
 
 ## Verification Tiers
 
@@ -70,6 +70,22 @@ python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.
 
 This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b, P2c, P2d, P2e, and P2f diagnostics. P2f closeout uses it as read-only non-regression evidence; it does not invoke the P2a or P2b outcome runners.
 
+Targeted P2g accepted-benign-diff clean paired audit and artifact checks:
+
+```bash
+python -B -m pytest tests/test_p2g_benign_diff_clean_audit.py tests/test_p2g_reports.py -q -p no:cacheprovider --basetemp tmp/pg-t-001
+```
+
+The targeted P2g command verifies the exact five accepted P2a clean patches and `14/14` oracle gate; six policies, two arms, 60 trajectories, and 30 pairs; starting and pre-target prefix agreement; exact normal-control replay; truthful non-empty repository-relative recent-diff evidence; every-firing target-only suppression and residual precedence; policy/state/RNG/context/action/update replay; separate false-positive, execution-failure, bug-detected, terminal, and suppression axes; historical/current five-file identity separation; fail-closed semantic mutations; and deterministic JSON/Markdown bytes and semantics.
+
+Relevant P2a–P2g regression for the complete accepted-input boundary:
+
+```bash
+python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py tests/test_p2d_reports.py tests/test_p2d_stop_relaxation_audit.py tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py tests/test_p2f_no_diff_clean_audit.py tests/test_p2f_reports.py tests/test_p2g_benign_diff_clean_audit.py tests/test_p2g_reports.py -q -p no:cacheprovider --basetemp tmp/pg-r-001
+```
+
+This regression is read-only non-regression evidence for P2a–P2f and verification of the additive P2g diagnostic. It does not invoke the P2a or P2b outcome runners.
+
 Targeted P1b/P1c CLI and real-diff checks:
 
 ```bash
@@ -121,7 +137,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b, P2c, P2d, P2e, and P2f. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b, P2c, P2d, P2e, P2f, and P2g. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -254,6 +270,34 @@ Portable identity normalizes CRLF and CR to LF. Historical Windows raw sizes are
 Use a new short basetemp suffix for each P2f pytest command. On Windows, a long basetemp can combine with the copied baseline namespace and ignored `__pycache__` filenames to exceed the legacy path-length boundary; that filesystem error is not a P2f assertion result.
 
 Do not overwrite or regenerate tracked P2f artifacts during closeout or release verification. Do not run the P2a or P2b outcome runners. A fixed-input P2f fresh replay is verification only and must not be followed by metric, threshold, policy, denominator, result, or claim tuning.
+
+## P2g Artifact, Fresh-Run, and Identity Checks
+
+P2g preserves the historical five-file pre-outcome identity and separately gates the current corrective five-file LF-canonical identity. Accepted candidate artifact identities are:
+
+```text
+JSON        3370390 bytes / b37a6d3af44714d5cd2dcb0bc6afd4b93b43898bbdd9d75d747f8a6125a48ab0
+Markdown    3371629 bytes / a01cfac29acb9a43afec7b1764ff8d926cc654327dd0e6eb95266afa58c367ec
+summary                   / 1eb05962a96a3783484c0ef77e7b2fccd9f223d9663cb08a42d6787c3d1e3e2b
+trajectories              / 3d7079c77a9d9d3598172d3938356b3c83367311acdde5faef386636407bf1a2
+pairs                     / 8bec24f367f498cbe5d6cc6f8c81539fdf2a34fafa82dc49e300abf9de23ae26
+aggregates                / 22062f67d818ef26b5f9641f36ac3cb9a526b7dee3a57a6d934f7364dd1edd0c
+input contract            / ca53689e46ea7b12cbb7c42e199bfef487bf82058303cdc1024634dc1b6cc387
+dependency contract       / c6c2576d575e14e1e4358bfb96df3c33b3ffa01c0edd46748793b427259c07e5
+```
+
+Run two P2g audits into distinct ignored workspace-local directories and compare both serialized output pairs with the tracked files byte-for-byte and semantically. Required checks are:
+
+- exact ordered support of 5 inputs / 6 policies / 2 arms / 60 trajectories / 30 pairs;
+- clean-validity gate `14/14`, normal-control replay `30/30`, and pair start/prefix agreement `30/30`;
+- control/intervention false positives `0/30` and `0/30` as separate fixed-support fractions;
+- intervention terminals exactly 20 budget / 5 max-step / 5 no-available-actions;
+- truthful benign-diff observations `20/20`, with zero execution failures and zero bug-detected observations in both arms;
+- summary, trajectory, pair, aggregate, input-contract, and dependency-contract digests match exactly;
+- the artifact historical first-outcome identity remains unchanged while the current five-file map is checked separately;
+- accepted P1b–P2f source, tests, artifacts, identities, results, and public claims remain unchanged.
+
+Do not overwrite the tracked P2g artifacts during verification. Do not run the P2a or P2b outcome runners. P2g fresh replay is fixed-input verification only and must not be followed by support, metric, threshold, policy, arm, denominator, result, or claim tuning.
 
 ## `tmp_path` Tests
 
