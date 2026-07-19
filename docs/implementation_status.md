@@ -73,6 +73,9 @@
 - P2f exact descriptive evidence records control false positives `0/6` and target-suppressed continuation false positives `0/6`; intervention terminals are 4 budget limits, 1 max-step limit, and 1 no-available-action stop. Suppression counts are `[4,4,4,4,4,5]`, pair start and prefix agreement are `6/6`, and all four recent-diff executions preserve exact empty fields.
 - P2f final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review, required verification, and same-reviewer correction review.
 - P2f result interpretation note: [`docs/p2f_result_interpretation.md`](p2f_result_interpretation.md).
+- P2g accepted-benign-diff clean paired continuation audit candidate source, tests, and versioned JSON/Markdown evidence over the exact five accepted P2a clean patches. It crosses five fixed inputs with six accepted policies and two arms, yielding 60 trajectories and 30 pairs after an exact `14/14` clean-oracle gate.
+- P2g fixed-input descriptive evidence records control and target-suppressed-continuation false positives of `0/30` and `0/30`; intervention terminals are 20 budget limits, 5 max-step limits, and 5 no-available-action stops. Pair start and pre-target prefix agreement are `30/30`, and all 20 recent-diff observations preserve the accepted non-empty repository-relative patch evidence.
+- P2g remains a Draft-PR candidate pending CI and separate later result/public-documentation acceptance. Its artifact fields remain self-non-accepting; the independent implementation review accepted software conformance with unresolved High/Medium/Low `0/0/0` after same-reviewer correction review.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -109,7 +112,7 @@
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 - A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
-- A new or tuned policy, optimized/unbounded P2c/P2d/P2e/P2f sequence search or DP analysis, a second domain, additional clean inputs, inferential analysis, or production-readiness claim.
+- A new or tuned policy, optimized/unbounded P2c/P2d/P2e/P2f/P2g sequence search or DP analysis, a second domain, additional clean inputs, inferential analysis, or production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -122,7 +125,7 @@
 - A separately reviewed design for any future combined cost plus dropout/delay interaction.
 - Any benchmark expansion beyond the accepted P2a same-domain cohort, new policy/variant study, uncertainty analysis, or cross-profile optimization requires a separate specification and review.
 - Any P2b follow-up involving a sequence/DP ceiling, deployable policy candidate, second domain, clean stress, or inference requires a separate pre-outcome specification and review.
-- Any P2c/P2d/P2e/P2f follow-up beyond the accepted fixed P2f paired-clean contract, including a new or tuned policy, optimized/unbounded sequence or DP analysis, unseen or benign-diff clean expansion, second domain, inference, or production readiness, requires a separate pre-outcome specification and review.
+- Any P2c/P2d/P2e/P2f/P2g follow-up beyond the fixed P2g accepted-input paired-clean contract, including a new or tuned policy, optimized/unbounded sequence or DP analysis, unseen/additional clean expansion, second domain, inference, or production readiness, requires a separate pre-outcome specification and review.
 
 ## Known Limitations
 
@@ -167,6 +170,7 @@
 - P2d is a model-internal one-step counterfactual over the same fixed cohort. Its exactly-once stop suppression and 11/52 direct-detector selections do not establish stop causality, a policy defect or ranking, deployable improvement, multi-step reachability, generalization, or production readiness.
 - P2e is a model-internal bounded continuation over 41 fixed P2d post-action states. Repeated target-only suppression and 21/41 direct-detector endpoints do not establish threshold causality or defect, policy ranking or improvement, sequence optimality, deployability, generalization, inference, or production readiness.
 - P2f is a model-internal paired observation over one exact unpatched program. Its per-arm `0/6` false positives and `4/1/1` intervention terminal partition do not establish a clean safety rate, causal threshold effect, policy defect/improvement/ranking, a combined P2e/P2f payoff, deployability, generalization, inference, or production readiness.
+- P2g is a model-internal paired observation over five accepted, hand-authored, same-domain, non-iid benign-diff clean inputs. Its per-arm `0/30` false positives and `20/5/5` intervention terminal partition do not establish a population clean-safety rate, causal threshold effect, policy defect/improvement/ranking, a combined P2e/P2f/P2g payoff, deployability, generalization, inference, or production readiness.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -205,6 +209,51 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current P2g Draft-PR candidate implementation evidence
+
+The fixed-input P2g candidate checkpoint records:
+
+```text
+P2g targeted                            33 passed in 25.44s
+independent-review targeted             33 passed in 34.31s
+P2a-P2g relevant regression            802 passed in 372.89s
+full repository suite                 2120 passed in 466.93s
+P1b real-diff validator                 25 / 25
+isolated fresh artifact runs             2 / 2 exact
+ordered support                         60 / 60
+paired support                           30 / 30
+clean validity gate                      14 / 14
+normal-control replay                    30 / 30
+pair start / prefix agreement            30 / 30
+control false positives                   0 / 30
+intervention false positives              0 / 30
+intervention terminals                   20 budget / 5 max-step / 5 no-action
+truthful benign-diff observations         20 / 20
+execution failures                        0 / 60
+bug-detected observations                 0 / 60
+```
+
+Versioned candidate artifacts:
+
+- JSON: 3,370,390 bytes, SHA-256 `b37a6d3af44714d5cd2dcb0bc6afd4b93b43898bbdd9d75d747f8a6125a48ab0`.
+- Markdown: 3,371,629 bytes, SHA-256 `a01cfac29acb9a43afec7b1764ff8d926cc654327dd0e6eb95266afa58c367ec`.
+- Validated-summary digest: `1eb05962a96a3783484c0ef77e7b2fccd9f223d9663cb08a42d6787c3d1e3e2b`.
+- Trajectory/pair/aggregate digests: `3d7079c77a9d9d3598172d3938356b3c83367311acdde5faef386636407bf1a2` / `8bec24f367f498cbe5d6cc6f8c81539fdf2a34fafa82dc49e300abf9de23ae26` / `22062f67d818ef26b5f9641f36ac3cb9a526b7dee3a57a6d934f7364dd1edd0c`.
+- Input/dependency contract digests: `ca53689e46ea7b12cbb7c42e199bfef487bf82058303cdc1024634dc1b6cc387` / `c6c2576d575e14e1e4358bfb96df3c33b3ffa01c0edd46748793b427259c07e5`.
+
+The first valid outcome followed the accepted specification review and external five-file pre-outcome freeze. Corrective validation added full decision replay and exact clean-gate/schema rejection without changing support, arms, metrics, denominators, result, artifact bytes, or claim boundary. The same independent implementation reviewer accepted both corrections with unresolved High/Medium/Low `0/0/0`.
+
+The artifact preserves the historical first-outcome five-file identity. The current corrective LF-canonical identity is a separate external fresh-run gate, and both isolated fresh runs reproduced the tracked files byte-for-byte and semantically. Accepted P1b–P2f inputs, source semantics, tests, artifacts, results, and public claims are unchanged.
+
+```text
+P2g software conformance review        accepted
+P2g versioned artifact identity        pending separate external acceptance
+P2g descriptive result                 pending separate external acceptance
+P2g public result documentation        pending separate external acceptance
+```
+
+Repository-wide Ruff remains the three accepted pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; changed P2g Python files pass narrow Ruff. The `0/30` values are fixed 30-trajectory arm fractions over five hand-authored same-domain inputs, not population safety rates. P2g does not establish causality, a policy/threshold defect or improvement, ranking, combined payoff, deployability, generalization, inference, or production readiness.
 
 ### Current P2f accepted implementation, artifact, and result evidence
 
