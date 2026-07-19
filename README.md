@@ -20,6 +20,8 @@ P2e is the merged bounded continuation audit over the same 60 accepted pairs. It
 
 P2f is the merged paired clean-boundary audit over one exact unpatched canonical P1b baseline. The six accepted deterministic policies each have a normal control and an arm that suppresses only `no_bug_probability_threshold` at every pre-action firing, for 12 trajectories and 6 pairs after a `29/29` baseline gate. Control false positives are `0/6`; intervention false positives are `0/6`, with terminals `4/6` budget, `1/6` maximum step, and `1/6` no available actions. Suppression counts are `[4, 4, 4, 4, 4, 5]`, and all four recent-diff executions truthfully preserve empty path/file/function/excerpt fields. This is analysis-only, fixed-input, model-internal, paired, non-causal, and non-deployable evidence—not a clean safety rate, threshold or policy improvement, combined P2e/P2f payoff, or production result. See [`docs/p2f_result_interpretation.md`](docs/p2f_result_interpretation.md).
 
+P2g is the merged paired benign-diff clean-boundary audit over the exact five accepted P2a clean patches. It crosses those five hand-authored same-domain inputs with the six accepted formal policies and two arms, for 60 trajectories and 30 pairs after a `14/14` input-specific clean-oracle gate. Normal-control replay, pair starts, and pre-target prefixes agree `30/30`; control and target-suppressed-continuation false positives are separately `0/30` and `0/30`. Intervention terminals are `20/30` budget, `5/30` maximum step, and `5/30` no available actions; action counts are 20 at five and 10 at six, costs are 5 at 10, 5 at 11, and 20 at 12, suppression counts are 25 at four and 5 at five, and all `20/20` recent-diff observations preserve the accepted non-empty repository-relative patch evidence. This fixed crossed non-iid support is analysis-only, model-internal, paired, non-causal, and non-deployable—not a population clean-safety rate, threshold or policy defect/improvement, ranking, combined P2e/P2f/P2g payoff, generalization result, or production recommendation. See [`docs/p2g_result_interpretation.md`](docs/p2g_result_interpretation.md).
+
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
 ## What This Project Is
@@ -37,6 +39,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A P2d exactly-one-threshold-suppression audit with a zero-or-one-action horizon and separate software, artifact, result, and documentation acceptance decisions.
 - A P2e every-later-decision target-only continuation audit with finite budget, step, and non-repeating-action bounds and separate software, artifact, result, and documentation acceptance decisions.
 - A P2f canonical unpatched-clean paired audit with truthful empty-diff evidence and separate software, artifact, result, and documentation acceptance decisions.
+- A P2g accepted-benign-diff clean paired audit with truthful non-empty patch evidence and separate software, artifact, result, and documentation acceptance decisions.
 
 ## What This Project Is Not
 
@@ -56,6 +59,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - P2d does not establish threshold causality, a policy defect or improvement, a second action, multi-step or DP reachability, deployability, generalization, or production readiness.
 - P2e does not establish threshold causality or defect, policy ranking or improvement, sequence optimality, an unbounded or DP ceiling, deployability, generalization, or production readiness.
 - P2f does not establish a clean safety rate, causal effect, threshold or policy defect, policy improvement or ranking, a P2e/P2f combined payoff, deployability, generalization, or production readiness.
+- P2g does not establish a population clean-safety rate, causal effect, threshold or policy defect, policy improvement or ranking, a P2e/P2f/P2g combined payoff, deployability, generalization, inference, or production readiness.
 
 ## Related Work
 
@@ -158,6 +162,8 @@ P2e also has no public CLI command. Its tracked artifact pair and targeted tests
 
 P2f also has no public CLI command. Its tracked artifact pair and targeted tests preserve the exact unpatched baseline, `29/29` gate, 12 trajectories, 6 pairs, `6/6` starting and prefix agreement, target-only repeated suppression, and truthful empty-diff boundary. The `0/6` false positives in each arm are policy-support fractions for one program, not population safety estimates or causal effects.
 
+P2g also has no public CLI command. Its tracked artifact pair and targeted tests preserve the exact five accepted benign non-empty-diff clean inputs, `14/14` gate, 60 trajectories, 30 pairs, `30/30` normal replay and starting/prefix agreement, every-firing target-only suppression, and truthful repository-relative patch evidence. The `0/30` false positives in each arm are fixed trajectory-support fractions over five hand-authored same-domain inputs, not independent program replication, population safety estimates, or causal effects.
+
 ## Project Status
 
 For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
@@ -172,6 +178,7 @@ For the current implementation state, verification guidance, public-release boun
 - [`docs/p2d_result_interpretation.md`](docs/p2d_result_interpretation.md)
 - [`docs/p2e_result_interpretation.md`](docs/p2e_result_interpretation.md)
 - [`docs/p2f_result_interpretation.md`](docs/p2f_result_interpretation.md)
+- [`docs/p2g_result_interpretation.md`](docs/p2g_result_interpretation.md)
 
 ## Example Command
 
@@ -352,6 +359,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P2d covers the same fixed support and only one suppressed predicate evaluation followed by at most one action. Its `11/52` selections and detections and `11/52` horizons do not support causal, policy-performance, multi-step, generalization, deployment, or production claims.
 - P2e covers the same fixed support and 41 bounded continuations only. Its repeated target-only suppression, `21/41` selections, `21/41` detections, and `8/4/8` budget/max-step/no-action endpoints do not support causal, policy-performance, optimality, generalization, deployment, or production claims.
 - P2f covers one exact unpatched program and six paired policy executions only. Its `0/6` per-arm false positives, `4/1/1` intervention terminals, and repeated target-only suppression do not support clean-safety, causal, policy-performance, generalization, deployment, or production claims.
+- P2g covers five accepted hand-authored same-domain non-iid benign-diff clean inputs and 30 paired input-policy executions only. Its `0/30` per-arm false positives, `20/5/5` intervention terminals, and repeated target-only suppression do not support population clean-safety, causal, policy-performance, generalization, inference, deployment, or production claims.
 
 ## Reproducibility Notes
 
