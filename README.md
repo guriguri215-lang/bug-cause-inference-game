@@ -18,6 +18,8 @@ P2d is the merged one-step stop-relaxation audit over those same 60 accepted pai
 
 P2e is the merged bounded continuation audit over the same 60 accepted pairs. It retains `41/60` P2d post-action threshold rows as continuation candidates, `11/60` accepted P2d direct-detector endpoints, and `8/60` not-applicable rows. Suppressing only `no_bug_probability_threshold` at every later pre-action decision produced the candidate terminal partition `21/41` detector, `0/41` bug confidence, `8/41` budget, `4/41` maximum step, `0/41` low utility, and `8/41` no available actions. Direct-detector selection and observation detection are separate axes and both equal `21/41` here. This evidence is analysis-only, fixed-input, ground-truth-informed, model-internal, bounded-sequence, non-causal, and non-deployable. Repeated target-only suppression does not establish stop causality, a threshold defect, policy improvement or ranking, sequence optimality, or a production recommendation. See [`docs/p2e_result_interpretation.md`](docs/p2e_result_interpretation.md).
 
+P2f is the merged paired clean-boundary audit over one exact unpatched canonical P1b baseline. The six accepted deterministic policies each have a normal control and an arm that suppresses only `no_bug_probability_threshold` at every pre-action firing, for 12 trajectories and 6 pairs after a `29/29` baseline gate. Control false positives are `0/6`; intervention false positives are `0/6`, with terminals `4/6` budget, `1/6` maximum step, and `1/6` no available actions. Suppression counts are `[4, 4, 4, 4, 4, 5]`, and all four recent-diff executions truthfully preserve empty path/file/function/excerpt fields. This is analysis-only, fixed-input, model-internal, paired, non-causal, and non-deployable evidence—not a clean safety rate, threshold or policy improvement, combined P2e/P2f payoff, or production result. See [`docs/p2f_result_interpretation.md`](docs/p2f_result_interpretation.md).
+
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
 ## What This Project Is
@@ -34,6 +36,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A P2c frozen-policy trajectory audit with versioned evidence and separate software, artifact, result, and documentation acceptance decisions.
 - A P2d exactly-one-threshold-suppression audit with a zero-or-one-action horizon and separate software, artifact, result, and documentation acceptance decisions.
 - A P2e every-later-decision target-only continuation audit with finite budget, step, and non-repeating-action bounds and separate software, artifact, result, and documentation acceptance decisions.
+- A P2f canonical unpatched-clean paired audit with truthful empty-diff evidence and separate software, artifact, result, and documentation acceptance decisions.
 
 ## What This Project Is Not
 
@@ -52,6 +55,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - P2c does not rank policies, assign mutually exclusive causal miss reasons, add or tune a policy, compute a counterfactual or DP ceiling, or establish generalization or production readiness.
 - P2d does not establish threshold causality, a policy defect or improvement, a second action, multi-step or DP reachability, deployability, generalization, or production readiness.
 - P2e does not establish threshold causality or defect, policy ranking or improvement, sequence optimality, an unbounded or DP ceiling, deployability, generalization, or production readiness.
+- P2f does not establish a clean safety rate, causal effect, threshold or policy defect, policy improvement or ranking, a P2e/P2f combined payoff, deployability, generalization, or production readiness.
 
 ## Related Work
 
@@ -152,6 +156,8 @@ P2d also has no public CLI command. Its tracked artifact pair and targeted tests
 
 P2e also has no public CLI command. Its tracked artifact pair and targeted tests preserve all `60` rows, the `41/11/8` classification, every-later-decision target-only suppression, the `21/0/8/4/0/8` candidate terminal partition, and the finite continuation boundary. Detector selection and observation detection are separate even though both are `21/41`; terminal labels are not causal miss categories or policy recommendations.
 
+P2f also has no public CLI command. Its tracked artifact pair and targeted tests preserve the exact unpatched baseline, `29/29` gate, 12 trajectories, 6 pairs, `6/6` starting and prefix agreement, target-only repeated suppression, and truthful empty-diff boundary. The `0/6` false positives in each arm are policy-support fractions for one program, not population safety estimates or causal effects.
+
 ## Project Status
 
 For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
@@ -165,6 +171,7 @@ For the current implementation state, verification guidance, public-release boun
 - [`docs/p2c_result_interpretation.md`](docs/p2c_result_interpretation.md)
 - [`docs/p2d_result_interpretation.md`](docs/p2d_result_interpretation.md)
 - [`docs/p2e_result_interpretation.md`](docs/p2e_result_interpretation.md)
+- [`docs/p2f_result_interpretation.md`](docs/p2f_result_interpretation.md)
 
 ## Example Command
 
@@ -344,6 +351,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P2c covers 60 fixed same-domain policy/variant pairs only. Its ground-truth-informed detector mapping is unavailable to deployable policies, its reduced traces exclude full posterior and action-score payloads, and its selection, budget-state, and termination axes are descriptive and overlapping rather than causal.
 - P2d covers the same fixed support and only one suppressed predicate evaluation followed by at most one action. Its `11/52` selections and detections and `11/52` horizons do not support causal, policy-performance, multi-step, generalization, deployment, or production claims.
 - P2e covers the same fixed support and 41 bounded continuations only. Its repeated target-only suppression, `21/41` selections, `21/41` detections, and `8/4/8` budget/max-step/no-action endpoints do not support causal, policy-performance, optimality, generalization, deployment, or production claims.
+- P2f covers one exact unpatched program and six paired policy executions only. Its `0/6` per-arm false positives, `4/1/1` intervention terminals, and repeated target-only suppression do not support clean-safety, causal, policy-performance, generalization, deployment, or production claims.
 
 ## Reproducibility Notes
 
