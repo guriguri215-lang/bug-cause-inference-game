@@ -409,6 +409,20 @@ def test_baseline_missing_extra_and_hash_drift_fail_closed(tmp_path) -> None:
         audit._baseline_rows(root)
 
 
+def test_baseline_identity_is_portable_across_lf_checkout(tmp_path) -> None:
+    root = tmp_path / "checkout"
+    shutil.copytree(audit._BASELINE_ROOT, root)
+    files = sorted(path for path in root.iterdir() if path.is_file())
+    for path in files:
+        raw = path.read_bytes()
+        path.write_bytes(raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n"))
+
+    rows = audit._baseline_rows(root)
+
+    assert rows == audit._baseline_rows()
+    assert [path.stat().st_size for path in files] != [row["raw_size"] for row in rows]
+
+
 @pytest.mark.parametrize("mode", ["reordered", "duplicate"])
 def test_inherited_identity_order_and_duplicates_fail_closed(monkeypatch, mode) -> None:
     original = audit.p2e_audit._identity_rows()

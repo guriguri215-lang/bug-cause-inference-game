@@ -284,18 +284,21 @@ def _implementation_raw_snapshot() -> dict[str, str]:
 
 def _baseline_rows(root: Path = _BASELINE_ROOT) -> list[dict[str, Any]]:
     files = sorted(path for path in root.iterdir() if path.is_file())
-    rows = []
+    observed = []
     for path in files:
         relative = f"checkout/{path.name}"
         portable, _ = _hash_file(path)
-        rows.append({"path": relative, "raw_size": path.stat().st_size, "sha256_lf": portable})
+        observed.append({"path": relative, "sha256_lf": portable})
     expected = [
-        {"path": path, "raw_size": size, "sha256_lf": digest}
-        for path, size, digest in BASELINE_FILE_ROWS
+        {"path": path, "sha256_lf": digest}
+        for path, _raw_size, digest in BASELINE_FILE_ROWS
     ]
-    if rows != expected:
+    if observed != expected:
         raise P2FAuditError("canonical baseline file identity drifted")
-    return rows
+    return [
+        {"path": path, "raw_size": raw_size, "sha256_lf": digest}
+        for path, raw_size, digest in BASELINE_FILE_ROWS
+    ]
 
 
 def _validate_manifest() -> dict[str, Any]:
