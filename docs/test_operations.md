@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c/P2d/P2e inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
+- change accepted P2a/P2b/P2c/P2d/P2e/P2f inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics.
 
 ## Verification Tiers
 
@@ -54,13 +54,21 @@ python -B -m pytest tests/test_p2e_continuation_audit.py tests/test_p2e_reports.
 
 The targeted P2e command verifies the exact 60-pair order and accepted P2d replay; `41/11/8` classification; 41 state/RNG/execution-context checkpoints; every-later-decision target-only suppression; residual-stop precedence; retained state, RNG, execution context, policy, costs, budget, max-step, observations, and updates; separate selection and observation-detection fields; the exclusive `21/0/8/4/0/8` terminal partition; finite non-repeating continuation; 60 authoritative pair digests; five-file historical/current identity separation and raw same-run drift protection; 57 accepted input identities; deterministic JSON/Markdown bytes and semantics; and accepted P1b/P2a/P2b/P2c/P2d non-regression.
 
-Relevant P2a/P2b/P2c/P2d/P2e regression for the complete accepted-input boundary:
+Targeted P2f paired clean-boundary and artifact checks:
 
 ```bash
-python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py tests/test_p2d_reports.py tests/test_p2d_stop_relaxation_audit.py tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py -q -p no:cacheprovider
+python -B -m pytest tests/test_p2f_no_diff_clean_audit.py tests/test_p2f_reports.py -q -p no:cacheprovider --basetemp tmp/pf-t-001
 ```
 
-This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b, P2c, P2d, and P2e diagnostics. P2e closeout uses it as read-only non-regression evidence; it does not invoke the P2a or P2b outcome runners.
+The targeted P2f command verifies the exact unpatched baseline and 29-case validity gate; six accepted policies, two arms, 12 trajectories, 6 pairs, starting/prefix agreement; accepted normal control; every-firing target-only suppression; residual precedence and retained state/RNG/context/policy/cost/budget/max-step/update semantics; truthful empty recent-diff fields; separate false-positive, execution-failure, bug-detected, terminal, and suppression axes; the `4/1/1` intervention partition; historical/current five-file identity separation; cross-version arithmetic fixtures; raw same-run drift; 65 accepted input identities; deterministic JSON/Markdown bytes and semantics; and accepted P1b–P2e non-regression.
+
+Relevant P2a/P2b/P2c/P2d/P2e/P2f regression for the complete accepted-input boundary:
+
+```bash
+python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py tests/test_p2d_reports.py tests/test_p2d_stop_relaxation_audit.py tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py tests/test_p2f_no_diff_clean_audit.py tests/test_p2f_reports.py -q -p no:cacheprovider --basetemp tmp/pf-r-001
+```
+
+This regression covers the P2a candidate, compatibility, execution, freeze, evaluation, and report layers plus the P2b, P2c, P2d, P2e, and P2f diagnostics. P2f closeout uses it as read-only non-regression evidence; it does not invoke the P2a or P2b outcome runners.
 
 Targeted P1b/P1c CLI and real-diff checks:
 
@@ -113,7 +121,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b, P2c, P2d, and P2e. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b, P2c, P2d, P2e, and P2f. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -209,6 +217,43 @@ Run two P2e audits into isolated temporary directories and compare both output p
 Portable identity normalizes CRLF to LF. Exact raw bytes detect same-run drift within one checkout. The reviewed difference between historical freeze identities and final current identities is expected and must not be treated as drift or used to rebind the historical freeze.
 
 Do not overwrite or regenerate tracked P2e artifacts during verification. Do not run the P2a or P2b outcome runners as part of P2e closeout. A fixed-input P2e fresh replay is permitted, but it must not be followed by metric, catalog, policy, classification, result, or claim tuning.
+
+## P2f Artifact, Fresh-Run, and Identity Checks
+
+P2f preserves the historical five-file pre-outcome identity and separately gates the final merged five-file LF-canonical identity. Each runner invocation also compares checkout-specific raw snapshots before and after execution. Accepted artifact identities are:
+
+```text
+JSON         920661 bytes / f0ffbddb24cd500144ea0b52958b3ae51d81e2b895ff8b89faf3da504a871000
+Markdown     921896 bytes / a93019bb2422278d8efe1b9fdbb1453ba0829b6d0388ff77b172e5ca21c1410a
+summary                   / 36d5ae198b4e9f873dedd4d13ac9ce467cde373fc8a7bf4ec6a30f32b360dfad
+trajectories              / 13726d00369e9483e7d395aca8a282c6abd64fde017a954de44f8b32067b7c09
+pairs                     / 71e3b09994cfbf46ac27ff3fc5a47d4824bbfeabc8d820fab2d821c59c7365bf
+aggregates                / ec03765df1854a9e78fe769e691d731754bca260c5f45434b3aa9b894dacc2c6
+65-file contract          / aca567fb7048aac2b6349a6383ec0aa601ceedde504724e4c75ddbf1e8729d0a
+```
+
+Run two P2f audits into isolated temporary directories and compare both output pairs with the tracked files. The complete safe example and accepted final current identity map are in [`docs/p2f_result_interpretation.md`](p2f_result_interpretation.md#reproduction-and-verification). Required checks are:
+
+- both fresh JSON and Markdown files equal the tracked pair byte-for-byte;
+- JSON and Markdown recover the same validated summary;
+- summary, trajectory, pair, aggregate, and 65-file digests match exactly;
+- the artifact's historical pre-outcome implementation identity matches the frozen constants;
+- the five current LF-canonical hashes equal the accepted final merged map;
+- checkout-specific raw snapshots are unchanged before and after both runs;
+- the unpatched baseline gate passes `29/29` with no fabricated diff evidence;
+- ordered support is exactly 12 trajectories / 6 pairs / one program;
+- pair start and prefix agreement are `6/6`;
+- control/intervention false positives remain `0/6` and `0/6` as separate policy-support fractions;
+- the intervention terminal partition is exactly 4 budget / 1 max-step / 1 no-available-actions;
+- suppression counts are `[4,4,4,4,4,5]` and four recent-diff observations have exact empty fields;
+- execution-failure and bug-detected-observation axes remain zero in both arms;
+- accepted P1b–P2e source, tests, artifacts, identities, and results remain unchanged.
+
+Portable identity normalizes CRLF and CR to LF. Historical Windows raw sizes are provenance metadata, not Linux runner-local sizes. Exact raw bytes detect same-run drift within one checkout. The P2f-local `math.fsum` correction keeps accepted checkpoints stable on Python 3.10 and 3.12 without changing P1b–P2e.
+
+Use a new short basetemp suffix for each P2f pytest command. On Windows, a long basetemp can combine with the copied baseline namespace and ignored `__pycache__` filenames to exceed the legacy path-length boundary; that filesystem error is not a P2f assertion result.
+
+Do not overwrite or regenerate tracked P2f artifacts during closeout or release verification. Do not run the P2a or P2b outcome runners. A fixed-input P2f fresh replay is verification only and must not be followed by metric, threshold, policy, denominator, result, or claim tuning.
 
 ## `tmp_path` Tests
 

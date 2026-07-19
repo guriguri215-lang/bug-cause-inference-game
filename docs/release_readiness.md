@@ -22,6 +22,8 @@ The repository is ready to be reviewed as a small reproducible prototype when th
 - P2d software conformance, versioned artifact identity, descriptive result, and public documentation are separate acceptance decisions. Accepted P2d evidence is release evidence, but it does not automatically advance production readiness.
 - P2e is an analysis-only, fixed-input, ground-truth-informed, model-internal, bounded-sequence, non-causal, non-deployable audit over the same 60 pairs. Its 41 candidate continuations suppress only the target threshold at every later decision; 11 accepted P2d endpoints and 8 not-applicable rows remain in overall support. The `21/41` selections, `21/41` detections, and `8/4/8` budget/max-step/no-action endpoints do not establish causality, policy improvement, sequence optimality, or deployability.
 - P2e software conformance, versioned artifact identity, descriptive result, and public documentation are separate acceptance decisions. Accepted P2e evidence is release evidence, but it does not automatically advance production readiness.
+- P2f is an analysis-only, fixed-input, model-internal, paired, non-causal, non-deployable audit over one exact unpatched P1b baseline and six frozen policies. The `29/29` gate, 12 trajectories, 6 pairs, per-arm false positives `0/6`, and `4/1/1` intervention terminals do not establish a clean safety rate, causality, policy improvement, or deployability.
+- P2f software conformance, versioned artifact identity, descriptive result, and public documentation are separate acceptance decisions. Accepted P2f evidence is release evidence only for the exact fixed artifact; it does not automatically advance release or production readiness.
 - The project does not claim production fault localization, automated repair, LLM agent benchmarking, real-world debugging accuracy, general minimax optimality, a general Nash equilibrium, regret optimality, or a game-theoretic guarantee beyond each explicitly fixed empirical matrix.
 
 ## Tracked Public Artifacts
@@ -47,6 +49,10 @@ The tracked generated artifacts are deliberate, reproducible public evidence:
 - `src/bug_cause_inference/p2c/artifacts/p2c_frozen_policy_trajectory_audit_v1.md`
 - `src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.json`
 - `src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.md`
+- `src/bug_cause_inference/p2e/artifacts/p2e_bounded_threshold_relaxation_continuation_audit_v1.json`
+- `src/bug_cause_inference/p2e/artifacts/p2e_bounded_threshold_relaxation_continuation_audit_v1.md`
+- `src/bug_cause_inference/p2f/artifacts/p2f_canonical_no_diff_clean_paired_continuation_audit_v1.json`
+- `src/bug_cause_inference/p2f/artifacts/p2f_canonical_no_diff_clean_paired_continuation_audit_v1.md`
 
 The versioned P2a evaluation files are intentionally large evidence artifacts: the JSON is 1,699,240 bytes and the Markdown is 1,701,581 bytes. They preserve the same validated summary, exact per-variant outcomes, and descriptive LOVO evidence. Their size is deliberate and should not be treated as an accidental generated-output leak.
 
@@ -57,6 +63,8 @@ The versioned P2c artifacts are deliberate public evidence: 387,424-byte JSON an
 The versioned P2d artifacts are deliberate public evidence: 248,450-byte JSON and 249,662-byte Markdown files with the same validated summary. Their accepted SHA-256 values are `5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93` and `633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4`.
 
 The versioned P2e artifacts are deliberate public evidence: 464,656-byte JSON and 465,827-byte Markdown files with the same validated summary. Their accepted SHA-256 values are `28af62b91f2a25ee4cb8f7aa4cef8186d6976863ae1fd8f0ac17f1d067befb61` and `a99e72e4334d76a74a5fb6c5a1e8b7c9d13975758d14238f178348c0fa135174`. The canonical, pair-results, aggregate-results, and 57-file digests must also remain exact. The historical pre-outcome implementation identity and final reviewed current identity are separate layers; release verification must not rebind the historical freeze to current files.
+
+The versioned P2f artifacts are deliberate public evidence: 920,661-byte JSON and 921,896-byte Markdown files with the same validated summary. Their accepted SHA-256 values are `f0ffbddb24cd500144ea0b52958b3ae51d81e2b895ff8b89faf3da504a871000` and `a93019bb2422278d8efe1b9fdbb1453ba0829b6d0388ff77b172e5ca21c1410a`. The summary, trajectory, pair, aggregate, and 65-file digests must remain exact. Historical pre-outcome identity, portable final merged LF identity, and checkout-specific raw same-run drift are separate gates.
 
 These public artifacts must not contain private project data, local filesystem paths, credentials, generated full checkout trees, cache metadata, or temporary work roots. Other large or ad hoc benchmark outputs remain local unless separately reviewed and deliberately versioned.
 
@@ -75,6 +83,7 @@ Local outputs should stay out of commits unless they are deliberately refreshed 
 - P2c fresh-run candidates, scratch reports, local audit logs, caches, and temporary work roots. Only the reviewed versioned pair is tracked.
 - P2d fresh-run candidates, scratch reports, local audit logs, caches, and temporary work roots. Only the reviewed versioned pair is tracked.
 - P2e fresh-run candidates, scratch reports, local audit logs, caches, and temporary work roots. Only the reviewed versioned pair is tracked.
+- P2f fresh-run candidates, copied clean baselines, scratch reports, local audit logs, caches, and temporary work roots. Only the reviewed versioned pair is tracked.
 
 Use `tmp/` or `temp/` for local scratch output when possible. Generated checkout trees from `bug_cause_inference.p1b.real_diff` should remain temporary or live under an ignored scratch directory.
 
@@ -114,6 +123,8 @@ P2c also has no public CLI command. Release verification should run its targeted
 P2d also has no public CLI command. Release verification should run its targeted tests and compare two isolated fresh P2d runs with the tracked pair without overwriting tracked artifacts. Verify exact JSON/Markdown bytes and semantics, canonical digest, 50-file LF-canonical identity, five-file raw pre/post implementation drift protection, all 60 authoritative pair digests, and accepted P2a/P2b/P2c non-regression. The P2d fresh replay is permitted; the P2a and P2b outcome runners are not. Windows CRLF and Linux LF checkouts must share the portable accepted identity, while raw-byte drift remains checkout-specific.
 
 P2e also has no public CLI command. Release verification should run its targeted tests and compare two isolated fresh P2e runs with the tracked pair without overwriting tracked artifacts. Verify exact JSON/Markdown bytes and semantics; canonical, pair-results, aggregate-results, and 57-file digests; historical freeze identity; final current raw pre/post drift protection; all 60 authoritative rows; 60 accepted P2d replays; 41 start checkpoints; and accepted P1b/P2a/P2b/P2c/P2d non-regression. The P2e fresh replay is permitted; the P2a and P2b outcome runners are not. Windows CRLF and Linux LF checkouts must share the portable accepted identity, while raw same-run drift remains checkout-specific.
+
+P2f also has no public CLI command. Release verification should run its targeted tests and compare two isolated fresh P2f runs with the tracked pair without overwriting tracked artifacts. Verify exact JSON/Markdown bytes and semantics; summary, trajectory, pair, aggregate, and 65-file digests; historical freeze identity; final current five-file LF identity; raw same-run drift; `29/29` baseline validity; 12 trajectories, 6 pairs, `6/6` starting/prefix agreement; per-arm false positives `0/6`; the `4/1/1` intervention partition; suppression counts `[4,4,4,4,4,5]`; and accepted P1b–P2e non-regression. P2a/P2b outcome runners are not release checks. Release verification must not regenerate or overwrite the tracked P2f artifacts.
 
 If a Codex sandbox run hits the known Windows Temp-directory permission issue for pytest `tmp_path` tests, rerun the same command with normal permissions or explicit approval and record both results. Do not change production code, pytest configuration, CI, or test coverage for that local constraint.
 
@@ -162,3 +173,4 @@ python -m bug_cause_inference.p1b.real_diff --validate
 - P2c is limited to 60 fixed, hand-authored, same-domain, non-iid policy/variant pairs. Its detector mapping uses hidden ground truth, its reduced traces exclude full posterior and action scores, and terminal feasibility is not post-stop selectability. The result does not establish causal miss reasons, a policy defect or ranking, counterfactual/DP optimality, inference, external validity, or production readiness.
 - P2d is limited to the same fixed cohort and 52 preregistered candidates. Its detector mapping is ground-truth-informed, suppression is model-internal, and its horizon is exactly one action. The result does not establish threshold causality, policy defect/ranking/improvement, next-step or multi-step reachability, optimality, inference, external validity, or production readiness.
 - P2e is limited to the same fixed cohort and 41 accepted P2d post-action starting states. Its detector mapping is ground-truth-informed, repeated target-only suppression is model-internal, and continuation is bounded by budget, maximum steps, and a finite non-repeating catalog. The result does not establish threshold causality or defect, causal miss categories, policy defect/ranking/improvement, optimized or unbounded sequence behavior, a DP ceiling, optimality, inference, external validity, or production readiness.
+- P2f is limited to one exact unpatched program and six paired policy executions. Its false-positive zeros and terminal partition do not establish clean safety, causal threshold effects, policy defect/ranking/improvement, a combined P2e/P2f payoff, unseen-clean or benign-diff behavior, inference, external validity, release readiness, or production readiness.
