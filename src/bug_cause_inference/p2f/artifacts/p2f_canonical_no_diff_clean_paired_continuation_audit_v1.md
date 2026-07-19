@@ -1,0 +1,25480 @@
+# P2f Canonical No-Diff Clean Paired Continuation Audit
+
+This is an analysis-only, fixed-input, clean-boundary, model-internal, paired, non-causal, and non-deployable audit.
+
+Validation status: `valid`.
+
+## Frozen Population and Pairing
+
+- Input: exactly one canonical baseline with no applied patch.
+- Population: `1` input × `6` accepted formal policies × `2` paired arms = `12` trajectories and `6` pairs.
+- Control: the accepted normal stop/action/update loop.
+- Intervention: suppress only `no_bug_probability_threshold` at every pre-action decision.
+- Baseline gate: all `29/29` accepted execution tests passed before trajectories ran.
+
+## Descriptive Fixed-Input Outcome
+
+- Control false positives: `0/6` policies.
+- Intervention false positives: `0/6` policies.
+- Every pair has an identical start checkpoint and an exact prefix before the control terminal.
+- Empty recent-diff evidence contains no changed file, function, patch, or artifact path.
+
+This result does not establish stop causality, a policy defect or ranking, deployable improvement, safety, inference, generalization, or production readiness.
+
+## Canonical Validated Summary
+
+<!-- P2F_VALIDATED_SUMMARY_BEGIN -->
+```json
+{
+  "aggregate_results": {
+    "baseline_validity_gate": {
+      "baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "catalog_case_count": 29,
+      "executed_case_count": 29,
+      "failed_case_count": 0,
+      "ordered_case_id_digest": "6a3b54794479c4c9d33de752cee77617a5a6f56f40334aba0ff8341b63edb8d5",
+      "passed_case_count": 29
+    },
+    "by_arm": {
+      "normal_control": {
+        "bug_detected_observation_count": 0,
+        "execution_failure_count": 0,
+        "false_positive_count": 0,
+        "false_positive_ratio": {
+          "denominator": 6,
+          "numerator": 0,
+          "unit": "policies"
+        },
+        "selected_action_counts": {
+          "inspect_coverage_spectrum": 0,
+          "inspect_recent_diff": 1,
+          "inspect_spec_clause": 0,
+          "inspect_traceback": 2,
+          "run_boundary_tests": 4,
+          "run_config_matrix_tests": 0,
+          "run_null_missing_tests": 0,
+          "run_property_search": 0,
+          "run_smoke_tests": 6,
+          "run_state_sequence_tests": 0
+        },
+        "support_policy_count": 6,
+        "terminal_reason_counts": {
+          "budget_limit": 0,
+          "bug_confidence_threshold": 0,
+          "low_expected_utility": 0,
+          "max_steps": 0,
+          "no_available_actions": 0,
+          "no_bug_probability_threshold": 6
+        }
+      },
+      "target_suppressed_continuation": {
+        "bug_detected_observation_count": 0,
+        "execution_failure_count": 0,
+        "false_positive_count": 0,
+        "false_positive_ratio": {
+          "denominator": 6,
+          "numerator": 0,
+          "unit": "policies"
+        },
+        "selected_action_counts": {
+          "inspect_coverage_spectrum": 0,
+          "inspect_recent_diff": 3,
+          "inspect_spec_clause": 3,
+          "inspect_traceback": 2,
+          "run_boundary_tests": 5,
+          "run_config_matrix_tests": 4,
+          "run_null_missing_tests": 5,
+          "run_property_search": 1,
+          "run_smoke_tests": 6,
+          "run_state_sequence_tests": 3
+        },
+        "support_policy_count": 6,
+        "terminal_reason_counts": {
+          "budget_limit": 4,
+          "bug_confidence_threshold": 0,
+          "low_expected_utility": 0,
+          "max_steps": 1,
+          "no_available_actions": 1,
+          "no_bug_probability_threshold": 0
+        }
+      }
+    },
+    "by_policy": [
+      {
+        "action_count_delta": 3,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 9,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "budget_limit",
+        "policy_id": "fixed_checklist",
+        "suppression_count": 4
+      },
+      {
+        "action_count_delta": 3,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 9,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "budget_limit",
+        "policy_id": "test_first",
+        "suppression_count": 4
+      },
+      {
+        "action_count_delta": 3,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 9,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "budget_limit",
+        "policy_id": "coverage_first",
+        "suppression_count": 4
+      },
+      {
+        "action_count_delta": 3,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 7,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "budget_limit",
+        "policy_id": "recent_diff_first",
+        "suppression_count": 4
+      },
+      {
+        "action_count_delta": 3,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 9,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "no_available_actions",
+        "policy_id": "cause_only_p1a_style",
+        "suppression_count": 4
+      },
+      {
+        "action_count_delta": 4,
+        "control_terminal_reason": "no_bug_probability_threshold",
+        "cost_delta": 8,
+        "false_positive_delta": 0,
+        "intervention_terminal_reason": "max_steps",
+        "policy_id": "expected_utility_per_cost",
+        "suppression_count": 5
+      }
+    ],
+    "digests": {
+      "aggregate_results_digest": "ec03765df1854a9e78fe769e691d731754bca260c5f45434b3aa9b894dacc2c6",
+      "baseline_identity_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "canonical_summary_digest": "36d5ae198b4e9f873dedd4d13ac9ce467cde373fc8a7bf4ec6a30f32b360dfad",
+      "input_contract_digest": "aca567fb7048aac2b6349a6383ec0aa601ceedde504724e4c75ddbf1e8729d0a",
+      "pair_results_digest": "71e3b09994cfbf46ac27ff3fc5a47d4824bbfeabc8d820fab2d821c59c7365bf",
+      "trajectory_results_digest": "13726d00369e9483e7d395aca8a282c6abd64fde017a954de44f8b32067b7c09"
+    },
+    "empty_diff_observations": {
+      "empty_fields_agreement_count": 4,
+      "execution_count": 4
+    },
+    "false_positive_delta_counts": {
+      "-1": 0,
+      "0": 6,
+      "1": 0
+    },
+    "pair_prefix_agreement": {
+      "denominator": 6,
+      "numerator": 6
+    },
+    "pair_start_checkpoint_agreement": {
+      "denominator": 6,
+      "numerator": 6
+    },
+    "support": {
+      "arm_count": 2,
+      "input_count": 1,
+      "pair_count": 6,
+      "policy_count": 6,
+      "trajectory_count": 12
+    },
+    "suppression_count_distribution": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 5,
+      "5": 1,
+      "6": 0,
+      "7": 0
+    },
+    "suppression_policy_ids": {
+      "multiple": [
+        "fixed_checklist",
+        "test_first",
+        "coverage_first",
+        "recent_diff_first",
+        "cause_only_p1a_style",
+        "expected_utility_per_cost"
+      ],
+      "one": [],
+      "zero": []
+    }
+  },
+  "analysis_phase": "P2f",
+  "artifact_identity_acceptance": {
+    "scope": "versioned_artifact_identity",
+    "status": "pending_separate_external_acceptance"
+  },
+  "audit_id": "p2f_canonical_no_diff_clean_paired_continuation_audit_v1",
+  "definitions": {
+    "bug_detected_observation": "any observation has bug_detected=true",
+    "execution_failure_observed": "any executed canonical baseline test or oracle failed",
+    "false_positive": "terminal bug_confidence_threshold OR final bug_presence_posterior >= 0.75",
+    "normal_no_bug_stop": "normal control terminates at no_bug_probability_threshold",
+    "safe_non_bug_terminal": "intervention terminal without false positive; not a general safety claim"
+  },
+  "documentation_acceptance": {
+    "scope": "public_result_documentation",
+    "status": "pending_separate_external_acceptance"
+  },
+  "execution_boundary": {
+    "baseline_validity_gate": "all 29 accepted execution tests must pass",
+    "control_semantics": "accepted normal stop/action/update loop",
+    "input_semantics": "exact canonical baseline with no patch",
+    "intervention_semantics": "suppress only no_bug_probability_threshold at every pre-action decision"
+  },
+  "input_identity": {
+    "base_commit": "8daeb427be82e4596382911335fdb9c0b85be27f",
+    "base_tree": "f81aaaa268d835552cb1ab2b8cc3b0e4555f4fe8",
+    "baseline_file_rows": [
+      {
+        "path": "checkout/__init__.py",
+        "raw_size": 67,
+        "sha256_lf": "41234f3dc364631d4c77ac22af1f07de9099314b0e69551ef0300b00df4f6ae5"
+      },
+      {
+        "path": "checkout/cart.py",
+        "raw_size": 2290,
+        "sha256_lf": "350cd07ed621cc22ba78e5915d4e956123e75d7246858f3502cfe9a7f9092e93"
+      },
+      {
+        "path": "checkout/config.py",
+        "raw_size": 1749,
+        "sha256_lf": "548a57f4ecd3f85e922fc62901d4b5a3a0c9f33cf6da6c3a15137f3dab83c231"
+      },
+      {
+        "path": "checkout/discounts.py",
+        "raw_size": 1746,
+        "sha256_lf": "4900a6cd8a14c87d2b2a66dfa6bb0017adfdfdd9513f3c08d1104612ec945ea2"
+      },
+      {
+        "path": "checkout/inventory.py",
+        "raw_size": 883,
+        "sha256_lf": "a62be8ae4c24b43adfc38da8e9c695483cfe80230102fc3dde55225bfc9b00b9"
+      },
+      {
+        "path": "checkout/shipping.py",
+        "raw_size": 1179,
+        "sha256_lf": "f0549311d9b41d298185a366ac92943b9b62eef75cc768fcccdc4fa0a380b439"
+      }
+    ],
+    "baseline_manifest_sha256_lf": "7740415235971faa8b990fcff31184f25a1445d82a6320815d42d6d9fa069c41",
+    "identity_contract_digest": "aca567fb7048aac2b6349a6383ec0aa601ceedde504724e4c75ddbf1e8729d0a",
+    "identity_rows": [
+      {
+        "identity": "p1b_actions_source",
+        "path": "src/bug_cause_inference/p1b/actions.py",
+        "sha256_lf": "cb191a6834f75e87835a2f9b3e164b2e05b48a6168a515455be57680f3d738fe"
+      },
+      {
+        "identity": "p1b_execution_source",
+        "path": "src/bug_cause_inference/p1b/execution.py",
+        "sha256_lf": "820847852f623f91870c824c5218bf5a0c20643868f99131b40c63413b992a91"
+      },
+      {
+        "identity": "p1b_dataset_source",
+        "path": "src/bug_cause_inference/p1b/dataset.py",
+        "sha256_lf": "2c164076148d590c86893da4bfeaedfc82f09c4df5ef7f461c892d2438e17050"
+      },
+      {
+        "identity": "p1b_models_source",
+        "path": "src/bug_cause_inference/p1b/models.py",
+        "sha256_lf": "895a9be33fd8502b8532554c4ca12b92db86b08a3074b54a8233d7ee25104fde"
+      },
+      {
+        "identity": "p1b_policies_source",
+        "path": "src/bug_cause_inference/p1b/policies.py",
+        "sha256_lf": "b039dff408f4fa26f6de86ffe1924fad6dd652c68092bcc08e59e8aa478e4ecd"
+      },
+      {
+        "identity": "p1b_real_diff_source",
+        "path": "src/bug_cause_inference/p1b/real_diff.py",
+        "sha256_lf": "b9b59a58ecf08a251e4281e3c7ffcd0f1b8f6b1707dbac6c98660b816593f4f4"
+      },
+      {
+        "identity": "p2a_adequacy_source",
+        "path": "src/bug_cause_inference/p2a/adequacy.py",
+        "sha256_lf": "bdef79f373a6398fa6756f1b77661b4dbd394d5470ea5ca84b80e0286ea6d400"
+      },
+      {
+        "identity": "p2a_candidate_authoring_source",
+        "path": "src/bug_cause_inference/p2a/candidate_authoring.py",
+        "sha256_lf": "c5a8f6801901d535c2bbde61603aa4de66c9d6ccc2005c30e13592733ae46701"
+      },
+      {
+        "identity": "p2a_candidate_oracles_source",
+        "path": "src/bug_cause_inference/p2a/candidate_oracles.py",
+        "sha256_lf": "0361aefc33fd6a5d0be2dc8fc8e79e1ae290886568113f824598ccbe154c1732"
+      },
+      {
+        "identity": "p2a_candidates_source",
+        "path": "src/bug_cause_inference/p2a/candidates.py",
+        "sha256_lf": "47e0bfccff06819efc66384d9528be0828ca95943f63498bca1eb6aed68f6351"
+      },
+      {
+        "identity": "p2a_freeze_realization_source",
+        "path": "src/bug_cause_inference/p2a/freeze_realization.py",
+        "sha256_lf": "a8c1dea78ad1e592c8823219aa3e074b3284ec48eac722bc7979d993ff04db1b"
+      },
+      {
+        "identity": "p2a_evaluation_source",
+        "path": "src/bug_cause_inference/p2a/evaluation.py",
+        "sha256_lf": "02db9095416885f865229f13ba52d2c7e1d794fac07b5cc2e1651d6593866785"
+      },
+      {
+        "identity": "p2a_reports_source",
+        "path": "src/bug_cause_inference/p2a/reports.py",
+        "sha256_lf": "51c5b873a5562badbb4bc5653686c4b94f3cd7f7f2d2f03f37482c11f6d16992"
+      },
+      {
+        "identity": "p2a_authoring_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/authoring_manifest.json",
+        "sha256_lf": "ccf05cd8c4179ee2b84b68dffa1d576e59f717e4fd314a4cccb0136d9ffb7e3b"
+      },
+      {
+        "identity": "p2a_artifact_manifest",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/artifact_manifest.json",
+        "sha256_lf": "ff519a4f5bd7985e0b8f3929fcaa0ded3bd98f742e52bb85d7866f21a2cf1b0d"
+      },
+      {
+        "identity": "p2a_official_freeze_bundle",
+        "path": "src/bug_cause_inference/p2a/artifacts/freeze/official_freeze_bundle.json",
+        "sha256_lf": "8a5197288c60329af2667fba8c541edd39ccc068b3ecf6393afdaddf8ebdb5a4"
+      },
+      {
+        "identity": "p2a_evaluation_json",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.json",
+        "sha256_lf": "d7e69fa62513f5bbae22d570e39b841401f5110b6cd1e45701c53393eb0ef3df"
+      },
+      {
+        "identity": "p2a_evaluation_markdown",
+        "path": "src/bug_cause_inference/p2a/artifacts/evaluation/p2a_benchmark_evidence_expansion_v1.md",
+        "sha256_lf": "017c5e3d9281e59e0b115a825a5f0e08f90a5e15a1e331514296adf443a2808a"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-001.patch",
+        "sha256_lf": "fb828c07825746dab12831dc90504b4471894e4d24ae5381425e26a60d56ecb1"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-002.patch",
+        "sha256_lf": "57168b75361ff6ca8039aa41a0326edc0136758dabb78329f8ddc2eaf3a10cea"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-003.patch",
+        "sha256_lf": "68cdd7a8b9d5e1f4fac818d16fdcb7d12c999d40e2bd480d4b962449740c4a92"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-004.patch",
+        "sha256_lf": "62e7bc6bc3f9855299f7413d3530373f13008a6658682285dbb44af2bfe4a2cf"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-005.patch",
+        "sha256_lf": "8bcbc4fcdccd41ffd92fe27fa25a8f6a0d95a66770832b779c35fa837d62c147"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_006",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-006.patch",
+        "sha256_lf": "095a4ecc21fb5408aceaf62f009e113ccaecff1bd81a2455ab3665bb8ef0cc87"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_007",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-007.patch",
+        "sha256_lf": "85646fa091547497bc12f523a4f6f95d6cda5d07f63ec7b66327cdeda77f2c6f"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_008",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-008.patch",
+        "sha256_lf": "7c11b70025dcfdef22898103a8656f2d8afa6d492403ac24c52c075967cb374c"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_009",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-009.patch",
+        "sha256_lf": "68903ccc686878bdae8b73489596978006c2a422ed6ac17bbbb5d7db88c45030"
+      },
+      {
+        "identity": "p2a_candidate_patch_bug_010",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-BUG-010.patch",
+        "sha256_lf": "843ec18c88a2fcfd45e8ea7a04c4c5302472b9856cc3fe3a0c5b793672eeffd7"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_001",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-001.patch",
+        "sha256_lf": "c0a1b7d75e313d91ec0653ddd361f926e1f69ad5025e78878e80aa114c8e3caa"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_002",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-002.patch",
+        "sha256_lf": "ef17bf8a5eb330d52e7ef9b122c4b574b01141bf23d15b6bc90fefa25ddd39f1"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_003",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-003.patch",
+        "sha256_lf": "2ab2975d1537a7ea841ca2744515020f12d914b8a88668c967bcd664d64adea9"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_004",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-004.patch",
+        "sha256_lf": "eb614f960d83f19a7ddccfc4f7162397f008c42dd2e2089cb3c09753c468b65d"
+      },
+      {
+        "identity": "p2a_candidate_patch_clean_005",
+        "path": "src/bug_cause_inference/p2a/artifacts/candidates/patches/P2A-CLEAN-005.patch",
+        "sha256_lf": "b78e400beeffcd5a9a9c84bf39c25f3b67a4b2c03eb41605700806b9331c8778"
+      },
+      {
+        "identity": "p1b_baseline_checkout_init",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/__init__.py",
+        "sha256_lf": "41234f3dc364631d4c77ac22af1f07de9099314b0e69551ef0300b00df4f6ae5"
+      },
+      {
+        "identity": "p1b_baseline_checkout_cart",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/cart.py",
+        "sha256_lf": "350cd07ed621cc22ba78e5915d4e956123e75d7246858f3502cfe9a7f9092e93"
+      },
+      {
+        "identity": "p1b_baseline_checkout_config",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/config.py",
+        "sha256_lf": "548a57f4ecd3f85e922fc62901d4b5a3a0c9f33cf6da6c3a15137f3dab83c231"
+      },
+      {
+        "identity": "p1b_baseline_checkout_discounts",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/discounts.py",
+        "sha256_lf": "4900a6cd8a14c87d2b2a66dfa6bb0017adfdfdd9513f3c08d1104612ec945ea2"
+      },
+      {
+        "identity": "p1b_baseline_checkout_inventory",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/inventory.py",
+        "sha256_lf": "a62be8ae4c24b43adfc38da8e9c695483cfe80230102fc3dde55225bfc9b00b9"
+      },
+      {
+        "identity": "p1b_baseline_checkout_shipping",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/shipping.py",
+        "sha256_lf": "f0549311d9b41d298185a366ac92943b9b62eef75cc768fcccdc4fa0a380b439"
+      },
+      {
+        "identity": "p2b_solvability_source",
+        "path": "src/bug_cause_inference/p2b/solvability_ceiling.py",
+        "sha256_lf": "cc7155407288a9d9045b49eb4a9f151808961ec58bd1c841e48ba076799e5b60"
+      },
+      {
+        "identity": "p2b_reports_source",
+        "path": "src/bug_cause_inference/p2b/reports.py",
+        "sha256_lf": "3680c63c58356c792c45c1c5c04a1931dea0c2ebb610dde7f21024e790915b9b"
+      },
+      {
+        "identity": "p2b_json",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.json",
+        "sha256_lf": "1bbb71c5627f756f5dba3aba4f5f333f287f2fbacbb805e50118074d08ce928d"
+      },
+      {
+        "identity": "p2b_markdown",
+        "path": "src/bug_cause_inference/p2b/artifacts/p2b_fixed_catalog_solvability_ceiling_v1.md",
+        "sha256_lf": "ad53651027e024febc04708763398112b81f1bf69aea4f104d94c70f4590ac3b"
+      },
+      {
+        "identity": "p2c_init_source",
+        "path": "src/bug_cause_inference/p2c/__init__.py",
+        "sha256_lf": "9f5368cfffca746c19874a7f6cd68ff8e92ecacee1db7ded9dcd068bfd3eae59"
+      },
+      {
+        "identity": "p2c_trajectory_audit_source",
+        "path": "src/bug_cause_inference/p2c/trajectory_audit.py",
+        "sha256_lf": "32d4387053fb277178d648a67e4d8e913e15c0b00bb7df2fa2ffbeb6b4ad7c17"
+      },
+      {
+        "identity": "p2c_reports_source",
+        "path": "src/bug_cause_inference/p2c/reports.py",
+        "sha256_lf": "5fc076ca798f6e7cb023b090713f668cd99b665cd17d933e3bc594a587753d49"
+      },
+      {
+        "identity": "p2c_json",
+        "path": "src/bug_cause_inference/p2c/artifacts/p2c_frozen_policy_trajectory_audit_v1.json",
+        "sha256_lf": "1ebfb62edd5034fd57ea69e18c3eb647a3a8746946ecb98d80b66fa127d989d7"
+      },
+      {
+        "identity": "p2c_markdown",
+        "path": "src/bug_cause_inference/p2c/artifacts/p2c_frozen_policy_trajectory_audit_v1.md",
+        "sha256_lf": "ee9bfda6a7b352ff770fa3025dff4d4feb94e4e36201d256a76de6d569286666"
+      },
+      {
+        "identity": "p2c_trajectory_tests",
+        "path": "tests/test_p2c_trajectory_audit.py",
+        "sha256_lf": "bd1115bf689453541811c6703325b2333bcab12cccc314f89e82a6ee99843c61"
+      },
+      {
+        "identity": "p2c_reports_tests",
+        "path": "tests/test_p2c_reports.py",
+        "sha256_lf": "1251cf34767e2068c4e83beb266866f59f1101efbdefc47dc4a2cef4e7573d24"
+      },
+      {
+        "identity": "p2d_init_source",
+        "path": "src/bug_cause_inference/p2d/__init__.py",
+        "sha256_lf": "ab08a163455be343d89ca5e1ffe4b266453d2c335c447a8f79c2f198c05f2ab3"
+      },
+      {
+        "identity": "p2d_stop_relaxation_source",
+        "path": "src/bug_cause_inference/p2d/stop_relaxation_audit.py",
+        "sha256_lf": "0fc32737233388c3d26f228f2b3048eef1807df05af0148ad2c9eedf834ba9a5"
+      },
+      {
+        "identity": "p2d_reports_source",
+        "path": "src/bug_cause_inference/p2d/reports.py",
+        "sha256_lf": "b1382ab2874f282011ee69c9b231e4285c426b8b282f7b43c66884314fda2b59"
+      },
+      {
+        "identity": "p2d_json",
+        "path": "src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.json",
+        "sha256_lf": "5fb30992bc16666fd3210709b1143e34f62c6f07635fe72962a4a7880c336f93"
+      },
+      {
+        "identity": "p2d_markdown",
+        "path": "src/bug_cause_inference/p2d/artifacts/p2d_one_step_stop_relaxation_audit_v1.md",
+        "sha256_lf": "633305a95afbf237c2163ac3b1de634bf9c6e9a696747ec04a58e14a7c015dd4"
+      },
+      {
+        "identity": "p2d_stop_relaxation_tests",
+        "path": "tests/test_p2d_stop_relaxation_audit.py",
+        "sha256_lf": "147f932602a73ef0465b6d76bcef7ad0403c8ee77f10cea6a3090a5a026d9cc9"
+      },
+      {
+        "identity": "p2d_reports_tests",
+        "path": "tests/test_p2d_reports.py",
+        "sha256_lf": "4ca535f46306aab77aca48e4df49a12ba4a2cd64716743502ba286bc413440e0"
+      },
+      {
+        "identity": "p2e_init_source",
+        "path": "src/bug_cause_inference/p2e/__init__.py",
+        "sha256_lf": "bed9dc32d78fd419c34929a425d09800e53b536792dec16bac8c2eec398b98ff"
+      },
+      {
+        "identity": "p2e_continuation_source",
+        "path": "src/bug_cause_inference/p2e/continuation_audit.py",
+        "sha256_lf": "ffada38b510ed782e819751dbbc3ec9ec6e0cd2b4204a9be873f1c412f007947"
+      },
+      {
+        "identity": "p2e_reports_source",
+        "path": "src/bug_cause_inference/p2e/reports.py",
+        "sha256_lf": "48477174f16ad1caeaedfe5c5b165bb6c45a0c743592faaa46ea2dc2d1eb7566"
+      },
+      {
+        "identity": "p2e_continuation_tests",
+        "path": "tests/test_p2e_continuation_audit.py",
+        "sha256_lf": "8e539426ed28a8b8d7c5ba9a8636731a7e843425b853f2161899ba73252f93b0"
+      },
+      {
+        "identity": "p2e_reports_tests",
+        "path": "tests/test_p2e_reports.py",
+        "sha256_lf": "db658f234edef11ebf43a125e46eb2c657b06a7e44ea633631fe5d1c8067ee67"
+      },
+      {
+        "identity": "p2e_json",
+        "path": "src/bug_cause_inference/p2e/artifacts/p2e_bounded_threshold_relaxation_continuation_audit_v1.json",
+        "sha256_lf": "28af62b91f2a25ee4cb8f7aa4cef8186d6976863ae1fd8f0ac17f1d067befb61"
+      },
+      {
+        "identity": "p2e_markdown",
+        "path": "src/bug_cause_inference/p2e/artifacts/p2e_bounded_threshold_relaxation_continuation_audit_v1.md",
+        "sha256_lf": "a99e72e4334d76a74a5fb6c5a1e8b7c9d13975758d14238f178348c0fa135174"
+      },
+      {
+        "identity": "p1b_real_diff_manifest",
+        "path": "src/bug_cause_inference/p1b/artifacts/real_diff/manifest.json",
+        "sha256_lf": "7740415235971faa8b990fcff31184f25a1445d82a6320815d42d6d9fa069c41"
+      }
+    ],
+    "implementation_file_sha256_lf": {
+      "src/bug_cause_inference/p2f/__init__.py": "f04b73866e041663a582a3447987096b8bb57ccf55eb35544ef9a3caef13de37",
+      "src/bug_cause_inference/p2f/no_diff_clean_audit.py": "d9f20ce7b7160771ab24df5585b3a854f0d523decef68f58e6d7e68e609e3ddc",
+      "src/bug_cause_inference/p2f/reports.py": "aef7abf588ac1c68436a9e08cd30514474ee244069164c5ddfa998b1699836c5",
+      "tests/test_p2f_no_diff_clean_audit.py": "3958740a6beda8421caf0b02665685791ca8abf21478725d1da843a033b54a5a",
+      "tests/test_p2f_reports.py": "711160041d1f56bf514cfec2799e758694068b30aa6ec0c78a9916bcc9003f53"
+    }
+  },
+  "limitations": [
+    "The evidence covers one exact canonical no-diff clean baseline only.",
+    "The twelve trajectories are six paired policy comparisons, not independent programs or replicates.",
+    "The intervention is model-internal and is not a deployable policy."
+  ],
+  "non_claims": [
+    "The audit does not establish general clean safety or a population false-positive rate.",
+    "The audit does not establish a threshold or policy defect, improvement, ranking, or recommendation.",
+    "The audit does not combine P2e buggy benefit with P2f clean cost into a payoff or causal effect.",
+    "The audit does not establish optimality, external validity, production readiness, or deployability."
+  ],
+  "notes": [
+    "P2a benign-diff clean evidence and P2e buggy continuation evidence are not pooled into this denominator.",
+    "External review records, not this artifact, decide acceptance."
+  ],
+  "pair_results": [
+    {
+      "action_count_delta": 3,
+      "control_action_count": 2,
+      "control_cost": 3,
+      "control_false_positive": false,
+      "control_row_index": 1,
+      "control_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 9,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 3,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 5,
+      "intervention_cost": 12,
+      "intervention_false_positive": false,
+      "intervention_row_index": 2,
+      "intervention_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "intervention_terminal_reason": "budget_limit",
+      "pair_digest": "69b727b68734370d3f6b4a3e58c1539c6e4bc8101c758a8608924681890cd8ab",
+      "pair_index": 1,
+      "policy_id": "fixed_checklist",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 4
+    },
+    {
+      "action_count_delta": 3,
+      "control_action_count": 2,
+      "control_cost": 3,
+      "control_false_positive": false,
+      "control_row_index": 3,
+      "control_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 9,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 3,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 5,
+      "intervention_cost": 12,
+      "intervention_false_positive": false,
+      "intervention_row_index": 4,
+      "intervention_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "intervention_terminal_reason": "budget_limit",
+      "pair_digest": "a0d9180315815219927680540a954e0b29a97ac59dbe5934b8e02eb5bcd23f52",
+      "pair_index": 2,
+      "policy_id": "test_first",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 4
+    },
+    {
+      "action_count_delta": 3,
+      "control_action_count": 2,
+      "control_cost": 3,
+      "control_false_positive": false,
+      "control_row_index": 5,
+      "control_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 9,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 3,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 5,
+      "intervention_cost": 12,
+      "intervention_false_positive": false,
+      "intervention_row_index": 6,
+      "intervention_selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "intervention_terminal_reason": "budget_limit",
+      "pair_digest": "9bafb9da05f0eb9aa6afd654c33a4bfb51e5bfe7636d40bc5eb3a41afa510f1c",
+      "pair_index": 3,
+      "policy_id": "coverage_first",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 4
+    },
+    {
+      "action_count_delta": 3,
+      "control_action_count": 3,
+      "control_cost": 5,
+      "control_false_positive": false,
+      "control_row_index": 7,
+      "control_selected_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 7,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 4,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 6,
+      "intervention_cost": 12,
+      "intervention_false_positive": false,
+      "intervention_row_index": 8,
+      "intervention_selected_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_config_matrix_tests",
+        "run_null_missing_tests",
+        "inspect_spec_clause"
+      ],
+      "intervention_terminal_reason": "budget_limit",
+      "pair_digest": "312edf8987c6efc12704d6515393a2f18dd57fd7245e82c0e0d76c038f967206",
+      "pair_index": 4,
+      "policy_id": "recent_diff_first",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 4
+    },
+    {
+      "action_count_delta": 3,
+      "control_action_count": 2,
+      "control_cost": 2,
+      "control_false_positive": false,
+      "control_row_index": 9,
+      "control_selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 9,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 3,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 5,
+      "intervention_cost": 11,
+      "intervention_false_positive": false,
+      "intervention_row_index": 10,
+      "intervention_selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests",
+        "inspect_recent_diff",
+        "inspect_spec_clause",
+        "run_property_search"
+      ],
+      "intervention_terminal_reason": "no_available_actions",
+      "pair_digest": "71cbfba4905df70ec4accf401ffda24b6969fb87bfc31707a71cb796364dc040",
+      "pair_index": 5,
+      "policy_id": "cause_only_p1a_style",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 4
+    },
+    {
+      "action_count_delta": 4,
+      "control_action_count": 2,
+      "control_cost": 2,
+      "control_false_positive": false,
+      "control_row_index": 11,
+      "control_selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "control_terminal_reason": "no_bug_probability_threshold",
+      "cost_delta": 8,
+      "false_positive_delta": 0,
+      "first_divergence_checkpoint": 3,
+      "first_divergence_is_exact_target_suppression": true,
+      "input_id": "P2F-NODIFF-001",
+      "intervention_action_count": 6,
+      "intervention_cost": 10,
+      "intervention_false_positive": false,
+      "intervention_row_index": 12,
+      "intervention_selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests",
+        "inspect_spec_clause",
+        "run_null_missing_tests",
+        "inspect_recent_diff",
+        "run_boundary_tests"
+      ],
+      "intervention_terminal_reason": "max_steps",
+      "pair_digest": "61d92f369779ed818a0301228996aec61ffd626e3c9e7587b026ac39332eea57",
+      "pair_index": 6,
+      "policy_id": "expected_utility_per_cost",
+      "prefix_agreement_before_control_terminal": true,
+      "start_checkpoint_agreement": true,
+      "suppression_count": 5
+    }
+  ],
+  "population": {
+    "arm_ids": [
+      "normal_control",
+      "target_suppressed_continuation"
+    ],
+    "baseline_id": "p1b_checkout_clean_v1",
+    "independent_program_count": 1,
+    "input_ids": [
+      "P2F-NODIFF-001"
+    ],
+    "order": "input_major_policy_major_arm_minor",
+    "pair_count": 6,
+    "policy_ids": [
+      "fixed_checklist",
+      "test_first",
+      "coverage_first",
+      "recent_diff_first",
+      "cause_only_p1a_style",
+      "expected_utility_per_cost"
+    ],
+    "trajectory_count": 12
+  },
+  "pre_outcome_freeze": {
+    "first_outcome_executed_after_freeze": true,
+    "implementation_file_sha256_lf": {
+      "src/bug_cause_inference/p2f/__init__.py": "f04b73866e041663a582a3447987096b8bb57ccf55eb35544ef9a3caef13de37",
+      "src/bug_cause_inference/p2f/no_diff_clean_audit.py": "d9f20ce7b7160771ab24df5585b3a854f0d523decef68f58e6d7e68e609e3ddc",
+      "src/bug_cause_inference/p2f/reports.py": "aef7abf588ac1c68436a9e08cd30514474ee244069164c5ddfa998b1699836c5",
+      "tests/test_p2f_no_diff_clean_audit.py": "3958740a6beda8421caf0b02665685791ca8abf21478725d1da843a033b54a5a",
+      "tests/test_p2f_reports.py": "711160041d1f56bf514cfec2799e758694068b30aa6ec0c78a9916bcc9003f53"
+    },
+    "specification_review_record_sha256_lf": "0a2f4db60359d951f3ac7b2e764ec597d58b0d497b76be7165c57559adcb570a",
+    "specification_sha256_lf": "70f8583eb9748ac6230e915336ad18e601aecdbcc55715f48780308fddc0ed6e"
+  },
+  "report_role": "analysis_only_fixed_input_clean_boundary",
+  "result_acceptance": {
+    "scope": "descriptive_result",
+    "status": "pending_separate_external_acceptance"
+  },
+  "schema_version": "p2f_canonical_no_diff_clean_paired_continuation_audit.v1",
+  "software_acceptance": {
+    "scope": "software_conformance",
+    "status": "pending_separate_external_acceptance"
+  },
+  "trajectory_results": [
+    {
+      "action_costs": [
+        1,
+        2
+      ],
+      "action_count": 2,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 1,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 3,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": null,
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.14,
+      "final_execution_context_digest": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.14,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 3,
+        "current_step": 2,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        }
+      ],
+      "pair_index": 1,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "fixed_checklist",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "d3ad1556577baa104418c5d4a066292c8ac2a6a414a86a455470a9349c27a2fa"
+    },
+    {
+      "action_costs": [
+        1,
+        2,
+        2,
+        3,
+        4
+      ],
+      "action_count": 5,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 2,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 12,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": {
+            "action_id": "run_null_missing_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              }
+            ]
+          },
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_null_missing_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "execution_context_digest_before": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "observation": {
+            "action_id": "run_config_matrix_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 3,
+            "coverage_counts": {
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 4,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "config_counterexample",
+            "passed_test_ids": [
+              "config.missing_jp_tax_default",
+              "config.missing_feature_flag_no_stacking",
+              "config.region_alias_rate",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 0.1,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_tax_rate",
+                  "config.load_config"
+                ],
+                "expected": 0.1,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+                "stack_functions": [],
+                "test_id": "config.missing_jp_tax_default"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 500,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_feature_flag",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 500,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+                "stack_functions": [],
+                "test_id": "config.missing_feature_flag_no_stacking"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 1600,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 1600,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+                "stack_functions": [],
+                "test_id": "config.region_alias_rate"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 7,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 3,
+          "selected_action_id": "run_config_matrix_tests",
+          "selection_attempted": true,
+          "state_digest_after": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "state_digest_before": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            }
+          ],
+          "available_action_ids": [
+            "run_state_sequence_tests",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "observation": {
+            "action_id": "run_state_sequence_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 4,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.cancel_reservation": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.sync_after_cart_update": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "state_sequence_counterexample",
+            "passed_test_ids": [
+              "state.reserve_then_cancel",
+              "state.double_coupon_idempotency",
+              "state.removed_item_releases_reservation",
+              "state.quote_after_cart_mutation"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.reserve_stock"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+                "stack_functions": [],
+                "test_id": "state.reserve_then_cancel"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": [
+                  "WELCOME500"
+                ],
+                "evidence_tags": [
+                  "idempotency_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": [
+                  "WELCOME500"
+                ],
+                "fix_intent_hints": [
+                  "make_operation_idempotent"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+                "stack_functions": [],
+                "test_id": "state.double_coupon_idempotency"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.sync_after_cart_update"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+                "stack_functions": [],
+                "test_id": "state.removed_item_releases_reservation"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "evidence_tags": [
+                  "stale_state_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "fix_intent_hints": [
+                  "recompute_stale_state"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "checkout_quote two physical items totaling 11000.",
+                "stack_functions": [],
+                "test_id": "state.quote_after_cart_mutation"
+              }
+            ]
+          },
+          "remaining_budget_before": 4,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 4,
+          "selected_action_id": "run_state_sequence_tests",
+          "selection_attempted": true,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "observation": null,
+          "remaining_budget_before": 0,
+          "residual_stop_result": "budget_limit",
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "budget_limit"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 12,
+        "current_step": 5,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests",
+          "run_null_missing_tests",
+          "run_config_matrix_tests",
+          "run_state_sequence_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        },
+        {
+          "action_id": "run_null_missing_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            }
+          ]
+        },
+        {
+          "action_id": "run_config_matrix_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 3,
+          "coverage_counts": {
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 4,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "config_counterexample",
+          "passed_test_ids": [
+            "config.missing_jp_tax_default",
+            "config.missing_feature_flag_no_stacking",
+            "config.region_alias_rate",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 0.1,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_tax_rate",
+                "config.load_config"
+              ],
+              "expected": 0.1,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+              "stack_functions": [],
+              "test_id": "config.missing_jp_tax_default"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 500,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_feature_flag",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 500,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+              "stack_functions": [],
+              "test_id": "config.missing_feature_flag_no_stacking"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 1600,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 1600,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+              "stack_functions": [],
+              "test_id": "config.region_alias_rate"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_state_sequence_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 4,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.cancel_reservation": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.sync_after_cart_update": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "state_sequence_counterexample",
+          "passed_test_ids": [
+            "state.reserve_then_cancel",
+            "state.double_coupon_idempotency",
+            "state.removed_item_releases_reservation",
+            "state.quote_after_cart_mutation"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.reserve_stock"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+              "stack_functions": [],
+              "test_id": "state.reserve_then_cancel"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": [
+                "WELCOME500"
+              ],
+              "evidence_tags": [
+                "idempotency_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": [
+                "WELCOME500"
+              ],
+              "fix_intent_hints": [
+                "make_operation_idempotent"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+              "stack_functions": [],
+              "test_id": "state.double_coupon_idempotency"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.sync_after_cart_update"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+              "stack_functions": [],
+              "test_id": "state.removed_item_releases_reservation"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "evidence_tags": [
+                "stale_state_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "fix_intent_hints": [
+                "recompute_stale_state"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "checkout_quote two physical items totaling 11000.",
+              "stack_functions": [],
+              "test_id": "state.quote_after_cart_mutation"
+            }
+          ]
+        }
+      ],
+      "pair_index": 1,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "fixed_checklist",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 4,
+      "terminal_reason": "budget_limit",
+      "trajectory_digest": "b4f5cfe5df98753c606e89a4d7e22043939699c9bc6fd383888d227f012caf06"
+    },
+    {
+      "action_costs": [
+        1,
+        2
+      ],
+      "action_count": 2,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 3,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 3,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": null,
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.14,
+      "final_execution_context_digest": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.14,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 3,
+        "current_step": 2,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        }
+      ],
+      "pair_index": 2,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "test_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "6cb4ffdb6f87a0d8f0c0362c2613afbf5086346031130856d9a3cacf794de590"
+    },
+    {
+      "action_costs": [
+        1,
+        2,
+        2,
+        3,
+        4
+      ],
+      "action_count": 5,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 4,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 12,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": {
+            "action_id": "run_null_missing_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              }
+            ]
+          },
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_null_missing_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "execution_context_digest_before": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "observation": {
+            "action_id": "run_config_matrix_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 3,
+            "coverage_counts": {
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 4,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "config_counterexample",
+            "passed_test_ids": [
+              "config.missing_jp_tax_default",
+              "config.missing_feature_flag_no_stacking",
+              "config.region_alias_rate",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 0.1,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_tax_rate",
+                  "config.load_config"
+                ],
+                "expected": 0.1,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+                "stack_functions": [],
+                "test_id": "config.missing_jp_tax_default"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 500,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_feature_flag",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 500,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+                "stack_functions": [],
+                "test_id": "config.missing_feature_flag_no_stacking"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 1600,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 1600,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+                "stack_functions": [],
+                "test_id": "config.region_alias_rate"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 7,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 3,
+          "selected_action_id": "run_config_matrix_tests",
+          "selection_attempted": true,
+          "state_digest_after": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "state_digest_before": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            }
+          ],
+          "available_action_ids": [
+            "run_state_sequence_tests",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "observation": {
+            "action_id": "run_state_sequence_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 4,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.cancel_reservation": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.sync_after_cart_update": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "state_sequence_counterexample",
+            "passed_test_ids": [
+              "state.reserve_then_cancel",
+              "state.double_coupon_idempotency",
+              "state.removed_item_releases_reservation",
+              "state.quote_after_cart_mutation"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.reserve_stock"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+                "stack_functions": [],
+                "test_id": "state.reserve_then_cancel"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": [
+                  "WELCOME500"
+                ],
+                "evidence_tags": [
+                  "idempotency_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": [
+                  "WELCOME500"
+                ],
+                "fix_intent_hints": [
+                  "make_operation_idempotent"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+                "stack_functions": [],
+                "test_id": "state.double_coupon_idempotency"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.sync_after_cart_update"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+                "stack_functions": [],
+                "test_id": "state.removed_item_releases_reservation"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "evidence_tags": [
+                  "stale_state_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "fix_intent_hints": [
+                  "recompute_stale_state"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "checkout_quote two physical items totaling 11000.",
+                "stack_functions": [],
+                "test_id": "state.quote_after_cart_mutation"
+              }
+            ]
+          },
+          "remaining_budget_before": 4,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 4,
+          "selected_action_id": "run_state_sequence_tests",
+          "selection_attempted": true,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "observation": null,
+          "remaining_budget_before": 0,
+          "residual_stop_result": "budget_limit",
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "budget_limit"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 12,
+        "current_step": 5,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests",
+          "run_null_missing_tests",
+          "run_config_matrix_tests",
+          "run_state_sequence_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        },
+        {
+          "action_id": "run_null_missing_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            }
+          ]
+        },
+        {
+          "action_id": "run_config_matrix_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 3,
+          "coverage_counts": {
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 4,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "config_counterexample",
+          "passed_test_ids": [
+            "config.missing_jp_tax_default",
+            "config.missing_feature_flag_no_stacking",
+            "config.region_alias_rate",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 0.1,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_tax_rate",
+                "config.load_config"
+              ],
+              "expected": 0.1,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+              "stack_functions": [],
+              "test_id": "config.missing_jp_tax_default"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 500,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_feature_flag",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 500,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+              "stack_functions": [],
+              "test_id": "config.missing_feature_flag_no_stacking"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 1600,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 1600,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+              "stack_functions": [],
+              "test_id": "config.region_alias_rate"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_state_sequence_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 4,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.cancel_reservation": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.sync_after_cart_update": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "state_sequence_counterexample",
+          "passed_test_ids": [
+            "state.reserve_then_cancel",
+            "state.double_coupon_idempotency",
+            "state.removed_item_releases_reservation",
+            "state.quote_after_cart_mutation"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.reserve_stock"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+              "stack_functions": [],
+              "test_id": "state.reserve_then_cancel"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": [
+                "WELCOME500"
+              ],
+              "evidence_tags": [
+                "idempotency_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": [
+                "WELCOME500"
+              ],
+              "fix_intent_hints": [
+                "make_operation_idempotent"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+              "stack_functions": [],
+              "test_id": "state.double_coupon_idempotency"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.sync_after_cart_update"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+              "stack_functions": [],
+              "test_id": "state.removed_item_releases_reservation"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "evidence_tags": [
+                "stale_state_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "fix_intent_hints": [
+                "recompute_stale_state"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "checkout_quote two physical items totaling 11000.",
+              "stack_functions": [],
+              "test_id": "state.quote_after_cart_mutation"
+            }
+          ]
+        }
+      ],
+      "pair_index": 2,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "test_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 4,
+      "terminal_reason": "budget_limit",
+      "trajectory_digest": "a239cafb21e7bf6e2a9fb85c9b6fed4d0e8ed19e389216fc10ed5cc0afb377de"
+    },
+    {
+      "action_costs": [
+        1,
+        2
+      ],
+      "action_count": 2,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 5,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 3,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": null,
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.14,
+      "final_execution_context_digest": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.14,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 3,
+        "current_step": 2,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        }
+      ],
+      "pair_index": 3,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "coverage_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "aac8e768b5ffc237b3daebe0681f371a9aa72718ad411947687da48bc442c30c"
+    },
+    {
+      "action_costs": [
+        1,
+        2,
+        2,
+        3,
+        4
+      ],
+      "action_count": 5,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 6,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 12,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.204,
+              "expected_utility": 1.504,
+              "expected_utility_per_cost": 1.504,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "state_digest_before": "61a7b49e1873e97cd1fb3dd266cb993ab9be5c907173a11eb33d579227371b0e",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.258,
+              "expected_utility": 1.558,
+              "expected_utility_per_cost": 1.558,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": {
+            "action_id": "run_null_missing_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              }
+            ]
+          },
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_null_missing_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "state_digest_before": "d4db04081900bf7e014c3917cb85e9693234d83827add5d174bc3636b26b8fcc",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "execution_context_digest_before": "e29773877471b61cfdbee944b31c3d92764785ed85a27a67089a45c979eac08b",
+          "observation": {
+            "action_id": "run_config_matrix_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 3,
+            "coverage_counts": {
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 4,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "config_counterexample",
+            "passed_test_ids": [
+              "config.missing_jp_tax_default",
+              "config.missing_feature_flag_no_stacking",
+              "config.region_alias_rate",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 0.1,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_tax_rate",
+                  "config.load_config"
+                ],
+                "expected": 0.1,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+                "stack_functions": [],
+                "test_id": "config.missing_jp_tax_default"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 500,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_feature_flag",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 500,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+                "stack_functions": [],
+                "test_id": "config.missing_feature_flag_no_stacking"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 1600,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 1600,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+                "stack_functions": [],
+                "test_id": "config.region_alias_rate"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 7,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 3,
+          "selected_action_id": "run_config_matrix_tests",
+          "selection_attempted": true,
+          "state_digest_after": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "state_digest_before": "d93f5c034bce0e90955b22d213347e87e1b259f8af9fca5b4a5914c140b3cdc4",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            }
+          ],
+          "available_action_ids": [
+            "run_state_sequence_tests",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "30961d2e01a987c8b1aba9cffcd52f5e07aa604589dcd6fde0c3541427c36fba",
+          "observation": {
+            "action_id": "run_state_sequence_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 4,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.cancel_reservation": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.sync_after_cart_update": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "state_sequence_counterexample",
+            "passed_test_ids": [
+              "state.reserve_then_cancel",
+              "state.double_coupon_idempotency",
+              "state.removed_item_releases_reservation",
+              "state.quote_after_cart_mutation"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.cancel_reservation",
+              "inventory.reserve_stock",
+              "inventory.sync_after_cart_update",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.reserve_stock"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+                "stack_functions": [],
+                "test_id": "state.reserve_then_cancel"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": [
+                  "WELCOME500"
+                ],
+                "evidence_tags": [
+                  "idempotency_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": [
+                  "WELCOME500"
+                ],
+                "fix_intent_hints": [
+                  "make_operation_idempotent"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+                "stack_functions": [],
+                "test_id": "state.double_coupon_idempotency"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.cancel_reservation",
+                  "inventory.sync_after_cart_update"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "fix_state_transition"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+                "stack_functions": [],
+                "test_id": "state.removed_item_releases_reservation"
+              },
+              {
+                "action_id": "run_state_sequence_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "evidence_tags": [
+                  "stale_state_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 11000,
+                  "total": 11000
+                },
+                "fix_intent_hints": [
+                  "recompute_stale_state"
+                ],
+                "group": "state_sequence",
+                "passed": true,
+                "reproduction_input": "checkout_quote two physical items totaling 11000.",
+                "stack_functions": [],
+                "test_id": "state.quote_after_cart_mutation"
+              }
+            ]
+          },
+          "remaining_budget_before": 4,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 4,
+          "selected_action_id": "run_state_sequence_tests",
+          "selection_attempted": true,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "784f7773265f224c478feb01730a886372cc1653e369f7c06019214ecc10eca9",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "execution_context_digest_before": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+          "observation": null,
+          "remaining_budget_before": 0,
+          "residual_stop_result": "budget_limit",
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "state_digest_before": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "budget_limit"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "ba58ec92d2d68b961ffff355b3ef8446b62660ff0cd138d36cef9515ea1e7cf4",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 12,
+        "current_step": 5,
+        "executed_actions": [
+          "run_smoke_tests",
+          "run_boundary_tests",
+          "run_null_missing_tests",
+          "run_config_matrix_tests",
+          "run_state_sequence_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "2128ff65d54927dbd7a7e8a0d558c48a3d5f485c00103cec49ef2864e303583d",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        },
+        {
+          "action_id": "run_null_missing_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            }
+          ]
+        },
+        {
+          "action_id": "run_config_matrix_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 3,
+          "coverage_counts": {
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 4,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "config_counterexample",
+          "passed_test_ids": [
+            "config.missing_jp_tax_default",
+            "config.missing_feature_flag_no_stacking",
+            "config.region_alias_rate",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 0.1,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_tax_rate",
+                "config.load_config"
+              ],
+              "expected": 0.1,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+              "stack_functions": [],
+              "test_id": "config.missing_jp_tax_default"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 500,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_feature_flag",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 500,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+              "stack_functions": [],
+              "test_id": "config.missing_feature_flag_no_stacking"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 1600,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 1600,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+              "stack_functions": [],
+              "test_id": "config.region_alias_rate"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_state_sequence_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 4,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.cancel_reservation": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.sync_after_cart_update": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "state_sequence_counterexample",
+          "passed_test_ids": [
+            "state.reserve_then_cancel",
+            "state.double_coupon_idempotency",
+            "state.removed_item_releases_reservation",
+            "state.quote_after_cart_mutation"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.cancel_reservation",
+            "inventory.reserve_stock",
+            "inventory.sync_after_cart_update",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_state_sequence_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.reserve_stock"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "reserve_stock(A100, 2) then cancel_reservation(A100, 2).",
+              "stack_functions": [],
+              "test_id": "state.reserve_then_cancel"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": [
+                "WELCOME500"
+              ],
+              "evidence_tags": [
+                "idempotency_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": [
+                "WELCOME500"
+              ],
+              "fix_intent_hints": [
+                "make_operation_idempotent"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+              "stack_functions": [],
+              "test_id": "state.double_coupon_idempotency"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.cancel_reservation",
+                "inventory.sync_after_cart_update"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "fix_state_transition"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "sync_after_cart_update({'reserved': 1}, removed_quantity=1).",
+              "stack_functions": [],
+              "test_id": "state.removed_item_releases_reservation"
+            },
+            {
+              "action_id": "run_state_sequence_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "evidence_tags": [
+                "stale_state_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 11000,
+                "total": 11000
+              },
+              "fix_intent_hints": [
+                "recompute_stale_state"
+              ],
+              "group": "state_sequence",
+              "passed": true,
+              "reproduction_input": "checkout_quote two physical items totaling 11000.",
+              "stack_functions": [],
+              "test_id": "state.quote_after_cart_mutation"
+            }
+          ]
+        }
+      ],
+      "pair_index": 3,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "coverage_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_null_missing_tests",
+        "run_config_matrix_tests",
+        "run_state_sequence_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 4,
+      "terminal_reason": "budget_limit",
+      "trajectory_digest": "4904d8534283d20d143e2e6d9ae41adf6b1619adeb00b50d19acf86499f76c34"
+    },
+    {
+      "action_costs": [
+        2,
+        1,
+        2
+      ],
+      "action_count": 3,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 7,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 5,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_recent_diff",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {},
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": "",
+            "evidence_source": "p2f_truthful_no_diff",
+            "exception_type": null,
+            "executed_functions": [],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": false,
+            "observation_type": "recent_diff_signal",
+            "passed_test_ids": [],
+            "passing_executed_functions": [],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+            "test_results": []
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_recent_diff",
+          "selection_attempted": true,
+          "state_digest_after": "ce70ccc4ce48eb227e8b4a45d045d50264fc7f25ac6d33d33ac23e324e78a7f9",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.135,
+              "expected_utility": 1.435,
+              "expected_utility_per_cost": 1.435,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.2025,
+              "expected_utility": 1.0525,
+              "expected_utility_per_cost": 1.0525,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.2025,
+              "expected_utility": 1.5025,
+              "expected_utility_per_cost": 0.75125,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.265,
+              "expected_utility_per_cost": 0.6325,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.165,
+              "expected_utility_per_cost": 0.5825,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.0675,
+              "expected_utility": 1.3675,
+              "expected_utility_per_cost": 0.455833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.165,
+              "expected_utility_per_cost": 0.388333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.3375,
+              "expected_utility": 1.2875,
+              "expected_utility_per_cost": 0.321875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.2925,
+              "expected_utility": 1.4425,
+              "expected_utility_per_cost": 0.2885,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "805bf5e681836d035b1edadcffe107245a89f7a5c4ace047250c780fcdcc841d",
+          "state_digest_before": "ce70ccc4ce48eb227e8b4a45d045d50264fc7f25ac6d33d33ac23e324e78a7f9",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.189,
+              "expected_utility": 1.489,
+              "expected_utility_per_cost": 1.489,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.2835,
+              "expected_utility": 1.5835,
+              "expected_utility_per_cost": 0.79175,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.391,
+              "expected_utility_per_cost": 0.6955,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.291,
+              "expected_utility_per_cost": 0.6455,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.0945,
+              "expected_utility": 1.3945,
+              "expected_utility_per_cost": 0.464833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.291,
+              "expected_utility_per_cost": 0.430333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.4725,
+              "expected_utility": 1.4225,
+              "expected_utility_per_cost": 0.355625,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.4095,
+              "expected_utility": 1.5595,
+              "expected_utility_per_cost": 0.3119,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+          "state_digest_before": "805bf5e681836d035b1edadcffe107245a89f7a5c4ace047250c780fcdcc841d",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.243,
+              "expected_utility": 1.543,
+              "expected_utility_per_cost": 1.543,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.3645,
+              "expected_utility": 1.6645,
+              "expected_utility_per_cost": 0.83225,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.517,
+              "expected_utility_per_cost": 0.7585,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.1215,
+              "expected_utility": 1.4215,
+              "expected_utility_per_cost": 0.473833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.417,
+              "expected_utility_per_cost": 0.472333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.6075,
+              "expected_utility": 1.5575,
+              "expected_utility_per_cost": 0.389375,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.5265,
+              "expected_utility": 1.6765,
+              "expected_utility_per_cost": 0.3353,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": null,
+          "remaining_budget_before": 7,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+          "state_digest_before": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 1,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.19000000000000006,
+      "final_execution_context_digest": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.19000000000000006,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 5,
+        "current_step": 3,
+        "executed_actions": [
+          "inspect_recent_diff",
+          "run_smoke_tests",
+          "run_boundary_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+      "first_divergence_checkpoint": 4,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "inspect_recent_diff",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {},
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": "",
+          "evidence_source": "p2f_truthful_no_diff",
+          "exception_type": null,
+          "executed_functions": [],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": false,
+          "observation_type": "recent_diff_signal",
+          "passed_test_ids": [],
+          "passing_executed_functions": [],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+          "test_results": []
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        }
+      ],
+      "pair_index": 4,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "recent_diff_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "627e9006f9383276c023ba2d7a7f05ba36ad34b0f49aed7e71eced83f8c75a83"
+    },
+    {
+      "action_costs": [
+        2,
+        1,
+        2,
+        3,
+        2,
+        2
+      ],
+      "action_count": 6,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 8,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 12,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_recent_diff",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {},
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": "",
+            "evidence_source": "p2f_truthful_no_diff",
+            "exception_type": null,
+            "executed_functions": [],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": false,
+            "observation_type": "recent_diff_signal",
+            "passed_test_ids": [],
+            "passing_executed_functions": [],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+            "test_results": []
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_recent_diff",
+          "selection_attempted": true,
+          "state_digest_after": "ce70ccc4ce48eb227e8b4a45d045d50264fc7f25ac6d33d33ac23e324e78a7f9",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.135,
+              "expected_utility": 1.435,
+              "expected_utility_per_cost": 1.435,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.2025,
+              "expected_utility": 1.0525,
+              "expected_utility_per_cost": 1.0525,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.2025,
+              "expected_utility": 1.5025,
+              "expected_utility_per_cost": 0.75125,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.265,
+              "expected_utility_per_cost": 0.6325,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.165,
+              "expected_utility_per_cost": 0.5825,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.0675,
+              "expected_utility": 1.3675,
+              "expected_utility_per_cost": 0.455833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.315,
+              "expected_utility": 1.165,
+              "expected_utility_per_cost": 0.388333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.3375,
+              "expected_utility": 1.2875,
+              "expected_utility_per_cost": 0.321875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.2925,
+              "expected_utility": 1.4425,
+              "expected_utility_per_cost": 0.2885,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "805bf5e681836d035b1edadcffe107245a89f7a5c4ace047250c780fcdcc841d",
+          "state_digest_before": "ce70ccc4ce48eb227e8b4a45d045d50264fc7f25ac6d33d33ac23e324e78a7f9",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.189,
+              "expected_utility": 1.489,
+              "expected_utility_per_cost": 1.489,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.2835,
+              "expected_utility": 1.5835,
+              "expected_utility_per_cost": 0.79175,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.391,
+              "expected_utility_per_cost": 0.6955,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.291,
+              "expected_utility_per_cost": 0.6455,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.0945,
+              "expected_utility": 1.3945,
+              "expected_utility_per_cost": 0.464833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.291,
+              "expected_utility_per_cost": 0.430333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.4725,
+              "expected_utility": 1.4225,
+              "expected_utility_per_cost": 0.355625,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.4095,
+              "expected_utility": 1.5595,
+              "expected_utility_per_cost": 0.3119,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "execution_context_digest_before": "b012c5c45bb16e5a4b7fbfb3338edf9f928ae23ec3ac5a2d14369fc3e286bab2",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 9,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+          "state_digest_before": "805bf5e681836d035b1edadcffe107245a89f7a5c4ace047250c780fcdcc841d",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.243,
+              "expected_utility": 1.543,
+              "expected_utility_per_cost": 1.543,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.3645,
+              "expected_utility": 1.6645,
+              "expected_utility_per_cost": 0.83225,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.517,
+              "expected_utility_per_cost": 0.7585,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.1215,
+              "expected_utility": 1.4215,
+              "expected_utility_per_cost": 0.473833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.417,
+              "expected_utility_per_cost": 0.472333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.6075,
+              "expected_utility": 1.5575,
+              "expected_utility_per_cost": 0.389375,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.5265,
+              "expected_utility": 1.6765,
+              "expected_utility_per_cost": 0.3353,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ce4bb64f39698aeb8309ab292d086ced5f2ea644fa1de8e5a2f7bc8d0d9448b2",
+          "execution_context_digest_before": "99d2b5291dbc240c335741dfd2aee872e71ad7e6dc8f4f5e500c2340c1118bd9",
+          "observation": {
+            "action_id": "run_config_matrix_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 3,
+            "coverage_counts": {
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 4,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "config_counterexample",
+            "passed_test_ids": [
+              "config.missing_jp_tax_default",
+              "config.missing_feature_flag_no_stacking",
+              "config.region_alias_rate",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "config.get_feature_flag",
+              "config.get_region_aliases",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 0.1,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_tax_rate",
+                  "config.load_config"
+                ],
+                "expected": 0.1,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+                "stack_functions": [],
+                "test_id": "config.missing_jp_tax_default"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 500,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_feature_flag",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 500,
+                "fix_intent_hints": [
+                  "fix_config_default"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+                "stack_functions": [],
+                "test_id": "config.missing_feature_flag_no_stacking"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": 1600,
+                "evidence_tags": [
+                  "config_matrix_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 1600,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+                "stack_functions": [],
+                "test_id": "config.region_alias_rate"
+              },
+              {
+                "action_id": "run_config_matrix_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 7,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 3,
+          "selected_action_id": "run_config_matrix_tests",
+          "selection_attempted": true,
+          "state_digest_after": "163b68a35dafe302fbbddd4f4a820913f944c37a6fc2d321f467085ebe053201",
+          "state_digest_before": "398a72ec8a252b3b2b01416cc7f1d308e23ea037b73287ab6ccabfed2885029e",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.636,
+              "expected_utility_per_cost": 0.818,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            }
+          ],
+          "available_action_ids": [
+            "run_null_missing_tests",
+            "run_state_sequence_tests",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "71639ccaf53e96acb9b513411f650943bc4fb399b1a4fb79ff28833b12eb11cd",
+          "execution_context_digest_before": "ce4bb64f39698aeb8309ab292d086ced5f2ea644fa1de8e5a2f7bc8d0d9448b2",
+          "observation": {
+            "action_id": "run_null_missing_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              }
+            ]
+          },
+          "remaining_budget_before": 4,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_null_missing_tests",
+          "selection_attempted": true,
+          "state_digest_after": "9511b3a3a762f54534a7195e9ff99f2a3cc41d852a2ac3109b5b3f903fb03795",
+          "state_digest_before": "163b68a35dafe302fbbddd4f4a820913f944c37a6fc2d321f467085ebe053201",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.294,
+              "expected_utility": 1.594,
+              "expected_utility_per_cost": 1.594,
+              "location_utility": 0.7
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.441,
+              "expected_utility": 1.741,
+              "expected_utility_per_cost": 0.8705,
+              "location_utility": 0.5
+            }
+          ],
+          "available_action_ids": [
+            "inspect_traceback",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "fadeedf486513658e108518f362ff916bcb9a98c2f77313992ca5732dd7d325f",
+          "execution_context_digest_before": "71639ccaf53e96acb9b513411f650943bc4fb399b1a4fb79ff28833b12eb11cd",
+          "observation": {
+            "action_id": "inspect_spec_clause",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_total": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_bogo_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "spec_clause_mismatch",
+            "passed_test_ids": [
+              "spec.discount_before_tax",
+              "spec.bogo_cheapest_rule",
+              "spec.digital_only_shipping",
+              "spec.preorder_reservation"
+            ],
+            "passing_executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 10450,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax",
+                  "cart.calculate_total",
+                  "cart.cart_subtotal",
+                  "config.get_feature_flag",
+                  "config.get_tax_rate",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 10450,
+                "fix_intent_hints": [
+                  "align_calculation_order_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+                "stack_functions": [],
+                "test_id": "spec.discount_before_tax"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1000,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_bogo_discount"
+                ],
+                "expected": 1000,
+                "fix_intent_hints": [
+                  "align_selection_rule_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+                "stack_functions": [],
+                "test_id": "spec.bogo_cheapest_rule"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "spec.digital_only_shipping"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "spec.preorder_reservation"
+              }
+            ]
+          },
+          "remaining_budget_before": 2,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_spec_clause",
+          "selection_attempted": true,
+          "state_digest_after": "deb224640272b3fb9b7ed58cb53fe5ad711421c74e3b051b8a8f3c7b1b63f44c",
+          "state_digest_before": "9511b3a3a762f54534a7195e9ff99f2a3cc41d852a2ac3109b5b3f903fb03795",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 7,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "fadeedf486513658e108518f362ff916bcb9a98c2f77313992ca5732dd7d325f",
+          "execution_context_digest_before": "fadeedf486513658e108518f362ff916bcb9a98c2f77313992ca5732dd7d325f",
+          "observation": null,
+          "remaining_budget_before": 0,
+          "residual_stop_result": "budget_limit",
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "deb224640272b3fb9b7ed58cb53fe5ad711421c74e3b051b8a8f3c7b1b63f44c",
+          "state_digest_before": "deb224640272b3fb9b7ed58cb53fe5ad711421c74e3b051b8a8f3c7b1b63f44c",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "budget_limit"
+        }
+      ],
+      "empty_diff_observation_count": 1,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "fadeedf486513658e108518f362ff916bcb9a98c2f77313992ca5732dd7d325f",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 12,
+        "current_step": 6,
+        "executed_actions": [
+          "inspect_recent_diff",
+          "run_smoke_tests",
+          "run_boundary_tests",
+          "run_config_matrix_tests",
+          "run_null_missing_tests",
+          "inspect_spec_clause"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "deb224640272b3fb9b7ed58cb53fe5ad711421c74e3b051b8a8f3c7b1b63f44c",
+      "first_divergence_checkpoint": 4,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "inspect_recent_diff",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {},
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": "",
+          "evidence_source": "p2f_truthful_no_diff",
+          "exception_type": null,
+          "executed_functions": [],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": false,
+          "observation_type": "recent_diff_signal",
+          "passed_test_ids": [],
+          "passing_executed_functions": [],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+          "test_results": []
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        },
+        {
+          "action_id": "run_config_matrix_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 3,
+          "coverage_counts": {
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 4,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "config_counterexample",
+          "passed_test_ids": [
+            "config.missing_jp_tax_default",
+            "config.missing_feature_flag_no_stacking",
+            "config.region_alias_rate",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "config.get_feature_flag",
+            "config.get_region_aliases",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_config_matrix_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 0.1,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_tax_rate",
+                "config.load_config"
+              ],
+              "expected": 0.1,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "get_tax_rate for JP when tax_rates omits JP.",
+              "stack_functions": [],
+              "test_id": "config.missing_jp_tax_default"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 500,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_feature_flag",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 500,
+              "fix_intent_hints": [
+                "fix_config_default"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "compute_discount with missing stack_member_and_coupon flag.",
+              "stack_functions": [],
+              "test_id": "config.missing_feature_flag_no_stacking"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": 1600,
+              "evidence_tags": [
+                "config_matrix_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 1600,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with jp-okinawa alias.",
+              "stack_functions": [],
+              "test_id": "config.region_alias_rate"
+            },
+            {
+              "action_id": "run_config_matrix_tests",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_null_missing_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            }
+          ]
+        },
+        {
+          "action_id": "inspect_spec_clause",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_total": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_bogo_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "spec_clause_mismatch",
+          "passed_test_ids": [
+            "spec.discount_before_tax",
+            "spec.bogo_cheapest_rule",
+            "spec.digital_only_shipping",
+            "spec.preorder_reservation"
+          ],
+          "passing_executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 10450,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax",
+                "cart.calculate_total",
+                "cart.cart_subtotal",
+                "config.get_feature_flag",
+                "config.get_tax_rate",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 10450,
+              "fix_intent_hints": [
+                "align_calculation_order_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+              "stack_functions": [],
+              "test_id": "spec.discount_before_tax"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1000,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_bogo_discount"
+              ],
+              "expected": 1000,
+              "fix_intent_hints": [
+                "align_selection_rule_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+              "stack_functions": [],
+              "test_id": "spec.bogo_cheapest_rule"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "spec.digital_only_shipping"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "spec.preorder_reservation"
+            }
+          ]
+        }
+      ],
+      "pair_index": 4,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "recent_diff_first",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "inspect_recent_diff",
+        "run_smoke_tests",
+        "run_boundary_tests",
+        "run_config_matrix_tests",
+        "run_null_missing_tests",
+        "inspect_spec_clause"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 4,
+      "terminal_reason": "budget_limit",
+      "trajectory_digest": "c394c6282a55cc1afc660360824511a9794e54cbd2376aaa4157350261b4dcf5"
+    },
+    {
+      "action_costs": [
+        1,
+        1
+      ],
+      "action_count": 2,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 9,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 2,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_traceback",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_traceback",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "inspect_traceback",
+          "selection_attempted": true,
+          "state_digest_after": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.156,
+              "expected_utility_per_cost": 1.156,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.726,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "observation": null,
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.14,
+      "final_execution_context_digest": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.14,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 2,
+        "current_step": 2,
+        "executed_actions": [
+          "inspect_traceback",
+          "run_smoke_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "inspect_traceback",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_traceback",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        }
+      ],
+      "pair_index": 5,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "cause_only_p1a_style",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "724d11cb75d9201fd044b70aa71721421fcdcaa6e539a880e38c6fea5712b0c8"
+    },
+    {
+      "action_costs": [
+        1,
+        1,
+        2,
+        2,
+        5
+      ],
+      "action_count": 5,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 10,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 11,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_traceback",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_traceback",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "inspect_traceback",
+          "selection_attempted": true,
+          "state_digest_after": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.156,
+              "expected_utility_per_cost": 1.156,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.726,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "observation": {
+            "action_id": "inspect_recent_diff",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {},
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": "",
+            "evidence_source": "p2f_truthful_no_diff",
+            "exception_type": null,
+            "executed_functions": [],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": false,
+            "observation_type": "recent_diff_signal",
+            "passed_test_ids": [],
+            "passing_executed_functions": [],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+            "test_results": []
+          },
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_recent_diff",
+          "selection_attempted": true,
+          "state_digest_after": "d7cc5060787b67de638017a8d57b775e44be07c528321785e71544e56d0cee03",
+          "state_digest_before": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.3645,
+              "expected_utility": 1.6645,
+              "expected_utility_per_cost": 0.83225,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.517,
+              "expected_utility_per_cost": 0.7585,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.417,
+              "expected_utility_per_cost": 0.7085,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.1215,
+              "expected_utility": 1.4215,
+              "expected_utility_per_cost": 0.473833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.567,
+              "expected_utility": 1.417,
+              "expected_utility_per_cost": 0.472333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.6075,
+              "expected_utility": 1.5575,
+              "expected_utility_per_cost": 0.389375,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.5265,
+              "expected_utility": 1.6765,
+              "expected_utility_per_cost": 0.3353,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "d04af80ff35facd8e50c3363578e5aad91922fdeb6f52cd92ecbe11c964ffa19",
+          "execution_context_digest_before": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "observation": {
+            "action_id": "inspect_spec_clause",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_total": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_bogo_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "spec_clause_mismatch",
+            "passed_test_ids": [
+              "spec.discount_before_tax",
+              "spec.bogo_cheapest_rule",
+              "spec.digital_only_shipping",
+              "spec.preorder_reservation"
+            ],
+            "passing_executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 10450,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax",
+                  "cart.calculate_total",
+                  "cart.cart_subtotal",
+                  "config.get_feature_flag",
+                  "config.get_tax_rate",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 10450,
+                "fix_intent_hints": [
+                  "align_calculation_order_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+                "stack_functions": [],
+                "test_id": "spec.discount_before_tax"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1000,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_bogo_discount"
+                ],
+                "expected": 1000,
+                "fix_intent_hints": [
+                  "align_selection_rule_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+                "stack_functions": [],
+                "test_id": "spec.bogo_cheapest_rule"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "spec.digital_only_shipping"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "spec.preorder_reservation"
+              }
+            ]
+          },
+          "remaining_budget_before": 8,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_spec_clause",
+          "selection_attempted": true,
+          "state_digest_after": "e11448e5cac26ef1c96af113ed26baa2bea005f2e63f131acd39b18f8aa3dafd",
+          "state_digest_before": "d7cc5060787b67de638017a8d57b775e44be07c528321785e71544e56d0cee03",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.636,
+              "expected_utility_per_cost": 0.818,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.768,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "a420a125ea2a1948e84756c39ec8bf966658dde2de955cae5a3eaf5ba58994ec",
+          "execution_context_digest_before": "d04af80ff35facd8e50c3363578e5aad91922fdeb6f52cd92ecbe11c964ffa19",
+          "observation": {
+            "action_id": "run_property_search",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 5,
+            "coverage_counts": {
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_total": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_bogo_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.apply_coupon",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "property_counterexample",
+            "passed_test_ids": [
+              "property.free_shipping_boundary_vector",
+              "property.coupon_idempotency",
+              "property.total_consistency",
+              "property.bogo_cheapest_rule",
+              "property.preorder_reservation"
+            ],
+            "passing_executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_shipping_threshold",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.apply_coupon",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_property_search passed all 5 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_property_search",
+                "actual": [
+                  false,
+                  true,
+                  true
+                ],
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": [
+                  false,
+                  true,
+                  true
+                ],
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "property",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible for subtotals 9999, 10000, 10001.",
+                "stack_functions": [],
+                "test_id": "property.free_shipping_boundary_vector"
+              },
+              {
+                "action_id": "run_property_search",
+                "actual": [
+                  "WELCOME500"
+                ],
+                "evidence_tags": [
+                  "idempotency_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": [
+                  "WELCOME500"
+                ],
+                "fix_intent_hints": [
+                  "make_operation_idempotent"
+                ],
+                "group": "property",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+                "stack_functions": [],
+                "test_id": "property.coupon_idempotency"
+              },
+              {
+                "action_id": "run_property_search",
+                "actual": 10450,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax",
+                  "cart.calculate_total",
+                  "cart.cart_subtotal",
+                  "config.get_feature_flag",
+                  "config.get_tax_rate",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 10450,
+                "fix_intent_hints": [
+                  "align_calculation_order_with_spec"
+                ],
+                "group": "property",
+                "passed": true,
+                "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+                "stack_functions": [],
+                "test_id": "property.total_consistency"
+              },
+              {
+                "action_id": "run_property_search",
+                "actual": 1000,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_bogo_discount"
+                ],
+                "expected": 1000,
+                "fix_intent_hints": [
+                  "align_selection_rule_with_spec"
+                ],
+                "group": "property",
+                "passed": true,
+                "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+                "stack_functions": [],
+                "test_id": "property.bogo_cheapest_rule"
+              },
+              {
+                "action_id": "run_property_search",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "property",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "property.preorder_reservation"
+              }
+            ]
+          },
+          "remaining_budget_before": 6,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 5,
+          "selected_action_id": "run_property_search",
+          "selection_attempted": true,
+          "state_digest_after": "2e7e87eccf0c1ea7fbf32892c98baf5491c4f54040ea39bd23f0e8de508bc739",
+          "state_digest_before": "e11448e5cac26ef1c96af113ed26baa2bea005f2e63f131acd39b18f8aa3dafd",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "a420a125ea2a1948e84756c39ec8bf966658dde2de955cae5a3eaf5ba58994ec",
+          "execution_context_digest_before": "a420a125ea2a1948e84756c39ec8bf966658dde2de955cae5a3eaf5ba58994ec",
+          "observation": null,
+          "remaining_budget_before": 1,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": true,
+          "state_digest_after": "2e7e87eccf0c1ea7fbf32892c98baf5491c4f54040ea39bd23f0e8de508bc739",
+          "state_digest_before": "2e7e87eccf0c1ea7fbf32892c98baf5491c4f54040ea39bd23f0e8de508bc739",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_available_actions"
+        }
+      ],
+      "empty_diff_observation_count": 1,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "a420a125ea2a1948e84756c39ec8bf966658dde2de955cae5a3eaf5ba58994ec",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 11,
+        "current_step": 5,
+        "executed_actions": [
+          "inspect_traceback",
+          "run_smoke_tests",
+          "inspect_recent_diff",
+          "inspect_spec_clause",
+          "run_property_search"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "2e7e87eccf0c1ea7fbf32892c98baf5491c4f54040ea39bd23f0e8de508bc739",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "inspect_traceback",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_traceback",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "inspect_recent_diff",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {},
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": "",
+          "evidence_source": "p2f_truthful_no_diff",
+          "exception_type": null,
+          "executed_functions": [],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": false,
+          "observation_type": "recent_diff_signal",
+          "passed_test_ids": [],
+          "passing_executed_functions": [],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+          "test_results": []
+        },
+        {
+          "action_id": "inspect_spec_clause",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_total": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_bogo_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "spec_clause_mismatch",
+          "passed_test_ids": [
+            "spec.discount_before_tax",
+            "spec.bogo_cheapest_rule",
+            "spec.digital_only_shipping",
+            "spec.preorder_reservation"
+          ],
+          "passing_executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 10450,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax",
+                "cart.calculate_total",
+                "cart.cart_subtotal",
+                "config.get_feature_flag",
+                "config.get_tax_rate",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 10450,
+              "fix_intent_hints": [
+                "align_calculation_order_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+              "stack_functions": [],
+              "test_id": "spec.discount_before_tax"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1000,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_bogo_discount"
+              ],
+              "expected": 1000,
+              "fix_intent_hints": [
+                "align_selection_rule_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+              "stack_functions": [],
+              "test_id": "spec.bogo_cheapest_rule"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "spec.digital_only_shipping"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "spec.preorder_reservation"
+            }
+          ]
+        },
+        {
+          "action_id": "run_property_search",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 5,
+          "coverage_counts": {
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_total": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_bogo_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.apply_coupon",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "property_counterexample",
+          "passed_test_ids": [
+            "property.free_shipping_boundary_vector",
+            "property.coupon_idempotency",
+            "property.total_consistency",
+            "property.bogo_cheapest_rule",
+            "property.preorder_reservation"
+          ],
+          "passing_executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_shipping_threshold",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.apply_coupon",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_property_search passed all 5 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_property_search",
+              "actual": [
+                false,
+                true,
+                true
+              ],
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": [
+                false,
+                true,
+                true
+              ],
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "property",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible for subtotals 9999, 10000, 10001.",
+              "stack_functions": [],
+              "test_id": "property.free_shipping_boundary_vector"
+            },
+            {
+              "action_id": "run_property_search",
+              "actual": [
+                "WELCOME500"
+              ],
+              "evidence_tags": [
+                "idempotency_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": [
+                "WELCOME500"
+              ],
+              "fix_intent_hints": [
+                "make_operation_idempotent"
+              ],
+              "group": "property",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, 'WELCOME500') twice.",
+              "stack_functions": [],
+              "test_id": "property.coupon_idempotency"
+            },
+            {
+              "action_id": "run_property_search",
+              "actual": 10450,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax",
+                "cart.calculate_total",
+                "cart.cart_subtotal",
+                "config.get_feature_flag",
+                "config.get_tax_rate",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 10450,
+              "fix_intent_hints": [
+                "align_calculation_order_with_spec"
+              ],
+              "group": "property",
+              "passed": true,
+              "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+              "stack_functions": [],
+              "test_id": "property.total_consistency"
+            },
+            {
+              "action_id": "run_property_search",
+              "actual": 1000,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_bogo_discount"
+              ],
+              "expected": 1000,
+              "fix_intent_hints": [
+                "align_selection_rule_with_spec"
+              ],
+              "group": "property",
+              "passed": true,
+              "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+              "stack_functions": [],
+              "test_id": "property.bogo_cheapest_rule"
+            },
+            {
+              "action_id": "run_property_search",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "property",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "property.preorder_reservation"
+            }
+          ]
+        }
+      ],
+      "pair_index": 5,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "cause_only_p1a_style",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests",
+        "inspect_recent_diff",
+        "inspect_spec_clause",
+        "run_property_search"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 4,
+      "terminal_reason": "no_available_actions",
+      "trajectory_digest": "7f47dc68882ff25a304bdfe5898f0548e4214bf074e93b9ea026fa4730746d49"
+    },
+    {
+      "action_costs": [
+        1,
+        1
+      ],
+      "action_count": 2,
+      "arm_id": "normal_control",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 11,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 2,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_traceback",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_traceback",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "inspect_traceback",
+          "selection_attempted": true,
+          "state_digest_after": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.156,
+              "expected_utility_per_cost": 1.156,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.726,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "observation": null,
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "suppression_event_index": null,
+          "target_predicate_value": true,
+          "target_suppressed": false,
+          "terminal_after_decision": true,
+          "terminal_reason": "no_bug_probability_threshold"
+        }
+      ],
+      "empty_diff_observation_count": 0,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.14,
+      "final_execution_context_digest": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.14,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 2,
+        "current_step": 2,
+        "executed_actions": [
+          "inspect_traceback",
+          "run_smoke_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": true,
+      "observations": [
+        {
+          "action_id": "inspect_traceback",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_traceback",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        }
+      ],
+      "pair_index": 6,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "expected_utility_per_cost",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": false,
+      "selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 0,
+      "terminal_reason": "no_bug_probability_threshold",
+      "trajectory_digest": "08bdd62b001e704b197a24c1659a233bd021ae0a0a0630b3d2fbe560995c6751"
+    },
+    {
+      "action_costs": [
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "action_count": 6,
+      "arm_id": "target_suppressed_continuation",
+      "baseline_id": "p1b_checkout_clean_v1",
+      "bug_detected_observation": false,
+      "canonical_row_index": 12,
+      "catalog_digest": "07b41b4d61a8b63250f62bb01e49ecca38ee2ab9f8124ba9d6c03c0f87fb84bb",
+      "cumulative_cost": 10,
+      "decision_events": [
+        {
+          "action_scores": [
+            {
+              "action": "inspect_traceback",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.15,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 1.45,
+              "location_utility": 0.7
+            },
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.075,
+              "expected_utility_per_cost": 1.075,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.225,
+              "expected_utility": 1.525,
+              "expected_utility_per_cost": 0.7625,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.1,
+              "expected_utility": 1.45,
+              "expected_utility_per_cost": 0.725,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.3,
+              "expected_utility_per_cost": 0.65,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.6,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.075,
+              "expected_utility": 1.375,
+              "expected_utility_per_cost": 0.458333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.35,
+              "expected_utility": 1.2,
+              "expected_utility_per_cost": 0.4,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.375,
+              "expected_utility": 1.325,
+              "expected_utility_per_cost": 0.33125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.325,
+              "expected_utility": 1.475,
+              "expected_utility_per_cost": 0.295,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_traceback",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 1,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "execution_context_digest_before": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+          "observation": {
+            "action_id": "inspect_traceback",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero",
+              "config.free_shipping_threshold_override"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.free_shipping_eligible",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_traceback",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              },
+              {
+                "action_id": "inspect_traceback",
+                "actual": true,
+                "evidence_tags": [
+                  "config_parse_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "normalize_config_or_input"
+                ],
+                "group": "config_matrix",
+                "passed": true,
+                "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+                "stack_functions": [],
+                "test_id": "config.free_shipping_threshold_override"
+              }
+            ]
+          },
+          "remaining_budget_before": 12,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "inspect_traceback",
+          "selection_attempted": true,
+          "state_digest_after": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "state_digest_before": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_smoke_tests",
+              "cause_utility": 0.4,
+              "cost": 1,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.156,
+              "expected_utility_per_cost": 1.156,
+              "location_utility": 0.25
+            },
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.306,
+              "expected_utility": 1.606,
+              "expected_utility_per_cost": 0.803,
+              "location_utility": 0.5
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.136,
+              "expected_utility": 1.486,
+              "expected_utility_per_cost": 0.743,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.426,
+              "expected_utility_per_cost": 0.713,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.663,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.102,
+              "expected_utility": 1.402,
+              "expected_utility_per_cost": 0.467333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.476,
+              "expected_utility": 1.326,
+              "expected_utility_per_cost": 0.442,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.51,
+              "expected_utility": 1.46,
+              "expected_utility_per_cost": 0.365,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.442,
+              "expected_utility": 1.592,
+              "expected_utility_per_cost": 0.3184,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_smoke_tests",
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 2,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "execution_context_digest_before": "c673aaf2a74c3382b50fa2e580932a9d0ba69c4cc313e569fe1f51d81aafafa0",
+          "observation": {
+            "action_id": "run_smoke_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 1,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.checkout_quote": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "test_failure",
+            "passed_test_ids": [
+              "smoke.checkout_quote_threshold",
+              "smoke.missing_coupon_noop",
+              "smoke.digital_shipping",
+              "smoke.preorder_reserve"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "cart.checkout_quote",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "evidence_tags": [
+                  "boundary_failure",
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal",
+                  "cart.checkout_quote",
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.calculate_shipping",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": {
+                  "shipping": 0,
+                  "subtotal": 10000,
+                  "total": 10000
+                },
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+                "stack_functions": [],
+                "test_id": "smoke.checkout_quote_threshold"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "smoke.missing_coupon_noop"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "smoke.digital_shipping"
+              },
+              {
+                "action_id": "run_smoke_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "smoke",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "smoke.preorder_reserve"
+              }
+            ]
+          },
+          "remaining_budget_before": 11,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 1,
+          "selected_action_id": "run_smoke_tests",
+          "selection_attempted": true,
+          "state_digest_after": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "state_digest_before": "ff2b84655afcd75b2bf2de44b2c42cd33f3dff192c8b8349f693aabd20667968",
+          "suppression_event_index": null,
+          "target_predicate_value": false,
+          "target_suppressed": false,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_spec_clause",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.387,
+              "expected_utility": 1.687,
+              "expected_utility_per_cost": 0.8435,
+              "location_utility": 0.5
+            },
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.552,
+              "expected_utility_per_cost": 0.776,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.172,
+              "expected_utility": 1.522,
+              "expected_utility_per_cost": 0.761,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.726,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.602,
+              "expected_utility": 1.452,
+              "expected_utility_per_cost": 0.484,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.129,
+              "expected_utility": 1.429,
+              "expected_utility_per_cost": 0.476333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.645,
+              "expected_utility": 1.595,
+              "expected_utility_per_cost": 0.39875,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.559,
+              "expected_utility": 1.709,
+              "expected_utility_per_cost": 0.3418,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff",
+            "inspect_spec_clause"
+          ],
+          "decision_index": 3,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "d04af80ff35facd8e50c3363578e5aad91922fdeb6f52cd92ecbe11c964ffa19",
+          "execution_context_digest_before": "cad204ce2b7684f0eccbd3111efd0a6cd5d252919512ef29f16b23a2c48c7c81",
+          "observation": {
+            "action_id": "inspect_spec_clause",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_total": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_feature_flag": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_tax_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 2,
+                "total_failed": 0
+              },
+              "discounts.apply_bogo_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.compute_discount": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.calculate_shipping": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "spec_clause_mismatch",
+            "passed_test_ids": [
+              "spec.discount_before_tax",
+              "spec.bogo_cheapest_rule",
+              "spec.digital_only_shipping",
+              "spec.preorder_reservation"
+            ],
+            "passing_executed_functions": [
+              "cart.calculate_tax",
+              "cart.calculate_total",
+              "cart.cart_subtotal",
+              "config.get_feature_flag",
+              "config.get_tax_rate",
+              "config.load_config",
+              "discounts.apply_bogo_discount",
+              "discounts.compute_discount",
+              "discounts.coupon_is_eligible",
+              "inventory.reserve_stock",
+              "shipping.calculate_shipping"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 10450,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax",
+                  "cart.calculate_total",
+                  "cart.cart_subtotal",
+                  "config.get_feature_flag",
+                  "config.get_tax_rate",
+                  "config.load_config",
+                  "discounts.compute_discount",
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": 10450,
+                "fix_intent_hints": [
+                  "align_calculation_order_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+                "stack_functions": [],
+                "test_id": "spec.discount_before_tax"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1000,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_bogo_discount"
+                ],
+                "expected": 1000,
+                "fix_intent_hints": [
+                  "align_selection_rule_with_spec"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+                "stack_functions": [],
+                "test_id": "spec.bogo_cheapest_rule"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 0,
+                "evidence_tags": [
+                  "spec_rule_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.load_config",
+                  "shipping.calculate_shipping"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+                "stack_functions": [],
+                "test_id": "spec.digital_only_shipping"
+              },
+              {
+                "action_id": "inspect_spec_clause",
+                "actual": 1,
+                "evidence_tags": [
+                  "spec_rule_failure",
+                  "state_invariant_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_spec_exception_rule"
+                ],
+                "group": "spec_clause",
+                "passed": true,
+                "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+                "stack_functions": [],
+                "test_id": "spec.preorder_reservation"
+              }
+            ]
+          },
+          "remaining_budget_before": 10,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_spec_clause",
+          "selection_attempted": true,
+          "state_digest_after": "46d72ea32edfc521a3dfc72f9c1ee1696ee6a78cb3777b2676a5cfa0a508e3de",
+          "state_digest_before": "a0e73280c9946483874ae98fd5de94c61898fe6b43a6fdc782f1da95d4be5d91",
+          "suppression_event_index": 1,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_null_missing_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.636,
+              "expected_utility_per_cost": 0.818,
+              "location_utility": 0.55
+            },
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.768,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_null_missing_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff"
+          ],
+          "decision_index": 4,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ea1f69db700d6cfcd1008a448d914cf496b46350fa616b8154a2351bf89b4bd3",
+          "execution_context_digest_before": "d04af80ff35facd8e50c3363578e5aad91922fdeb6f52cd92ecbe11c964ffa19",
+          "observation": {
+            "action_id": "run_null_missing_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.cart_subtotal": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_aliases": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_region_defaults": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.apply_coupon": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "inventory.reserve_stock": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.resolve_region_rate": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "exception_trace",
+            "passed_test_ids": [
+              "null_missing.coupon_none_noop",
+              "null_missing.missing_region_default",
+              "null_missing.none_cart_subtotal",
+              "null_missing.missing_reserved_defaults_zero"
+            ],
+            "passing_executed_functions": [
+              "cart.cart_subtotal",
+              "config.get_region_aliases",
+              "config.get_region_defaults",
+              "config.load_config",
+              "discounts.apply_coupon",
+              "inventory.reserve_stock",
+              "shipping.resolve_region_rate"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": {},
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.apply_coupon"
+                ],
+                "expected": {},
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "apply_coupon({}, None).",
+                "stack_functions": [],
+                "test_id": "null_missing.coupon_none_noop"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 800,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_region_aliases",
+                  "config.get_region_defaults",
+                  "config.load_config",
+                  "shipping.resolve_region_rate"
+                ],
+                "expected": 800,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "resolve_region_rate with an address missing region.",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_region_default"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 0,
+                "evidence_tags": [
+                  "null_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.cart_subtotal"
+                ],
+                "expected": 0,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "cart_subtotal(None).",
+                "stack_functions": [],
+                "test_id": "null_missing.none_cart_subtotal"
+              },
+              {
+                "action_id": "run_null_missing_tests",
+                "actual": 1,
+                "evidence_tags": [
+                  "missing_key_exception"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "inventory.reserve_stock"
+                ],
+                "expected": 1,
+                "fix_intent_hints": [
+                  "add_missing_value_guard"
+                ],
+                "group": "null_missing",
+                "passed": true,
+                "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+                "stack_functions": [],
+                "test_id": "null_missing.missing_reserved_defaults_zero"
+              }
+            ]
+          },
+          "remaining_budget_before": 8,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_null_missing_tests",
+          "selection_attempted": true,
+          "state_digest_after": "d7f35f2bea43c2ed04d40d7ea0ca0040aaed4f94e6a8e59e4f018f6999fe63fb",
+          "state_digest_before": "46d72ea32edfc521a3dfc72f9c1ee1696ee6a78cb3777b2676a5cfa0a508e3de",
+          "suppression_event_index": 2,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "inspect_recent_diff",
+              "cause_utility": 0.6,
+              "cost": 2,
+              "discovery_utility": 0.196,
+              "expected_utility": 1.546,
+              "expected_utility_per_cost": 0.773,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.768,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.686,
+              "expected_utility": 1.536,
+              "expected_utility_per_cost": 0.512,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.147,
+              "expected_utility": 1.447,
+              "expected_utility_per_cost": 0.482333,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.735,
+              "expected_utility": 1.685,
+              "expected_utility_per_cost": 0.42125,
+              "location_utility": 0.55
+            },
+            {
+              "action": "run_property_search",
+              "cause_utility": 0.6,
+              "cost": 5,
+              "discovery_utility": 0.637,
+              "expected_utility": 1.787,
+              "expected_utility_per_cost": 0.3574,
+              "location_utility": 0.35
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "run_property_search",
+            "inspect_coverage_spectrum",
+            "inspect_recent_diff"
+          ],
+          "decision_index": 5,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "ea1f69db700d6cfcd1008a448d914cf496b46350fa616b8154a2351bf89b4bd3",
+          "execution_context_digest_before": "ea1f69db700d6cfcd1008a448d914cf496b46350fa616b8154a2351bf89b4bd3",
+          "observation": {
+            "action_id": "inspect_recent_diff",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {},
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": "",
+            "evidence_source": "p2f_truthful_no_diff",
+            "exception_type": null,
+            "executed_functions": [],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": false,
+            "observation_type": "recent_diff_signal",
+            "passed_test_ids": [],
+            "passing_executed_functions": [],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+            "test_results": []
+          },
+          "remaining_budget_before": 6,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "inspect_recent_diff",
+          "selection_attempted": true,
+          "state_digest_after": "83a535f0aacccc1c84fc1ab80f8736dc8c496a0df76657beab5dcc124d050688",
+          "state_digest_before": "d7f35f2bea43c2ed04d40d7ea0ca0040aaed4f94e6a8e59e4f018f6999fe63fb",
+          "suppression_event_index": 3,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [
+            {
+              "action": "run_boundary_tests",
+              "cause_utility": 0.2,
+              "cost": 2,
+              "discovery_utility": 0.651,
+              "expected_utility": 1.501,
+              "expected_utility_per_cost": 0.7505,
+              "location_utility": 0.45
+            },
+            {
+              "action": "run_config_matrix_tests",
+              "cause_utility": 0.2,
+              "cost": 3,
+              "discovery_utility": 0.651,
+              "expected_utility": 1.501,
+              "expected_utility_per_cost": 0.500333,
+              "location_utility": 0.45
+            },
+            {
+              "action": "inspect_coverage_spectrum",
+              "cause_utility": 0.25,
+              "cost": 3,
+              "discovery_utility": 0.1395,
+              "expected_utility": 1.4395,
+              "expected_utility_per_cost": 0.479833,
+              "location_utility": 0.85
+            },
+            {
+              "action": "run_state_sequence_tests",
+              "cause_utility": 0.2,
+              "cost": 4,
+              "discovery_utility": 0.6975,
+              "expected_utility": 1.6475,
+              "expected_utility_per_cost": 0.411875,
+              "location_utility": 0.55
+            }
+          ],
+          "available_action_ids": [
+            "run_boundary_tests",
+            "run_config_matrix_tests",
+            "run_state_sequence_tests",
+            "inspect_coverage_spectrum"
+          ],
+          "decision_index": 6,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "2368001e6ec1e9bcae99f92c77d2fa65db2e4b0f6f866ac5abf60883d02469c8",
+          "execution_context_digest_before": "ea1f69db700d6cfcd1008a448d914cf496b46350fa616b8154a2351bf89b4bd3",
+          "observation": {
+            "action_id": "run_boundary_tests",
+            "bug_detected": false,
+            "cause_scores": {},
+            "changed_files": [],
+            "changed_functions": [],
+            "cost": 2,
+            "coverage_counts": {
+              "cart.add_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.calculate_tax": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "cart.validate_item": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.get_shipping_threshold": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "config.load_config": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "discounts.coupon_is_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              },
+              "shipping.free_shipping_eligible": {
+                "failed": 0,
+                "passed": 1,
+                "total_failed": 0
+              }
+            },
+            "coverage_suspicion": {},
+            "diff_artifact_path": null,
+            "diff_excerpt": null,
+            "evidence_source": "p2f_canonical_baseline",
+            "exception_type": null,
+            "executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "failed_test_ids": [],
+            "failing_executed_functions": [],
+            "failure_found": false,
+            "fix_intent_scores": {},
+            "location_scores": {},
+            "no_bug_evidence": true,
+            "observation_type": "boundary_counterexample",
+            "passed_test_ids": [
+              "boundary.free_shipping_exact_threshold",
+              "boundary.coupon_exact_minimum",
+              "boundary.quantity_upper_boundary",
+              "boundary.tax_half_up_rounding"
+            ],
+            "passing_executed_functions": [
+              "cart.add_item",
+              "cart.calculate_tax",
+              "cart.validate_item",
+              "config.get_shipping_threshold",
+              "config.load_config",
+              "discounts.coupon_is_eligible",
+              "shipping.free_shipping_eligible"
+            ],
+            "reproduction_input": null,
+            "stack_functions": [],
+            "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+            "test_results": [
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "config.get_shipping_threshold",
+                  "config.load_config",
+                  "shipping.free_shipping_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "free_shipping_eligible subtotal=10000.",
+                "stack_functions": [],
+                "test_id": "boundary.free_shipping_exact_threshold"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": true,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "discounts.coupon_is_eligible"
+                ],
+                "expected": true,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+                "stack_functions": [],
+                "test_id": "boundary.coupon_exact_minimum"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 99,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.add_item",
+                  "cart.validate_item"
+                ],
+                "expected": 99,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "add_item quantity=99.",
+                "stack_functions": [],
+                "test_id": "boundary.quantity_upper_boundary"
+              },
+              {
+                "action_id": "run_boundary_tests",
+                "actual": 200,
+                "evidence_tags": [
+                  "boundary_failure"
+                ],
+                "exception_type": null,
+                "executed_functions": [
+                  "cart.calculate_tax"
+                ],
+                "expected": 200,
+                "fix_intent_hints": [
+                  "change_comparison"
+                ],
+                "group": "boundary",
+                "passed": true,
+                "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+                "stack_functions": [],
+                "test_id": "boundary.tax_half_up_rounding"
+              }
+            ]
+          },
+          "remaining_budget_before": 4,
+          "residual_stop_result": null,
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": 2,
+          "selected_action_id": "run_boundary_tests",
+          "selection_attempted": true,
+          "state_digest_after": "4477974e832f9581b97bbc8f1ba0ccef9cef01f6c3e484b677adbbca41866c8a",
+          "state_digest_before": "83a535f0aacccc1c84fc1ab80f8736dc8c496a0df76657beab5dcc124d050688",
+          "suppression_event_index": 4,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": false,
+          "terminal_reason": null
+        },
+        {
+          "action_scores": [],
+          "available_action_ids": [],
+          "decision_index": 7,
+          "evaluated_stop_predicates": [
+            {
+              "stop_id": "no_bug_probability_threshold",
+              "suppressed": true,
+              "value": true
+            },
+            {
+              "stop_id": "bug_confidence_threshold",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "budget_limit",
+              "suppressed": false,
+              "value": false
+            },
+            {
+              "stop_id": "max_steps",
+              "suppressed": false,
+              "value": true
+            },
+            {
+              "stop_id": "low_expected_utility",
+              "suppressed": false,
+              "value": false
+            }
+          ],
+          "execution_context_digest_after": "2368001e6ec1e9bcae99f92c77d2fa65db2e4b0f6f866ac5abf60883d02469c8",
+          "execution_context_digest_before": "2368001e6ec1e9bcae99f92c77d2fa65db2e4b0f6f866ac5abf60883d02469c8",
+          "observation": null,
+          "remaining_budget_before": 2,
+          "residual_stop_result": "max_steps",
+          "rng_state_digest_after": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "rng_state_digest_before": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+          "selected_action_cost": null,
+          "selected_action_id": null,
+          "selection_attempted": false,
+          "state_digest_after": "4477974e832f9581b97bbc8f1ba0ccef9cef01f6c3e484b677adbbca41866c8a",
+          "state_digest_before": "4477974e832f9581b97bbc8f1ba0ccef9cef01f6c3e484b677adbbca41866c8a",
+          "suppression_event_index": 5,
+          "target_predicate_value": true,
+          "target_suppressed": true,
+          "terminal_after_decision": true,
+          "terminal_reason": "max_steps"
+        }
+      ],
+      "empty_diff_observation_count": 1,
+      "execution_failure_observed": false,
+      "false_positive": false,
+      "final_bug_presence_posterior": 0.02,
+      "final_execution_context_digest": "2368001e6ec1e9bcae99f92c77d2fa65db2e4b0f6f866ac5abf60883d02469c8",
+      "final_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "final_state": {
+        "bug_detected": false,
+        "bug_presence": 0.02,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 10,
+        "current_step": 6,
+        "executed_actions": [
+          "inspect_traceback",
+          "run_smoke_tests",
+          "inspect_spec_clause",
+          "run_null_missing_tests",
+          "inspect_recent_diff",
+          "run_boundary_tests"
+        ],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "final_state_digest": "4477974e832f9581b97bbc8f1ba0ccef9cef01f6c3e484b677adbbca41866c8a",
+      "first_divergence_checkpoint": 3,
+      "initial_baseline_copy_digest": "fc20aff06e1a5b2afb143edf57b14ff92d9e8eebe6da38c4ec818e8f22458c47",
+      "initial_execution_context_digest": "b0211feaa75877f103caf0252e5c79a70f05a8ce4da1e7a32df8b761d36a9433",
+      "initial_rng_state_digest": "66524cebb4b45f86290f7aa8e71acfbbe09d5ae46ff692e950f3dde75760775d",
+      "initial_state": {
+        "bug_detected": false,
+        "bug_presence": 0.5,
+        "cause_posterior": {
+          "boundary_condition": 0.2,
+          "configuration_environment": 0.2,
+          "missing_null_handling": 0.2,
+          "specification_mismatch": 0.2,
+          "state_order_dependence": 0.2
+        },
+        "cumulative_cost": 0,
+        "current_step": 0,
+        "executed_actions": [],
+        "fix_intent_posterior": {
+          "add_missing_value_guard": 0.1,
+          "add_spec_exception_rule": 0.1,
+          "align_calculation_order_with_spec": 0.1,
+          "align_selection_rule_with_spec": 0.1,
+          "change_comparison": 0.1,
+          "fix_config_default": 0.1,
+          "fix_state_transition": 0.1,
+          "make_operation_idempotent": 0.1,
+          "normalize_config_or_input": 0.1,
+          "recompute_stale_state": 0.1
+        },
+        "location_posterior": {
+          "cart.add_item": 0.041666666666666664,
+          "cart.calculate_tax": 0.041666666666666664,
+          "cart.calculate_total": 0.041666666666666664,
+          "cart.cart_subtotal": 0.041666666666666664,
+          "cart.checkout_quote": 0.041666666666666664,
+          "cart.item_requires_shipping": 0.041666666666666664,
+          "cart.remove_item": 0.041666666666666664,
+          "cart.validate_item": 0.041666666666666664,
+          "config.get_feature_flag": 0.041666666666666664,
+          "config.get_region_aliases": 0.041666666666666664,
+          "config.get_region_defaults": 0.041666666666666664,
+          "config.get_shipping_threshold": 0.041666666666666664,
+          "config.get_tax_rate": 0.041666666666666664,
+          "config.load_config": 0.041666666666666664,
+          "discounts.apply_bogo_discount": 0.041666666666666664,
+          "discounts.apply_coupon": 0.041666666666666664,
+          "discounts.compute_discount": 0.041666666666666664,
+          "discounts.coupon_is_eligible": 0.041666666666666664,
+          "inventory.cancel_reservation": 0.041666666666666664,
+          "inventory.reserve_stock": 0.041666666666666664,
+          "inventory.sync_after_cart_update": 0.041666666666666664,
+          "shipping.calculate_shipping": 0.041666666666666664,
+          "shipping.free_shipping_eligible": 0.041666666666666664,
+          "shipping.resolve_region_rate": 0.041666666666666664
+        }
+      },
+      "initial_state_digest": "9b5dbc9eaecd81351f2f7112cb2600ecb141cb281b2fad45302d8610a358462a",
+      "input_id": "P2F-NODIFF-001",
+      "input_identity_checks": {
+        "accepted_65_file_contract": true,
+        "baseline_validity_gate": true,
+        "implementation_freeze_identity": true,
+        "manifest_and_baseline_identity": true
+      },
+      "normal_no_bug_stop": false,
+      "observations": [
+        {
+          "action_id": "inspect_traceback",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero",
+            "config.free_shipping_threshold_override"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.free_shipping_eligible",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_traceback passed all 5 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_traceback",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            },
+            {
+              "action_id": "inspect_traceback",
+              "actual": true,
+              "evidence_tags": [
+                "config_parse_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "normalize_config_or_input"
+              ],
+              "group": "config_matrix",
+              "passed": true,
+              "reproduction_input": "load_config FREE_SHIPPING_THRESHOLD='9000' then compare subtotal 10000.",
+              "stack_functions": [],
+              "test_id": "config.free_shipping_threshold_override"
+            }
+          ]
+        },
+        {
+          "action_id": "run_smoke_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 1,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.checkout_quote": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "test_failure",
+          "passed_test_ids": [
+            "smoke.checkout_quote_threshold",
+            "smoke.missing_coupon_noop",
+            "smoke.digital_shipping",
+            "smoke.preorder_reserve"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "cart.checkout_quote",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_smoke_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "evidence_tags": [
+                "boundary_failure",
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal",
+                "cart.checkout_quote",
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.calculate_shipping",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": {
+                "shipping": 0,
+                "subtotal": 10000,
+                "total": 10000
+              },
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "checkout_quote one physical item at subtotal 10000, domestic address.",
+              "stack_functions": [],
+              "test_id": "smoke.checkout_quote_threshold"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "smoke.missing_coupon_noop"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "smoke.digital_shipping"
+            },
+            {
+              "action_id": "run_smoke_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "smoke",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "smoke.preorder_reserve"
+            }
+          ]
+        },
+        {
+          "action_id": "inspect_spec_clause",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_total": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_feature_flag": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_tax_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 2,
+              "total_failed": 0
+            },
+            "discounts.apply_bogo_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.compute_discount": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.calculate_shipping": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "spec_clause_mismatch",
+          "passed_test_ids": [
+            "spec.discount_before_tax",
+            "spec.bogo_cheapest_rule",
+            "spec.digital_only_shipping",
+            "spec.preorder_reservation"
+          ],
+          "passing_executed_functions": [
+            "cart.calculate_tax",
+            "cart.calculate_total",
+            "cart.cart_subtotal",
+            "config.get_feature_flag",
+            "config.get_tax_rate",
+            "config.load_config",
+            "discounts.apply_bogo_discount",
+            "discounts.compute_discount",
+            "discounts.coupon_is_eligible",
+            "inventory.reserve_stock",
+            "shipping.calculate_shipping"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_spec_clause passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 10450,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax",
+                "cart.calculate_total",
+                "cart.cart_subtotal",
+                "config.get_feature_flag",
+                "config.get_tax_rate",
+                "config.load_config",
+                "discounts.compute_discount",
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": 10450,
+              "fix_intent_hints": [
+                "align_calculation_order_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_total subtotal=10000, coupon WELCOME500, region JP.",
+              "stack_functions": [],
+              "test_id": "spec.discount_before_tax"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1000,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_bogo_discount"
+              ],
+              "expected": 1000,
+              "fix_intent_hints": [
+                "align_selection_rule_with_spec"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "apply_bogo_discount on prices 1000 and 2500.",
+              "stack_functions": [],
+              "test_id": "spec.bogo_cheapest_rule"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 0,
+              "evidence_tags": [
+                "spec_rule_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.load_config",
+                "shipping.calculate_shipping"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "calculate_shipping for a digital-only domestic cart.",
+              "stack_functions": [],
+              "test_id": "spec.digital_only_shipping"
+            },
+            {
+              "action_id": "inspect_spec_clause",
+              "actual": 1,
+              "evidence_tags": [
+                "spec_rule_failure",
+                "state_invariant_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_spec_exception_rule"
+              ],
+              "group": "spec_clause",
+              "passed": true,
+              "reproduction_input": "reserve_stock preorder SKU with zero on-hand stock.",
+              "stack_functions": [],
+              "test_id": "spec.preorder_reservation"
+            }
+          ]
+        },
+        {
+          "action_id": "run_null_missing_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.cart_subtotal": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_aliases": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_region_defaults": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.apply_coupon": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "inventory.reserve_stock": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.resolve_region_rate": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "exception_trace",
+          "passed_test_ids": [
+            "null_missing.coupon_none_noop",
+            "null_missing.missing_region_default",
+            "null_missing.none_cart_subtotal",
+            "null_missing.missing_reserved_defaults_zero"
+          ],
+          "passing_executed_functions": [
+            "cart.cart_subtotal",
+            "config.get_region_aliases",
+            "config.get_region_defaults",
+            "config.load_config",
+            "discounts.apply_coupon",
+            "inventory.reserve_stock",
+            "shipping.resolve_region_rate"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_null_missing_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": {},
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.apply_coupon"
+              ],
+              "expected": {},
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "apply_coupon({}, None).",
+              "stack_functions": [],
+              "test_id": "null_missing.coupon_none_noop"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 800,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_region_aliases",
+                "config.get_region_defaults",
+                "config.load_config",
+                "shipping.resolve_region_rate"
+              ],
+              "expected": 800,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "resolve_region_rate with an address missing region.",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_region_default"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 0,
+              "evidence_tags": [
+                "null_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.cart_subtotal"
+              ],
+              "expected": 0,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "cart_subtotal(None).",
+              "stack_functions": [],
+              "test_id": "null_missing.none_cart_subtotal"
+            },
+            {
+              "action_id": "run_null_missing_tests",
+              "actual": 1,
+              "evidence_tags": [
+                "missing_key_exception"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "inventory.reserve_stock"
+              ],
+              "expected": 1,
+              "fix_intent_hints": [
+                "add_missing_value_guard"
+              ],
+              "group": "null_missing",
+              "passed": true,
+              "reproduction_input": "reserve_stock({'sku': 'A100', 'on_hand': 3}, 1).",
+              "stack_functions": [],
+              "test_id": "null_missing.missing_reserved_defaults_zero"
+            }
+          ]
+        },
+        {
+          "action_id": "inspect_recent_diff",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {},
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": "",
+          "evidence_source": "p2f_truthful_no_diff",
+          "exception_type": null,
+          "executed_functions": [],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": false,
+          "observation_type": "recent_diff_signal",
+          "passed_test_ids": [],
+          "passing_executed_functions": [],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "inspect_recent_diff observed the canonical baseline with no applied patch; changed files: none; changed functions: none.",
+          "test_results": []
+        },
+        {
+          "action_id": "run_boundary_tests",
+          "bug_detected": false,
+          "cause_scores": {},
+          "changed_files": [],
+          "changed_functions": [],
+          "cost": 2,
+          "coverage_counts": {
+            "cart.add_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.calculate_tax": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "cart.validate_item": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.get_shipping_threshold": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "config.load_config": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "discounts.coupon_is_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            },
+            "shipping.free_shipping_eligible": {
+              "failed": 0,
+              "passed": 1,
+              "total_failed": 0
+            }
+          },
+          "coverage_suspicion": {},
+          "diff_artifact_path": null,
+          "diff_excerpt": null,
+          "evidence_source": "p2f_canonical_baseline",
+          "exception_type": null,
+          "executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "failed_test_ids": [],
+          "failing_executed_functions": [],
+          "failure_found": false,
+          "fix_intent_scores": {},
+          "location_scores": {},
+          "no_bug_evidence": true,
+          "observation_type": "boundary_counterexample",
+          "passed_test_ids": [
+            "boundary.free_shipping_exact_threshold",
+            "boundary.coupon_exact_minimum",
+            "boundary.quantity_upper_boundary",
+            "boundary.tax_half_up_rounding"
+          ],
+          "passing_executed_functions": [
+            "cart.add_item",
+            "cart.calculate_tax",
+            "cart.validate_item",
+            "config.get_shipping_threshold",
+            "config.load_config",
+            "discounts.coupon_is_eligible",
+            "shipping.free_shipping_eligible"
+          ],
+          "reproduction_input": null,
+          "stack_functions": [],
+          "summary": "run_boundary_tests passed all 4 execution-grounded tests.",
+          "test_results": [
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "config.get_shipping_threshold",
+                "config.load_config",
+                "shipping.free_shipping_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "free_shipping_eligible subtotal=10000.",
+              "stack_functions": [],
+              "test_id": "boundary.free_shipping_exact_threshold"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": true,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "discounts.coupon_is_eligible"
+              ],
+              "expected": true,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "coupon_is_eligible subtotal=5000, coupon WELCOME500.",
+              "stack_functions": [],
+              "test_id": "boundary.coupon_exact_minimum"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 99,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.add_item",
+                "cart.validate_item"
+              ],
+              "expected": 99,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "add_item quantity=99.",
+              "stack_functions": [],
+              "test_id": "boundary.quantity_upper_boundary"
+            },
+            {
+              "action_id": "run_boundary_tests",
+              "actual": 200,
+              "evidence_tags": [
+                "boundary_failure"
+              ],
+              "exception_type": null,
+              "executed_functions": [
+                "cart.calculate_tax"
+              ],
+              "expected": 200,
+              "fix_intent_hints": [
+                "change_comparison"
+              ],
+              "group": "boundary",
+              "passed": true,
+              "reproduction_input": "calculate_tax amount=1995, tax_rate=0.10.",
+              "stack_functions": [],
+              "test_id": "boundary.tax_half_up_rounding"
+            }
+          ]
+        }
+      ],
+      "pair_index": 6,
+      "policy_digest": "02a25101cd10cacc6ddb2717cedf1a29c08643e44609be9909735263ae216def",
+      "policy_id": "expected_utility_per_cost",
+      "row_consistency_checks": {
+        "baseline_tests_passed": true,
+        "bounded_nonrepeating_actions": true,
+        "canonical_order": true,
+        "false_positive_definition": true,
+        "terminal_complete": true,
+        "truthful_empty_diff": true
+      },
+      "safe_non_bug_terminal": true,
+      "selected_action_ids": [
+        "inspect_traceback",
+        "run_smoke_tests",
+        "inspect_spec_clause",
+        "run_null_missing_tests",
+        "inspect_recent_diff",
+        "run_boundary_tests"
+      ],
+      "settings_digest": "b11fe4cff40728a9225e154de36a4d56420f6d387ae6acec8d2b87009d30b954",
+      "suppression_count": 5,
+      "terminal_reason": "max_steps",
+      "trajectory_digest": "667b2a1d8cdada09992d30dbbd2980ce73a833357971c1e81e7697128be922bf"
+    }
+  ],
+  "validation_status": {
+    "status": "valid"
+  }
+}
+```
+<!-- P2F_VALIDATED_SUMMARY_END -->
