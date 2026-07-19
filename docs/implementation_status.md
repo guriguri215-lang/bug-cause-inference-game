@@ -69,6 +69,8 @@
 - P2e implementation evidence observes 21 direct-detector endpoints, 8 budget stops, 4 max-step stops, and 8 no-available-action terminations among the 41 continuation candidates. Direct-detector selection and observation detection are recorded separately and are both `21/41` in this fixed artifact.
 - P2e final merged-tree software conformance, versioned artifact identity, descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review and required verification.
 - P2e result interpretation note: [`docs/p2e_result_interpretation.md`](p2e_result_interpretation.md).
+- P2f canonical no-diff clean paired continuation audit candidate source, tests, and versioned JSON/Markdown evidence over one exact unpatched P1b baseline. It compares the six accepted policies under the normal control and repeated suppression of only `no_bug_probability_threshold`, yielding 12 trajectories and 6 pairs without manufacturing diff evidence.
+- P2f candidate evidence records control false positives `0/6` and target-suppressed continuation false positives `0/6`; intervention terminals are 4 budget limits, 1 max-step limit, and 1 no-available-action stop. These are fixed-input descriptive observations pending independent implementation acceptance, not a safety rate, causal effect, policy improvement, or deployable result.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -105,7 +107,7 @@
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 - A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
-- A new or tuned policy, optimized/unbounded P2c/P2d/P2e sequence search or DP analysis, a second domain, no-diff clean stress, inferential analysis, or production-readiness claim.
+- A new or tuned policy, optimized/unbounded P2c/P2d/P2e/P2f sequence search or DP analysis, a second domain, additional clean inputs, inferential analysis, or production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -200,6 +202,35 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current P2f candidate evidence (acceptance pending)
+
+The current P2f pre-review checkpoint records:
+
+```text
+P2f targeted                           56 passed
+P2a-P2f relevant regression           767 passed
+full repository suite                2085 passed
+P1b real-diff validator                25 / 25
+isolated fresh artifact runs            2 / 2 exact
+ordered support                        12 / 12
+paired support                           6 / 6
+baseline validity gate                 29 / 29
+control threshold terminals              6 / 6
+control false positives                   0 / 6
+intervention false positives              0 / 6
+intervention terminals                 4 budget / 1 max-step / 1 no-action
+accepted input identities              65 / 65
+```
+
+Candidate versioned artifacts:
+
+- JSON: 920,661 bytes, SHA-256 `f0ffbddb24cd500144ea0b52958b3ae51d81e2b895ff8b89faf3da504a871000`.
+- Markdown: 921,896 bytes, SHA-256 `a93019bb2422278d8efe1b9fdbb1453ba0829b6d0388ff77b172e5ca21c1410a`.
+- Validated-summary digest: `36d5ae198b4e9f873dedd4d13ac9ce467cde373fc8a7bf4ec6a30f32b360dfad`.
+- 65-file identity-contract digest: `aca567fb7048aac2b6349a6383ec0aa601ceedde504724e4c75ddbf1e8729d0a`.
+
+The first outcome followed the accepted specification review and explicit five-file pre-outcome freeze. Post-first-execution corrections made canonical result digests independent of JSON object insertion order and closed two fail-closed decision/checkpoint validation findings; they did not change any policy action, terminal, metric, input, artifact byte, or claim boundary. The distinct independent implementation reviewer accepted software conformance, candidate artifact identity, descriptive result, and documentation boundary with unresolved High/Medium/Low findings `0/0/0`. Targeted, relevant, full-suite, real-diff, and two-run identity verification passed. Final merged-tree acceptance and public closeout remain pending and separate.
 
 ### Current P2e accepted implementation, artifact, and result evidence
 
