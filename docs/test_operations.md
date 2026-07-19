@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c/P2d/P2e/P2f inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, or intervention semantics, or the frozen P2g candidate contract/result.
+- change accepted P2a/P2b/P2c/P2d/P2e/P2f/P2g inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, intervention semantics, or contracts.
 
 ## Verification Tiers
 
@@ -273,7 +273,7 @@ Do not overwrite or regenerate tracked P2f artifacts during closeout or release 
 
 ## P2g Artifact, Fresh-Run, and Identity Checks
 
-P2g preserves the historical five-file pre-outcome identity and separately gates the current corrective five-file LF-canonical identity. Accepted candidate artifact identities are:
+P2g preserves the historical five-file pre-outcome identity and separately gates the accepted current corrective five-file LF-canonical identity. Accepted artifact identities are:
 
 ```text
 JSON        3370390 bytes / b37a6d3af44714d5cd2dcb0bc6afd4b93b43898bbdd9d75d747f8a6125a48ab0
@@ -285,6 +285,18 @@ aggregates                / 22062f67d818ef26b5f9641f36ac3cb9a526b7dee3a57a6d934f
 input contract            / ca53689e46ea7b12cbb7c42e199bfef487bf82058303cdc1024634dc1b6cc387
 dependency contract       / c6c2576d575e14e1e4358bfb96df3c33b3ffa01c0edd46748793b427259c07e5
 ```
+
+The accepted current LF-canonical five-file identity is:
+
+```text
+src/bug_cause_inference/p2g/__init__.py                    64 / cd9678425da62a0e2d9db430479569640a0ab4bf58ffae7f513c48381cb8cbcd
+src/bug_cause_inference/p2g/benign_diff_clean_audit.py   61100 / c700a7ac5515d9c83874d88b5b071846fed7f97e567c8c06fdb0ff1c74116d11
+src/bug_cause_inference/p2g/reports.py                    4030 / b4c29bba4859868ac60dfed044ba90424daa8498e2a1249d542ddce6afac0001
+tests/test_p2g_benign_diff_clean_audit.py                11136 / 4746ac55aaf1bece7d5eaf79d3c6c2a1aa8869eaeff6adcf72be9805a295ff3b
+tests/test_p2g_reports.py                                 3400 / 0c05ca91ab2b94bb3f0060d8147b6a5ea690e1a8f16c1e6f7deb032faf5e16be
+```
+
+The artifact's historical first-outcome map is not rebound by the reviewed current implementation corrections. Portable identity uses LF-canonical bytes; raw identity detects drift only within one checkout and run. The complete safe two-run example and correction provenance are in [`docs/p2g_result_interpretation.md`](p2g_result_interpretation.md#reproduction-and-verification).
 
 Run two P2g audits into distinct ignored workspace-local directories and compare both serialized output pairs with the tracked files byte-for-byte and semantically. Required checks are:
 
@@ -298,6 +310,8 @@ Run two P2g audits into distinct ignored workspace-local directories and compare
 - accepted P1b–P2f source, tests, artifacts, identities, results, and public claims remain unchanged.
 
 Do not overwrite the tracked P2g artifacts during verification. Do not run the P2a or P2b outcome runners. P2g fresh replay is fixed-input verification only and must not be followed by support, metric, threshold, policy, arm, denominator, result, or claim tuning.
+
+The 2026-07-19 documentation-closeout checkpoint passed P2g targeted `33` tests, the P2a–P2g relevant regression `802` tests, the full repository suite `2120` tests, P1b real-diff validation `25/25`, and two isolated exact fresh P2g artifact runs. Both fresh runs preserved raw implementation/dependency snapshots and matched the tracked JSON/Markdown bytes, semantics, six digests, historical identity, and accepted current identity. These are verification results, not new outcome evidence.
 
 ## `tmp_path` Tests
 
