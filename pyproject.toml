@@ -28,6 +28,16 @@ bug-cause-inference = "bug_cause_inference.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = [
+  "bug_cause_inference",
+  "bug_cause_inference.p1b",
+  "bug_cause_inference.p1b.*",
+  "bug_cause_inference.p1c",
+  "bug_cause_inference.p1c.*",
+  "bug_cause_inference.p1d",
+  "bug_cause_inference.p1d.*",
+]
+namespaces = true
 
 [tool.setuptools.package-data]
 "bug_cause_inference.p1b" = [
