@@ -1,0 +1,11 @@
+--- a/scheduler/retries.py
++++ b/scheduler/retries.py
+@@ -2,7 +2,7 @@
+ 
+ 
+ def should_retry(attempts: int, max_attempts: int) -> bool:
+-    return attempts < max_attempts
++    return attempts <= max_attempts
+ 
+ 
+ def next_retry_tick(

@@ -1,0 +1,11 @@
+--- a/scheduler/jobs.py
++++ b/scheduler/jobs.py
+@@ -10,7 +10,7 @@
+ 
+ 
+ def is_released(release_tick: int, current_tick: int) -> bool:
+-    return current_tick >= release_tick
++    return (current_tick - release_tick) >= 0
+ 
+ 
+ def normalize_tags(tags: list[str] | None) -> tuple[str, ...]:

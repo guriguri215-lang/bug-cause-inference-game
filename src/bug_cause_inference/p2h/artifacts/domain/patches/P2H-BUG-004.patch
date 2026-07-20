@@ -1,0 +1,11 @@
+--- a/scheduler/config.py
++++ b/scheduler/config.py
+@@ -15,7 +15,7 @@
+ def retry_limit(config: dict[str, Any], queue_name: str) -> int:
+     aliases = config.get("queue_aliases") or {}
+     normalized_queue = normalize_queue_name(queue_name, aliases)
+-    raw_limits = config.get("queue_limits") or {}
++    raw_limits = config["queue_limits"]
+     limits = {
+         normalize_queue_name(str(key), aliases): int(value)
+         for key, value in raw_limits.items()

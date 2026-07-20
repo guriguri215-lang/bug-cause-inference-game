@@ -1,0 +1,20 @@
+--- a/scheduler/queues.py
++++ b/scheduler/queues.py
+@@ -13,7 +13,7 @@
+     ]
+     if not eligible:
+         return None
+-    selected = min(
++    ranked = sorted(
+         eligible,
+         key=lambda job: (
+             -int(job["priority"]),
+@@ -21,7 +21,7 @@
+             str(job["job_id"]),
+         ),
+     )
+-    return str(selected["job_id"])
++    return str(ranked[0]["job_id"])
+ 
+ 
+ def complete_job(snapshot: dict[str, list[str]], job_id: str) -> dict[str, list[str]]:

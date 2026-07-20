@@ -77,6 +77,9 @@
 - P2g fixed-input descriptive evidence records control and target-suppressed-continuation false positives of `0/30` and `0/30`; intervention terminals are 20 budget limits, 5 max-step limits, and 5 no-available-action stops. Pair start and pre-target prefix agreement are `30/30`, and all 20 recent-diff observations preserve the accepted non-empty repository-relative patch evidence.
 - P2g final merged-tree software conformance, versioned artifact identity, exact fixed-input descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review, required verification, and same-reviewer status-closure re-review. The artifact remains self-non-accepting.
 - P2g result interpretation note: [`docs/p2g_result_interpretation.md`](p2g_result_interpretation.md).
+- P2h implementation-candidate source, tests, frozen domain artifacts, and versioned JSON/Markdown evidence for one hand-authored toy task-scheduler second domain. It crosses 10 buggy and 5 benign clean inputs with the accepted six policies under normal execution only, yielding 60 buggy and 30 clean trajectories after an outcome-free 25-oracle gate.
+- P2h fixed-input descriptive evidence records bug discovery `12/60`, clean false positives `0/30`, function location top-3 `35/60`, and cause/fix-intent top-1 `16/60` each. These are exact support fractions, not evidence of policy superiority or population/production generalization.
+- P2h pre-outcome specification/freeze review is accepted. Software conformance awaits the independent implementation review and required verification in this Draft-PR slice; artifact/result/public-documentation final acceptance is deferred to a separate post-merge closeout.
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -113,7 +116,7 @@
 - A second P2a domain, unseen-variant evaluation, inferential analysis, confidence intervals, bootstrap analysis, or significance testing.
 - P2a policy tuning, new policies, combined profiles, weighted or mixed solutions, Nash analysis, regret analysis, or a general minimax result.
 - A public P2b CLI command, deployable P2b policy, multi-step sequence ceiling, dynamic-programming result, or general solvability bound.
-- A new or tuned policy, optimized/unbounded P2c/P2d/P2e/P2f/P2g sequence search or DP analysis, a second domain, additional clean inputs, inferential analysis, or production-readiness claim.
+- A new or tuned policy, optimized/unbounded P2c/P2d/P2e/P2f/P2g sequence search or DP analysis, any domain beyond the fixed P2h toy task-scheduler domain, additional clean inputs, inferential analysis, or production-readiness claim.
 
 ## Deferred To Future Work
 
@@ -172,6 +175,7 @@
 - P2e is a model-internal bounded continuation over 41 fixed P2d post-action states. Repeated target-only suppression and 21/41 direct-detector endpoints do not establish threshold causality or defect, policy ranking or improvement, sequence optimality, deployability, generalization, inference, or production readiness.
 - P2f is a model-internal paired observation over one exact unpatched program. Its per-arm `0/6` false positives and `4/1/1` intervention terminal partition do not establish a clean safety rate, causal threshold effect, policy defect/improvement/ranking, a combined P2e/P2f payoff, deployability, generalization, inference, or production readiness.
 - P2g is a model-internal paired observation over five accepted, hand-authored, same-domain, non-iid benign-diff clean inputs. Its per-arm `0/30` false positives and `20/5/5` intervention terminal partition do not establish a population clean-safety rate, causal threshold effect, policy defect/improvement/ranking, a combined P2e/P2f/P2g payoff, deployability, generalization, inference, or production readiness.
+- P2h is an analysis-only observation over one hand-authored, fixed-input, non-IID toy task-scheduler domain. It is not an independent program replication or domain-population sample, and its exact 90 rows do not establish a policy winner/ranking, checkout-to-scheduler causal transfer, arbitrary-program or production generalization, inference, deployability, scheduler correctness/security/reliability/performance, or release readiness.
 - The synthetic cases are useful for policy comparison, not for claiming real-world debugging accuracy.
 - The current expected information gain calculation uses action-specific candidate evidence sets derived from the fixed likelihood table.
 
@@ -210,6 +214,34 @@ python -m bug_cause_inference.p1b.real_diff --validate
 ```
 
 ## Latest Test Result
+
+### Current P2h implementation-candidate evidence
+
+P2h is the final planned pre-release research slice. Its pre-outcome specification, independent review, exact domain/input/oracle freeze, and first valid 90-row outcome are complete on the topic branch; this is not merged-tree or release acceptance.
+
+```text
+support                         10 buggy + 5 clean x 6 policies = 90 rows
+bug discovery                  12/60 (0.200000)
+first failure observed         12/60 (0.200000)
+clean false positive            0/30 (0.000000)
+function location top-1        25/60 (0.416667)
+function location top-3        35/60 (0.583333)
+function location MRR          0.555192 over 60 rows
+cause top-1                    16/60 (0.266667)
+fix-intent top-1               16/60 (0.266667)
+terminal partition             85 no-bug / 4 bug-confidence / 1 budget
+targeted tests                 30 passed
+```
+
+Versioned implementation-candidate artifacts:
+
+- JSON: 2,453,124 bytes, SHA-256 `d3ba265fb42dbf33e1e71ad972a85409386a2537160d7be5c09afc6e5d7d0f47`.
+- Markdown: 2,652 bytes, SHA-256 `f693f9079409fc71cb5cc8ac609d0fde47b517161162f0e7baf95cabf58c522f`.
+- Validated summary digest: `68a169c60dc25eda886df608560f1698eb5e09f05ed2563f2aef622b49ae3df3`.
+- Row / aggregate digests: `f53d6a1d2d74cca3510ca1495814baa096ef4b1e114f22c7797a3cf3aab4ee72` / `6befa920087340f33d69ac8912cf4c5e129980b5f2e6a2087e022e01e1a8e531`.
+- Historical pre-outcome / post-outcome current implementation digests: `72e545afd77900b14107f93ece3b95f0289a9cd3ea1504321b2a5fd7da1813ff` / `41937256d429feba4898f23f841415a983335e23ace54133cf0be234475ad2a8`.
+
+The historical/current identity split records one test-only conformance correction after the first outcome; the frozen domain, policies, settings, metrics, result rows, aggregates, and artifact bytes did not change. Independent implementation review and final verification remain required before this Draft PR is complete. Artifact/result/public-documentation final acceptance remains deferred to the post-merge P2h closeout.
 
 ### Current P2g merged-tree acceptance and closeout evidence
 

@@ -1,0 +1,10 @@
+--- a/scheduler/retries.py
++++ b/scheduler/retries.py
+@@ -11,5 +11,5 @@
+     base_delay: int,
+     max_delay: int,
+ ) -> int:
+-    delay = base_delay * (2 ** attempts)
+-    return failure_tick + min(delay, max_delay)
++    delay = min(base_delay, max_delay) * (2 ** attempts)
++    return failure_tick + delay
