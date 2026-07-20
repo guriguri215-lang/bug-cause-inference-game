@@ -1,0 +1,14 @@
+--- a/scheduler/state.py
++++ b/scheduler/state.py
+@@ -8,7 +8,7 @@
+         ("running", "fail"): "failed",
+         ("failed", "retry"): "queued",
+     }
+-    try:
+-        return transitions[(current_state, event)]
+-    except KeyError as exc:
+-        raise ValueError(f"invalid transition: {current_state}/{event}") from exc
++    key = (current_state, event)
++    if key not in transitions:
++        raise ValueError(f"invalid transition: {current_state}/{event}")
++    return transitions[key]

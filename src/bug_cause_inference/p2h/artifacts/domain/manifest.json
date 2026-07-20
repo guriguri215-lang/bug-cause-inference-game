@@ -1,0 +1,1038 @@
+{
+  "manifest_digest": "343746ea65d6649726e116e529c8a0e83d07f7c8d72e76c2074e21f24941304b",
+  "schema_version": "p2h_task_scheduler_domain.v1",
+  "domain_id": "toy_task_scheduler_v1",
+  "domain_boundary": {
+    "language": "pure deterministic Python",
+    "forbidden_runtime_inputs": [
+      "network",
+      "filesystem_domain_io",
+      "database",
+      "subprocess",
+      "thread",
+      "async",
+      "wall_clock",
+      "locale",
+      "operating_system_state"
+    ],
+    "time_model": "explicit integer ticks only"
+  },
+  "baseline_files": [
+    {
+      "path": "scheduler/__init__.py",
+      "size": 45,
+      "sha256_lf": "0b54d1d168c079803e2e6afcad03034f2d85e261adc7bac42f5fb32bff739dbf"
+    },
+    {
+      "path": "scheduler/jobs.py",
+      "size": 600,
+      "sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678"
+    },
+    {
+      "path": "scheduler/queues.py",
+      "size": 1044,
+      "sha256_lf": "fe10e10a5776fed6f3d938698c7f13fcecbac7764d3468bb1559007c5dda1ee3"
+    },
+    {
+      "path": "scheduler/retries.py",
+      "size": 349,
+      "sha256_lf": "ee077b3631fd3df1a066879a68b35cf4fcae80cf281f66a42bd4a4286a9b3cf7"
+    },
+    {
+      "path": "scheduler/config.py",
+      "size": 845,
+      "sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2"
+    },
+    {
+      "path": "scheduler/state.py",
+      "size": 465,
+      "sha256_lf": "877cb604b2ccea97e3816c6e8460d41e7d2efec3db5cec5dc875ed64b0790b3d"
+    }
+  ],
+  "input_order": [
+    "P2H-BUG-001",
+    "P2H-BUG-002",
+    "P2H-BUG-003",
+    "P2H-BUG-004",
+    "P2H-BUG-005",
+    "P2H-BUG-006",
+    "P2H-BUG-007",
+    "P2H-BUG-008",
+    "P2H-BUG-009",
+    "P2H-BUG-010",
+    "P2H-CLEAN-001",
+    "P2H-CLEAN-002",
+    "P2H-CLEAN-003",
+    "P2H-CLEAN-004",
+    "P2H-CLEAN-005"
+  ],
+  "inputs": [
+    {
+      "input_id": "P2H-BUG-001",
+      "is_buggy": true,
+      "cause_family": "boundary_condition",
+      "clean_family": null,
+      "family": "release_tick_inclusive_boundary",
+      "target_path": "scheduler/jobs.py",
+      "target_function": "jobs.is_released",
+      "expected_failing_oracle_ids": [
+        "boundary.release_equal",
+        "coverage.release_equal"
+      ],
+      "fix_intent": "change_comparison",
+      "trigger": "release_tick=5, current_tick=5",
+      "expected_behavior": "A job is eligible at its exact release tick.",
+      "actual_behavior": "The patched function delays eligibility by one tick.",
+      "order": 1,
+      "patch_path": "patches/P2H-BUG-001.patch",
+      "patch_size": 283,
+      "patch_sha256_lf": "fe6243730253c7794d391f9d2d8f7bb812de442cb0ec7a20cc4fc2fb78fb6651",
+      "baseline_file_sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678",
+      "post_image_size": 599,
+      "post_image_sha256_lf": "a515471cd23a1ca02fafb8ace3c4271bde33412855423893d7c5654abdbb443d",
+      "replacement_operation_digest": "3c1378411cbc1b6a3760d0a147d8031d1a3a4fc61f29cc6cfbc9b5c7935ea7df"
+    },
+    {
+      "input_id": "P2H-BUG-002",
+      "is_buggy": true,
+      "cause_family": "boundary_condition",
+      "clean_family": null,
+      "family": "retry_attempt_limit_boundary",
+      "target_path": "scheduler/retries.py",
+      "target_function": "retries.should_retry",
+      "expected_failing_oracle_ids": [
+        "boundary.retry_limit_equal"
+      ],
+      "fix_intent": "change_comparison",
+      "trigger": "attempts=3, max_attempts=3",
+      "expected_behavior": "No retry is allowed once attempts reaches the limit.",
+      "actual_behavior": "The patched function allows one retry beyond the limit.",
+      "order": 2,
+      "patch_path": "patches/P2H-BUG-002.patch",
+      "patch_size": 234,
+      "patch_sha256_lf": "bd40e7216d54cfcc66f66e7c7e62b4d5681c3da36585695f3abcf77a1dce9e96",
+      "baseline_file_sha256_lf": "ee077b3631fd3df1a066879a68b35cf4fcae80cf281f66a42bd4a4286a9b3cf7",
+      "post_image_size": 350,
+      "post_image_sha256_lf": "1c4c866c1d2884e53d4c11599da708ccc2397b6903ede795441eb4daa59b255c",
+      "replacement_operation_digest": "9de232ae5f7ef7b39ecf3fb0df49d2590a53a0d2b3df186a2be65fe772377ad0"
+    },
+    {
+      "input_id": "P2H-BUG-003",
+      "is_buggy": true,
+      "cause_family": "missing_null_handling",
+      "clean_family": null,
+      "family": "optional_tags_null_guard",
+      "target_path": "scheduler/jobs.py",
+      "target_function": "jobs.normalize_tags",
+      "expected_failing_oracle_ids": [
+        "null.tags_none",
+        "trace.tags_none"
+      ],
+      "fix_intent": "add_missing_value_guard",
+      "trigger": "tags=None",
+      "expected_behavior": "Missing optional tags normalize to an empty tuple.",
+      "actual_behavior": "The patched function iterates over None and raises TypeError.",
+      "order": 3,
+      "patch_path": "patches/P2H-BUG-003.patch",
+      "patch_size": 276,
+      "patch_sha256_lf": "f520ac18de5f2440e89eb6fd14aefa5dbc6c276674a2996b193c5f4988ec7de7",
+      "baseline_file_sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678",
+      "post_image_size": 602,
+      "post_image_sha256_lf": "f6b23944383d4e5eb9ac5c7351b2a3dc7761e8de3427893354202cc620c702dc",
+      "replacement_operation_digest": "6135ec7a08ce14674e8743c146fbbba5dc26e8b685b292102148d95ea9064f17"
+    },
+    {
+      "input_id": "P2H-BUG-004",
+      "is_buggy": true,
+      "cause_family": "missing_null_handling",
+      "clean_family": null,
+      "family": "missing_queue_limits_default",
+      "target_path": "scheduler/config.py",
+      "target_function": "config.retry_limit",
+      "expected_failing_oracle_ids": [
+        "null.queue_limits_absent",
+        "trace.queue_limits_absent"
+      ],
+      "fix_intent": "fix_config_default",
+      "trigger": "config without queue_limits",
+      "expected_behavior": "The configured default retry limit is returned.",
+      "actual_behavior": "The patched function raises KeyError for an absent optional map.",
+      "order": 4,
+      "patch_path": "patches/P2H-BUG-004.patch",
+      "patch_size": 466,
+      "patch_sha256_lf": "ac5219b58678d68c1059e64623ee4521f615c90870f61eed4b26e0a980f84ccd",
+      "baseline_file_sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2",
+      "post_image_size": 835,
+      "post_image_sha256_lf": "51bd790a79106c0c9bbc416d22f2690e06a0a6d81f9ec7776f40f3936497e333",
+      "replacement_operation_digest": "814ec331e88cc70c110f88774d8f18267ee2b4f055282259a158c0476dedf0d3"
+    },
+    {
+      "input_id": "P2H-BUG-005",
+      "is_buggy": true,
+      "cause_family": "configuration_environment",
+      "clean_family": null,
+      "family": "queue_name_whitespace_normalization",
+      "target_path": "scheduler/config.py",
+      "target_function": "config.normalize_queue_name",
+      "expected_failing_oracle_ids": [
+        "config.queue_name_trim",
+        "config.queue_retry_limit"
+      ],
+      "fix_intent": "normalize_config_or_input",
+      "trigger": "queue name \" Critical \"",
+      "expected_behavior": "Equivalent queue names ignore surrounding whitespace.",
+      "actual_behavior": "The patched function preserves whitespace and misses the canonical queue.",
+      "order": 5,
+      "patch_path": "patches/P2H-BUG-005.patch",
+      "patch_size": 367,
+      "patch_sha256_lf": "20b4ce19d8f21ea220c6704d4d9bf2a670c18c17e69cf94a6d5478372ee12cfe",
+      "baseline_file_sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2",
+      "post_image_size": 837,
+      "post_image_sha256_lf": "e73713450014c0cdcb94d23db92ca316e8c284351b8d3fc994503c1d3f90a8b9",
+      "replacement_operation_digest": "fd8782e615abb9480fb3c68e8f57875f37a17b7dcb8c3a750dccc973ee4758c8"
+    },
+    {
+      "input_id": "P2H-BUG-006",
+      "is_buggy": true,
+      "cause_family": "configuration_environment",
+      "clean_family": null,
+      "family": "queue_limit_lookup_normalization",
+      "target_path": "scheduler/config.py",
+      "target_function": "config.retry_limit",
+      "expected_failing_oracle_ids": [
+        "config.queue_retry_limit"
+      ],
+      "fix_intent": "normalize_config_or_input",
+      "trigger": "queue name \" Critical \" with a critical queue limit",
+      "expected_behavior": "The queue-specific retry limit is selected after normalization.",
+      "actual_behavior": "The patched lookup falls back to the default limit.",
+      "order": 6,
+      "patch_path": "patches/P2H-BUG-006.patch",
+      "patch_size": 424,
+      "patch_sha256_lf": "c6e9f14a76714fc23a26d746af66046ef0929c8e60e9b09e7f1e35ccc5a9ec8c",
+      "baseline_file_sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2",
+      "post_image_size": 822,
+      "post_image_sha256_lf": "1f978eed0af5a5eb113dbb0addf4094969ac35f267506cf0f68197894dcff530",
+      "replacement_operation_digest": "5ebf8f9ea324712a1bf5658931cc1f731b5efb77b51347a00f96e1dca0cedd05"
+    },
+    {
+      "input_id": "P2H-BUG-007",
+      "is_buggy": true,
+      "cause_family": "state_order_dependence",
+      "clean_family": null,
+      "family": "completion_requires_running_state",
+      "target_path": "scheduler/state.py",
+      "target_function": "state.transition_state",
+      "expected_failing_oracle_ids": [
+        "state.invalid_completion"
+      ],
+      "fix_intent": "fix_state_transition",
+      "trigger": "queued + succeed without start",
+      "expected_behavior": "Completion before a start event is rejected.",
+      "actual_behavior": "The patched state machine skips the running state.",
+      "order": 7,
+      "patch_path": "patches/P2H-BUG-007.patch",
+      "patch_size": 330,
+      "patch_sha256_lf": "d588014216caecb4d008736272cc2bc65eee59726a1b9a5af929a154c3056c1d",
+      "baseline_file_sha256_lf": "877cb604b2ccea97e3816c6e8460d41e7d2efec3db5cec5dc875ed64b0790b3d",
+      "post_image_size": 549,
+      "post_image_sha256_lf": "4a209c1ed9a64e94ab46b6d3d820024a1cbec8208c86ce12c25f0045d38894ab",
+      "replacement_operation_digest": "9fde40f8bdc32834aba886b6d77d1bfa7c4d267c75fd96a2f28b398367ca663a"
+    },
+    {
+      "input_id": "P2H-BUG-008",
+      "is_buggy": true,
+      "cause_family": "state_order_dependence",
+      "clean_family": null,
+      "family": "completion_moves_out_of_running",
+      "target_path": "scheduler/queues.py",
+      "target_function": "queues.complete_job",
+      "expected_failing_oracle_ids": [
+        "state.queue_complete_moves"
+      ],
+      "fix_intent": "fix_state_transition",
+      "trigger": "complete a running job",
+      "expected_behavior": "Completion atomically removes the job from running and adds it to completed.",
+      "actual_behavior": "The patched function leaves the completed job in running.",
+      "order": 8,
+      "patch_path": "patches/P2H-BUG-008.patch",
+      "patch_size": 414,
+      "patch_sha256_lf": "7277e1385723b02ac63ed6cfa3bd386f8836b28290525b3644797d6dc363dab0",
+      "baseline_file_sha256_lf": "fe10e10a5776fed6f3d938698c7f13fcecbac7764d3468bb1559007c5dda1ee3",
+      "post_image_size": 1056,
+      "post_image_sha256_lf": "a1b43197c667d85e6747b2a436edbdc16b301b48bf66effed14eebf575d1e793",
+      "replacement_operation_digest": "5db10a6df92da3c1aa87f74cd5c516880b9e50d8c66273c30dc1db33c5eb4f39"
+    },
+    {
+      "input_id": "P2H-BUG-009",
+      "is_buggy": true,
+      "cause_family": "specification_mismatch",
+      "clean_family": null,
+      "family": "priority_before_due_selection_rule",
+      "target_path": "scheduler/queues.py",
+      "target_function": "queues.select_next",
+      "expected_failing_oracle_ids": [
+        "coverage.selection_priority",
+        "spec.priority_before_due"
+      ],
+      "fix_intent": "align_selection_rule_with_spec",
+      "trigger": "higher-priority job has a later due tick",
+      "expected_behavior": "Priority is the primary scheduler ordering key.",
+      "actual_behavior": "The patched selector gives due tick precedence over priority.",
+      "order": 9,
+      "patch_path": "patches/P2H-BUG-009.patch",
+      "patch_size": 295,
+      "patch_sha256_lf": "0015705d29bd225852eba76ede025117d1aaf7bfcc5e024bf27d8ed2fbec78c0",
+      "baseline_file_sha256_lf": "fe10e10a5776fed6f3d938698c7f13fcecbac7764d3468bb1559007c5dda1ee3",
+      "post_image_size": 1044,
+      "post_image_sha256_lf": "15333123b6a8d5f7c3e85561be143836c3f126bc45687164df054bf609664a8e",
+      "replacement_operation_digest": "5fff18cd83041b5836cc0322ede681879e211af194e491e34dd0571fde6be6f0"
+    },
+    {
+      "input_id": "P2H-BUG-010",
+      "is_buggy": true,
+      "cause_family": "specification_mismatch",
+      "clean_family": null,
+      "family": "retry_cap_after_exponential_growth",
+      "target_path": "scheduler/retries.py",
+      "target_function": "retries.next_retry_tick",
+      "expected_failing_oracle_ids": [
+        "property.retry_cap",
+        "spec.retry_cap_after_growth"
+      ],
+      "fix_intent": "align_calculation_order_with_spec",
+      "trigger": "exponential delay exceeds the configured cap",
+      "expected_behavior": "The fully grown delay is capped before it is added to the failure tick.",
+      "actual_behavior": "The patched calculation caps the base and then grows past the limit.",
+      "order": 10,
+      "patch_path": "patches/P2H-BUG-010.patch",
+      "patch_size": 308,
+      "patch_sha256_lf": "79868baaa3909c334484ae24354c2158251798b8a9355380a1866e41697ccd48",
+      "baseline_file_sha256_lf": "ee077b3631fd3df1a066879a68b35cf4fcae80cf281f66a42bd4a4286a9b3cf7",
+      "post_image_size": 349,
+      "post_image_sha256_lf": "0fb59472981173bbcc84980950ffe78b7a5f951c70aa939e7bfb83bb170a5109",
+      "replacement_operation_digest": "9bd4cb0e1134715504ff5620504e2bea375494dd589cb4bd7863b96c665fb8e6"
+    },
+    {
+      "input_id": "P2H-CLEAN-001",
+      "is_buggy": false,
+      "cause_family": null,
+      "clean_family": "boundary_adjacent_valid_behavior",
+      "family": "boundary_adjacent_valid_behavior",
+      "target_path": "scheduler/jobs.py",
+      "target_function": "jobs.is_released",
+      "expected_failing_oracle_ids": [],
+      "fix_intent": null,
+      "trigger": "release ticks before, at, and after the current tick",
+      "expected_behavior": "Inclusive release behavior is preserved.",
+      "actual_behavior": "Inclusive release behavior is preserved by equivalent arithmetic.",
+      "order": 11,
+      "patch_path": "patches/P2H-CLEAN-001.patch",
+      "patch_size": 290,
+      "patch_sha256_lf": "f0ea5074f09d6eed922f395e59fdcc6a0e5f6af2d0342c6a5a93b2ff92746e55",
+      "baseline_file_sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678",
+      "post_image_size": 606,
+      "post_image_sha256_lf": "420ce1b6297d54e05ddb3395e4bfb9ece39d7ae5114cbc5969622eaaac4f092a",
+      "replacement_operation_digest": "0bbe55c998089ea5468c9151407f37780d94ece69194d622827dd80b02b942de"
+    },
+    {
+      "input_id": "P2H-CLEAN-002",
+      "is_buggy": false,
+      "cause_family": null,
+      "clean_family": "optional_absence_default",
+      "family": "optional_absence_default",
+      "target_path": "scheduler/jobs.py",
+      "target_function": "jobs.normalize_tags",
+      "expected_failing_oracle_ids": [],
+      "fix_intent": null,
+      "trigger": "tags=None and ordinary tag lists",
+      "expected_behavior": "Optional absence still normalizes to an empty tuple.",
+      "actual_behavior": "The explicit conditional expression preserves the same behavior.",
+      "order": 12,
+      "patch_path": "patches/P2H-CLEAN-002.patch",
+      "patch_size": 298,
+      "patch_sha256_lf": "e492d8948ddd506f7597b2514c3d6812ef2714e4e4bf6318ba2dfdc7e4e12f7e",
+      "baseline_file_sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678",
+      "post_image_size": 601,
+      "post_image_sha256_lf": "b89c17c3f7bbb3b73922d7073b1c8eee2b3ed2d7a2c3a80c9f4a66217760dc60",
+      "replacement_operation_digest": "87e80b9a130a5c2b90358df0fd053dcd594b4138c6e9f2063da39b16998e76ff"
+    },
+    {
+      "input_id": "P2H-CLEAN-003",
+      "is_buggy": false,
+      "cause_family": null,
+      "clean_family": "config_equivalent_normalization",
+      "family": "config_equivalent_normalization",
+      "target_path": "scheduler/config.py",
+      "target_function": "config.normalize_queue_name",
+      "expected_failing_oracle_ids": [],
+      "fix_intent": null,
+      "trigger": "ASCII queue names and aliases in the frozen oracle matrix",
+      "expected_behavior": "Equivalent ASCII configuration forms normalize identically.",
+      "actual_behavior": "casefold preserves the frozen ASCII normalization behavior.",
+      "order": 13,
+      "patch_path": "patches/P2H-CLEAN-003.patch",
+      "patch_size": 378,
+      "patch_sha256_lf": "fc06b829680e11b8cd95224379cfaae296dfd30bb46650a7b2f32612bd613022",
+      "baseline_file_sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2",
+      "post_image_size": 848,
+      "post_image_sha256_lf": "cd418ef753841bf3b5d7bb3ecd202f2696c6ecbcc9aec8c23052c19088bce95b",
+      "replacement_operation_digest": "d86dfaf94504c73f2d42a5f0b438d44ce6db759fd1c621d9f7c9b9e79fdf7361"
+    },
+    {
+      "input_id": "P2H-CLEAN-004",
+      "is_buggy": false,
+      "cause_family": null,
+      "clean_family": "valid_state_sequence",
+      "family": "valid_state_sequence",
+      "target_path": "scheduler/state.py",
+      "target_function": "state.transition_state",
+      "expected_failing_oracle_ids": [],
+      "fix_intent": null,
+      "trigger": "all frozen valid and invalid lifecycle transitions",
+      "expected_behavior": "Valid order and invalid-order rejection are preserved.",
+      "actual_behavior": "An explicit membership check preserves the same transition contract.",
+      "order": 14,
+      "patch_path": "patches/P2H-CLEAN-004.patch",
+      "patch_size": 496,
+      "patch_sha256_lf": "f3558d5891b83cce9a215f51d2454db74cebc09794adc57d383eb2b98dad2939",
+      "baseline_file_sha256_lf": "877cb604b2ccea97e3816c6e8460d41e7d2efec3db5cec5dc875ed64b0790b3d",
+      "post_image_size": 460,
+      "post_image_sha256_lf": "351825f12352f0063d0b32bbb096662752003f4fa5729513703ca6aa04698df5",
+      "replacement_operation_digest": "68060b9be87714c89cef2ca4bb95a075f7bcf41d06804018878bbd0b7daef686"
+    },
+    {
+      "input_id": "P2H-CLEAN-005",
+      "is_buggy": false,
+      "cause_family": null,
+      "clean_family": "nonintuitive_spec_conformance",
+      "family": "nonintuitive_spec_conformance",
+      "target_path": "scheduler/queues.py",
+      "target_function": "queues.select_next",
+      "expected_failing_oracle_ids": [],
+      "fix_intent": null,
+      "trigger": "priority first, then due tick, then lexical job ID",
+      "expected_behavior": "The nonintuitive priority-first specification remains exact.",
+      "actual_behavior": "Sorting and taking the first row is equivalent to min with the same key.",
+      "order": 15,
+      "patch_path": "patches/P2H-CLEAN-005.patch",
+      "patch_size": 480,
+      "patch_sha256_lf": "393be587dfb5444af80f106c4a5f7eadbb4cf81d67a04af89d497b85842b06f5",
+      "baseline_file_sha256_lf": "fe10e10a5776fed6f3d938698c7f13fcecbac7764d3468bb1559007c5dda1ee3",
+      "post_image_size": 1046,
+      "post_image_sha256_lf": "54550d1c47d985d431bfb559a641244096dc4275b9d50af543d91e0db940beda",
+      "replacement_operation_digest": "23ddaf300f25ab11ee1efcec01b70d0ab69c0f928378ef4701110eb5239293c4"
+    }
+  ],
+  "oracle_order": [
+    "smoke.priority_normal",
+    "smoke.release_past",
+    "smoke.selection_tie",
+    "smoke.transition_start",
+    "boundary.release_equal",
+    "boundary.retry_limit_equal",
+    "boundary.priority_upper",
+    "null.tags_none",
+    "null.queue_limits_absent",
+    "config.queue_name_trim",
+    "config.alias_case",
+    "config.queue_retry_limit",
+    "state.valid_completion",
+    "state.invalid_completion",
+    "state.queue_complete_moves",
+    "property.release_monotonic",
+    "property.retry_cap",
+    "property.selection_deterministic",
+    "trace.tags_none",
+    "trace.queue_limits_absent",
+    "coverage.release_equal",
+    "coverage.selection_priority",
+    "coverage.transition_retry",
+    "spec.priority_before_due",
+    "spec.retry_cap_after_growth"
+  ],
+  "oracle_cases": [
+    {
+      "oracle_id": "smoke.priority_normal",
+      "action_id": "run_smoke_tests",
+      "module": "jobs",
+      "function": "validate_priority",
+      "args": [
+        4
+      ],
+      "kwargs": {},
+      "expected": 4,
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "smoke.release_past",
+      "action_id": "run_smoke_tests",
+      "module": "jobs",
+      "function": "is_released",
+      "args": [
+        1,
+        2
+      ],
+      "kwargs": {},
+      "expected": true,
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "smoke.selection_tie",
+      "action_id": "run_smoke_tests",
+      "module": "queues",
+      "function": "select_next",
+      "args": [
+        [
+          {
+            "job_id": "b",
+            "priority": 5,
+            "due_tick": 4,
+            "release_tick": 0,
+            "state": "queued"
+          },
+          {
+            "job_id": "a",
+            "priority": 5,
+            "due_tick": 4,
+            "release_tick": 0,
+            "state": "queued"
+          }
+        ],
+        0
+      ],
+      "kwargs": {},
+      "expected": "a",
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "smoke.transition_start",
+      "action_id": "run_smoke_tests",
+      "module": "state",
+      "function": "transition_state",
+      "args": [
+        "queued",
+        "start"
+      ],
+      "kwargs": {},
+      "expected": "running",
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "boundary.release_equal",
+      "action_id": "run_boundary_tests",
+      "module": "jobs",
+      "function": "is_released",
+      "args": [
+        5,
+        5
+      ],
+      "kwargs": {},
+      "expected": true,
+      "expected_exception": null,
+      "evidence_tags": [
+        "boundary_failure"
+      ],
+      "fix_intent_hints": [
+        "change_comparison"
+      ]
+    },
+    {
+      "oracle_id": "boundary.retry_limit_equal",
+      "action_id": "run_boundary_tests",
+      "module": "retries",
+      "function": "should_retry",
+      "args": [
+        3,
+        3
+      ],
+      "kwargs": {},
+      "expected": false,
+      "expected_exception": null,
+      "evidence_tags": [
+        "boundary_failure"
+      ],
+      "fix_intent_hints": [
+        "change_comparison"
+      ]
+    },
+    {
+      "oracle_id": "boundary.priority_upper",
+      "action_id": "run_boundary_tests",
+      "module": "jobs",
+      "function": "validate_priority",
+      "args": [
+        9
+      ],
+      "kwargs": {},
+      "expected": 9,
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "null.tags_none",
+      "action_id": "run_null_missing_tests",
+      "module": "jobs",
+      "function": "normalize_tags",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "expected": [],
+      "expected_exception": null,
+      "evidence_tags": [
+        "null_exception"
+      ],
+      "fix_intent_hints": [
+        "add_missing_value_guard"
+      ]
+    },
+    {
+      "oracle_id": "null.queue_limits_absent",
+      "action_id": "run_null_missing_tests",
+      "module": "config",
+      "function": "retry_limit",
+      "args": [
+        {
+          "default_retry_limit": 3
+        },
+        "critical"
+      ],
+      "kwargs": {},
+      "expected": 3,
+      "expected_exception": null,
+      "evidence_tags": [
+        "missing_key_exception"
+      ],
+      "fix_intent_hints": [
+        "fix_config_default"
+      ]
+    },
+    {
+      "oracle_id": "config.queue_name_trim",
+      "action_id": "run_config_matrix_tests",
+      "module": "config",
+      "function": "normalize_queue_name",
+      "args": [
+        " Critical "
+      ],
+      "kwargs": {},
+      "expected": "critical",
+      "expected_exception": null,
+      "evidence_tags": [
+        "config_matrix_failure"
+      ],
+      "fix_intent_hints": [
+        "normalize_config_or_input"
+      ]
+    },
+    {
+      "oracle_id": "config.alias_case",
+      "action_id": "run_config_matrix_tests",
+      "module": "config",
+      "function": "normalize_queue_name",
+      "args": [
+        "FAST",
+        {
+          "fast": "critical"
+        }
+      ],
+      "kwargs": {},
+      "expected": "critical",
+      "expected_exception": null,
+      "evidence_tags": [
+        "config_matrix_failure"
+      ],
+      "fix_intent_hints": [
+        "normalize_config_or_input"
+      ]
+    },
+    {
+      "oracle_id": "config.queue_retry_limit",
+      "action_id": "run_config_matrix_tests",
+      "module": "config",
+      "function": "retry_limit",
+      "args": [
+        {
+          "queue_limits": {
+            "critical": 5
+          },
+          "default_retry_limit": 3
+        },
+        " Critical "
+      ],
+      "kwargs": {},
+      "expected": 5,
+      "expected_exception": null,
+      "evidence_tags": [
+        "config_matrix_failure"
+      ],
+      "fix_intent_hints": [
+        "normalize_config_or_input"
+      ]
+    },
+    {
+      "oracle_id": "state.valid_completion",
+      "action_id": "run_state_sequence_tests",
+      "module": "state",
+      "function": "transition_state",
+      "args": [
+        "running",
+        "succeed"
+      ],
+      "kwargs": {},
+      "expected": "succeeded",
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "state.invalid_completion",
+      "action_id": "run_state_sequence_tests",
+      "module": "state",
+      "function": "transition_state",
+      "args": [
+        "queued",
+        "succeed"
+      ],
+      "kwargs": {},
+      "expected": null,
+      "expected_exception": "ValueError",
+      "evidence_tags": [
+        "state_invariant_failure"
+      ],
+      "fix_intent_hints": [
+        "fix_state_transition"
+      ]
+    },
+    {
+      "oracle_id": "state.queue_complete_moves",
+      "action_id": "run_state_sequence_tests",
+      "module": "queues",
+      "function": "complete_job",
+      "args": [
+        {
+          "running": [
+            "job-1",
+            "job-2"
+          ],
+          "completed": []
+        },
+        "job-1"
+      ],
+      "kwargs": {},
+      "expected": {
+        "running": [
+          "job-2"
+        ],
+        "completed": [
+          "job-1"
+        ]
+      },
+      "expected_exception": null,
+      "evidence_tags": [
+        "state_invariant_failure"
+      ],
+      "fix_intent_hints": [
+        "fix_state_transition"
+      ]
+    },
+    {
+      "oracle_id": "property.release_monotonic",
+      "action_id": "run_property_search",
+      "module": "jobs",
+      "function": "is_released",
+      "args": [
+        5,
+        6
+      ],
+      "kwargs": {},
+      "expected": true,
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "property.retry_cap",
+      "action_id": "run_property_search",
+      "module": "retries",
+      "function": "next_retry_tick",
+      "args": [
+        10,
+        5,
+        2,
+        8
+      ],
+      "kwargs": {},
+      "expected": 18,
+      "expected_exception": null,
+      "evidence_tags": [
+        "spec_rule_failure"
+      ],
+      "fix_intent_hints": [
+        "align_calculation_order_with_spec"
+      ]
+    },
+    {
+      "oracle_id": "property.selection_deterministic",
+      "action_id": "run_property_search",
+      "module": "queues",
+      "function": "select_next",
+      "args": [
+        [
+          {
+            "job_id": "b",
+            "priority": 5,
+            "due_tick": 4,
+            "release_tick": 0,
+            "state": "queued"
+          },
+          {
+            "job_id": "a",
+            "priority": 5,
+            "due_tick": 4,
+            "release_tick": 0,
+            "state": "queued"
+          }
+        ],
+        0
+      ],
+      "kwargs": {},
+      "expected": "a",
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "trace.tags_none",
+      "action_id": "inspect_traceback",
+      "module": "jobs",
+      "function": "normalize_tags",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "expected": [],
+      "expected_exception": null,
+      "evidence_tags": [
+        "null_exception"
+      ],
+      "fix_intent_hints": [
+        "add_missing_value_guard"
+      ]
+    },
+    {
+      "oracle_id": "trace.queue_limits_absent",
+      "action_id": "inspect_traceback",
+      "module": "config",
+      "function": "retry_limit",
+      "args": [
+        {
+          "default_retry_limit": 3
+        },
+        "critical"
+      ],
+      "kwargs": {},
+      "expected": 3,
+      "expected_exception": null,
+      "evidence_tags": [
+        "missing_key_exception"
+      ],
+      "fix_intent_hints": [
+        "fix_config_default"
+      ]
+    },
+    {
+      "oracle_id": "coverage.release_equal",
+      "action_id": "inspect_coverage_spectrum",
+      "module": "jobs",
+      "function": "is_released",
+      "args": [
+        0,
+        0
+      ],
+      "kwargs": {},
+      "expected": true,
+      "expected_exception": null,
+      "evidence_tags": [
+        "boundary_failure"
+      ],
+      "fix_intent_hints": [
+        "change_comparison"
+      ]
+    },
+    {
+      "oracle_id": "coverage.selection_priority",
+      "action_id": "inspect_coverage_spectrum",
+      "module": "queues",
+      "function": "select_next",
+      "args": [
+        [
+          {
+            "job_id": "low",
+            "priority": 3,
+            "due_tick": 2,
+            "release_tick": 0,
+            "state": "queued"
+          },
+          {
+            "job_id": "high",
+            "priority": 8,
+            "due_tick": 9,
+            "release_tick": 0,
+            "state": "queued"
+          }
+        ],
+        0
+      ],
+      "kwargs": {},
+      "expected": "high",
+      "expected_exception": null,
+      "evidence_tags": [
+        "spec_rule_failure"
+      ],
+      "fix_intent_hints": [
+        "align_selection_rule_with_spec"
+      ]
+    },
+    {
+      "oracle_id": "coverage.transition_retry",
+      "action_id": "inspect_coverage_spectrum",
+      "module": "state",
+      "function": "transition_state",
+      "args": [
+        "failed",
+        "retry"
+      ],
+      "kwargs": {},
+      "expected": "queued",
+      "expected_exception": null,
+      "evidence_tags": [],
+      "fix_intent_hints": []
+    },
+    {
+      "oracle_id": "spec.priority_before_due",
+      "action_id": "inspect_spec_clause",
+      "module": "queues",
+      "function": "select_next",
+      "args": [
+        [
+          {
+            "job_id": "low",
+            "priority": 3,
+            "due_tick": 2,
+            "release_tick": 0,
+            "state": "queued"
+          },
+          {
+            "job_id": "high",
+            "priority": 8,
+            "due_tick": 9,
+            "release_tick": 0,
+            "state": "queued"
+          }
+        ],
+        0
+      ],
+      "kwargs": {},
+      "expected": "high",
+      "expected_exception": null,
+      "evidence_tags": [
+        "spec_rule_failure"
+      ],
+      "fix_intent_hints": [
+        "align_selection_rule_with_spec"
+      ]
+    },
+    {
+      "oracle_id": "spec.retry_cap_after_growth",
+      "action_id": "inspect_spec_clause",
+      "module": "retries",
+      "function": "next_retry_tick",
+      "args": [
+        100,
+        4,
+        3,
+        10
+      ],
+      "kwargs": {},
+      "expected": 110,
+      "expected_exception": null,
+      "evidence_tags": [
+        "spec_rule_failure"
+      ],
+      "fix_intent_hints": [
+        "align_calculation_order_with_spec"
+      ]
+    }
+  ],
+  "action_order": [
+    "run_smoke_tests",
+    "run_boundary_tests",
+    "run_null_missing_tests",
+    "run_config_matrix_tests",
+    "run_state_sequence_tests",
+    "run_property_search",
+    "inspect_traceback",
+    "inspect_coverage_spectrum",
+    "inspect_recent_diff",
+    "inspect_spec_clause"
+  ],
+  "action_case_mapping": {
+    "run_smoke_tests": [
+      "smoke.priority_normal",
+      "smoke.release_past",
+      "smoke.selection_tie",
+      "smoke.transition_start"
+    ],
+    "run_boundary_tests": [
+      "boundary.release_equal",
+      "boundary.retry_limit_equal",
+      "boundary.priority_upper"
+    ],
+    "run_null_missing_tests": [
+      "null.tags_none",
+      "null.queue_limits_absent"
+    ],
+    "run_config_matrix_tests": [
+      "config.queue_name_trim",
+      "config.alias_case",
+      "config.queue_retry_limit"
+    ],
+    "run_state_sequence_tests": [
+      "state.valid_completion",
+      "state.invalid_completion",
+      "state.queue_complete_moves"
+    ],
+    "run_property_search": [
+      "property.release_monotonic",
+      "property.retry_cap",
+      "property.selection_deterministic"
+    ],
+    "inspect_traceback": [
+      "trace.tags_none",
+      "trace.queue_limits_absent"
+    ],
+    "inspect_coverage_spectrum": [
+      "coverage.release_equal",
+      "coverage.selection_priority",
+      "coverage.transition_retry"
+    ],
+    "inspect_recent_diff": [
+      "diff.exact_patch_identity"
+    ],
+    "inspect_spec_clause": [
+      "spec.priority_before_due",
+      "spec.retry_cap_after_growth"
+    ]
+  }
+}

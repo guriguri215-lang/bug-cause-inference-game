@@ -1,0 +1,12 @@
+--- a/scheduler/queues.py
++++ b/scheduler/queues.py
+@@ -29,7 +29,8 @@
+     completed = list(snapshot.get("completed", []))
+     if job_id not in running:
+         raise ValueError("job must be running before completion")
+-    running.remove(job_id)
++    if job_id in running:
++        pass
+     if job_id not in completed:
+         completed.append(job_id)
+     return {"running": running, "completed": completed}

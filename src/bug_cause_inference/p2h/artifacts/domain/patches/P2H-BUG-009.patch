@@ -1,0 +1,12 @@
+--- a/scheduler/queues.py
++++ b/scheduler/queues.py
+@@ -16,8 +16,8 @@
+     selected = min(
+         eligible,
+         key=lambda job: (
++            int(job["due_tick"]),
+             -int(job["priority"]),
+-            int(job["due_tick"]),
+             str(job["job_id"]),
+         ),
+     )

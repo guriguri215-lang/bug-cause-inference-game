@@ -1,0 +1,10 @@
+--- a/scheduler/jobs.py
++++ b/scheduler/jobs.py
+@@ -14,6 +14,5 @@
+ 
+ 
+ def normalize_tags(tags: list[str] | None) -> tuple[str, ...]:
+-    if tags is None:
+-        tags = []
++    tags = [] if tags is None else tags
+     return tuple(sorted({str(tag).strip() for tag in tags if str(tag).strip()}))

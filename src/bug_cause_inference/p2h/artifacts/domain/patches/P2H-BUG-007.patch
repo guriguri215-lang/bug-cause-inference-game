@@ -1,0 +1,11 @@
+--- a/scheduler/state.py
++++ b/scheduler/state.py
+@@ -8,6 +8,8 @@
+         ("running", "fail"): "failed",
+         ("failed", "retry"): "queued",
+     }
++    if current_state == "queued" and event == "succeed":
++        return "succeeded"
+     try:
+         return transitions[(current_state, event)]
+     except KeyError as exc:
