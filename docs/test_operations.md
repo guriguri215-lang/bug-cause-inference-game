@@ -12,7 +12,7 @@ This note does not:
 - hardcode user-specific temporary directories;
 - weaken GitHub Actions verification;
 - change P1b or P1c runtime behavior, metrics, policies, thresholds, scores, datasets, real-diff artifacts, or observation semantics.
-- change accepted P2a/P2b/P2c/P2d/P2e/P2f/P2g inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, intervention semantics, or contracts.
+- change accepted P2a/P2b/P2c/P2d/P2e/P2f/P2g/P2h inputs, artifacts, results, catalog cases, action costs, settings, policy outcomes, execution/intervention semantics, or contracts.
 
 ## Verification Tiers
 
@@ -86,6 +86,22 @@ python -B -m pytest tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.
 
 This regression is read-only non-regression evidence for P2a–P2f and verification of the additive P2g diagnostic. It does not invoke the P2a or P2b outcome runners.
 
+Targeted P2h task-scheduler second-domain replication and artifact checks:
+
+```bash
+python -B -m pytest tests/test_p2h_task_scheduler_replication.py tests/test_p2h_reports.py -q -p no:cacheprovider --basetemp tmp/ph-t-001
+```
+
+The targeted P2h command verifies the exact 15-input and six-policy order; 60 buggy, 30 clean, and 90 total normal-execution rows; the outcome-free 25-oracle baseline and input-specific failure/pass gate; frozen actions, costs, settings, stop precedence, and policy-visible selector boundary; truthful scheduler-local recent-diff and coverage evidence; independent row replay and aggregate recomputation; false-positive, discovery, localization, cause, fix-intent, cost, action-count, and terminal axes; fail-closed schema, identity, private-path, and mutation gates; historical/current 28-file identity separation; and deterministic JSON/Markdown bytes and semantics.
+
+Relevant P1b–P2h regression for the complete accepted-input boundary:
+
+```bash
+python -B -m pytest tests/test_p1b_actions.py tests/test_p1b_cli.py tests/test_p1b_dataset.py tests/test_p1b_evaluation.py tests/test_p1b_policies.py tests/test_p1b_real_diff.py tests/test_p2a_adequacy.py tests/test_p2a_candidate_oracles.py tests/test_p2a_candidates.py tests/test_p2a_compatibility.py tests/test_p2a_evaluation.py tests/test_p2a_execution.py tests/test_p2a_freeze.py tests/test_p2a_freeze_realization.py tests/test_p2a_reports.py tests/test_p2b_reports.py tests/test_p2b_solvability_ceiling.py tests/test_p2c_reports.py tests/test_p2c_trajectory_audit.py tests/test_p2d_reports.py tests/test_p2d_stop_relaxation_audit.py tests/test_p2e_continuation_audit.py tests/test_p2e_reports.py tests/test_p2f_no_diff_clean_audit.py tests/test_p2f_reports.py tests/test_p2g_benign_diff_clean_audit.py tests/test_p2g_reports.py tests/test_p2h_task_scheduler_replication.py tests/test_p2h_reports.py -q -p no:cacheprovider --basetemp tmp/ph-r-001
+```
+
+This regression verifies the accepted P1b boundary and P2a–P2g non-regression together with the additive P2h diagnostic. It does not invoke the P2a or P2b outcome runners.
+
 Targeted P1b/P1c CLI and real-diff checks:
 
 ```bash
@@ -137,7 +153,7 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
-The full suite includes P2b, P2c, P2d, P2e, P2f, and P2g. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+The full suite includes P2b, P2c, P2d, P2e, P2f, P2g, and P2h. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
 
 ## P2b Artifact and Portability Checks
 
@@ -312,6 +328,50 @@ Run two P2g audits into distinct ignored workspace-local directories and compare
 Do not overwrite the tracked P2g artifacts during verification. Do not run the P2a or P2b outcome runners. P2g fresh replay is fixed-input verification only and must not be followed by support, metric, threshold, policy, arm, denominator, result, or claim tuning.
 
 The 2026-07-19 documentation-closeout checkpoint passed P2g targeted `33` tests, the P2a–P2g relevant regression `802` tests, the full repository suite `2120` tests, P1b real-diff validation `25/25`, and two isolated exact fresh P2g artifact runs. Both fresh runs preserved raw implementation/dependency snapshots and matched the tracked JSON/Markdown bytes, semantics, six digests, historical identity, and accepted current identity. These are verification results, not new outcome evidence.
+
+## P2h Artifact, Fresh-Run, and Identity Checks
+
+P2h preserves the historical 28-file pre-outcome identity and separately gates the accepted current corrective 28-file LF-canonical identity. Accepted artifact identities are:
+
+```text
+JSON                       2453124 bytes / d3ba265fb42dbf33e1e71ad972a85409386a2537160d7be5c09afc6e5d7d0f47
+Markdown                      2652 bytes / f693f9079409fc71cb5cc8ac609d0fde47b517161162f0e7baf95cabf58c522f
+summary                                  / 68a169c60dc25eda886df608560f1698eb5e09f05ed2563f2aef622b49ae3df3
+rows                                     / f53d6a1d2d74cca3510ca1495814baa096ef4b1e114f22c7797a3cf3aab4ee72
+aggregates                               / 6befa920087340f33d69ac8912cf4c5e129980b5f2e6a2087e022e01e1a8e531
+manifest                                 / 343746ea65d6649726e116e529c8a0e83d07f7c8d72e76c2074e21f24941304b
+dependency                               / c3ca2a00d1729b003a6ac12ba73853cb3d1c86710d0fa29b4aee61e55c19179f
+freeze                                   / 105a0076aaedef34c06f00b1ce43b351a74f07a364e5f23b2e72e41646e09b52
+outcome-free validation                  / 06c00f7f46e8d33ec6792eb8d5d06ff259b376b0e781d7d74f9968b6b54fde9d
+historical implementation                / 72e545afd77900b14107f93ece3b95f0289a9cd3ea1504321b2a5fd7da1813ff
+current implementation                   / 41937256d429feba4898f23f841415a983335e23ace54133cf0be234475ad2a8
+domain manifest LF             33448 bytes / 16bb5876d857e74fd4a8f63f43ab701a60fab018a2c9969d889b11d085227316
+```
+
+The artifact's historical map is not rebound by the reviewed implementation/test correction. Portable identity uses LF-canonical bytes; raw identity detects drift only within one checkout and run. The complete contract and safe commands are in [`docs/p2h_result_interpretation.md`](p2h_result_interpretation.md#reproduction-and-verification).
+
+Run two P2h audits into distinct ignored workspace-local directories:
+
+```bash
+python -B -m bug_cause_inference.p2h.task_scheduler_replication --output-dir tmp/p2h-closeout-fresh-a
+python -B -m bug_cause_inference.p2h.task_scheduler_replication --output-dir tmp/p2h-closeout-fresh-b
+```
+
+Compare both serialized pairs with the tracked files byte-for-byte and semantically. Required checks are:
+
+- exact ordered support of 15 inputs / 6 policies / 90 normal-execution rows;
+- 25-oracle baseline, exact input-specific failure sets, and clean passes `5/5` at `25/25` each;
+- exact action costs, settings, selector boundary, decision/action/observation/update semantics, and terminal partition;
+- bug discovery `12/60`, first failure `12/60`, clean false positives `0/30`, location top-1/top-3 `25/60` and `35/60`, cause/fix `16/60` each;
+- truthful scheduler-local recent-diff and coverage observations;
+- summary, row, aggregate, manifest, dependency, freeze, and outcome-free-validation digests match exactly;
+- artifact historical 28-file identity remains unchanged while the current 28-file map is checked separately;
+- raw implementation and dependency snapshots remain identical before/after each run;
+- accepted P1b–P2g source, tests, artifacts, identities, results, and public claims remain unchanged.
+
+Do not overwrite or regenerate the tracked P2h artifacts during verification. Do not run the P2a or P2b outcome runners. P2h fresh replay is fixed-input verification only and must not be followed by input, oracle, action, cost, setting, policy, metric, denominator, result, or claim tuning.
+
+The 2026-07-20 documentation-closeout checkpoint passed P2h targeted `30` tests in `18.22s`, the P1b–P2h relevant regression `1014` tests in `278.67s`, the full repository suite `2150` tests in `378.59s`, P1b real-diff validation `25/25`, and two isolated exact fresh P2h artifact runs. Both authoritative fresh runs preserved all 32 raw implementation/dependency paths and matched the tracked JSON/Markdown bytes, validated semantics, seven result/contract digests, historical 28-file identity, accepted current 28-file identity, 25-oracle gate, and 90-row support. These are verification results, not new outcome evidence.
 
 ## `tmp_path` Tests
 

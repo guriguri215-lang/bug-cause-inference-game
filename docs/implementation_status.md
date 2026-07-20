@@ -77,9 +77,10 @@
 - P2g fixed-input descriptive evidence records control and target-suppressed-continuation false positives of `0/30` and `0/30`; intervention terminals are 20 budget limits, 5 max-step limits, and 5 no-available-action stops. Pair start and pre-target prefix agreement are `30/30`, and all 20 recent-diff observations preserve the accepted non-empty repository-relative patch evidence.
 - P2g final merged-tree software conformance, versioned artifact identity, exact fixed-input descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review, required verification, and same-reviewer status-closure re-review. The artifact remains self-non-accepting.
 - P2g result interpretation note: [`docs/p2g_result_interpretation.md`](p2g_result_interpretation.md).
-- P2h implementation-candidate source, tests, frozen domain artifacts, and versioned JSON/Markdown evidence for one hand-authored toy task-scheduler second domain. It crosses 10 buggy and 5 benign clean inputs with the accepted six policies under normal execution only, yielding 60 buggy and 30 clean trajectories after an outcome-free 25-oracle gate.
+- P2h task-scheduler second-domain replication source, tests, frozen domain artifacts, and versioned JSON/Markdown evidence, merged by PR #40 for one hand-authored deterministic toy domain. It crosses 10 buggy and 5 benign clean inputs with the accepted six policies under normal execution only, yielding 60 buggy and 30 clean trajectories after an outcome-free 25-oracle gate.
 - P2h fixed-input descriptive evidence records bug discovery `12/60`, clean false positives `0/30`, function location top-3 `35/60`, and cause/fix-intent top-1 `16/60` each. These are exact support fractions, not evidence of policy superiority or population/production generalization.
-- P2h pre-outcome specification/freeze review is accepted. Software conformance awaits the independent implementation review and required verification in this Draft-PR slice; artifact/result/public-documentation final acceptance is deferred to a separate post-merge closeout.
+- P2h final merged-tree software conformance, versioned artifact identity, exact fixed-input descriptive result, and public documentation are accepted as four separate decisions. The documentation decision followed independent documentation review, required verification, and same-reviewer status-closure re-review. The artifact remains self-non-accepting.
+- P2h result interpretation note: [`docs/p2h_result_interpretation.md`](p2h_result_interpretation.md).
 - P1b dataset metadata validation for location/action references, dataset counts, category balance, required fields, difficulty labels, and duplicate variant IDs.
 - Dataset diagnostics for initial top-1/top-2 accuracy.
 - Separate evaluation summary for cases where the initial top-1 hypothesis is wrong.
@@ -215,11 +216,16 @@ python -m bug_cause_inference.p1b.real_diff --validate
 
 ## Latest Test Result
 
-### Current P2h implementation-candidate evidence
+### Current P2h merged-tree acceptance evidence
 
-P2h is the final planned pre-release research slice. Its pre-outcome specification, independent review, exact domain/input/oracle freeze, and first valid 90-row outcome are complete on the topic branch; this is not merged-tree or release acceptance.
+P2h is the final planned pre-release research slice. PR #40 merged the implementation, frozen domain, and exact versioned outcome. Independent final merged-tree review accepted software conformance, versioned artifact identity, and the exact descriptive result. Independent documentation review, required verification, and same-reviewer status closure accepted the public documentation as the fourth separate decision.
 
 ```text
+P2h closeout targeted                  30 passed in 18.22s
+P1b-P2h closeout relevant regression 1014 passed in 278.67s
+full closeout repository suite       2150 passed in 378.59s
+P1b real-diff validator                 25 / 25
+isolated fresh artifact runs             2 / 2 exact
 support                         10 buggy + 5 clean x 6 policies = 90 rows
 bug discovery                  12/60 (0.200000)
 first failure observed         12/60 (0.200000)
@@ -230,10 +236,9 @@ function location MRR          0.555192 over 60 rows
 cause top-1                    16/60 (0.266667)
 fix-intent top-1               16/60 (0.266667)
 terminal partition             85 no-bug / 4 bug-confidence / 1 budget
-targeted tests                 30 passed
 ```
 
-Versioned implementation-candidate artifacts:
+Versioned accepted artifacts:
 
 - JSON: 2,453,124 bytes, SHA-256 `d3ba265fb42dbf33e1e71ad972a85409386a2537160d7be5c09afc6e5d7d0f47`.
 - Markdown: 2,652 bytes, SHA-256 `f693f9079409fc71cb5cc8ac609d0fde47b517161162f0e7baf95cabf58c522f`.
@@ -241,7 +246,18 @@ Versioned implementation-candidate artifacts:
 - Row / aggregate digests: `f53d6a1d2d74cca3510ca1495814baa096ef4b1e114f22c7797a3cf3aab4ee72` / `6befa920087340f33d69ac8912cf4c5e129980b5f2e6a2087e022e01e1a8e531`.
 - Historical pre-outcome / post-outcome current implementation digests: `72e545afd77900b14107f93ece3b95f0289a9cd3ea1504321b2a5fd7da1813ff` / `41937256d429feba4898f23f841415a983335e23ace54133cf0be234475ad2a8`.
 
-The historical/current identity split records one test-only conformance correction after the first outcome; the frozen domain, policies, settings, metrics, result rows, aggregates, and artifact bytes did not change. Independent implementation review and final verification remain required before this Draft PR is complete. Artifact/result/public-documentation final acceptance remains deferred to the post-merge P2h closeout.
+The historical/current identity split records one implementation/test conformance correction after the first outcome; the frozen domain, policies, settings, metrics, result rows, aggregates, and artifact bytes did not change. The accepted head `1490bb52aeedbc9ca075f3daa2f6e64783be6e67` and merge commit `55316cb29c3a0b87037c0bf5df829e0b127ebced` share tree `62db4def9a9ffadb341a7925d1d7bb4660bfdf13`. PR CI run #79 and post-merge main run #80 succeeded. The independent final merged-tree reviewer returned `accept` with unresolved High/Medium/Low `0/0/0`.
+
+```text
+P2h software conformance review        accepted
+P2h versioned artifact identity        accepted
+P2h descriptive result                 accepted for the exact fixed support
+P2h public result documentation        accepted after review, verification, and status closure
+```
+
+Both authoritative fresh runs reproduced the tracked JSON/Markdown bytes and validated summary, all seven result/contract digests, historical/current 28-file identity gates, and exact support/terminal result. Their 32 raw implementation/dependency paths were unchanged before and after each run. Accepted P1b–P2g source, tests, artifacts, identities, results, and public claims remain unchanged. The earlier implementation checkpoint remains historical provenance: targeted `30 passed`, relevant regression `1014 passed`, full suite `2150 passed`, and P1b validator `25/25`; the table above records the current documentation-closeout reruns.
+
+Repository-wide Ruff remains the three accepted pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; this documentation-only slice has no changed Python file for narrow Ruff. The 90 rows are crossed observations over one hand-authored toy domain, not independent program replications. They do not establish a policy winner, causal transfer, population or arbitrary-program generalization, inference, scheduler quality, deployability, release readiness, or production readiness.
 
 ### Current P2g merged-tree acceptance and closeout evidence
 
