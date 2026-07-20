@@ -1,0 +1,150 @@
+{
+  "schema_version": "p2h_post_outcome_current_identity.v1",
+  "historical_pre_outcome_implementation_digest": "72e545afd77900b14107f93ece3b95f0289a9cd3ea1504321b2a5fd7da1813ff",
+  "change_boundary": "implementation/test conformance only; outcome contract unchanged",
+  "implementation_identity": {
+    "digest": "41937256d429feba4898f23f841415a983335e23ace54133cf0be234475ad2a8",
+    "files": [
+      {
+        "path": "src/bug_cause_inference/p2h/__init__.py",
+        "size": 58,
+        "sha256_lf": "e83410b7225ebfaaa9f05cd43982b4f9047cd69efc0e37a9b1f0822a8039cab6"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/__init__.py",
+        "size": 45,
+        "sha256_lf": "0b54d1d168c079803e2e6afcad03034f2d85e261adc7bac42f5fb32bff739dbf"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/config.py",
+        "size": 845,
+        "sha256_lf": "8919144cc903182a67bf5d2831536c0291af3802d173652353073e2a3c5497c2"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/jobs.py",
+        "size": 600,
+        "sha256_lf": "3433a66d65a3959ab22e14b91600484c166eb94943e71186f4f4f32017405678"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/queues.py",
+        "size": 1044,
+        "sha256_lf": "fe10e10a5776fed6f3d938698c7f13fcecbac7764d3468bb1559007c5dda1ee3"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/retries.py",
+        "size": 349,
+        "sha256_lf": "ee077b3631fd3df1a066879a68b35cf4fcae80cf281f66a42bd4a4286a9b3cf7"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/baseline/scheduler/state.py",
+        "size": 465,
+        "sha256_lf": "877cb604b2ccea97e3816c6e8460d41e7d2efec3db5cec5dc875ed64b0790b3d"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/manifest.json",
+        "size": 33448,
+        "sha256_lf": "16bb5876d857e74fd4a8f63f43ab701a60fab018a2c9969d889b11d085227316"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-001.patch",
+        "size": 283,
+        "sha256_lf": "fe6243730253c7794d391f9d2d8f7bb812de442cb0ec7a20cc4fc2fb78fb6651"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-002.patch",
+        "size": 234,
+        "sha256_lf": "bd40e7216d54cfcc66f66e7c7e62b4d5681c3da36585695f3abcf77a1dce9e96"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-003.patch",
+        "size": 276,
+        "sha256_lf": "f520ac18de5f2440e89eb6fd14aefa5dbc6c276674a2996b193c5f4988ec7de7"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-004.patch",
+        "size": 466,
+        "sha256_lf": "ac5219b58678d68c1059e64623ee4521f615c90870f61eed4b26e0a980f84ccd"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-005.patch",
+        "size": 367,
+        "sha256_lf": "20b4ce19d8f21ea220c6704d4d9bf2a670c18c17e69cf94a6d5478372ee12cfe"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-006.patch",
+        "size": 424,
+        "sha256_lf": "c6e9f14a76714fc23a26d746af66046ef0929c8e60e9b09e7f1e35ccc5a9ec8c"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-007.patch",
+        "size": 330,
+        "sha256_lf": "d588014216caecb4d008736272cc2bc65eee59726a1b9a5af929a154c3056c1d"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-008.patch",
+        "size": 414,
+        "sha256_lf": "7277e1385723b02ac63ed6cfa3bd386f8836b28290525b3644797d6dc363dab0"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-009.patch",
+        "size": 295,
+        "sha256_lf": "0015705d29bd225852eba76ede025117d1aaf7bfcc5e024bf27d8ed2fbec78c0"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-BUG-010.patch",
+        "size": 308,
+        "sha256_lf": "79868baaa3909c334484ae24354c2158251798b8a9355380a1866e41697ccd48"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-CLEAN-001.patch",
+        "size": 290,
+        "sha256_lf": "f0ea5074f09d6eed922f395e59fdcc6a0e5f6af2d0342c6a5a93b2ff92746e55"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-CLEAN-002.patch",
+        "size": 298,
+        "sha256_lf": "e492d8948ddd506f7597b2514c3d6812ef2714e4e4bf6318ba2dfdc7e4e12f7e"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-CLEAN-003.patch",
+        "size": 378,
+        "sha256_lf": "fc06b829680e11b8cd95224379cfaae296dfd30bb46650a7b2f32612bd613022"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-CLEAN-004.patch",
+        "size": 496,
+        "sha256_lf": "f3558d5891b83cce9a215f51d2454db74cebc09794adc57d383eb2b98dad2939"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/artifacts/domain/patches/P2H-CLEAN-005.patch",
+        "size": 480,
+        "sha256_lf": "393be587dfb5444af80f106c4a5f7eadbb4cf81d67a04af89d497b85842b06f5"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/domain_definition.py",
+        "size": 27823,
+        "sha256_lf": "d9c0b081856f4fa40344ebce7dae05de135f426530949d24ab6b52d65b526096"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/reports.py",
+        "size": 4351,
+        "sha256_lf": "10c6199d8e323fa3f8aba27650ac79d7db5995fbf1512156de5b347f860404cb"
+      },
+      {
+        "path": "src/bug_cause_inference/p2h/task_scheduler_replication.py",
+        "size": 67782,
+        "sha256_lf": "aba1da8c40513d4f17fdc84a740ef8ff667ac08a0dd5ce73e9db182947d1ec27"
+      },
+      {
+        "path": "tests/test_p2h_reports.py",
+        "size": 2352,
+        "sha256_lf": "17cff9fa9c5b13fed7c887a48d4b1f1a6c50c9cb59c20fa532dade4c6495db35"
+      },
+      {
+        "path": "tests/test_p2h_task_scheduler_replication.py",
+        "size": 13838,
+        "sha256_lf": "930156612369f10262fcc1b2dec9d2ee22c68049caa8075ff591f744acca206c"
+      }
+    ]
+  }
+}

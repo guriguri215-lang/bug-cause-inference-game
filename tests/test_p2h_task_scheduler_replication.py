@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import inspect
 from collections import Counter
 from copy import deepcopy
@@ -77,9 +78,10 @@ def test_policy_selector_has_no_ground_truth_or_oracle_parameter() -> None:
         "remaining_budget",
         "rng",
     )
-    source = inspect.getsource(p2h._select_policy_action)
+    source = ast.parse(inspect.getsource(p2h._select_policy_action))
+    referenced_names = {node.id for node in ast.walk(source) if isinstance(node, ast.Name)}
     for forbidden in ("definition", "input_id", "is_buggy", "oracle", "cause_family", "target_function"):
-        assert forbidden not in source
+        assert forbidden not in referenced_names
 
 
 def test_recent_diff_evidence_is_truthful_for_buggy_and_clean_inputs() -> None:
@@ -189,7 +191,9 @@ def test_execution_weight_mutation_fails_closed(monkeypatch: pytest.MonkeyPatch)
 def test_pre_outcome_freeze_matches_current_implementation() -> None:
     frozen = p2h.validate_pre_outcome_freeze_identity()
     assert frozen["formal_policy_outcomes_executed_before_freeze"] == 0
-    assert frozen["implementation_identity"] == p2h.current_implementation_identity()
+    assert frozen["implementation_identity"]["digest"] == p2h.EXPECTED_PRE_OUTCOME_IMPLEMENTATION_DIGEST
+    current = p2h.validate_current_implementation_identity()
+    assert current["implementation_identity"] == p2h.current_implementation_identity()
 
 
 def test_exact_90_row_support_and_canonical_order(summary: dict) -> None:

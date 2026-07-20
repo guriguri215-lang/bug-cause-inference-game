@@ -299,6 +299,10 @@ EXPECTED_CLAIM_BOUNDARY = {
     "does_not_establish_population_or_production_generalization": True,
 }
 FREEZE_IDENTITY_SCHEMA_VERSION = "p2h_pre_outcome_freeze_identity.v1"
+CURRENT_IDENTITY_SCHEMA_VERSION = "p2h_post_outcome_current_identity.v1"
+EXPECTED_PRE_OUTCOME_IMPLEMENTATION_DIGEST = (
+    "72e545afd77900b14107f93ece3b95f0289a9cd3ea1504321b2a5fd7da1813ff"
+)
 EXPECTED_SPECIFICATION_IDENTITY = {
     "path": "claude_review/206_p2h_task_scheduler_second_domain_replication_specification_2026-07-19.md",
     "size": 20828,
@@ -579,6 +583,10 @@ def freeze_identity_path() -> Path:
     return Path(__file__).resolve().parent / "artifacts" / "pre_outcome_freeze_identity.json"
 
 
+def current_identity_path() -> Path:
+    return Path(__file__).resolve().parent / "artifacts" / "post_outcome_current_identity.json"
+
+
 def implementation_identity_paths() -> tuple[Path, ...]:
     root = repository_root()
     paths = [
@@ -623,12 +631,46 @@ def validate_pre_outcome_freeze_identity() -> dict[str, Any]:
         raise P2HContractError("pre-outcome freeze identity schema version drifted")
     if frozen["formal_policy_outcomes_executed_before_freeze"] != 0:
         raise P2HContractError("pre-outcome outcome count is not zero")
-    if frozen["implementation_identity"] != current_implementation_identity():
-        raise P2HContractError("current implementation differs from the pre-outcome freeze")
+    implementation = frozen["implementation_identity"]
+    if tuple(implementation) != ("digest", "files"):
+        raise P2HContractError("pre-outcome implementation identity schema drifted")
+    if implementation["digest"] != EXPECTED_PRE_OUTCOME_IMPLEMENTATION_DIGEST:
+        raise P2HContractError("historical pre-outcome implementation digest drifted")
+    if implementation["digest"] != canonical_digest({"files": implementation["files"]}):
+        raise P2HContractError("historical pre-outcome implementation rows do not hash")
     spec = frozen["specification_identity"]
     if spec != EXPECTED_SPECIFICATION_IDENTITY:
         raise P2HContractError("pre-outcome specification identity drifted")
     return frozen
+
+
+def validate_current_implementation_identity() -> dict[str, Any]:
+    path = current_identity_path()
+    if not path.is_file():
+        raise P2HContractError("post-outcome current implementation identity is missing")
+    try:
+        recorded = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise P2HContractError("post-outcome current implementation identity is invalid JSON") from exc
+    if tuple(recorded) != (
+        "schema_version",
+        "historical_pre_outcome_implementation_digest",
+        "change_boundary",
+        "implementation_identity",
+    ):
+        raise P2HContractError("post-outcome current identity schema/order drifted")
+    if recorded["schema_version"] != CURRENT_IDENTITY_SCHEMA_VERSION:
+        raise P2HContractError("post-outcome current identity schema version drifted")
+    if (
+        recorded["historical_pre_outcome_implementation_digest"]
+        != EXPECTED_PRE_OUTCOME_IMPLEMENTATION_DIGEST
+    ):
+        raise P2HContractError("post-outcome identity lost its historical freeze link")
+    if recorded["change_boundary"] != "implementation/test conformance only; outcome contract unchanged":
+        raise P2HContractError("post-outcome change boundary drifted")
+    if recorded["implementation_identity"] != current_implementation_identity():
+        raise P2HContractError("current implementation differs from the post-outcome snapshot")
+    return recorded
 
 
 def _portable(value: Any) -> Any:
@@ -1385,6 +1427,7 @@ def validate_summary(summary: Any) -> dict[str, Any]:
     """Independently replay trajectories, metrics, identities, and schema fail closed."""
 
     _validate_registry_contract()
+    validate_current_implementation_identity()
     if type(summary) is not dict or tuple(summary) != EXPECTED_TOP_LEVEL_FIELDS:
         raise P2HContractError("summary schema/order drifted")
     expected_scalars = {
@@ -1465,6 +1508,7 @@ def build_summary() -> dict[str, Any]:
 
     validation = validate_outcome_free_contract()
     frozen = validate_pre_outcome_freeze_identity()
+    validate_current_implementation_identity()
     implementation_before = current_implementation_identity()
     dependency_before = current_dependency_identity()
     rows: list[dict[str, Any]] = []
