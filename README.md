@@ -22,6 +22,8 @@ P2f is the merged paired clean-boundary audit over one exact unpatched canonical
 
 P2g is the merged paired benign-diff clean-boundary audit over the exact five accepted P2a clean patches. It crosses those five hand-authored same-domain inputs with the six accepted formal policies and two arms, for 60 trajectories and 30 pairs after a `14/14` input-specific clean-oracle gate. Normal-control replay, pair starts, and pre-target prefixes agree `30/30`; control and target-suppressed-continuation false positives are separately `0/30` and `0/30`. Intervention terminals are `20/30` budget, `5/30` maximum step, and `5/30` no available actions; action counts are 20 at five and 10 at six, costs are 5 at 10, 5 at 11, and 20 at 12, suppression counts are 25 at four and 5 at five, and all `20/20` recent-diff observations preserve the accepted non-empty repository-relative patch evidence. This fixed crossed non-iid support is analysis-only, model-internal, paired, non-causal, and non-deployable—not a population clean-safety rate, threshold or policy defect/improvement, ranking, combined P2e/P2f/P2g payoff, generalization result, or production recommendation. See [`docs/p2g_result_interpretation.md`](docs/p2g_result_interpretation.md).
 
+P2h is the merged normal-execution replication in one pure deterministic toy task-scheduler domain, distinct from checkout/pricing and frozen before any formal-policy outcome. It crosses 10 buggy and 5 benign clean hand-authored inputs with the six accepted formal policies for 90 ordered rows after a 25-oracle outcome-free gate. The fixed-support results are bug discovery `12/60`, function localization top-1 `25/60` and top-3 `35/60`, cause and fix-intent top-1 `16/60` each, and clean false positives `0/30`; terminals are 85 no-bug thresholds, 4 bug-confidence thresholds, and 1 budget limit. This single-domain crossed non-iid evidence is analysis-only, descriptive, non-causal, and non-deployable—not independent program replication, a policy ranking, a population estimate, checkout-to-scheduler transfer, combined P2a–P2h payoff, inference, generalization, release readiness, or production evidence. See [`docs/p2h_result_interpretation.md`](docs/p2h_result_interpretation.md).
+
 See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the current evaluation interpretation.
 
 ## What This Project Is
@@ -40,6 +42,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - A P2e every-later-decision target-only continuation audit with finite budget, step, and non-repeating-action bounds and separate software, artifact, result, and documentation acceptance decisions.
 - A P2f canonical unpatched-clean paired audit with truthful empty-diff evidence and separate software, artifact, result, and documentation acceptance decisions.
 - A P2g accepted-benign-diff clean paired audit with truthful non-empty patch evidence and separate software, artifact, result, and documentation acceptance decisions.
+- A P2h fixed task-scheduler second-domain replication with 90 normal-execution rows and separate software, artifact, result, and documentation acceptance decisions.
 
 ## What This Project Is Not
 
@@ -60,6 +63,7 @@ See [`docs/p1a_evaluation_notes.md`](docs/p1a_evaluation_notes.md) for the curre
 - P2e does not establish threshold causality or defect, policy ranking or improvement, sequence optimality, an unbounded or DP ceiling, deployability, generalization, or production readiness.
 - P2f does not establish a clean safety rate, causal effect, threshold or policy defect, policy improvement or ranking, a P2e/P2f combined payoff, deployability, generalization, or production readiness.
 - P2g does not establish a population clean-safety rate, causal effect, threshold or policy defect, policy improvement or ranking, a P2e/P2f/P2g combined payoff, deployability, generalization, inference, or production readiness.
+- P2h does not establish independent program replication, a domain-population estimate, policy superiority or ranking, causal transfer, a combined P2a–P2h payoff, arbitrary-program generalization, inference, release readiness, or production readiness.
 
 ## Related Work
 
@@ -164,6 +168,8 @@ P2f also has no public CLI command. Its tracked artifact pair and targeted tests
 
 P2g also has no public CLI command. Its tracked artifact pair and targeted tests preserve the exact five accepted benign non-empty-diff clean inputs, `14/14` gate, 60 trajectories, 30 pairs, `30/30` normal replay and starting/prefix agreement, every-firing target-only suppression, and truthful repository-relative patch evidence. The `0/30` false positives in each arm are fixed trajectory-support fractions over five hand-authored same-domain inputs, not independent program replication, population safety estimates, or causal effects.
 
+P2h also has no public CLI command. Its tracked artifact pair and targeted tests preserve the exact 15 task-scheduler inputs, 25-oracle outcome-free gate, six accepted policies, fixed actions/costs/settings, 90 normal-execution rows, truthful scheduler-local diff/coverage evidence, and separate historical/current 28-file identities. The exact fractions describe one hand-authored toy domain; they do not select a policy or estimate behavior on other programs.
+
 ## Project Status
 
 For the current implementation state, verification guidance, public-release boundary notes, and consolidated P1c interpretation, see:
@@ -179,6 +185,7 @@ For the current implementation state, verification guidance, public-release boun
 - [`docs/p2e_result_interpretation.md`](docs/p2e_result_interpretation.md)
 - [`docs/p2f_result_interpretation.md`](docs/p2f_result_interpretation.md)
 - [`docs/p2g_result_interpretation.md`](docs/p2g_result_interpretation.md)
+- [`docs/p2h_result_interpretation.md`](docs/p2h_result_interpretation.md)
 
 ## Example Command
 
@@ -360,6 +367,7 @@ The P1b main policy is `expected_utility_per_cost`.
 - P2e covers the same fixed support and 41 bounded continuations only. Its repeated target-only suppression, `21/41` selections, `21/41` detections, and `8/4/8` budget/max-step/no-action endpoints do not support causal, policy-performance, optimality, generalization, deployment, or production claims.
 - P2f covers one exact unpatched program and six paired policy executions only. Its `0/6` per-arm false positives, `4/1/1` intervention terminals, and repeated target-only suppression do not support clean-safety, causal, policy-performance, generalization, deployment, or production claims.
 - P2g covers five accepted hand-authored same-domain non-iid benign-diff clean inputs and 30 paired input-policy executions only. Its `0/30` per-arm false positives, `20/5/5` intervention terminals, and repeated target-only suppression do not support population clean-safety, causal, policy-performance, generalization, inference, deployment, or production claims.
+- P2h covers one hand-authored, fixed-input, non-iid toy task-scheduler domain and 90 crossed input-policy rows only. Its `12/60` discovery, `35/60` top-3 localization, `16/60` cause/fix, and `0/30` clean-false-positive results do not support policy ranking, causal transfer, population, inferential, arbitrary-program, scheduler-quality, release, deployment, or production claims.
 
 ## Reproducibility Notes
 
