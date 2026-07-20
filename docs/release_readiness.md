@@ -30,6 +30,33 @@ The repository is ready to be reviewed as a small reproducible prototype when th
 - P2h software conformance, versioned artifact identity, descriptive result, and public documentation are separate acceptance decisions. Accepted P2h evidence is release evidence only for the exact fixed artifact; it does not automatically advance release or production readiness.
 - The project does not claim production fault localization, automated repair, LLM agent benchmarking, real-world debugging accuracy, general minimax optimality, a general Nash equilibrium, regret optimality, or a game-theoretic guarantee beyond each explicitly fixed empirical matrix.
 
+## Repository and Installed Distribution Decisions
+
+The post-P2h audit keeps five decisions separate. After final public-boundary review and before exact-head Draft PR CI, their current states are:
+
+```text
+github_source_release_readiness          pending_PR_CI
+wheel_runtime_boundary_acceptance        accepted
+sdist_boundary_acceptance                accepted
+repository_research_evidence_acceptance  accepted_unchanged
+public_release_documentation_acceptance  accepted
+```
+
+The final public-boundary reviewer accepted the wheel, sdist, unchanged repository evidence, and documentation decisions after reviewing the exact diff and artifacts. GitHub source readiness remains pending until the Draft PR's exact-head CI, including both jobs, completes successfully. Review records preserve these transitions rather than treating an implementation-time artifact as self-accepting.
+
+Their shared content contract is `repository_only_p2_research_evidence_v1`:
+
+- The GitHub source tree and GitHub-generated source archive retain the tracked public source, documentation, tests, and accepted P2a-P2h research evidence.
+- The advertised wheel retains the root runtime, P1b/P1c/P1d packages, the required P1b real-diff data (one manifest, six baseline Python files, and 25 patches), wheel metadata, and the license.
+- The sdist retains the same runtime/data source contract plus `LICENSE`, `MANIFEST.in`, `README.md`, `pyproject.toml`, and generated package metadata.
+- Both distributions exclude P2a-P2h packages and evidence. P2 modules depend on repository-relative artifacts, tests, or planning provenance and are not a complete installed runtime contract.
+- Both distributions also exclude tests, examples, the `docs/` tree, project documentation other than the sdist `README.md`, planning records, caches, generated checkouts, and local/build output.
+- Repository-public research evidence is not automatically an installed API, a production feature, or a production-readiness claim.
+
+The distribution checker enforces this content contract independently of archive basename, member order, timestamps, and container hashes. A release artifact must still pass metadata, license, entry-point, normalized-path, duplicate/case-collision, traversal, private-path, symlink/executable, source-byte, manifest, and fresh-install checks.
+
+Acceptance of the four reviewed decisions, and eventual acceptance of GitHub source readiness after exact-head CI, does not perform or authorize a version bump, tag, GitHub Release, PyPI upload, PR Ready transition, merge, production deployment, or P2i work. Those actions remain separate and deferred.
+
 ## Tracked Public Artifacts
 
 The tracked generated artifacts are deliberate, reproducible public evidence:
@@ -110,7 +137,7 @@ Public reproducibility of the accepted P2a evidence is based on the reviewed rep
 
 ## CI And Verification
 
-GitHub Actions is expected to install `requirements.txt` plus the editable package, run the full pytest suite, and validate the P1b real-diff artifacts. Do not weaken CI or skip `tmp_path` tests to work around local sandbox issues.
+GitHub Actions has two independent gates. The existing test job installs `requirements.txt` plus the editable package, runs the full pytest suite, and validates the P1b real-diff artifacts. The package-artifact job builds the sdist and a direct wheel, rebuilds a wheel from the sdist, runs the deterministic boundary/parity checker, installs both wheels into fresh environments, and exercises console/module help and the P1b validator from outside the repository. Do not weaken either job or skip `tmp_path` tests to work around local sandbox issues.
 
 Recommended pre-release checks:
 
@@ -149,38 +176,48 @@ P2g also has no public CLI command. Release verification should run its targeted
 
 P2h also has no public CLI command. Its module runner is a fixed-audit verification surface only. Release verification should run the targeted P2h tests and compare two isolated fresh P2h runs with the tracked pair without overwriting tracked artifacts. Verify exact JSON/Markdown bytes and semantics; summary, row, aggregate, manifest, dependency, freeze, and outcome-free-validation digests; historical and current 28-file LF identities; raw same-run implementation/dependency drift; exact 15-input/6-policy/90-row order; the 25-oracle baseline and input-specific gate; fixed actions/costs/settings; independent row replay; terminal partition; truthful scheduler-local diff/coverage evidence; and accepted P1b–P2g non-regression. P2a/P2b outcome runners are not release checks. Release verification must not regenerate or overwrite the tracked P2h artifacts.
 
-P2h closeout accepts research evidence only. Before creating any tag or GitHub Release, perform a separate release-readiness audit in a separate PR; the P2h acceptance decisions do not satisfy or bypass that gate.
+P2h closeout accepts research evidence only. This post-P2h package-boundary PR is the separate release-readiness audit required before any tag or GitHub Release; the earlier P2h acceptance decisions do not satisfy or bypass its final review, artifact, fresh-install, or exact-head CI gates. No tag, GitHub Release, PyPI upload, version bump, Ready transition, merge, or P2i work is authorized by this audit.
 
 If a Codex sandbox run hits the known Windows Temp-directory permission issue for pytest `tmp_path` tests, rerun the same command with normal permissions or explicit approval and record both results. Do not change production code, pytest configuration, CI, or test coverage for that local constraint.
 
 ## Package Artifact Smoke
 
-For a local release-artifact boundary check, build outputs should stay under ignored paths:
+Build outputs must stay under unique ignored paths. Run these repository-audit commands from a clean GitHub repository checkout; the checker script is not part of the sdist. Ensure that an old ignored `build/` directory cannot supply stale modules to a direct wheel; the checker will reject such leakage.
 
 ```bash
-python -m pip wheel . --no-deps -w tmp/wheelhouse
-python -m build --sdist --wheel --outdir tmp/dist
+python -m build --sdist --outdir tmp/release-direct
+python -m build --wheel --outdir tmp/release-direct
+python -m pip wheel --no-deps --no-cache-dir --wheel-dir tmp/release-from-sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz
+python scripts/check_release_artifacts.py --wheel tmp/release-direct/bug_cause_inference_game-0.1.0-py3-none-any.whl --sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz --derived-wheel tmp/release-from-sdist/bug_cause_inference_game-0.1.0-py3-none-any.whl
 ```
 
 If a no-isolation build fails because the active environment cannot import `setuptools.build_meta`, treat that as a local build-tool constraint. Do not add build backends or build frontends to runtime requirements only for this smoke; use build isolation or a temporary build environment instead.
 
-Before publishing or tagging, inspect the built wheel and verify that it:
+The exact wheel contract is 71 files:
 
+- includes the root runtime and the P1b/P1c/P1d Python packages;
 - includes `bug_cause_inference/p1b/artifacts/real_diff/manifest.json`;
 - includes the six baseline checkout Python files under `bug_cause_inference/p1b/artifacts/real_diff/baseline/checkout/`;
 - includes the 25 real-diff patch files under `bug_cause_inference/p1b/artifacts/real_diff/patches/`;
-- excludes generated checkout trees, `tmp/`, `temp/`, `.venv/`, pytest caches, local outputs, `examples/`, and `tests/`.
+- includes the expected metadata, license, console entry point, top-level declaration, and a complete SHA-256 `RECORD`;
+- excludes P2a-P2h, tests, docs, examples, planning files, generated checkout trees, `tmp/`, `temp/`, virtual environments, caches, credentials, and local outputs.
+
+The exact sdist contract is 76 files and 13 directories. It carries the same runtime/data source contract plus `LICENSE`, `MANIFEST.in`, `README.md`, `pyproject.toml`, and the expected generated package metadata. It excludes P2a-P2h and the repository test suite rather than shipping tests that refer to intentionally excluded P2 packages.
 
 Also confirm that package metadata builds without setuptools license deprecation warnings: `pyproject.toml` should use the SPDX license expression `MIT`, include `LICENSE` as a license file, and avoid deprecated license classifiers.
 
-The source distribution may include source and test files, but it should still exclude local scratch output, generated checkout trees, virtual environments, and build/cache directories.
+Container SHA-256 values and compressed byte sizes are audit evidence for one build, not portable release identities: ZIP/tar timestamps may change. The checker instead requires exact normalized member sets and bytes, and requires direct and sdist-derived wheels to agree on every member byte except each wheel's self-referential `RECORD`.
 
-Install the wheel into a temporary environment under `tmp/` and run at least:
+Install both the direct and sdist-derived wheels into separate temporary environments. Change to a directory outside the repository before running at least:
 
 ```bash
+bug-cause-inference --help
 python -m bug_cause_inference.cli --help
 python -m bug_cause_inference.p1b.real_diff --validate
+python -m bug_cause_inference.cli p1d1-report --format json
 ```
+
+Also run `python -m twine check` over both built artifacts. These checks audit release readiness; they do not publish anything.
 
 ## Current Constraints
 

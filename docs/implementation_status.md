@@ -25,7 +25,10 @@
 - P1b Phase C1 real-diff artifact schema with clean baseline checkout source, per-variant unified patches, and manifest.
 - P1b Phase C1 real-diff generator/validator for all 25 variants; generated checkout trees are temporary and not committed.
 - P1b Phase C2 `execution_grounded` `inspect_recent_diff` observations backed by Phase C real-diff artifacts.
-- Minimal GitHub Actions CI workflow for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
+- GitHub Actions test gate for pull requests and pushes to `main`, running pytest and the P1b real-diff validator on Python 3.10.
+- Independent GitHub Actions package-artifact gate that builds a direct wheel and sdist, rebuilds a wheel from the sdist, validates the exact distribution boundary and parity, installs both wheels, and runs repository-external smoke checks.
+- Explicit `repository_only_p2_research_evidence_v1` package boundary: GitHub retains accepted P2a-P2h research evidence, while the wheel/sdist contain only the root runtime, P1b/P1c/P1d, and required P1b `1/6/25` data.
+- Deterministic release-artifact checker for exact members/source bytes, metadata, license, entry point, path/type/mode safety, wheel `RECORD`, sdist `SOURCES.txt`, P2/test/private-output exclusion, and direct-versus-sdist-derived wheel parity.
 - Test operations guidance for verification tiers, CI expectations, and Codex sandbox Temp fallback: [`docs/test_operations.md`](test_operations.md).
 - Public-release hygiene notes for tracked artifacts, ignored local outputs, CI expectations, known constraints, and public non-claims: [`docs/release_readiness.md`](release_readiness.md).
 - P1c1 analysis-only worst-case report over existing P1b variants, policies, settings, and run results.
@@ -523,7 +526,7 @@ P1d closeout verification completed on 2026-07-13 at 22:15 JST. The standard Win
 .\.venv\Scripts\python.exe -m pytest -q --basetemp tmp/pytest/p1d-closeout-full-20260713-01
 ```
 
-Results: `1080 passed` targeted and `1318 passed` full suite. The standard-Temp attempts produced `1078 passed, 2 errors` and `1300 passed, 18 errors`, respectively; every error was the known `PermissionError` while accessing `C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig`.
+Results: `1080 passed` targeted and `1318 passed` full suite. The standard-Temp attempts produced `1078 passed, 2 errors` and `1300 passed, 18 errors`, respectively; every error was the known `PermissionError` while accessing `C:\Users\<user>\AppData\Local\Temp\pytest-of-<user>`.
 
 The documentation-path Ruff command exited successfully but reported `No Python files found under the given path(s)`, so it is not recorded as a Python changed-file lint pass. Repository-wide Ruff reported only the three pre-existing `F401` findings in `p1b/policies.py`, `p1b/reports.py`, and `p1d/p1d2_evaluation.py`; no file was changed to suppress them.
 
@@ -556,7 +559,7 @@ Result: 34 passed.
 In the Codex sandbox, `tmp_path` commands can report Temp-directory permission errors such as:
 
 ```text
-PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
+PermissionError: C:\Users\<user>\AppData\Local\Temp\pytest-of-<user>
 ```
 
 - During the test-operations review, the targeted CLI/file-output command hit this sandbox error (`4 passed, 14 errors`) and passed when rerun with normal permissions (`18 passed`).

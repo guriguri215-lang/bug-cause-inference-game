@@ -93,6 +93,25 @@ After the editable install, you can run:
 python -m bug_cause_inference.cli --help
 ```
 
+## Repository and Distribution Boundary
+
+The public repository and the installable distributions intentionally have different surfaces. The `repository_only_p2_research_evidence_v1` boundary retains all reviewed P2a-P2h source, tests, fixed inputs, identity files, versioned results, and interpretation documents in the GitHub source tree. Those files are repository-public research evidence, not an advertised installed runtime API.
+
+The wheel contains only the root `bug_cause_inference` runtime, the P1b/P1c/P1d packages, and the P1b real-diff manifest, six baseline Python files, and 25 patches, together with wheel metadata and the license. The sdist carries the same runtime/data source contract plus `LICENSE`, `MANIFEST.in`, `README.md`, `pyproject.toml`, and generated package metadata. Both distributions exclude every P2a-P2h package and evidence file, as well as tests, examples, the `docs/` tree, project documentation other than the sdist `README.md`, planning records, caches, and local/build output. This avoids exposing the incomplete P2 Python-only surface that would otherwise depend on repository-relative evidence absent from an installed distribution.
+
+The installed console and module entry points cover P1a, P1b, P1c, and P1d. P2a-P2h remain reproducible from a repository checkout under their documented fixed-input verification contracts and have no public installed CLI command. This package boundary does not mean that a tag, GitHub Release, PyPI publication, production deployment, or production-readiness decision has occurred.
+
+Build and validate the distribution boundary from a clean GitHub repository checkout. These are repository-audit commands: `scripts/check_release_artifacts.py` is intentionally not shipped inside the sdist.
+
+```bash
+python -m build --sdist --outdir tmp/release-direct
+python -m build --wheel --outdir tmp/release-direct
+python -m pip wheel --no-deps --no-cache-dir --wheel-dir tmp/release-from-sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz
+python scripts/check_release_artifacts.py --wheel tmp/release-direct/bug_cause_inference_game-0.1.0-py3-none-any.whl --sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz --derived-wheel tmp/release-from-sdist/bug_cause_inference_game-0.1.0-py3-none-any.whl
+```
+
+The checker verifies exact required and forbidden members, source bytes, metadata, license, entry point, wheel `RECORD`, sdist `SOURCES.txt`, archive path/type/mode safety, P1b data counts, and direct-versus-sdist-derived wheel parity. It does not require stable archive timestamps or container hashes.
+
 ## Quick Start
 
 Generate the reproducible synthetic dataset:

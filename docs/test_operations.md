@@ -149,11 +149,28 @@ python -m bug_cause_inference.cli p1c-evaluate --observation-mode both --policie
 
 ## CI Expectations
 
-`.github/workflows/ci.yml` is expected to run on Ubuntu with Python 3.10, install `requirements.txt` plus the editable package, run the full pytest suite, and validate P1b real-diff artifacts.
+`.github/workflows/ci.yml` is expected to run two independent Ubuntu/Python 3.10 jobs. The test job installs `requirements.txt` plus the editable package, runs the full pytest suite, and validates P1b real-diff artifacts. The package-artifact job builds a direct wheel and sdist, rebuilds a wheel from the sdist, checks the exact distribution boundary and wheel parity, installs both wheels, and runs repository-external smoke checks.
 
-CI should keep the full pytest command and real-diff validator unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
+CI should keep the full pytest command, real-diff validator, and package-artifact job unless there is a clear repository-side problem. Do not reduce CI coverage just to avoid local sandbox issues or speed up verification.
 
 The full suite includes P2b, P2c, P2d, P2e, P2f, P2g, and P2h. On Linux, the tracked LF artifacts and accepted identities must match the same portable LF-canonical hashes used on Windows. A platform-specific raw working-tree hash is not an accepted portable artifact identity.
+
+## Release Artifact Boundary Checks
+
+The installed distribution boundary is `repository_only_p2_research_evidence_v1`. GitHub keeps P2a-P2h research source, tests, inputs, artifacts, identities, and interpretation documents; the wheel and sdist intentionally exclude P2 and retain only the root runtime, P1b/P1c/P1d, and required P1b data.
+
+Use clean, unique ignored paths:
+
+```bash
+python -m build --sdist --outdir tmp/release-direct
+python -m build --wheel --outdir tmp/release-direct
+python -m pip wheel --no-deps --no-cache-dir --wheel-dir tmp/release-from-sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz
+python scripts/check_release_artifacts.py --wheel tmp/release-direct/bug_cause_inference_game-0.1.0-py3-none-any.whl --sdist tmp/release-direct/bug_cause_inference_game-0.1.0.tar.gz --derived-wheel tmp/release-from-sdist/bug_cause_inference_game-0.1.0-py3-none-any.whl
+```
+
+The checker requires the direct wheel, sdist, and sdist-derived wheel together. It fails closed on missing or unexpected members; changed source bytes; P2, tests, docs, examples, local/private paths, or caches; non-POSIX paths; duplicates and case/Unicode collisions; traversal; archive links, devices, FIFOs, encryption, or executable files; metadata/license/entry-point drift; noncanonical or invalid wheel `RECORD`; invalid sdist `SOURCES.txt`; incorrect P1b `1/6/25` counts; and direct-versus-sdist-derived wheel differences.
+
+After installing both wheels into separate fresh environments, move outside the repository checkout before exercising console/module help and P1b validation. A source-tree import or editable install is not evidence for the installed boundary. Archive hashes and sizes should be recorded for provenance, but timestamps make them build-instance evidence rather than portable content identities.
 
 ## P2b Artifact and Portability Checks
 
@@ -384,7 +401,7 @@ Do not replace these tests with fixed repository paths, skips, or xfails to work
 Some Codex sandbox runs on Windows have failed while pytest was creating or cleaning the user temp root, for example:
 
 ```text
-PermissionError: C:\Users\gurig\AppData\Local\Temp\pytest-of-gurig
+PermissionError: C:\Users\<user>\AppData\Local\Temp\pytest-of-<user>
 ```
 
 Treat this as a local execution-environment constraint when the same pytest command passes with normal permissions.
